@@ -57,6 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ContactMgmtBilling\Account.cs" />
+    <Compile Include="ContactMgmtBilling\ContractDetails.cs" />
+    <Compile Include="ContactMgmtBilling\MrktPlaceDbComm.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="DatabaseInteraction.cs" />
     <Compile Include="DBComm.cs" />
@@ -103,8 +107,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
