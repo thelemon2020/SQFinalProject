@@ -10,18 +10,26 @@ using MySql.Data.MySqlClient;
 
 namespace SQFinalProject
 {
-    public class DBComm
+    public class Database
     {
         public string connectionString { get; set; }
+
+        public string ip { get; set; }
+        public string user { get; set; }
+        public string pass { get; set; }
+        public string schema { get; set; }
         public MySqlConnection currentConnection { get; set; }
         public MySqlCommand SQLCommand { get; set; }
         public string userCommand { get; set; }
         public List<string> SQLReturn { get; set; }
 
-        public DBComm(string dbIP, string userName, string password, string command, string table)
+        public Database(string dbIP, string userName, string password, string table)
         {
-            connectionString = "server=" + dbIP + ";uid=" + userName + ";pwd=" + password + ";database=" + table;
-            userCommand = command;
+            ip = dbIP;
+            user = userName;
+            pass = password;
+            schema = table;
+            connectionString = "server=" + ip + ";uid=" + user + ";pwd=" + pass + ";database=" + schema;
         }
 
         public List<string> ExecuteCommand()
@@ -31,6 +39,11 @@ namespace SQFinalProject
             SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand);
             DatabaseInteraction.CloseConnection(currentConnection);
             return SQLReturn;
+        }
+
+        public void MakeCommand(string table, string searchParam)
+        {
+            userCommand = "SELECT" + searchParam + "FROM" + table;
         }
     }
 }
