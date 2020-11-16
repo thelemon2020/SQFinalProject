@@ -41,9 +41,18 @@ namespace SQFinalProject
             return SQLReturn;
         }
 
-        public void MakeCommand(string table, string searchParam)
+        virtual public void MakeCommand(string table, string columns)
         {
-            userCommand = "SELECT" + searchParam + "FROM" + table;
+            userCommand = "SELECT " + columns + " FROM " + table + ";";
+        }
+
+        public void MakeCommand(string columns, string table, string conditionalField, string searchParam)
+        {
+            userCommand = "SELECT " + columns + " FROM " + table + " WHERE " + conditionalField + " = " + searchParam + ";";
+        }
+        public void MakeCommand()
+        {
+            userCommand = "SELECT * from tms_login.login";
         }
     }
 }

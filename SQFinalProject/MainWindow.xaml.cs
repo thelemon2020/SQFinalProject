@@ -20,9 +20,13 @@ namespace SQFinalProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        Database loginDB { get; set; }
         public MainWindow()
-        {
+        { 
             InitializeComponent();
+            loginDB = new Database("192.168.0.197", "tms_admin", "admin", "tms_login");
+            loginDB.MakeCommand("*","login","username","'admin'");
+            loginDB.ExecuteCommand();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,9 @@ namespace SQFinalProject
                 connection = new MySqlConnection(connectionString);
                 connection.Open();
             }
-            catch
+            catch (MySqlException e)
             {
+                
                 return null;
             }
             return connection;
@@ -30,7 +32,7 @@ namespace SQFinalProject
             MySqlDataReader reader = DBCommand.ExecuteReader();
             while (reader.Read())
             {
-                results.Append(reader[0]);
+                results.Add(reader[1].ToString());
             }
             return results;
         }
