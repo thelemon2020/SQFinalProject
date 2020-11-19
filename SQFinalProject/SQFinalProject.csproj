@@ -62,8 +62,8 @@
     <Compile Include="ContactMgmtBilling\MrktPlaceDbComm.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="Database.cs" />
-    <Compile Include="DatabaseInteraction.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\DatabaseInteraction.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Transpo.cs" />
     <Compile Include="UI.cs" />

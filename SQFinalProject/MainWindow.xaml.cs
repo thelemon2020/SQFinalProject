@@ -25,7 +25,15 @@ namespace SQFinalProject
         { 
             InitializeComponent();
             loginDB = new Database("192.168.0.197", "tms_admin", "admin", "tms_login");
-            loginDB.MakeCommand("*","login","username","'admin'");
+            List<string> insertInfo = new List<string>();
+            insertInfo.Add("planner");
+            insertInfo.Add("planner");
+            insertInfo.Add("p");
+            List<string> fields = new List<string>();
+            fields.Add("username");
+            fields.Add("password");
+            fields.Add("role");
+            loginDB.MakeInsertCommand("login", fields, insertInfo);
             loginDB.ExecuteCommand();
         }
     }
