@@ -8,9 +8,21 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 namespace SQFinalProject
-{
+{   /// 
+    /// \class <b>DatabaseInteraction</b>
+    ///
+    /// \brief The purpose of this class is be used by Database class objects to interact with the actual database
+    ///
+    /// \author <i>Chris Lemon</i>
+    ///
     public static class DatabaseInteraction
-    {
+    {   /// \brief Used to connect to a database
+        /// \details <b>Details</b>
+        /// Creates a <i>MySqlConnection</i> and uses it to open a connection to a database and returns that connection for further use
+        /// \param - connectionString - <b>string</b> - a string holding all the information neccessary to connect to a database
+        /// 
+        /// \return - connection - <b>MySqlConnection</b> - The object that represents the connection to a database
+        /// 
         public static MySqlConnection connectToDatabase(string connectionString)
         {
             MySqlConnection connection = null;
@@ -26,6 +38,14 @@ namespace SQFinalProject
             }
             return connection;
         }
+        
+        /// \brief Sends a query to the database and gets back a response
+        /// \details <b>Details</b>
+        /// Uses a <i>MySqlCommand</i> object to query the database and creates a <i>MySqlDataReader</i> to get back the the query results
+        /// \param - DBCommand - <b>MySqlCommand</b> - an object that holds the connection and the query to be executed on the database
+        /// 
+        /// \return - results - <b>List<List<string>></b> - A lists of lists that holds each row and each column of the returned query
+        /// 
         public static List<List<string>> CommandDatabase(MySqlCommand DBCommand)
         {
             List<List<string>> results = new List<List<string>>();
@@ -41,6 +61,14 @@ namespace SQFinalProject
             }
             return results;
         }
+
+        /// \brief Closes a database connection
+        /// \details <b>Details</b>
+        /// Closes the current connection
+        /// \param - database - <b>MySqlConnection</b> - the current database connection
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
         public static void CloseConnection(MySqlConnection database)
         {
             database.Close();

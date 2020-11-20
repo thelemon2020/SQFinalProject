@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,21 +21,59 @@ namespace SQFinalProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string configFilePath = ".\\config\\TMS.config";
+        public List<string> TMS_Database { get; set; }
+        public List<string> MarketPlace_Database { get; set; }
         Database loginDB { get; set; }
         public MainWindow()
         { 
             InitializeComponent();
-            loginDB = new Database("192.168.0.197", "tms_admin", "admin", "tms_login");
-            List<string> insertInfo = new List<string>();
-            insertInfo.Add("planner");
-            insertInfo.Add("planner");
-            insertInfo.Add("p");
-            List<string> fields = new List<string>();
-            fields.Add("username");
-            fields.Add("password");
-            fields.Add("role");
-            loginDB.MakeInsertCommand("login", fields, insertInfo);
-            loginDB.ExecuteCommand();
+            LoadConfig();
+        }
+        
+        /// \brief Loads the database connection details from an external config file
+        /// \details <b>Details</b>
+        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
+        /// and parses it out into data that is usable to connect to one or more databases
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
+        private void LoadConfig()
+        {
+            if (File.Exists(configFilePath))
+            {
+                StreamReader configFile = new StreamReader(configFilePath);
+                string contents = configFile.ReadToEnd();
+                configFile.Close();
+                if (contents != "")
+                {
+                    string[] splitByDB = contents.Split('\n');
+                    foreach (string dbDetails in splitByDB)
+                    {
+                        string[] details = dbDetails.Split(' ');
+                        if (details[0] == "TMS")
+                        {
+                            for (int i = 1; i < details.Count(); i++)
+                            {
+                                TMS_Database.Add(details[i]);
+                            }
+                        }
+                        else if (details[0] == "MP")
+                        {
+                            for (int i = 1; i < details.Count(); i++)
+                            {
+                                MarketPlace_Database.Add(details[i]);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                FileStream newConfig = File.Create(configFilePath);
+                newConfig.Close();
+            }                      
         }
     }
 }

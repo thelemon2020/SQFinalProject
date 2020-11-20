@@ -9,28 +9,53 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 namespace SQFinalProject
-{
+{   /// 
+    /// \class <b>Database</b>
+    ///
+    /// \brief The purpose of this class is to connect to and interact with a MYSQL Database
+    ///
+    /// \author <i>Chris Lemon</i>
+    ///
     public class Database
     {
-        public string connectionString { get; set; }
+        //! Properties
+        public string connectionString { get; set; }//<the string used to connect to the database via MySqlConnector
 
-        public string ip { get; set; }
-        public string user { get; set; }
-        public string pass { get; set; }
-        public string schema { get; set; }
-        public MySqlConnection currentConnection { get; set; }
-        public MySqlCommand SQLCommand { get; set; }
-        public string userCommand { get; set; }
+        public string ip { get; set; }//<The ip of the database to connect to
+        public string user { get; set; }//<The username used to login to the database
+        public string pass { get; set; }//<The password used to login to the database
+        public string schema { get; set; }//<The database schema to interact with
+        public MySqlConnection currentConnection { get; set; }//<The active connection with the database
+        public MySqlCommand SQLCommand { get; set; }//<The command to be sent to the server
+        public string userCommand { get; set; }//<The command to be converted to MySqlCommand object
 
+        /// \brief To instantiate a new Database object with arguments supplied from a config file
+        /// \details <b>Details</b>
+        /// Instantiates a Databse object, using arguments that are held in an external config file.  It sets enough properties to create a MySQLConnection object
+        /// \param - dbIP - <b>string</b> - The ip address of the database to be connected to
+        /// \param - userName - <b>string</b> - the username used to log in to the server
+        /// \param - password - <b>string</b> - the password used to log in to the server
+        /// \param - table - <b>string</b> - the schema to be manipulated
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         public Database(string dbIP, string userName, string password, string table)
         {
+            //set starting properties to be able to connect to server
             ip = dbIP;
             user = userName;
             pass = password;
             schema = table;
             connectionString = "server=" + ip + ";uid=" + user + ";pwd=" + pass + ";database=" + schema;
         }
-
+        
+        /// \brief Used to send a command to a database and get a response back
+        /// \details <b>Details</b>
+        /// Calls other methods that allow for a connection to a database to be made and a query to be made to the database
+        /// \param - <b>None</b>
+        /// 
+        /// \return - SQLReturn - <b>List<List<string>></b> - This list holds whatever the response from the database was
+        /// 
         public List<List<string>> ExecuteCommand()
         {
             List<List<string>> SQLReturn = new List<List<string>>();
@@ -40,6 +65,16 @@ namespace SQFinalProject
             DatabaseInteraction.CloseConnection(currentConnection);
             return SQLReturn;
         }
+        
+        /// \brief Creates an Insert Command
+        /// \details <b>Details</b>
+        /// Uses a <i>StringBuilder</i> to combine parameters into a usable SQL Command.  It can take any number of variables.  
+        /// This is the default method, when the number of values being inserted matched the number of columns in a table
+        /// \param - table - <b>string</b> - the table to be inserted into
+        /// \param - values - <b>List<string></b> - the new values to be inserted
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
         public void MakeInsertCommand(string table, List<string> values)
         {
             StringBuilder InsertCommand = new StringBuilder();
@@ -61,6 +96,17 @@ namespace SQFinalProject
             InsertCommand.AppendFormat(")");
             userCommand = InsertCommand.ToString();
         }
+
+        /// \brief Creates an Insert Command
+        /// \details <b>Details</b>
+        /// Uses a <i>StringBuilder</i> to combine parameters into a usable SQL Command.  It can take any number of variables.  
+        /// This is the overloaded method that is used when the entire row isn't being filled
+        /// \param - table - <b>string</b> - the table to be inserted into
+        /// \param - fields - <b>List<string></b> - the columns to insert into
+        /// \param - values - <b>List<string></b> - the new values to be inserted
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
         public void MakeInsertCommand(string table, List<string> fields, List<string> values)
         {
             StringBuilder InsertCommand = new StringBuilder();
@@ -97,13 +143,24 @@ namespace SQFinalProject
             InsertCommand.AppendFormat(");");
             userCommand = InsertCommand.ToString();
         }
-        public void MakeSelectCommand(List<string> columns, string table, Dictionary<string, string> conditions)
+
+        /// \brief Creates an Select Command
+        /// \details <b>Details</b>
+        /// Uses a <i>StringBuilder</i> to combine parameters into a usable SQL Command.  It can take any number of variables.  
+        /// The command is used to get information out of the database
+        /// \param - fields - <b>List<string></b> - the columns to be returned
+        /// \param - table - <b>string</b> - the table to be inserted into
+        /// \param - conditions - <b>Dictionary<string, string></b> - the conditions that need to be met for a row or parts of a row to be returned
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
+        public void MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions)
         {
             StringBuilder selectCommand = new StringBuilder();
             selectCommand.AppendFormat("SELECT");
             int i = 0;
-            int countLoops = columns.Count() - 1;
-            foreach (string entry in columns)
+            int countLoops = fields.Count() - 1;
+            foreach (string entry in fields)
             {
                 if (i == countLoops)
                 {
@@ -138,6 +195,17 @@ namespace SQFinalProject
             }
         }
 
+
+        /// \brief Creates an Update Command
+        /// \details <b>Details</b>
+        /// Uses a <i>StringBuilder</i> to combine parameters into a usable SQL Command.  It can take any number of variables.  
+        /// The command is used to update a field or fields in a table
+        /// \param - table - <b>string</b> - the table to be inserted into
+        /// \param - updateValues - <b>Dictionary<string, string></b> - the columns to be updated and the values to be used
+        /// \param - conditions - <b>Dictionary<string, string></b> - the conditions that need to be met for a row or parts of a row to be updated
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
         public void MakeUpdateCommand(string table, Dictionary<string, string> updateValues, Dictionary<string, string> conditions)
         {
             StringBuilder updateCommand = new StringBuilder();
