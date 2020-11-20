@@ -173,7 +173,7 @@ namespace SQFinalProject
                 i++;
             }
             selectCommand.AppendFormat(" FROM {0}", table);
-            if (conditions.Count != 0)
+            if (conditions!=null)
             {
                 selectCommand.AppendFormat(" WHERE");
                 i = 0;
@@ -190,9 +190,9 @@ namespace SQFinalProject
                     }
                     i++;
                 }
-                selectCommand.AppendFormat(";");
-                userCommand = selectCommand.ToString();
             }
+            selectCommand.AppendFormat(";");
+            userCommand = selectCommand.ToString();
         }
 
 
