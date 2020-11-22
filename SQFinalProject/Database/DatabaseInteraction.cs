@@ -32,8 +32,7 @@ namespace SQFinalProject
                 connection.Open();
             }
             catch (MySqlException e)
-            {
-                
+            {               
                 return null;
             }
             return connection;
@@ -50,15 +49,23 @@ namespace SQFinalProject
         {
             List<List<string>> results = new List<List<string>>();
             List<string> line = new List<string>();
-            MySqlDataReader reader = DBCommand.ExecuteReader();
-            while (reader.Read())
+            try
             {
-               for (int i= 0; i<reader.FieldCount; i++)
+                MySqlDataReader reader = DBCommand.ExecuteReader();
+                while (reader.Read())
                 {
-                    line.Add(reader.GetString(i));
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        line.Add(reader.GetString(i));
+                    }
+                    results.Add(line);
                 }
-                results.Add(line);
             }
+            catch
+            {
+                results = null;
+            }
+            
             return results;
         }
 
@@ -69,9 +76,10 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         /// 
-        public static void CloseConnection(MySqlConnection database)
+        public static bool CloseConnection(MySqlConnection database)
         {
             database.Close();
+            return true;
         }
     }
 }

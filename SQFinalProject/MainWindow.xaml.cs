@@ -21,7 +21,7 @@ namespace SQFinalProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string configFilePath = "..\\..\\config\\TMS.txt";
+        public const string configFilePath = "C:\\Users\\Chris\\source\\repos\\SQ\\SQFinalProject\\config\\TMS.txt";
         public List<string> TMS_Database { get; set; }
         public List<string> MarketPlace_Database { get; set; }
         Database loginDB { get; set; }
@@ -38,10 +38,6 @@ namespace SQFinalProject
             {
                 MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
             }
-            List<string> select = new List<string>();
-            select.Add("*");
-            MarketPlace.MakeSelectCommand(select, "Contract", null);
-            MarketPlace.ExecuteCommand();
         }
         
         /// \brief Loads the database connection details from an external config file
@@ -52,7 +48,7 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         /// 
-        private void LoadConfig()
+        public void LoadConfig()
         {
             if (File.Exists(configFilePath))
             {

@@ -59,10 +59,17 @@ namespace SQFinalProject
         public List<List<string>> ExecuteCommand()
         {
             List<List<string>> SQLReturn = new List<List<string>>();
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
-            SQLCommand = new MySqlCommand(userCommand, currentConnection);
-            SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand);
-            DatabaseInteraction.CloseConnection(currentConnection);
+            try
+            {
+                currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
+                SQLCommand = new MySqlCommand(userCommand, currentConnection);
+                SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand);
+                DatabaseInteraction.CloseConnection(currentConnection);
+            }
+            catch(Exception e)
+            {
+                SQLReturn = null;
+            }          
             return SQLReturn;
         }
         
@@ -85,11 +92,11 @@ namespace SQFinalProject
             {
                 if (i==countLoops)
                 {
-                    InsertCommand.AppendFormat("{0}", value);
+                    InsertCommand.AppendFormat("'{0}'", value);
                 }
                 else
                 {
-                    InsertCommand.AppendFormat("{0}, ", value);
+                    InsertCommand.AppendFormat("'{0}', ", value);
                 }
                 i++;
             }
