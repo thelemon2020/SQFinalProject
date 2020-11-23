@@ -21,11 +21,14 @@ namespace SQFinalProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        public const string configFilePath = "C:\\Users\\Chris\\source\\repos\\SQ\\SQFinalProject\\config\\TMS.txt";
+        public const string configFilePath = @"..\..\config\TMS.txt";
         public List<string> TMS_Database { get; set; }
         public List<string> MarketPlace_Database { get; set; }
         Database loginDB { get; set; }
         Database MarketPlace { get; set; }
+
+        private bool isLoggedIn = false;
+
         public MainWindow()
         { 
             InitializeComponent();
@@ -85,6 +88,67 @@ namespace SQFinalProject
                 FileStream newConfig = File.Create(configFilePath);
                 newConfig.Close();
             }                      
+        }
+
+        private void Window_Loaded ( object sender,EventArgs e ) {
+            LoginWindow initialLogin = new LoginWindow();
+            initialLogin.Owner = this;
+            Nullable<bool> loginResult = initialLogin.ShowDialog();
+
+            if ( loginResult.HasValue ) {
+                isLoggedIn = loginResult.Value;
+                EnableCtrls ( isLoggedIn );
+            }
+        }
+        
+
+        
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+ * METHOD:		CloseCB_CanExecute & CloseCB_Executed																				*
+ * DESCRIPTION:	The CanExecute method says when the Close command binding can function and the Executed method says what happens    *
+ *          when it is run.  If Close is clicked, close the window.                                                                 *
+ * PARAMETERS:	sender :    the object that called the method              															*
+ *              e :         the arguments that are passed when this method is called                                                *
+ * RETURNS:		void																												*
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        private void CloseCB_CanExecute ( object sender,CanExecuteRoutedEventArgs e ) {
+            e.CanExecute = true;
+        }
+
+        private void CloseCB_Executed ( object sender,ExecutedRoutedEventArgs e ) {
+            this.Close();
+        }
+
+        private void Login_Click ( object sender,RoutedEventArgs e ) {
+            LoginWindow LoginW = new LoginWindow();
+            LoginW.Owner = this;
+            Nullable<bool> loginResult = LoginW.ShowDialog();
+
+            if ( loginResult.HasValue ) {
+                isLoggedIn = loginResult.Value;
+                EnableCtrls ( isLoggedIn );
+            }
+        }
+        
+
+        
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+ * METHOD:		About_Click      																		                    		*
+ * DESCRIPTION:	Opens the about window when the about option is clicked.                                                            *
+ * PARAMETERS:	sender :    the object that called the method              															*
+ *              e :         the arguments that are passed when this method is called                                                *
+ * RETURNS:		void																												*
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        private void About_Click ( object sender,RoutedEventArgs e ) {
+            AboutW aboutBox = new AboutW();
+            aboutBox.Owner = this;
+            aboutBox.ShowDialog();
+        }
+
+
+
+        private void EnableCtrls ( bool isLogin ) {
+                TestBTN.IsEnabled = isLogin;
         }
     }
 }

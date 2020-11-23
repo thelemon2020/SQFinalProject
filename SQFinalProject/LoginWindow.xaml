@@ -1,0 +1,47 @@
+﻿<Window x:Class="SQFinalProject.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQFinalProject"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="250" Width="400"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Closing="Login_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label   Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="User Name:  " />
+            <TextBox Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200" x:Name="UserName"/>
+        </Grid>
+
+        <Label  Grid.Row="2" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" />
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label   Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Password:  " />
+            <TextBox Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200" x:Name="UserName" />
+        </Grid>
+
+        <Label  Grid.Row="4" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" />
+
+        <Button Grid.Row="5" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Login" Click="Login_Click" />
+    </Grid>
+</Window>
