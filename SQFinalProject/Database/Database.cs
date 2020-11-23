@@ -20,7 +20,6 @@ namespace SQFinalProject
     {
         //! Properties
         public string connectionString { get; set; }//<the string used to connect to the database via MySqlConnector
-
         public string ip { get; set; }//<The ip of the database to connect to
         public string user { get; set; }//<The username used to login to the database
         public string pass { get; set; }//<The password used to login to the database

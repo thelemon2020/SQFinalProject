@@ -64,8 +64,7 @@ namespace SQFinalProject
             catch
             {
                 results = null;
-            }
-            
+            }           
             return results;
         }
 
