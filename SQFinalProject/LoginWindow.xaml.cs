@@ -23,8 +23,22 @@ namespace SQFinalProject {
         }
 
         private void Login_Click ( object sender,RoutedEventArgs e ) {
+            if ( UsrName.Text.Length == 0 ) { 
+                // change text in label to error message
+            } else if ( Password.Text.Length == 0 ) { 
+                // change text in label to error message
+            } else {
+                // get user name and check it against db
+                if ( true ) { // if user name !exists
+                } else if ( true ) { // if password !matches user name
+                } else { 
+                    loggedIn = true;
+                    DialogResult = true;
+                }
+            }
+            // temparary
             loggedIn = true;
-             DialogResult = true;
+            DialogResult = true;
         }
 
         private void Login_Closing ( object sender,System.ComponentModel.CancelEventArgs e ) {
