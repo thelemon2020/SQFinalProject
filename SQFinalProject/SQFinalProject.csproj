@@ -57,16 +57,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AboutW.xaml.cs">
+      <DependentUpon>AboutW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContactMgmtBilling\Account.cs" />
     <Compile Include="ContactMgmtBilling\ContractDetails.cs" />
     <Compile Include="ContactMgmtBilling\MrktPlaceDbComm.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="DatabaseInteraction.cs" />
-    <Compile Include="DBComm.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\DatabaseInteraction.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Message.cs" />
     <Compile Include="Transpo.cs" />
     <Compile Include="UI.cs" />
+    <Page Include="AboutW.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,6 +113,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="config\Carriers.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -107,6 +122,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="config\TMS.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

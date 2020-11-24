@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQFinalProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" >
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" CanExecute="CloseCB_CanExecute" Executed="CloseCB_Executed" />
+    </Window.CommandBindings>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+
+            <!-- The File Menu, containing Login, & Close -->
+            <MenuItem x:Name="FileMenu" Header="_File">
+                <MenuItem Header="_Login..." Click="Login_Click"></MenuItem>
+                <MenuItem Header="_Close"
+                    Command="ApplicationCommands.Close" >
+
+                    <MenuItem.CommandBindings>
+                        <CommandBinding Command="ApplicationCommands.Close"/>
+                    </MenuItem.CommandBindings>
+                </MenuItem>
+            </MenuItem>
+
+            <!-- The Help menu containing only the About option -->
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About..." Click="About_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <!-- the main textbox where the actual typing can happen -->
+        <!--<TextBox x:Name="txtMain"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 TextWrapping="NoWrap"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"/>-->
+        <Grid>
+        <Button x:Name="TestBTN" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Testing" IsEnabled="False"/>
+        </Grid>
+    </DockPanel>
 </Window>
