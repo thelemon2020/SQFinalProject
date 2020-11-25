@@ -22,6 +22,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public double Rate { get; set; }
         public int VanType { get; set; }
         public bool TripComplete { get; set; }
+        public double Cost { get; set; }
 
 
         public ContractDetails(string name, int job, int quant, string origin, string dest, double rate, int van)
@@ -36,12 +37,45 @@ namespace SQFinalProject.ContactMgmtBilling
             VanType = van;
             TripComplete = false;
             Distance = 0.00;
+            Cost = 0.00;
             ContractID++;
         }
 
-        public void ResetIdCount()
+        public static void ResetIdCount()
         {
             ContractID = 0;
+        }
+
+
+        public static void SetIdCount(int number)
+        {
+            ContractID = number;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder contract = new StringBuilder();
+            string tmpJobType;
+            string tmpVanType;
+            if(JobType == 0)
+            {
+                tmpJobType = "FTL";
+            }
+            else
+            {
+                tmpJobType = "LTL";
+            }
+
+            if(VanType == 0)
+            {
+                tmpVanType = "DRY";
+            }
+            else
+            {
+                tmpVanType = "REF";
+            }
+            contract.AppendFormat("ID:{0} Name:{1} Job:{2} Quantity:{3} Origin:{4} Destination:{5} Van:{6}",ID, ClientName, tmpJobType, Quantity, Origin, Destination, tmpVanType);
+            return contract.ToString();
         }
     }
 }
