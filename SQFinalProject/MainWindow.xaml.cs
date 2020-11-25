@@ -27,6 +27,8 @@ namespace SQFinalProject
         Database loginDB { get; set; }
         Database MarketPlace { get; set; }
 
+        public List<string> userInfo;
+
         private bool isLoggedIn = false;
 
         public MainWindow()
@@ -91,13 +93,17 @@ namespace SQFinalProject
         }
 
         private void Window_Loaded ( object sender,EventArgs e ) {
-            LoginWindow initialLogin = new LoginWindow();
+            LoginWindow initialLogin = new LoginWindow ( loginDB );
             initialLogin.Owner = this;
             Nullable<bool> loginResult = initialLogin.ShowDialog();
 
             if ( loginResult.HasValue ) {
                 isLoggedIn = loginResult.Value;
                 EnableCtrls ( isLoggedIn );
+                
+                if ( isLoggedIn ) {
+                    userInfo = initialLogin.userInfo;
+                }
             }
         }
         
@@ -120,13 +126,18 @@ namespace SQFinalProject
         }
 
         private void Login_Click ( object sender,RoutedEventArgs e ) {
-            LoginWindow LoginW = new LoginWindow();
+            LoginWindow LoginW = new LoginWindow ( loginDB );
             LoginW.Owner = this;
             Nullable<bool> loginResult = LoginW.ShowDialog();
+
 
             if ( loginResult.HasValue ) {
                 isLoggedIn = loginResult.Value;
                 EnableCtrls ( isLoggedIn );
+                
+                if ( isLoggedIn ) {
+                    userInfo = LoginW.userInfo;
+                }
             }
         }
         
