@@ -115,11 +115,12 @@ namespace SQFinalProject
 
             if ( loginResult.HasValue ) {
                 isLoggedIn = loginResult.Value;
-                EnableCtrls ( isLoggedIn );
                 
                 if ( isLoggedIn ) {
                     userInfo = initialLogin.userInfo;
                 }
+
+                EnableCtrls ( isLoggedIn );
             }
         }
 
@@ -185,13 +186,6 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         ///
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
- * METHOD:		About_Click      																		                    		*
- * DESCRIPTION:	Opens the about window when the about option is clicked.                                                            *
- * PARAMETERS:	sender :    the object that called the method              															*
- *              e :         the arguments that are passed when this method is called                                                *
- * RETURNS:		void																												*
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         private void About_Click ( object sender,RoutedEventArgs e ) {
             AboutW aboutBox = new AboutW();
             aboutBox.Owner = this;
@@ -201,7 +195,9 @@ namespace SQFinalProject
 
 
         private void EnableCtrls ( bool isLogin ) {
-                TestBTN.IsEnabled = isLogin;
+            TestBTN.IsEnabled = isLogin;
+
+            lblUsrInfo.Content = "User Name:  " + userInfo[0] + ";  Role:  " + userInfo[2];
         }
     }
 }
