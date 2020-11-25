@@ -348,7 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-SQFinalProject/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-SQFinalProject/obj/Debug/MainWindow.g.i.cs
-SQFinalProject/obj/Debug/SQFinalProject.csprojAssemblyReference.cache
-SQFinalProject/obj/Debug/SQFinalProject_MarkupCompile.i.cache
+
+# Additional exclusions For git project
+SQFinalProject/obj/Debug/*

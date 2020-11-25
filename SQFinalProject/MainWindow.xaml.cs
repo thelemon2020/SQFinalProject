@@ -44,7 +44,10 @@ namespace SQFinalProject
                 MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
             }
         }
-        
+
+
+
+        //  METHOD:		LoadConfig
         /// \brief Loads the database connection details from an external config file
         /// \details <b>Details</b>
         /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
@@ -92,7 +95,20 @@ namespace SQFinalProject
             }                      
         }
 
-        private void Window_Loaded ( object sender,EventArgs e ) {
+
+
+        //  METHOD:	    Window_Loaded
+        /// \brief Method that is called when the main window is loaded
+        /// \details <b>Details</b>
+        ///     The Window_Loaded event gets called when the window is finished loading.  
+        /// It brings up the Login window and handles what happens when the login window closes.
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        private void Window_Loaded ( object sender, EventArgs e ) {
             LoginWindow initialLogin = new LoginWindow ( loginDB );
             initialLogin.Owner = this;
             Nullable<bool> loginResult = initialLogin.ShowDialog();
@@ -106,17 +122,20 @@ namespace SQFinalProject
                 }
             }
         }
-        
 
-        
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
- * METHOD:		CloseCB_CanExecute & CloseCB_Executed																				*
- * DESCRIPTION:	The CanExecute method says when the Close command binding can function and the Executed method says what happens    *
- *          when it is run.  If Close is clicked, close the window.                                                                 *
- * PARAMETERS:	sender :    the object that called the method              															*
- *              e :         the arguments that are passed when this method is called                                                *
- * RETURNS:		void																												*
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+        //  METHODS:	CloseCB_CanExecute & CloseCB_Executed
+        /// \brief Says when the close command can run and what happens when it does
+        /// \details <b>Details</b>
+        ///     The CanExecute method says when the Close command binding can function and the Executed method says what happens
+        /// when it is run.  If Close is clicked, close the window.
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void CloseCB_CanExecute ( object sender,CanExecuteRoutedEventArgs e ) {
             e.CanExecute = true;
         }
@@ -125,6 +144,19 @@ namespace SQFinalProject
             this.Close();
         }
 
+
+
+        //  METHOD:		Login_Click
+        /// \brief Method that is called when the login item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the login window when the option is clicked on the menu.  Since the close button can't be deactivated, 
+        /// but users must login before they can do anything in the app, there needs to be a way to login if they close the window.
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void Login_Click ( object sender,RoutedEventArgs e ) {
             LoginWindow LoginW = new LoginWindow ( loginDB );
             LoginW.Owner = this;
@@ -140,9 +172,19 @@ namespace SQFinalProject
                 }
             }
         }
-        
 
-        
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.  
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
  * METHOD:		About_Click      																		                    		*
  * DESCRIPTION:	Opens the about window when the about option is clicked.                                                            *
