@@ -67,10 +67,5 @@ namespace SQFinalProject.ContactMgmtBilling
             double balance = rate * distance * (double)quantity * ContractDetails.LTLUpCharge;
             return balance;
         }
-
-        public void GenerateInvoice()
-        {
-
-        }
     }
 }

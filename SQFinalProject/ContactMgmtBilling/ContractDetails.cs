@@ -12,6 +12,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public const double FTLUpCharge = 1.08;
         public const double ReeferUpCharge = 1.09;
         static private int ContractID = 0;
+        public int ID { get; set; }
         public string ClientName { get; set; }
         public int JobType { get; set; }
         public int Quantity { get; set; }
@@ -25,6 +26,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
         public ContractDetails(string name, int job, int quant, string origin, string dest, double rate, int van)
         {
+            ID = ContractID;
             ClientName = name;
             JobType = job;
             Quantity = quant;
@@ -34,10 +36,12 @@ namespace SQFinalProject.ContactMgmtBilling
             VanType = van;
             TripComplete = false;
             Distance = 0.00;
-
             ContractID++;
         }
 
-
+        public void ResetIdCount()
+        {
+            ContractID = 0;
+        }
     }
 }
