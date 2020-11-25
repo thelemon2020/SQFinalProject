@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MySql.Data.MySqlClient;
 using SQFinalProject;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,42 @@ namespace SQFinalProject.Tests
             Database test = new Database("192.168.0.197", "tmsadmin", "12345", "tms");
             MySql.Data.MySqlClient.MySqlConnection testConnect = DatabaseInteraction.connectToDatabase(test.connectionString);
             Assert.IsTrue(DatabaseInteraction.CloseConnection(testConnect));
+        }
+
+        [TestMethod()]
+        public void RestoreDBTest_Functional()
+        {
+            Database test = new Database("192.168.0.197", "tmsadmin", "12345", "tms");           
+            MySqlConnection conn = DatabaseInteraction.connectToDatabase(test.connectionString);
+            int actual = DatabaseInteraction.RestoreDB(conn, "c:\\temp\\backup.sql");
+            Assert.AreEqual(0, actual);
+        }
+
+        [TestMethod()]
+        public void RestoreDBTest_Exception()
+        {
+            Database test = new Database("192.168.0.197", "tmsadmin", "12345", "tms");
+            MySqlConnection conn = DatabaseInteraction.connectToDatabase(test.connectionString);
+            int actual = DatabaseInteraction.RestoreDB(conn, "x:\\temp\\backup.sql");
+            Assert.AreEqual(1, actual);
+        }
+
+        [TestMethod()]
+        public void BackUpTest_Functional()
+        {
+            Database test = new Database("192.168.0.197", "tmsadmin", "12345", "tms");
+            MySqlConnection conn = DatabaseInteraction.connectToDatabase(test.connectionString);
+            int actual = DatabaseInteraction.BackUpDB(conn, "c:\\temp\\backup.sql");
+            Assert.AreEqual(0, actual);
+        }
+
+        [TestMethod()]
+        public void BackUpTest_Exception()
+        {
+            Database test = new Database("192.168.0.197", "tmsadmin", "12345", "tms");
+            MySqlConnection conn = DatabaseInteraction.connectToDatabase(test.connectionString);
+            int actual = DatabaseInteraction.BackUpDB(conn, "x:\\temp\\backup.sql");
+            Assert.AreEqual(1, actual);
         }
     }
 }

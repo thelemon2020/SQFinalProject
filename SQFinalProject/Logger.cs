@@ -28,7 +28,7 @@ namespace SQFinalProject
         /// 
         /// \return <b>Nothing</b>
         /// 
-        public static void Log(string msg)
+        public static int Log(string msg)
         {
             string timeStamp = DateTime.UtcNow.ToString();
             string logString = timeStamp + " - " + msg + "\n";
@@ -40,16 +40,10 @@ namespace SQFinalProject
                 }
                 catch (IOException e)
                 {
-                    EventLog serverEventLog = new EventLog();
-                    if (!EventLog.SourceExists("ChatServerEventSource"))
-                    {
-                        EventLog.CreateEventSource("ChatServerEventSource", "ChatServerEvents");
-                    }
-                    serverEventLog.Source = "ChatSeverEventSource";
-                    serverEventLog.Log = "ChatServerEvents";
-                    serverEventLog.WriteEntry(e.Message);
+                    return 1;
                 }
             }
+            return 0;
         }
     }
 }

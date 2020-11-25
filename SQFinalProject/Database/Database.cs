@@ -258,11 +258,12 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         /// 
-        public void BackItUp(string filePath)
+        public int BackItUp(string filePath)
         {
             currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
-            DatabaseInteraction.BackUpDB(currentConnection,filePath);
+            int didWork = DatabaseInteraction.BackUpDB(currentConnection,filePath);
             DatabaseInteraction.CloseConnection(currentConnection);
+            return didWork;
         }
 
         /// \brief Restores a <b>MySqlDatabase</b> from a backup script
@@ -273,11 +274,12 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         ///
-        public void Restore(string filePath)
+        public int Restore(string filePath)
         {
             currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
-            DatabaseInteraction.RestoreDB(currentConnection, filePath);
+            int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);
             DatabaseInteraction.CloseConnection(currentConnection);
+            return didWork;
         }
     }
 }
