@@ -248,5 +248,36 @@ namespace SQFinalProject
             updateCommand.AppendFormat(";");
             userCommand = updateCommand.ToString();
         }
+
+
+        /// \brief Creates an BackUp script of a <b>MySqlDatabase</b>
+        /// \details <b>Details</b>
+        /// Connects to a database and uses a 3rd party library called MySqlBackUp.Net <ahref="https://www.codeproject.com/Articles/256466/MySqlBackup-NET"></ahref>
+        /// to create a backup script of the database.  The connection is then closed
+        /// \param - filePath - <b>string</b> - the path to save the backup script to
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
+        public void BackItUp(string filePath)
+        {
+            currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
+            DatabaseInteraction.BackUpDB(currentConnection,filePath);
+            DatabaseInteraction.CloseConnection(currentConnection);
+        }
+
+        /// \brief Restores a <b>MySqlDatabase</b> from a backup script
+        /// \details <b>Details</b>
+        /// Connects to a database and uses a 3rd party library called MySqlBackUp.Net <ahref="https://www.codeproject.com/Articles/256466/MySqlBackup-NET"></ahref>
+        /// to restore the database from a backup script.  The connection is then closed
+        /// \param - filePath - <b>string</b> - the path that the backup script is saved to.
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        public void Restore(string filePath)
+        {
+            currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
+            DatabaseInteraction.RestoreDB(currentConnection, filePath);
+            DatabaseInteraction.CloseConnection(currentConnection);
+        }
     }
 }
