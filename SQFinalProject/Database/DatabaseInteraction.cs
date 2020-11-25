@@ -26,15 +26,10 @@ namespace SQFinalProject
         public static MySqlConnection connectToDatabase(string connectionString)
         {
             MySqlConnection connection = null;
-            try
-            {
-                connection = new MySqlConnection(connectionString);
-                connection.Open();
-            }
-            catch (MySqlException e)
-            {               
-                return null;
-            }
+            
+            connection = new MySqlConnection(connectionString);
+            connection.Open();
+            
             return connection;
         }
         
@@ -79,6 +74,64 @@ namespace SQFinalProject
         {
             database.Close();
             return true;
+        }
+
+        /// \brief Backup a <b>MySqlDatabase</b> with a generated .sql script
+        /// \details <b>Details</b>
+        /// Uses a 3rd party library called MySqlBackUp.Net <ahref="https://www.codeproject.com/Articles/256466/MySqlBackup-NET"></ahref>
+        /// to backup the database with a .sql script.
+        /// \param - conn - <b>MySqlConnection</b> - the database to be restored
+        /// \param - filePath - <b>string</b> - the path that the backup script is saved to.
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        public static int BackUpDB(MySqlConnection conn, string filePath)
+        {
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        mb.ExportToFile(filePath);
+                    }
+                }
+            }
+            catch
+            {
+                return 1;
+            }
+            return 0;
+        }
+
+        /// \brief Restores a <b>MySqlDatabase</b> from a backup script
+        /// \details <b>Details</b>
+        /// Uses a 3rd party library called MySqlBackUp.Net <ahref="https://www.codeproject.com/Articles/256466/MySqlBackup-NET"></ahref>
+        /// to restore the database from a backup script.
+        /// \param - conn - <b>MySqlConnection</b> - the database to be restored
+        /// \param - filePath - <b>string</b> - the path that the backup script is saved to.
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        public static int RestoreDB(MySqlConnection conn, string filePath)
+        {
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        mb.ImportFromFile(filePath);
+                    }
+                }
+            }
+            catch
+            {
+                return 1;
+            }
+            return 0;           
         }
     }
 }

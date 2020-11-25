@@ -32,6 +32,10 @@
             </MenuItem>
         </Menu>
 
+        <StatusBar DockPanel.Dock="Bottom">
+            <Label x:Name="lblUsrInfo" Content=""/>
+        </StatusBar>
+        
         <!-- the main textbox where the actual typing can happen -->
         <!--<TextBox x:Name="txtMain"
                  AcceptsReturn="True"
@@ -40,7 +44,7 @@
                  VerticalScrollBarVisibility="Auto"
                  HorizontalScrollBarVisibility="Auto"/>-->
         <Grid>
-        <Button x:Name="TestBTN" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Testing" IsEnabled="False"/>
+            <Button x:Name="TestBTN" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Testing" IsEnabled="False"/>
         </Grid>
     </DockPanel>
 </Window>
