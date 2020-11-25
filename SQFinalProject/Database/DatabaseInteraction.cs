@@ -26,15 +26,10 @@ namespace SQFinalProject
         public static MySqlConnection connectToDatabase(string connectionString)
         {
             MySqlConnection connection = null;
-            try
-            {
-                connection = new MySqlConnection(connectionString);
-                connection.Open();
-            }
-            catch (MySqlException e)
-            {               
-                return null;
-            }
+            
+            connection = new MySqlConnection(connectionString);
+            connection.Open();
+            
             return connection;
         }
         
