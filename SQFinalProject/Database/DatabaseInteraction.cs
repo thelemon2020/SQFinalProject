@@ -80,5 +80,32 @@ namespace SQFinalProject
             database.Close();
             return true;
         }
+        public static void BackUpDB(MySqlConnection conn, string filePath)
+        {
+            using (MySqlCommand cmd = new MySqlCommand())
+            {
+                using (MySqlBackup mb = new MySqlBackup(cmd))
+                {
+                    cmd.Connection = conn;
+                    conn.Open();
+                    mb.ExportToFile(filePath);
+                    conn.Close();
+                }
+            }
+        }
+
+        public static void RestoreDB(MySqlConnection conn, string filePath)
+        {
+            using (MySqlCommand cmd = new MySqlCommand())
+            {
+                using (MySqlBackup mb = new MySqlBackup(cmd))
+                {
+                    cmd.Connection = conn;
+                    conn.Open();
+                    mb.ImportFromFile(filePath);
+                    conn.Close();
+                }
+            }
+        }
     }
 }
