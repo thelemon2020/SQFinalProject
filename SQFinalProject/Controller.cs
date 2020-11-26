@@ -27,10 +27,18 @@ namespace SQFinalProject
             return account;
         }
 
-        public static void AddTripToAccount(Account account)
+        public static void AddTripToAccount(Account account, ContractDetails contract)
         {
-
+            account.AddNewContract(contract.ID, contract);
         }
+
+        public static ContractDetails CreateNewContract(string name, int job, int quant, string origin, string dest, double rate, int van)
+        {
+            ContractDetails contract = new ContractDetails(name, job, quant, origin, dest, rate, van);
+            return contract;
+        }
+        
+
 
         public static void GenerateInvoice(Account account)
         {

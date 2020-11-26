@@ -8,10 +8,17 @@ namespace SQFinalProject.ContactMgmtBilling
 {
     public class Account
     {
-        private Dictionary<int, ContractDetails> Contracts;
-        private Dictionary<int, ContractDetails> UncalculatedContracts;
-        public double Balance { get; set; }
+        //! Properties
+        private Dictionary<int, ContractDetails> Contracts; //< A collection of all the contracts associated with an account
+        private Dictionary<int, ContractDetails> UncalculatedContracts;//< A collection of all contracts whose cost has not yet been calculated
+        public double Balance { get; set; } //< The total balance owed on an account
 
+
+        /// \brief A constructor for the account class
+        /// \ details <b>Details</b>
+        /// One constructor for the Account class that initializes the Contract dictionary and UncalculatedContracts dictionary. Sets the balance on the account to 0.
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         public Account()
         {
             Contracts = new Dictionary<int, ContractDetails>();
@@ -19,6 +26,14 @@ namespace SQFinalProject.ContactMgmtBilling
             Balance = 0.00;
         }
 
+
+        /// \brief A constructor for Account class which takes a Contract
+        /// \ details <b>Details</b>
+        /// Instantiates an Account class with a contract, and adds that contract to the Contracts list. It also attempts to calculate and
+        /// Add a payable balance to the account, but if the balance can't be calculated, the contract is added to the UncalculatedContracts
+        /// dictionary.
+        /// \param - contract - <b>ContractDetails</b> - The class containing all of the details relating to the contract from the marketplace
+        /// \returns - <b>Nothing</b>
         public Account(ContractDetails contract)
         {
             Contracts = new Dictionary<int, ContractDetails>();
@@ -27,6 +42,14 @@ namespace SQFinalProject.ContactMgmtBilling
             AddBalance(contract);
         }
 
+
+        /// \brief a constructor for the account class that accepts a list of contracts
+        /// \ details <b>Details</b>
+        /// Instantiate an Account class with a list of contracts to add to it. Adds all contracts and attempts to calculate and add a payable
+        /// balance for eac contract to the account. For each contract where a balance can't be calculated, it is put in the 
+        /// UncalculatedContract dictionary.
+        /// \param - contracts - <b>List<ContractDetails></b> - A list of contracts to be added to the same account.
+        /// \returns - <b>Nothing</b>
         public Account(List<ContractDetails> contracts)
         {
             Contracts = new Dictionary<int, ContractDetails>();
@@ -39,11 +62,24 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
-        public void AddNewContract(int tripID, ContractDetails contract)
+        /// \brief A method to add a new Contract into the Contracts dictionary
+        /// \ details <b>Details</b>
+        /// Add a new contract into the Contracts dictionary using the Contract's ID as the Key, and the contract class as the Value
+        /// \param - contractID - <b>int</b> - The contract's unique id number
+        /// \param - contract - <b>ContractDetails</b> - The class containing all the details relating to the contract from the marketplace
+        /// \returns - <b>Nothing</b>
+        public void AddNewContract(int contractID, ContractDetails contract)
         {
-            Contracts.Add(tripID, contract);
+            Contracts.Add(contractID, contract);
         }
 
+
+        /// \brief A method to return all contracts on one account as a list
+        /// \ details <b>Details</b>
+        /// A method which iterates through the Account's Contracts dictionary and adds each one to a List of strings. This utilizes the 
+        /// The ContractDetails' overridden ToString method so that each string entry in the list is meaningful.
+        /// \param - <b>Nothing</b>
+        /// \returns - contractList <b>List<String></b> - A list containing all contracts expressed as strings
         public List<string> GetAllContracts()
         {
             List<string> contractList = new List<string>();
@@ -55,8 +91,13 @@ namespace SQFinalProject.ContactMgmtBilling
 
             return contractList;
         }
-        
 
+
+        /// \brief 
+        /// \ details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
         public void AddBalance(ContractDetails contract)
         {
             if(contract.Cost > 0.0)
