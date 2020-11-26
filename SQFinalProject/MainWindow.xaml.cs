@@ -196,7 +196,7 @@ namespace SQFinalProject
 
 
         private void EnableCtrls ( bool isLogin ) {
-            TestBTN.IsEnabled = isLogin;
+            //TestBTN.IsEnabled = isLogin;
 
             lblUsrInfo.Content = "User Name:  " + userInfo[0] + ";  Role:  " + userInfo[2];
         }
