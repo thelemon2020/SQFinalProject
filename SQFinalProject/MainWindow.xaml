@@ -37,14 +37,22 @@
         </StatusBar>
         
         <!-- the main textbox where the actual typing can happen -->
-        <!--<TextBox x:Name="txtMain"
+        <TextBox x:Name="txtMain"
                  AcceptsReturn="True"
                  AcceptsTab="True"
                  TextWrapping="NoWrap"
                  VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>-->
-        <Grid>
-            <Button x:Name="TestBTN" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Testing" IsEnabled="False"/>
-        </Grid>
+                 HorizontalScrollBarVisibility="Auto"/>
+        
+        <!--<ListView ItemsSource="{Binding Source={StaticResource EmployeeData}, XPath=Employee}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="User Information">
+                    <GridViewColumn Header="User ID"    DisplayMemberBinding="{Binding XPath=UserID}"   Width="100" />
+                    <GridViewColumn Header="User Name"  DisplayMemberBinding="{Binding XPath=UserName}" Width="100" />
+                    <GridViewColumn Header="Password"   DisplayMemberBinding="{Binding XPath=Password}" Width="100" />
+                    <GridViewColumn Header="Role"       DisplayMemberBinding="{Binding XPath=Role}"     Width="100" />
+                </GridView>
+            </ListView.View>
+        </ListView>-->
     </DockPanel>
 </Window>
