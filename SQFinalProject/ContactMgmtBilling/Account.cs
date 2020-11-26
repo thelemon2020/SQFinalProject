@@ -5,7 +5,6 @@
 // Last Change   : 2020-11-25
 // Description	 : A class used to hold account details for existing or new customers, includes a list of their existing contracts, and
 //				 : their total balance owed.
-//				 : 
 //*********************************************
 
 
@@ -60,7 +59,6 @@ namespace SQFinalProject.ContactMgmtBilling
             Contracts = new Dictionary<int, ContractDetails>();
             UncalculatedContracts = new Dictionary<int, ContractDetails>();
             AddNewContract(contract.ID, contract);
-            AddBalance(contract);
         }
 
 
@@ -79,7 +77,6 @@ namespace SQFinalProject.ContactMgmtBilling
             foreach (ContractDetails contract in contracts)
             {
                 AddNewContract(contract.ID, contract);
-                AddBalance(contract);
             }
         }
 
@@ -93,6 +90,10 @@ namespace SQFinalProject.ContactMgmtBilling
         public void AddNewContract(int contractID, ContractDetails contract)
         {
             Contracts.Add(contractID, contract);
+            if(this.AccountName == "")
+            {
+                AccountName = contract.ClientName;
+            }
             AddBalance(contract);
         }
 
@@ -113,6 +114,24 @@ namespace SQFinalProject.ContactMgmtBilling
             }
 
             return contractList;
+        }
+
+
+        /// \brief 
+        /// \ details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        public List<string> GetUncalcContracts()
+        {
+            List<string> contracts = new List<string>();
+
+            foreach(KeyValuePair<int, ContractDetails> entry in UncalculatedContracts)
+            {
+                contracts.Add(entry.Value.ToString());
+            }
+
+            return contracts;
         }
 
 
