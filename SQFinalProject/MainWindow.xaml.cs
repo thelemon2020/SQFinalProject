@@ -200,15 +200,5 @@ namespace SQFinalProject
 
             lblUsrInfo.Content = "User Name:  " + userInfo[0] + ";  Role:  " + userInfo[2];
         }
-
-        private void TestBTN_Click(object sender, RoutedEventArgs e)
-        {
-            var contract = Controller.CreateNewContract("test", 0, 0, "Detroit", "Toronto", 0);
-            contract.Cost = 250.50;
-            contract.Rate = 4.5;
-            contract.Distance = 500;
-
-            var account = Controller.CreateNewAccount(contract);
-        }
     }
 }
