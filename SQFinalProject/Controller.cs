@@ -32,9 +32,9 @@ namespace SQFinalProject
             account.AddNewContract(contract.ID, contract);
         }
 
-        public static ContractDetails CreateNewContract(string name, int job, int quant, string origin, string dest, double rate, int van)
+        public static ContractDetails CreateNewContract(string name, int job, int quant, string origin, string dest, int van)
         {
-            ContractDetails contract = new ContractDetails(name, job, quant, origin, dest, rate, van);
+            ContractDetails contract = new ContractDetails(name, job, quant, origin, dest, van);
             return contract;
         }
         

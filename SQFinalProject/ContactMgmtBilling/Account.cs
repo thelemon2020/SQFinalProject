@@ -1,4 +1,15 @@
-﻿using System;
+﻿//*********************************************
+// File			 : Account.cs
+// Project		 : PROG2020 - Term Project
+// Programmer	 : Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser
+// Last Change   : 2020-11-25
+// Description	 : A class used to hold account details for existing or new customers, includes a list of their existing contracts, and
+//				 : their total balance owed.
+//				 : 
+//*********************************************
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +17,21 @@ using System.Threading.Tasks;
 
 namespace SQFinalProject.ContactMgmtBilling
 {
+    /// 
+    /// \class <b>Account</b>
+    ///
+    /// \brief The Purpose of this class is to be a central area to hold exisiting customer details and their contracts.
+    ///
+    /// \author <i>Nick Byam</i>
+    ///
     public class Account
     {
         //! Properties
         private Dictionary<int, ContractDetails> Contracts; //< A collection of all the contracts associated with an account
         private Dictionary<int, ContractDetails> UncalculatedContracts;//< A collection of all contracts whose cost has not yet been calculated
         public double Balance { get; set; } //< The total balance owed on an account
+        public string AccountName { get; set; }
+        public int AccountID { get; set; }
 
 
         /// \brief A constructor for the account class
@@ -93,35 +113,37 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
-        /// \brief 
+        /// \brief Calculates the Balance owed on an account based on contract details
         /// \ details <b>Details</b>
-        /// 
-        /// \param - 
-        /// \returns - 
+        /// This method calculates the balance to be added to an account based on factors of a contract including distance, rate, truck type
+        /// and quantity of pallets. If the balance cannot be calculated, the contract is added into another list for contracts whose balance
+        /// has not yet been calculated.
+        /// \param - contract - <b>ContractDetails</b> - The contract to be evaluated to find its cost.
+        /// \returns - <b>Nothing</b>
         public void AddBalance(ContractDetails contract)
         {
-            if(contract.Cost > 0.0)
+            if(contract.Cost > 0.0) // make sure a basic cost has been calculated for the contract first
             {
-                if (contract.VanType == 0)
+                if (contract.VanType == 0) // the van type is a Dry Van, no upcharge associated
                 {
-                    if (contract.Quantity == 0)
+                    if (contract.Quantity == 0) // the trip is FTL
                     {
                         Balance += AddBalance(contract.Rate, contract.Distance);
                     }
-                    else
+                    else //the trip is LTL
                     {
                         Balance += AddBalance(contract.Rate, contract.Distance, contract.Quantity);
                     }
                 }
-                else
+                else // The van type is a Reefer Van there is an associate upcharge
                 {
-                    if (contract.Quantity == 0)
+                    if (contract.Quantity == 0) // FTL in a Reefer van
                     {
                         double tmpBal = AddBalance(contract.Rate, contract.Distance);
                         tmpBal *= ContractDetails.ReeferUpCharge;
                         Balance += tmpBal;
                     }
-                    else
+                    else // LTL in a Reefer van
                     {
                         double tmpBal = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
                         tmpBal *= ContractDetails.ReeferUpCharge;
@@ -129,12 +151,19 @@ namespace SQFinalProject.ContactMgmtBilling
                     }
                 }
             }
-            else
+            else // flat cost not assessed yet, add the contract to the UncalculatedContracts dictionary to be assessed at a later time.
             {
                 UncalculatedContracts.Add(contract.ID, contract);
             }
         }
 
+
+        /// \brief Calculates and returns a balance
+        /// \ details <b>Details</b>
+        /// An overridden method that calculates balance due for a contract based on the FTL rate and distance of the trip.
+        /// \param - rate - <b>double</b> - The rate set by a company offering a FTL delivery service
+        /// \param - distance - <b>double</b> - The distance of the trip
+        /// \returns - balance <b>double</b> - The balance calculated from the rate and distance
         private double AddBalance(double rate, double distance)
         {
             double balance = rate * distance * ContractDetails.FTLUpCharge;
@@ -142,6 +171,14 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
+        /// \brief Calculates and returns a balance
+        /// \ details <b>Details</b>
+        /// An overridden method that calculates the balance due for a contract based on the LTL rate, the distance of the trip, and the
+        /// quantity of the pallets delivered.
+        /// \param - rate - <b>double</b> - The rate set by a company offering a LTL delivery service
+        /// \param - distance - <b>double</b> - The distance of the trip
+        /// \param - quantity - <b>int</b> - The amount of pallets to be delivered
+        /// \returns - 
         private double AddBalance(double rate, double distance, int quantity)
         {
             double balance = rate * distance * (double)quantity * ContractDetails.LTLUpCharge;

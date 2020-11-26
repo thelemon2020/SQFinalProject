@@ -44,7 +44,7 @@
                  VerticalScrollBarVisibility="Auto"
                  HorizontalScrollBarVisibility="Auto"/>-->
         <Grid>
-            <Button x:Name="TestBTN" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Testing" IsEnabled="False"/>
+            <Button x:Name="TestBTN" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="80" Content="Testing" IsEnabled="True" Click="TestBTN_Click"/>
         </Grid>
     </DockPanel>
 </Window>

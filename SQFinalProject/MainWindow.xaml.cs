@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SQFinalProject.ContactMgmtBilling;
 
 namespace SQFinalProject
 {
@@ -198,6 +199,16 @@ namespace SQFinalProject
             TestBTN.IsEnabled = isLogin;
 
             lblUsrInfo.Content = "User Name:  " + userInfo[0] + ";  Role:  " + userInfo[2];
+        }
+
+        private void TestBTN_Click(object sender, RoutedEventArgs e)
+        {
+            var contract = Controller.CreateNewContract("test", 0, 0, "Detroit", "Toronto", 0);
+            contract.Cost = 250.50;
+            contract.Rate = 4.5;
+            contract.Distance = 500;
+
+            var account = Controller.CreateNewAccount(contract);
         }
     }
 }
