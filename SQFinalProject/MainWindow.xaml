@@ -10,7 +10,6 @@
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" CanExecute="CloseCB_CanExecute" Executed="CloseCB_Executed" />
     </Window.CommandBindings>
-
     <DockPanel>
         <Menu DockPanel.Dock="Top">
 
@@ -42,9 +41,10 @@
                  AcceptsTab="True"
                  TextWrapping="NoWrap"
                  VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>
-        
-        <!--<ListView ItemsSource="{Binding Source={StaticResource EmployeeData}, XPath=Employee}">
+                 HorizontalScrollBarVisibility="Auto"/><!-- -->
+
+        <!--
+        <ListView ItemsSource="{Binding Source={StaticResource UserData}, XPath=Employee}">
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="User Information">
                     <GridViewColumn Header="User ID"    DisplayMemberBinding="{Binding XPath=UserID}"   Width="100" />
@@ -53,6 +53,6 @@
                     <GridViewColumn Header="Role"       DisplayMemberBinding="{Binding XPath=Role}"     Width="100" />
                 </GridView>
             </ListView.View>
-        </ListView>-->
+        </ListView> <!-- -->
     </DockPanel>
 </Window>

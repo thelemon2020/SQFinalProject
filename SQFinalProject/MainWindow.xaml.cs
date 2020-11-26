@@ -31,6 +31,8 @@ namespace SQFinalProject
 
         private bool isLoggedIn = false;
 
+        public static List<List<string>> UserData = new List<List<string>>();
+
         public MainWindow()
         { 
             InitializeComponent();
