@@ -27,7 +27,7 @@ namespace SQFinalProject
             return account;
         }
 
-        public static void AddTripToAccount(Account account, ContractDetails contract)
+        public static void AddContractToAccount(Account account, ContractDetails contract)
         {
             account.AddNewContract(contract.ID, contract);
         }
@@ -38,6 +38,7 @@ namespace SQFinalProject
             return contract;
         }
         
+
         public static List<string> GetAllContractsFromDB(Database mrktPlace)
         {
             List<string> fields = new List<string>();
