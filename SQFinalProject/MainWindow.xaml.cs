@@ -228,16 +228,5 @@ namespace SQFinalProject {
                             
             MarketRtn = new ObservableCollection <string> ( loginDB.ExecuteCommand() );
         }
-
-        private void test(object sender, MouseButtonEventArgs e)
-        {
-            List<string> results = new List<string>();
-            results = Controller.GetAllContractsFromDB(MarketPlace);
-
-            for(int i = 0; i < results.Count; i++)
-            {
-                txtMain.Text += results[i] + "\n";
-            }
-        }
     }
 }
