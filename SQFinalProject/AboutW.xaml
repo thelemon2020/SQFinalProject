@@ -1,11 +1,10 @@
-﻿<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ! FILE:			AboutW.xaml																							    !
- ! PROJECT:			Windows & Mobile Programming - Assignment 2																!
- ! PROGRAMMER:		Deric Kruse																								!
- ! FINAL VERSION:	2020/09/27																								!
- ! DESCRIPTION:		This is the xaml file defining the user interface of the about window.									!
- !																															!
- !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+﻿<!--*********************************************
+ * File			 : AboutW.xaml
+ * Project		 : PROG2020 - Term Project
+ * Programmer	 : Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser
+ * Last Change   : 2020-11-25
+ * Description	 : This is the xaml file defining the user interface of the about window.
+ ************************************************-->
 <Window x:Class="SQFinalProject.AboutW"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,29 +12,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQFinalProject"
         mc:Ignorable="d"
-        Title="About SET Note Pad" Height="300" Width="500"
+        Title="About the TMS Application" Height="375" Width="500"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- The Title section -->
-        <TextBlock Text="SET Note Pad" FontSize="47" TextAlignment="Center" FontFamily="Footlight MT Light" FontWeight="Bold" Foreground="#FF006449"/>
+        <TextBlock FontSize="47" TextAlignment="Center" FontFamily="Footlight MT Light" FontWeight="Bold" Foreground="#FF006449">
+            Transport Management <LineBreak />
+            System
+        </TextBlock>
 
         <!-- The actual text of the about window -->
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
             <TextBlock Grid.Row="1"  Margin="5,0" HorizontalAlignment="Left" FontFamily="Times New Roman" FontSize="15">
-                Text Editor created for Assignment 2.  Allows the editing of .txt style files.<LineBreak />
+                This is a transport management system created in conjuction with <LineBreak />
+                Thorton P. Snodgrass III &amp; the Omnicorp Corporation.<LineBreak />
                 <LineBreak />
-                Coder:       Deric Kruse, Code-Monkey<LineBreak />
-                Project:     Windows &amp; Mobile Programming - Assignment 2<LineBreak />
-                Version:     1.0.3: 27/09/2020<LineBreak />
+                Authors:     Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser<LineBreak />
+                Project:     PROG2020 - TMS Term Project<LineBreak />
                 <LineBreak />
             </TextBlock>
-            <TextBlock Text="© 2007 JDGKruse's Code-Monkeys Ltd." TextAlignment="Center" FontFamily="Times New Roman" FontSize="15" />
+            <TextBlock Text="© 2020 Quality Assurers." TextAlignment="Center" FontFamily="Times New Roman" FontSize="15" />
         </StackPanel>
 
         <Grid Grid.Row="2">

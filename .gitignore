@@ -350,4 +350,4 @@ MigrationBackup/
 .ionide/
 
 # Additional exclusions For git project
-SQFinalProject/obj/*.*
+SQFinalProject/obj/*
