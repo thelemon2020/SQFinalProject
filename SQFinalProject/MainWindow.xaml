@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQFinalProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" >
+        Title="MainWindow" Height="600" Width="1000" >
     
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" CanExecute="CloseCB_CanExecute" Executed="CloseCB_Executed" />
@@ -13,9 +13,9 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
 
-            <!-- The File Menu, containing Login, & Close -->
+            <!-- The File Menu, containing Logout, & Close -->
             <MenuItem x:Name="FileMenu" Header="_File">
-                <MenuItem Header="_Login..." Click="Login_Click"></MenuItem>
+                <MenuItem Header="_Logout" Click="Logout_Click" ></MenuItem>
                 <MenuItem Header="_Close"
                     Command="ApplicationCommands.Close" >
 
@@ -34,25 +34,39 @@
         <StatusBar DockPanel.Dock="Bottom">
             <Label x:Name="lblUsrInfo" Content=""/>
         </StatusBar>
-        
-        <!-- the main textbox where the actual typing can happen -->
-        <TextBox x:Name="txtMain"
+
+        <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl">
+            <TabItem Header="Contact MarketPlace">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"  />
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ListBox Grid.Column="0">
+                            
+                        </ListBox>
+
+                        <Button Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Security" />
+            <TabItem Header="Details" />
+            <TabItem Header="Testing">
+                <TextBox x:Name="txtMain"
                  AcceptsReturn="True"
                  AcceptsTab="True"
                  TextWrapping="NoWrap"
                  VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/><!-- -->
-
-        <!--
-        <ListView ItemsSource="{Binding Source={StaticResource UserData}, XPath=Employee}">
-            <ListView.View>
-                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="User Information">
-                    <GridViewColumn Header="User ID"    DisplayMemberBinding="{Binding XPath=UserID}"   Width="100" />
-                    <GridViewColumn Header="User Name"  DisplayMemberBinding="{Binding XPath=UserName}" Width="100" />
-                    <GridViewColumn Header="Password"   DisplayMemberBinding="{Binding XPath=Password}" Width="100" />
-                    <GridViewColumn Header="Role"       DisplayMemberBinding="{Binding XPath=Role}"     Width="100" />
-                </GridView>
-            </ListView.View>
-        </ListView> <!-- -->
+                 HorizontalScrollBarVisibility="Auto"/>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>
