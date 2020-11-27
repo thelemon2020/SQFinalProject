@@ -28,11 +28,11 @@ namespace SQFinalProject
         Database loginDB { get; set; }
         Database MarketPlace { get; set; }
 
-        public List<string> userInfo;
+        public string userName;
 
         private bool isLoggedIn = false;
 
-        public MainWindow()
+        public MainWindow ( string name )
         { 
             InitializeComponent();
             LoadConfig();
@@ -44,6 +44,10 @@ namespace SQFinalProject
             {
                 MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
             }
+
+            isLoggedIn = true;
+            userName = name;
+            lblUsrInfo.Content = "User Name:  " + userName;
         }
 
 
@@ -109,7 +113,7 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         ///
-        private void Window_Loaded ( object sender, EventArgs e ) {
+       /* private void Window_Loaded ( object sender, EventArgs e ) {
             LoginWindow initialLogin = new LoginWindow ( loginDB );
             initialLogin.Owner = this;
             Nullable<bool> loginResult = initialLogin.ShowDialog();
@@ -123,7 +127,7 @@ namespace SQFinalProject
 
                 EnableCtrls ( isLoggedIn );
             }
-        }
+        }*/
 
 
 
@@ -148,31 +152,20 @@ namespace SQFinalProject
 
 
 
-        //  METHOD:		Login_Click
-        /// \brief Method that is called when the login item on the menu is clicked
+        //  METHOD:		Logout_Click
+        /// \brief Method that is called when the logout item on the menu is clicked
         /// \details <b>Details</b>
-        ///     Opens up the login window when the option is clicked on the menu.  Since the close button can't be deactivated, 
-        /// but users must login before they can do anything in the app, there needs to be a way to login if they close the window.
+        ///     Closes this window and opens up the login window when the option is clicked on the menu.
         /// 
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
         /// 
         /// \return - <b>Nothing</b>
-        ///
-        private void Login_Click ( object sender,RoutedEventArgs e ) {
-            LoginWindow LoginW = new LoginWindow ( loginDB );
-            LoginW.Owner = this;
-            Nullable<bool> loginResult = LoginW.ShowDialog();
-
-
-            if ( loginResult.HasValue ) {
-                isLoggedIn = loginResult.Value;
-                EnableCtrls ( isLoggedIn );
-                
-                if ( isLoggedIn ) {
-                    userInfo = LoginW.userInfo;
-                }
-            }
+        private void Logout_Click ( object sender,RoutedEventArgs e ) {
+            LoginWindow login = new LoginWindow ();
+            login.Show();
+                    
+            this.Close();
         }
 
 
@@ -193,12 +186,16 @@ namespace SQFinalProject
             aboutBox.ShowDialog();
         }
 
+        private void GetContracts ( object sender,RoutedEventArgs e ) {
+            List<string> QueryLst =  new List<string> ();
+            QueryLst.Add ("*");
 
+            Dictionary<string, string> tempDict = new Dictionary<string, string>();
+            //tempDict.Add ("username", usrName);
 
-        private void EnableCtrls ( bool isLogin ) {
-            //TestBTN.IsEnabled = isLogin;
-
-            lblUsrInfo.Content = "User Name:  " + userInfo[0] + ";  Role:  " + userInfo[2];
+            MarketPlace.MakeSelectCommand ( QueryLst, "cmp", tempDict );
+                            
+            List<string> PassReturn = MarketPlace.ExecuteCommand();
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SQFinalProject"
         mc:Ignorable="d"
         Title="LoginWindow" Height="250" Width="400"
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Closing="Login_Closing">
+        ResizeMode="NoResize" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>

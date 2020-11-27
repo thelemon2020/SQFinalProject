@@ -5,7 +5,6 @@
 // Last Change   : 2020-11-25
 // Description	 : A class used to hold account details for existing or new customers, includes a list of their existing contracts, and
 //				 : their total balance owed.
-//				 : 
 //*********************************************
 
 
@@ -60,7 +59,6 @@ namespace SQFinalProject.ContactMgmtBilling
             Contracts = new Dictionary<int, ContractDetails>();
             UncalculatedContracts = new Dictionary<int, ContractDetails>();
             AddNewContract(contract.ID, contract);
-            AddBalance(contract);
         }
 
 
@@ -79,7 +77,6 @@ namespace SQFinalProject.ContactMgmtBilling
             foreach (ContractDetails contract in contracts)
             {
                 AddNewContract(contract.ID, contract);
-                AddBalance(contract);
             }
         }
 
@@ -93,6 +90,10 @@ namespace SQFinalProject.ContactMgmtBilling
         public void AddNewContract(int contractID, ContractDetails contract)
         {
             Contracts.Add(contractID, contract);
+            if(this.AccountName == "")
+            {
+                AccountName = contract.ClientName;
+            }
             AddBalance(contract);
         }
 
@@ -116,6 +117,24 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
+        /// \brief 
+        /// \ details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        public List<string> GetUncalcContracts()
+        {
+            List<string> contracts = new List<string>();
+
+            foreach(KeyValuePair<int, ContractDetails> entry in UncalculatedContracts)
+            {
+                contracts.Add(entry.Value.ToString());
+            }
+
+            return contracts;
+        }
+
+
         /// \brief Calculates the Balance owed on an account based on contract details
         /// \ details <b>Details</b>
         /// This method calculates the balance to be added to an account based on factors of a contract including distance, rate, truck type
@@ -131,11 +150,13 @@ namespace SQFinalProject.ContactMgmtBilling
                 {
                     if (contract.Quantity == 0) // the trip is FTL
                     {
-                        Balance += AddBalance(contract.Rate, contract.Distance);
+                        double tmp = AddBalance(contract.Rate, contract.Distance);
+                        Balance += tmp * contract.FTLUpCharge;
                     }
                     else //the trip is LTL
                     {
-                        Balance += AddBalance(contract.Rate, contract.Distance, contract.Quantity);
+                        double tmp = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
+                        Balance += tmp * contract.LTLUpCharge;
                     }
                 }
                 else // The van type is a Reefer Van there is an associate upcharge
@@ -143,13 +164,15 @@ namespace SQFinalProject.ContactMgmtBilling
                     if (contract.Quantity == 0) // FTL in a Reefer van
                     {
                         double tmpBal = AddBalance(contract.Rate, contract.Distance);
-                        tmpBal *= ContractDetails.ReeferUpCharge;
+                        tmpBal *= contract.ReeferUpCharge;
+                        tmpBal *= contract.FTLUpCharge;
                         Balance += tmpBal;
                     }
                     else // LTL in a Reefer van
                     {
                         double tmpBal = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
-                        tmpBal *= ContractDetails.ReeferUpCharge;
+                        tmpBal *= contract.ReeferUpCharge;
+                        tmpBal *= contract.LTLUpCharge;
                         Balance += tmpBal;
                     }
                 }
@@ -169,7 +192,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - balance <b>double</b> - The balance calculated from the rate and distance
         private double AddBalance(double rate, double distance)
         {
-            double balance = rate * distance * ContractDetails.FTLUpCharge;
+            double balance = rate * distance;
             return balance;
         }
 
@@ -184,7 +207,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - 
         private double AddBalance(double rate, double distance, int quantity)
         {
-            double balance = rate * distance * (double)quantity * ContractDetails.LTLUpCharge;
+            double balance = rate * distance * (double)quantity;
             return balance;
         }
     }
