@@ -1,11 +1,18 @@
-﻿<Window x:Class="SQFinalProject.MainWindow"
+﻿<!--*********************************************
+ * File			 : MainWindow.zaml
+ * Project		 : PROG2020 - Term Project
+ * Programmer	 : Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser
+ * Last Change   : 2020-11-25
+ * Description	 : This is the xaml file defining the user interface of the main window of the TMS project.
+ ************************************************-->
+<Window x:Class="SQFinalProject.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQFinalProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" >
+        Title="Transport Management System" Height="600" Width="1000" >
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" CanExecute="CloseCB_CanExecute" Executed="CloseCB_Executed" />
@@ -13,7 +20,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
 
-            <!-- The File Menu, containing Logout, & Close -->
+            <!-- The File Menu, containing Logout & Close Options -->
             <MenuItem x:Name="FileMenu" Header="_File">
                 <MenuItem Header="_Logout" Click="Logout_Click" ></MenuItem>
                 <MenuItem Header="_Close"
@@ -30,11 +37,11 @@
                 <MenuItem Header="_About..." Click="About_Click"></MenuItem>
             </MenuItem>
         </Menu>
-
         <StatusBar DockPanel.Dock="Bottom">
             <Label x:Name="lblUsrInfo" Content=""/>
         </StatusBar>
 
+        <!-- Main Tabbed Window section -->
         <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl">
             <TabItem Header="Contact MarketPlace">
                 <Grid>
@@ -49,8 +56,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <ListBox Grid.Column="0">
-
+                        <ListBox Grid.Column="0" x:Name="MarketList" ItemsSource="{Binding Path=MarketRtn}" DisplayMemberPath="Source">
+                            
                         </ListBox>
 
                         <Button Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
