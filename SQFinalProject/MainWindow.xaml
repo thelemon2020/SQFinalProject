@@ -42,7 +42,7 @@
                  AcceptsTab="True"
                  TextWrapping="NoWrap"
                  VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>
+                 HorizontalScrollBarVisibility="Auto" MouseDoubleClick="test"/>
         
         <!--<ListView ItemsSource="{Binding Source={StaticResource EmployeeData}, XPath=Employee}">
             <ListView.View>

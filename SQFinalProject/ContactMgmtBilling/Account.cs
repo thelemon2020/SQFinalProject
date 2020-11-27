@@ -150,11 +150,13 @@ namespace SQFinalProject.ContactMgmtBilling
                 {
                     if (contract.Quantity == 0) // the trip is FTL
                     {
-                        Balance += AddBalance(contract.Rate, contract.Distance);
+                        double tmp = AddBalance(contract.Rate, contract.Distance);
+                        Balance += tmp * contract.FTLUpCharge;
                     }
                     else //the trip is LTL
                     {
-                        Balance += AddBalance(contract.Rate, contract.Distance, contract.Quantity);
+                        double tmp = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
+                        Balance += tmp * contract.LTLUpCharge;
                     }
                 }
                 else // The van type is a Reefer Van there is an associate upcharge
@@ -162,13 +164,15 @@ namespace SQFinalProject.ContactMgmtBilling
                     if (contract.Quantity == 0) // FTL in a Reefer van
                     {
                         double tmpBal = AddBalance(contract.Rate, contract.Distance);
-                        tmpBal *= ContractDetails.ReeferUpCharge;
+                        tmpBal *= contract.ReeferUpCharge;
+                        tmpBal *= contract.FTLUpCharge;
                         Balance += tmpBal;
                     }
                     else // LTL in a Reefer van
                     {
                         double tmpBal = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
-                        tmpBal *= ContractDetails.ReeferUpCharge;
+                        tmpBal *= contract.ReeferUpCharge;
+                        tmpBal *= contract.LTLUpCharge;
                         Balance += tmpBal;
                     }
                 }
@@ -188,7 +192,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - balance <b>double</b> - The balance calculated from the rate and distance
         private double AddBalance(double rate, double distance)
         {
-            double balance = rate * distance * ContractDetails.FTLUpCharge;
+            double balance = rate * distance;
             return balance;
         }
 
@@ -203,7 +207,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - 
         private double AddBalance(double rate, double distance, int quantity)
         {
-            double balance = rate * distance * (double)quantity * ContractDetails.LTLUpCharge;
+            double balance = rate * distance * (double)quantity;
             return balance;
         }
     }

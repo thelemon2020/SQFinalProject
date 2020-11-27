@@ -200,5 +200,16 @@ namespace SQFinalProject
 
             lblUsrInfo.Content = "User Name:  " + userInfo[0] + ";  Role:  " + userInfo[2];
         }
+
+        private void test(object sender, MouseButtonEventArgs e)
+        {
+            List<string> results = new List<string>();
+            results = Controller.GetAllContractsFromDB(MarketPlace);
+
+            for(int i = 0; i < results.Count; i++)
+            {
+                txtMain.Text += results[i] + "\n";
+            }
+        }
     }
 }
