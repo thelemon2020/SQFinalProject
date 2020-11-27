@@ -55,9 +55,9 @@ namespace SQFinalProject
         /// 
         /// \return - SQLReturn - <b>List<List<string>></b> - This list holds whatever the response from the database was
         /// 
-        public List<List<string>> ExecuteCommand()
+        public List<string> ExecuteCommand()
         {
-            List<List<string>> SQLReturn = new List<List<string>>();
+            List<string> SQLReturn = new List<string>();
             try
             {
                 currentConnection = DatabaseInteraction.connectToDatabase(connectionString);

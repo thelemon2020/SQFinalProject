@@ -40,6 +40,8 @@ namespace SQFinalProject.ContactMgmtBilling
         public int VanType { get; set; } //<The van type, 0 or 1 -> Dry van or Reefer van
         public bool TripComplete { get; set; } //<A boolean which represents if the trip has been completed or not
         public double Cost { get; set; } //<The flat cost of the trip before rates are applied
+        public DateTime ETA { get; set; }
+        
 
 
         /// \brief A constructor for the ContractDetails class

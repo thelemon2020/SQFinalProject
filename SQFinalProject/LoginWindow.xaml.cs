@@ -47,12 +47,12 @@ namespace SQFinalProject {
         //  METHOD:		LoadConfig
         /// \brief Loads the database connection details from an external config file
         /// \details <b>Details</b>
-        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
+        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file
         /// and parses it out into data that is usable to connect to one or more databases
         /// \param - <b>None</b>
-        /// 
+        ///
         /// \return - <b>Nothing</b>
-        /// 
+        ///
         public void LoadConfig()
         {
             if (File.Exists(configFilePath))
@@ -89,7 +89,7 @@ namespace SQFinalProject {
             {
                 FileStream newConfig = File.Create(configFilePath);
                 newConfig.Close();
-            }                      
+            }
         }
 
 
@@ -100,32 +100,32 @@ namespace SQFinalProject {
         ///     This method first checks if either the user name or password is empty, displaying appropriage messages.  If they aren't, it queries the database
         /// to see if the user name exists and if the password matches.  If both of these are true, it loads the appropriate main page for the users role and closes
         /// this window.
-        /// 
+        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
-        /// 
+        ///
         /// \return - <b>Nothing</b>
-        /// 
+        ///
         private void Login_Click ( object sender,RoutedEventArgs e ) {
             bool isValid = true;
-            if ( UsrName.Text.Length == 0 ) { 
+            if ( UsrName.Text.Length == 0 ) {
                 NameErr.Content = "User name cannot be blank!";
                 isValid = false;
             } else {
                 NameErr.Content = "";
             }
-            
-            if ( Password.Password.Length == 0 ) { 
+
+            if ( Password.Password.Length == 0 ) {
                 PassErr.Content = "Password cannot be blank!";
                 isValid = false;
-            } else { 
+            } else {
                 PassErr.Content = "";
             }
-            
+
             if ( isValid ) {
                 string usrName = UsrName.Text.Trim ();
                 string usrPass = Password.Password;
-                
+
                 // Check if the password matches
                 List<string> QueryLst =  new List<string> ();
                 QueryLst.Add ("password");
@@ -134,16 +134,16 @@ namespace SQFinalProject {
                 tempDict.Add ("username", usrName);
 
                 loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-                            
-                List<List<string>> PassReturn = loginDB.ExecuteCommand();
+
+                List<string> PassReturn = LoginDB.ExecuteCommand();
 
                 // Check if the name exists
                 QueryLst =  new List<string> ();
                 QueryLst.Add ("username");
 
                 loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-            
-                List<List<string>> UsrReturn = loginDB.ExecuteCommand();
+
+                List<string> UsrReturn = LoginDB.ExecuteCommand();
 
                 if ( UsrReturn == null || PassReturn == null ) {
                     // Connection failed!!!
@@ -156,7 +156,7 @@ namespace SQFinalProject {
                     isValid = false;
 
                 } else if ( PassReturn.Count() == 0 || !usrPass.Equals ( PassReturn.ElementAt(0).ElementAt(0) ) ) {
-                    
+
                     NameErr.Content = "";
                     PassErr.Content = "Password incorrect for user!";
                     isValid = false;
@@ -165,7 +165,7 @@ namespace SQFinalProject {
                     PassErr.Content = "";
                     NameErr.Content = "";
                 }
-                
+
                 loggedIn = isValid;
 
                 if ( isValid ) {
@@ -173,7 +173,7 @@ namespace SQFinalProject {
                     QueryLst.Add ("role");
 
                     loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-                            
+
                     userInfo = loginDB.ExecuteCommand().ElementAt(0);
 
                     /* !!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! */
@@ -186,10 +186,11 @@ namespace SQFinalProject {
 
                     MainWindow mainWindow = new MainWindow (usrName);
                     mainWindow.Show();
-                    
+
+
                     this.Close();
                 }
-            }        
+            }
         }
     }
 }

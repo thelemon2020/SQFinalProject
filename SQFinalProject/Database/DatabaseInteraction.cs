@@ -40,10 +40,9 @@ namespace SQFinalProject
         /// 
         /// \return - results - <b>List<List<string>></b> - A lists of lists that holds each row and each column of the returned query
         /// 
-        public static List<List<string>> CommandDatabase(MySqlCommand DBCommand)
+        public static List<string> CommandDatabase(MySqlCommand DBCommand)
         {
-            List<List<string>> results = new List<List<string>>();
-            List<string> line = new List<string>();
+            List<string> SQLReturn = new List<string>();
             try
             {
                 MySqlDataReader reader = DBCommand.ExecuteReader();
@@ -51,16 +50,15 @@ namespace SQFinalProject
                 {
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        line.Add(reader.GetString(i));
+                        SQLReturn.Add(reader.GetString(i));
                     }
-                    results.Add(line);
                 }
             }
             catch
             {
-                results = null;
+                SQLReturn = null;
             }           
-            return results;
+            return SQLReturn;
         }
 
         /// \brief Closes a database connection
