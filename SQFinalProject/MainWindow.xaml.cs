@@ -195,7 +195,7 @@ namespace SQFinalProject
 
             MarketPlace.MakeSelectCommand ( QueryLst, "cmp", tempDict );
                             
-            List<List<string>> PassReturn = MarketPlace.ExecuteCommand();
+            List<string> PassReturn = MarketPlace.ExecuteCommand();
         }
 
         private void test(object sender, MouseButtonEventArgs e)
