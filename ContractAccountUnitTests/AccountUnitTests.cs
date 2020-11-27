@@ -6,9 +6,21 @@ using System.Collections.Generic;
 
 namespace SQFinalProject.Tests
 {
+    ///
+    /// \class AccountUnitTests
+    /// 
+    /// \brief A test class the Account and ContractDetails methods
+    /// 
+    /// \author <i>Nick Byam</i>
     [TestClass()]
     public class AccountUnitTests
     {
+        /// \brief A test method to check that the balance calculations would be equal for two accounts with the same contract
+        /// \ details <b>Details</b>
+        /// A test method for the Balance feature of the Account class that keeps a running total of the payable balance incurred on an
+        /// Account having one or more associated contracts
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         [TestMethod()]
         public void TestBalancesFunctional()
         {
@@ -23,6 +35,12 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(testAcc.Balance, testAcc2.Balance);
         }
 
+
+        /// \brief A boundary test related to the Balance property of the Account class
+        /// \ details <b>Details</b>
+        /// A Method that tests the boundaries of the calculation, and if numbers very close in value will produce accurate or rounded responses after calculation.
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         [TestMethod()]
         public void TestBalancesBoundary()
         {
@@ -44,6 +62,12 @@ namespace SQFinalProject.Tests
             Assert.AreNotEqual(a1.Balance, a2.Balance);
         }
 
+
+        /// \brief A second boundary test for the Balance feature of the Account class
+        /// \ details <b>Details</b>
+        /// A boundary test which further pushes the accuracy of double type numbers related to calculating the balance to be added to the Account class
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         [TestMethod()]
         public void TestBalancesBoundary2()
         {
@@ -66,6 +90,12 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(ac.Balance, ac2.Balance);
         }
 
+
+        /// \brief A test for the contract list methods
+        /// \ details <b>Details</b>
+        /// A method to test that the contract list that is returned provides the same content for both account
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         [TestMethod()]
         public void TestContractList()
         {
@@ -83,8 +113,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(a1.GetAllContracts()[0], a2.GetAllContracts()[0]);
         }
 
+
+        /// \brief
+        /// \ details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
         [TestMethod()]
-        public void TestContractListException()
+        public void TestContractList2()
         {
             ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
             ContractDetails cd2 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
@@ -100,6 +136,12 @@ namespace SQFinalProject.Tests
             Assert.AreNotEqual(a1.GetAllContracts()[1], a2.GetAllContracts()[2]);
         }
 
+
+        /// \brief 
+        /// \ details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
         [TestMethod()]
         public void TestUncalcContracts()
         {
@@ -117,8 +159,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(a1.GetUncalcContracts()[2], a2.GetUncalcContracts()[2]);
         }
 
+
+        /// \brief 
+        /// \ details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
         [TestMethod()]
-        public void TestUncalcContractsExceptional()
+        public void TestUncalcContracts2()
         {
             ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
             ContractDetails cd2 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);

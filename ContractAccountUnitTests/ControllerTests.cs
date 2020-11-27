@@ -71,9 +71,9 @@ namespace ContractAccountUnitTests
         [TestMethod()]
         public void GetOneContractExceptionTest()
         {
-            var db = new Database("59.89.117.198", "DevOSHT", "Snodgr4ss!", "cmp");
+            var db = new Database("159.89.117.198", "DevOSHT", "Snodgr4ss!", "cmp");
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("Job_Type", "1");
+            dict.Add("Job", "3");
             var result = Controller.SelectContract(db, dict);
 
             Assert.IsNull(result);

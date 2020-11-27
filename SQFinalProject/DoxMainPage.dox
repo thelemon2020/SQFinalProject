@@ -1,0 +1,88 @@
+﻿/// \mainpage Transportation Management System   
+///
+/// \image 
+///
+/// \section intro Introduction
+/// The TMS application offers a solution to connect product delivery companies to clients looking for transportation for bulk products.
+/// Through our intuitive app, users are able to easily select customer contracts and assign appropriate carriers to complete the deliveries.
+/// Our team offers an all in one solution to transportation management through intelligent design and consultation with real people who have real
+/// experience in delegating product delivery for clients in need. What this means for you is that you can expect our application to do just what
+/// you need without over complicating your everyday process and work flow. Work flows and designations are applied for contract <b>Buyers</b> to select
+/// and approve incoming contracts, <b>Planners</b> who choose appropriate carriers and plan their optimal routes for all deliveries applicable,
+/// and an <b>Administrator</b> view for account, data, and database management.
+///
+/// TMS by Snodgrass III Inc. 
+/// <i>Quality of Life Solutions</i>
+///
+/// <hr>
+/// \section requirements TMS Requirements
+/// <b><u>Database Requirements</u></b>
+///
+/// <i>Functional Requirements</i>
+/// - There must be 3 databases accessible to the TMS application
+///	<ul>
+///	<li>Contract Marketplace Database</li>
+/// <li>Carrier Database</li>
+/// <li>Internal TMS Database</li>
+/// </ul><br/>
+/// - The contract marketplace will be from where contracts are selected from
+/// - Multiple contracts can be selected to use or view from the Buyer page, and the option to select a contract limited by conditions must be supported
+/// - The carrier database will hold all carriers partnered with the company using the TMS application
+/// - The TMS database will hold all accepted and planned contracts, as well as existing client accounts, invoices, and internal reports
+/// - Connection must be simple for the average user, and if possible automated so that a single click will create a connection for a regsitered employee
+/// - Information retrieved from the database must be readily available for use in other parts of the system, while still mainting integrity
+/// - Exceptions must be handled internally, and should not disturb the user's experience of the TMS app.
+///
+/// <b><u>Accounts, Contracts, and Billing</u></b>
+///
+/// <i>Functional Requirements</i>
+/// - A user account must be created for every new contract accepted if the client does not have an existing account
+/// - A client account must be able to support multiple contracts, and keep a running tally of balance incurred from contracts
+/// - Each contract retrieved and accepted from the Contract Marketplace should be formatted for internal use and passed to the Planner
+/// - Each contract should include fields regarding the name of the client, the origin and destination of the delivery, the delivery type, the van type, and the number of pallets if applicable.
+/// - The cost does not need to be calculated upon acceptance of a contract, but an account with uncalculated costs will flag an error when attempting to save their info to the internal database
+/// - Uncalculated Contracts must be kept track of meticulously.
+/// - There should exist simple methods to allow the TMS app user to view existing contracts and accounts.
+///
+/// <b><u>Carrier Management</u></b>
+///
+/// <i>Functional Requirements</i>
+/// - The Planner should be able to view existing contracts that need to be assigned to a carrier for delivery.
+/// - A carrier has requirements to the amount of work they can do per day, as well as the amount of products that can be done in one delivery.
+/// - Carriers that have to spend multiple days delivering a client's order will charge an extra $150 per day on top of the existing rate charged per kilometer (and per pallet).
+/// -The Distance must be calculated from the chart provided by the carriers, and which areas they service.
+/// - Some carriers only depart from some origin cities, meaning that contracts must be properly assigned to carriers that can complete the job properly.
+/// - It is possible that one carrier can take multiple LTL contracts in the same van, and make multiple stops.
+/// - A carriers work day cannot be more than 12 hours; 2 hours is reserved for loading products into the truck, 2 hours is reserved for unloading.
+/// - If multiple stops are made, 2 hours must be reserved for unloading at each stop.
+/// - A driver cannot drive for more than 8 hours per day, as required by law. Therefore if a carrier cannot make their destination by 8 hours, they will continue on the next day.
+/// - The planner must provide all the necessary travel information to the buyer, so that a contract may be finalized and its cost calculated.
+/// - The TMS must be able to simulate the passage of time from origin to destination, and provide the ETA along with extra costs incurred from multi day trips.
+///
+/// <b><u>User Interface</u></b>
+///
+/// <i>Functional Requirements</i>
+/// - There must be at least 3 separate but interrelated views; One for the Buyer, one for the Planner, one for the Admin.
+/// - The app should not be usable until the user has logged in.
+/// - Through the UI the user should be able to access and get results from all 3 databases.
+/// - The function of the app should be event driven, but simplistic so the user does not get overwhelmed.
+/// - All functionality of the TMS should be accessible from the UI
+/// - The Buyer should be able to create data accessible by the system planner
+/// - The Planner should be able to modify and create data accessible by the Buyer
+/// - the Admin should be able to register and remove users for TMS app access.
+/// - The Admin will be able to alter configuration info for the internal TMS database
+/// - The Admin should not be able to accept contracts or plan trips.
+/// - Each user's assigned function must not be performable by another user assigned to a different function
+/// - The Buyer will be able to create invoices for Contracts, and generate analytical reports in 2 week, or all time intervals on the operation of the TMS app.
+///
+/// <hr>
+/// \section version TMS App Version Information:
+/// <ul>
+/// <li>\author		Nick Byam</li>
+/// <li>\author		Deric Kruse </li>
+/// <li>\author		Chris Lemon</li>
+/// <li>\version   0.3.0</li>
+/// <li>\date      2020-11-27</li>
+/// <li>\copyright Snodgrass III Inc.
+/// </ul>
+///
