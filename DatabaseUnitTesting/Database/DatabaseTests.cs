@@ -15,12 +15,12 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void ExecuteCommandTest_Functional1()
         {
-            List<List<string>> expected = new List<List<string>> { new List<string> { "1", "admin", "admin", "a" } };
+            List<string> expected = new List<string>() { "1", "admin", "admin", "a" } ;
             Database test = new Database("192.168.0.197", "tmsadmin", "12345", "tms");
             List<string> select = new List<string>();
             select.Add("*");
             test.MakeSelectCommand(select, "login", null);
-            List<List<string>> results = new List<List<string>>();
+            List<string> results = new List<string>();
             results = test.ExecuteCommand();
             Assert.AreEqual(expected.ToString(), results.ToString());
         }
@@ -32,7 +32,7 @@ namespace SQFinalProject.Tests
             List<string> select = new List<string>();
             select.Add("*");
             test.MakeSelectCommand(select, "Contract", null);
-            List<List<string>> results = new List<List<string>>();
+            List<string> results = new List<string>();
             results = test.ExecuteCommand();
             Assert.AreEqual(6, results.Count());
         }
@@ -44,7 +44,7 @@ namespace SQFinalProject.Tests
             List<string> select = new List<string>();
             select.Add("*");
             test.MakeSelectCommand(select, "Contract", null);
-            List<List<string>> results = new List<List<string>>();
+            List<string> results = new List<string>();
             results = test.ExecuteCommand();
             Assert.AreEqual(null, results);
         }
@@ -56,7 +56,7 @@ namespace SQFinalProject.Tests
             List<string> select = new List<string>();
             select.Add("*");
             test.MakeSelectCommand(select, "Contractss", null);
-            List<List<string>> results = new List<List<string>>();
+            List<string> results = new List<string>();
             results = test.ExecuteCommand();
             Assert.AreEqual(null, results);
         }

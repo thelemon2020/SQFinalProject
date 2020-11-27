@@ -56,7 +56,7 @@ namespace SQFinalProject {
 
                 LoginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
                             
-                List<List<string>> PassReturn = LoginDB.ExecuteCommand();
+                List<string> PassReturn = LoginDB.ExecuteCommand();
 
                 // Check if the name exists
                 QueryLst =  new List<string> ();
@@ -64,7 +64,7 @@ namespace SQFinalProject {
 
                 LoginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
             
-                List<List<string>> UsrReturn = LoginDB.ExecuteCommand();
+                List<string> UsrReturn = LoginDB.ExecuteCommand();
 
                 if ( UsrReturn == null || PassReturn == null ) {
                     // Connection failed!!!
@@ -93,7 +93,7 @@ namespace SQFinalProject {
 
                     LoginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
                             
-                    userInfo = LoginDB.ExecuteCommand().ElementAt(0);
+                    userInfo = LoginDB.ExecuteCommand();
                     
                     DialogResult = true;
                 }
