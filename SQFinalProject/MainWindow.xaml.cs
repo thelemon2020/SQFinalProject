@@ -35,19 +35,18 @@ namespace SQFinalProject
         public MainWindow ( string name )
         { 
             InitializeComponent();
-            LoadConfig();
+            LoadConfig(); //<Call method that loads database connection info from config file
             if (TMS_Database!=null)
             {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]);
+                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]); //< fill loginDB database object with connection info
             }
             if (MarketPlace_Database!=null)
             {
-                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
+                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]); //< fill MarketPlace database object with connection info
             }
-
-            isLoggedIn = true;
-            userName = name;
-            lblUsrInfo.Content = "User Name:  " + userName;
+            isLoggedIn = true; //<User is logged in
+            userName = name; //copies username provided by user
+            lblUsrInfo.Content = "User Name:  " + userName; //<make a string to show on the UI
         }
 
 
@@ -65,27 +64,27 @@ namespace SQFinalProject
         {
             if (File.Exists(configFilePath))
             {
-                StreamReader configFile = new StreamReader(configFilePath);
-                string contents = configFile.ReadToEnd();
-                configFile.Close();
+                StreamReader configFile = new StreamReader(configFilePath);//<open reader stream
+                string contents = configFile.ReadToEnd(); //< get string from config file
+                configFile.Close();//<close stream
                 if (contents != "")
                 {
-                    string[] splitByDB = contents.Split('\n');
-                    foreach (string dbDetails in splitByDB)
+                    string[] splitByDB = contents.Split('\n');//<split string by line
+                    foreach (string dbDetails in splitByDB)//<iterate through string
                     {
-                        string[] details = dbDetails.Split(' ');
-                        if (details[0] == "TMS")
+                        string[] details = dbDetails.Split(' '); //<split string into individual fields
+                        if (details[0] == "TMS") //<If the info is for the TMS database
                         {
                             TMS_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)
+                            for (int i = 1; i < details.Count(); i++) //<iterate through parts of detials
                             {
                                 TMS_Database.Add(details[i]);
                             }
                         }
-                        else if (details[0] == "MP")
+                        else if (details[0] == "MP")//<If the info is for the MarketPlace database
                         {
                             MarketPlace_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)
+                            for (int i = 1; i < details.Count(); i++)//<iterate through parts of detials
                             {
                                 MarketPlace_Database.Add(details[i]);
                             }
@@ -93,10 +92,10 @@ namespace SQFinalProject
                     }
                 }
             }
-            else
+            else //<if file does not exist
             {
-                FileStream newConfig = File.Create(configFilePath);
-                newConfig.Close();
+                FileStream newConfig = File.Create(configFilePath); //< create file
+                newConfig.Close();//<close file
             }                      
         }
 

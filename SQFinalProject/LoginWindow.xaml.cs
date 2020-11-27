@@ -14,9 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace SQFinalProject {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
+
+    /// 
+    /// \class <b>LoginWindow</b>
+    ///
+    /// \brief This class represents the first window a user sees when they start up the application.  It gets a username and password from the user
+    /// \brief and compares them against credentials stored on the server.  It then creates another window based on the user's role
+    ///
+    /// \author <i>Deric Kruse</i>
+    ///
     public partial class LoginWindow : Window {
         public const string configFilePath = @"..\..\config\TMS.txt";
         public List<string> TMS_Database { get; set; }

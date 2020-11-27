@@ -25,12 +25,17 @@ namespace SQFinalProject
         /// 
         public static MySqlConnection connectToDatabase(string connectionString)
         {
-            MySqlConnection connection = null;
-            
-            connection = new MySqlConnection(connectionString);
-            connection.Open();
-            
-            return connection;
+            MySqlConnection connection = null; //< create MySqlConnection object           
+            try
+            {
+                connection = new MySqlConnection(connectionString); //< instantiate the MySqLConnection object
+                connection.Open(); //< open connection
+            }
+            catch
+            {
+                connection = null;
+            }
+            return connection; //< return the MySqlConnection object
         }
         
         /// \brief Sends a query to the database and gets back a response
@@ -45,20 +50,20 @@ namespace SQFinalProject
             List<string> SQLReturn = new List<string>();
             try
             {
-                MySqlDataReader reader = DBCommand.ExecuteReader();
-                while (reader.Read())
+                MySqlDataReader reader = DBCommand.ExecuteReader(); //< instantiate MySqlReader to get query returns from database
+                while (reader.Read()) //<read all query lines
                 {
-                    for (int i = 0; i < reader.FieldCount; i++)
+                    for (int i = 0; i < reader.FieldCount; i++) //<iterate through each field
                     {
-                        SQLReturn.Add(reader.GetString(i));
+                        SQLReturn.Add(reader.GetString(i)); //<add to list of strings
                     }
                 }
             }
             catch
             {
-                SQLReturn = null;
+                SQLReturn = null; //<if there is an exception throw, return null
             }           
-            return SQLReturn;
+            return SQLReturn;//<return list of strings containing query returns
         }
 
         /// \brief Closes a database connection
@@ -70,8 +75,15 @@ namespace SQFinalProject
         /// 
         public static bool CloseConnection(MySqlConnection database)
         {
-            database.Close();
-            return true;
+            try
+            {
+                database.Close(); //< close the database connection
+            }
+            catch
+            {
+                return false; //<return false if something goes wrong
+            }
+            return true; //< return true if connection closes successfully 
         }
 
         /// \brief Backup a <b>MySqlDatabase</b> with a generated .sql script
@@ -87,20 +99,20 @@ namespace SQFinalProject
         {
             try
             {
-                using (MySqlCommand cmd = new MySqlCommand())
+                using (MySqlCommand cmd = new MySqlCommand()) //< create MySqlCommand to connect to database
                 {
-                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    using (MySqlBackup mb = new MySqlBackup(cmd)) //< create MySqlBackup object
                     {
-                        cmd.Connection = conn;
-                        mb.ExportToFile(filePath);
+                        cmd.Connection = conn; //< set connection
+                        mb.ExportToFile(filePath); //<make backup sql script
                     }
                 }
             }
             catch
             {
-                return 1;
+                return 1; //<returns 1 if backup fails
             }
-            return 0;
+            return 0; //< returns 0 if backup is successful
         }
 
         /// \brief Restores a <b>MySqlDatabase</b> from a backup script
@@ -116,20 +128,20 @@ namespace SQFinalProject
         {
             try
             {
-                using (MySqlCommand cmd = new MySqlCommand())
+                using (MySqlCommand cmd = new MySqlCommand())  //< create MySqlCommand to connect to database
                 {
-                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    using (MySqlBackup mb = new MySqlBackup(cmd)) //< create MySqlBackup object
                     {
-                        cmd.Connection = conn;
-                        mb.ImportFromFile(filePath);
+                        cmd.Connection = conn; //< set connection
+                        mb.ImportFromFile(filePath);  //<restore from backup sql script
                     }
                 }
             }
             catch
             {
-                return 1;
+                return 1; //<returns 1 if restore fails
             }
-            return 0;           
+            return 0;  //< returns 0 if restore is successful
         }
     }
 }
