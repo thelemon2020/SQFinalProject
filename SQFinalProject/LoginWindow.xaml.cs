@@ -14,31 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace SQFinalProject {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
+    ///
+    /// \class <b>LoginWindow</b>
+    /// 
+    /// \brief This class holds all the event handlers for for the WPF login window.  It has data members for the TMS database & the Marketplace database.
+    /// 
+    /// \author <i>Deric Kruse</i>
+    /// 
     public partial class LoginWindow : Window {
-        public const string configFilePath = @"..\..\config\TMS.txt";
-        public List<string> TMS_Database { get; set; }
-        public List<string> MarketPlace_Database { get; set; }
-        Database loginDB { get; set; }
-        Database MarketPlace { get; set; }
+        //! Properties
+        public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
+        public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
+        public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info for the config parser
+        Database loginDB { get; set; }                                  //<The database object for the TMS database
 
-        private bool loggedIn = false;
-
-        public List<string> userInfo;
+        public List<string> userInfo;                                   //<String list to store the info on the user that is logging in
 
         public LoginWindow () {
             InitializeComponent();
 
-            LoadConfig();
-            if (TMS_Database!=null)
+            LoadConfig();                                               //< Parse the config file
+            if (TMS_Database!=null)                                     //< Connect to the TMS database if the config file loaded successfully
             {
                 loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]);
-            }
-            if (MarketPlace_Database!=null)
-            {
-                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
             }
         }
 
@@ -55,18 +53,18 @@ namespace SQFinalProject {
         /// 
         public void LoadConfig()
         {
-            if (File.Exists(configFilePath))
+            if (File.Exists(configFilePath))                        //< If the config file exists, try to read from it
             {
                 StreamReader configFile = new StreamReader(configFilePath);
                 string contents = configFile.ReadToEnd();
                 configFile.Close();
                 if (contents != "")
                 {
-                    string[] splitByDB = contents.Split('\n');
+                    string[] splitByDB = contents.Split('\n');      //< Grab each line so it can be dealt with individually
                     foreach (string dbDetails in splitByDB)
                     {
-                        string[] details = dbDetails.Split(' ');
-                        if (details[0] == "TMS")
+                        string[] details = dbDetails.Split(' ');    //< Pull the individual fields from the line of the config file
+                        if (details[0] == "TMS")                    //< If the line pertains to the TMS database, assign the values to the TMS string list
                         {
                             TMS_Database = new List<string>();
                             for (int i = 1; i < details.Count(); i++)
@@ -74,7 +72,7 @@ namespace SQFinalProject {
                                 TMS_Database.Add(details[i]);
                             }
                         }
-                        else if (details[0] == "MP")
+                        else if (details[0] == "MP")                //< If the line pertains to the Marketplace database, assign the values to the Marketplace string list
                         {
                             MarketPlace_Database = new List<string>();
                             for (int i = 1; i < details.Count(); i++)
@@ -108,86 +106,84 @@ namespace SQFinalProject {
         /// 
         private void Login_Click ( object sender,RoutedEventArgs e ) {
             bool isValid = true;
-            if ( UsrName.Text.Length == 0 ) { 
+            if ( UsrName.Text.Length == 0 ) {                   //< Check if the username is blank and display an error if it is
                 NameErr.Content = "User name cannot be blank!";
                 isValid = false;
             } else {
                 NameErr.Content = "";
             }
             
-            if ( Password.Password.Length == 0 ) { 
+            if ( Password.Password.Length == 0 ) {              //< Check if the username is blank and display an error if it is
                 PassErr.Content = "Password cannot be blank!";
                 isValid = false;
             } else { 
                 PassErr.Content = "";
             }
             
-            if ( isValid ) {
+            if ( isValid ) {                                   //< If the two text boxes are not empty ... 
                 string usrName = UsrName.Text.Trim ();
                 string usrPass = Password.Password;
                 
-                // Check if the password matches
-                List<string> QueryLst =  new List<string> ();
-                QueryLst.Add ("password");
+                List<string> QueryLst = new List<string> ();   //< Set up the database query and check if the user name exists in the database
+                QueryLst.Add ("username");
 
                 Dictionary<string, string> tempDict = new Dictionary<string, string>();
                 tempDict.Add ("username", usrName);
 
                 loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-                            
-                List<string> PassReturn = loginDB.ExecuteCommand();
-
-                // Check if the name exists
-                QueryLst =  new List<string> ();
-                QueryLst.Add ("username");
-
-                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
             
                 List<string> UsrReturn = loginDB.ExecuteCommand();
 
+                QueryLst = new List<string> ();                //< Then check if the password matches
+                QueryLst.Add ("password");
+
+                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
+                            
+                List<string> PassReturn = loginDB.ExecuteCommand();
+
                 if ( UsrReturn == null || PassReturn == null ) {
                     // Connection failed!!!
-                    //?? isValid = false;
                     this.Close();
 
-                } else if ( UsrReturn.Count() == 0 ) {
+                } else if ( UsrReturn.Count() == 0 ) {          //< If the User name is not found, print an error message ...
                     NameErr.Content = "User name doesn't exist!";
                     PassErr.Content = "";
                     isValid = false;
 
                 } else if ( PassReturn.Count() == 0 || !usrPass.Equals ( PassReturn.ElementAt(0) ) ) {
-                    
+                                                                //< and if the password doesn't match, print an error message
                     NameErr.Content = "";
                     PassErr.Content = "Password incorrect for user!";
                     isValid = false;
 
-                } else {
+                } else {                                        //< Otherwise clear all the errors
                     PassErr.Content = "";
                     NameErr.Content = "";
                 }
-                
-                loggedIn = isValid;
 
-                if ( isValid ) {
-                    QueryLst.Add ("password");
+                if ( isValid ) {                                //< If no errors were found ...
+                    QueryLst = new List<string> ();             //< Set up the database query and get the user's role from the database
                     QueryLst.Add ("role");
 
                     loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
                             
                     userInfo = loginDB.ExecuteCommand();
 
-                    /* !!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! */
-                    /* ~~~~~ ADD OTHER CLASSES WINDOWS HERE IN AN IF ~~~~~ */
-                    /* !!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! */
-                    /*
-                    if (userRole = p) {
-                        load planner page ...
-                    } else ... {} //*/
-
-                    MainWindow mainWindow = new MainWindow (usrName);
-                    mainWindow.Show();
+                    if ( userInfo.ElementAt(0).ToUpper().Equals( "A" ) ) {          //< If the user is an admin, load the admin main page
+                        MainWindow mainWindow = new MainWindow (usrName);
+                        mainWindow.Show();
+                    } else if ( userInfo.ElementAt(0).ToUpper().Equals( "B" ) ) {   //< If the user is a buyer, load the buyer main page
+                        MainWindow mainWindow = new MainWindow (usrName);
+                        mainWindow.Show();
+                    } else if ( userInfo.ElementAt(0).ToUpper().Equals( "P" ) ) {   //< If the user is a planner, load the buyer main page
+                        MainWindow mainWindow = new MainWindow (usrName);
+                        mainWindow.Show();
+                    } else {
+                        MainWindow mainWindow = new MainWindow (usrName);
+                        mainWindow.Show();
+                    }
                     
-                    this.Close();
+                    this.Close();                               //< and finally close the window
                 }
             }        
         }

@@ -40,7 +40,7 @@ namespace SQFinalProject
         ///
         public Database(string dbIP, string userName, string password, string table)
         {
-            //set starting properties to be able to connect to server
+            //<set starting properties to be able to connect to server
             ip = dbIP;
             user = userName;
             pass = password;
@@ -60,16 +60,16 @@ namespace SQFinalProject
             List<string> SQLReturn = new List<string>();
             try
             {
-                currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
-                SQLCommand = new MySqlCommand(userCommand, currentConnection);
-                SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand);
-                DatabaseInteraction.CloseConnection(currentConnection);
+                currentConnection = DatabaseInteraction.connectToDatabase(connectionString); //< create a connection to a database
+                SQLCommand = new MySqlCommand(userCommand, currentConnection); //<creat a MySqlCommand object to interact with database
+                SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand); //<query database and get the return
+                DatabaseInteraction.CloseConnection(currentConnection); //<close the connection to the database
             }
-            catch(Exception e)
+            catch(Exception e) //<catch any exception that may be thrown during the query process
             {
-                SQLReturn = null;
+                SQLReturn = null; //<set the query return to null to signify a problem with the query
             }          
-            return SQLReturn;
+            return SQLReturn; //<return the query results to the calling function
         }
         
         /// \brief Creates an Insert Command
@@ -83,11 +83,11 @@ namespace SQFinalProject
         /// 
         public void MakeInsertCommand(string table, List<string> values)
         {
-            StringBuilder InsertCommand = new StringBuilder();
-            InsertCommand.AppendFormat("INSERT INTO {0} VALUES (", table);
+            StringBuilder InsertCommand = new StringBuilder();  //<instantiate a stringbuiler for use in building the query string
+            InsertCommand.AppendFormat("INSERT INTO {0} VALUES (", table); //<set the initial part of the query
             int i = 0;
             int countLoops = values.Count() - 1;
-            foreach (string value in values)
+            foreach (string value in values) //<iterate through each string in the list to format the insert query string
             {
                 if (i==countLoops)
                 {
@@ -100,7 +100,7 @@ namespace SQFinalProject
                 i++;
             }
             InsertCommand.AppendFormat(")");
-            userCommand = InsertCommand.ToString();
+            userCommand = InsertCommand.ToString();//<set user command variable to newly created query string
         }
 
         /// \brief Creates an Insert Command
@@ -115,11 +115,11 @@ namespace SQFinalProject
         /// 
         public void MakeInsertCommand(string table, List<string> fields, List<string> values)
         {
-            StringBuilder InsertCommand = new StringBuilder();
-            InsertCommand.AppendFormat("INSERT INTO {0} (", table);
+            StringBuilder InsertCommand = new StringBuilder(); //<instantiate a stringbuiler for use in building the query string
+            InsertCommand.AppendFormat("INSERT INTO {0} (", table);  //<set the initial part of the query
             int i = 0;
             int countLoops = fields.Count() - 1;
-            foreach(string field in fields)
+            foreach(string field in fields)//<iterate through each string in the list to format which columns to insert the data into
             {
                 if (i==countLoops)
                 {
@@ -134,7 +134,7 @@ namespace SQFinalProject
             InsertCommand.AppendFormat(" VALUES (");
             i = 0;
             countLoops = values.Count() - 1;
-            foreach (string value in values)
+            foreach (string value in values) //<iterate through values to format the order of the data being inserted
             {
                 if (i == countLoops)
                 {
@@ -147,7 +147,7 @@ namespace SQFinalProject
                 i++;
             }
             InsertCommand.AppendFormat(");");
-            userCommand = InsertCommand.ToString();
+            userCommand = InsertCommand.ToString(); //< set userCommand to the newly created query string
         }
 
         /// \brief Creates an Select Command
@@ -162,11 +162,11 @@ namespace SQFinalProject
         /// 
         public void MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions)
         {
-            StringBuilder selectCommand = new StringBuilder();
-            selectCommand.AppendFormat("SELECT");
+            StringBuilder selectCommand = new StringBuilder(); //<instantiate string builder for use in building a query string
+            selectCommand.AppendFormat("SELECT"); //< set the first part of the query string
             int i = 0;
             int countLoops = fields.Count() - 1;
-            foreach (string entry in fields)
+            foreach (string entry in fields) //<iterate through the fields that are to be selected and append them to string
             {
                 if (i == countLoops)
                 {
@@ -179,12 +179,12 @@ namespace SQFinalProject
                 i++;
             }
             selectCommand.AppendFormat(" FROM {0}", table);
-            if (conditions!=null)
+            if (conditions!=null) //<check if there are optional select conditions
             {
-                selectCommand.AppendFormat(" WHERE");
+                selectCommand.AppendFormat(" WHERE"); //< add conditional WHERE clause
                 i = 0;
                 countLoops = conditions.Count() - 1;
-                foreach (KeyValuePair<string, string> entry in conditions)
+                foreach (KeyValuePair<string, string> entry in conditions)  //<iterate through conditions and append them to string
                 {
                     if (i == countLoops)
                     {
@@ -198,7 +198,7 @@ namespace SQFinalProject
                 }
             }
             selectCommand.AppendFormat(";");
-            userCommand = selectCommand.ToString();
+            userCommand = selectCommand.ToString(); //< set userCommand to the newly created query string
         }
 
 
@@ -214,8 +214,8 @@ namespace SQFinalProject
         /// 
         public void MakeUpdateCommand(string table, Dictionary<string, string> updateValues, Dictionary<string, string> conditions)
         {
-            StringBuilder updateCommand = new StringBuilder();
-            updateCommand.AppendFormat("UPDATE {0} SET", table);
+            StringBuilder updateCommand = new StringBuilder(); //<instantiate string builder for use in building a query string
+            updateCommand.AppendFormat("UPDATE {0} SET", table); //<set up 
             int i = 0;
             int countLoops = updateValues.Count() - 1;
             foreach (KeyValuePair<string, string> entry in updateValues)
@@ -233,7 +233,7 @@ namespace SQFinalProject
             updateCommand.AppendFormat(" WHERE");
             i = 0;
             countLoops = conditions.Count() - 1;
-            foreach (KeyValuePair<string, string> entry in conditions)
+            foreach (KeyValuePair<string, string> entry in conditions)//<iterate through conditions and append them to string
             {
                 if (i == countLoops)
                 {
@@ -246,7 +246,7 @@ namespace SQFinalProject
                 i++;
             }
             updateCommand.AppendFormat(";");
-            userCommand = updateCommand.ToString();
+            userCommand = updateCommand.ToString();//< set userCommand to the newly created query string
         }
 
 
@@ -260,10 +260,10 @@ namespace SQFinalProject
         /// 
         public int BackItUp(string filePath)
         {
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
-            int didWork = DatabaseInteraction.BackUpDB(currentConnection,filePath);
-            DatabaseInteraction.CloseConnection(currentConnection);
-            return didWork;
+            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); //<create connection
+            int didWork = DatabaseInteraction.BackUpDB(currentConnection,filePath); //<try to back up database and find out if it worked or not
+            DatabaseInteraction.CloseConnection(currentConnection); //<close the connection
+            return didWork;//<return if backup was successful or not
         }
 
         /// \brief Restores a <b>MySqlDatabase</b> from a backup script
@@ -276,10 +276,10 @@ namespace SQFinalProject
         ///
         public int Restore(string filePath)
         {
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString);
-            int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);
-            DatabaseInteraction.CloseConnection(currentConnection);
-            return didWork;
+            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); //<connect to database
+            int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);//<restore database 
+            DatabaseInteraction.CloseConnection(currentConnection);//<close connection
+            return didWork;//<return if it worked or not
         }
     }
 }

@@ -9,9 +9,27 @@ using System.Threading.Tasks;
 
 namespace SQFinalProject.Tests
 {
+
+    /// 
+    /// \class <b>DatabaseTest</b>
+    ///
+    /// \brief Holds many test methods to ensure <b>Database</b> class is functional
+    ///
+    /// \see ~Database
+    /// 
+    /// \author <i>Chris Lemon</i>
+    ///
     [TestClass()]
     public class DatabaseTests
     {
+        /// \brief Test method to test that the ExecuteCommand method can make a query on a database
+        /// \details <b>Details</b>
+        /// Creates a test connection to local database and tries to select everything from a single table. 
+        /// checks that the correct string was returned
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void ExecuteCommandTest_Functional1()
         {
@@ -25,6 +43,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(expected.ToString(), results.ToString());
         }
 
+        /// \brief Test method to test that the ExecuteCommand method can make a query on an external database
+        /// \details <b>Details</b>
+        /// Creates a test connection to external database and tries to select everything from a single table. 
+        /// Checks that correct number of entries is returned
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void ExecuteCommandTest_Functional2()
         {
@@ -34,9 +60,17 @@ namespace SQFinalProject.Tests
             test.MakeSelectCommand(select, "Contract", null);
             List<string> results = new List<string>();
             results = test.ExecuteCommand();
-            Assert.AreEqual(6, results.Count());
+            Assert.AreEqual(36, results.Count());
         }
 
+        /// \brief Test method to test that the ExecuteCommand method correctly catches an exception thrown by a bad connection
+        /// \details <b>Details</b>
+        /// Creates a test connection to external database and tries to select everything from a single table. 
+        /// Exception should be thrown because the IP address for the server is incorrect
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void ExecuteCommandTest_Exception1()
         {
@@ -49,6 +83,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(null, results);
         }
 
+        /// \brief Test method to test that the ExecuteCommand method correctly catches an exception thrown by a bad query
+        /// \details <b>Details</b>
+        /// Creates a test connection to external database and tries to select everything from a single table. 
+        /// Exception should be thrown because the query cannot be processed as the table name is spelled wrong
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void ExecuteCommandTest_Exception2()
         {
@@ -61,6 +103,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(null, results);
         }
 
+        /// \brief Test method to test that the MakeInsertCommand method does indeed make a proper INSERT query string
+        /// \details <b>Details</b>
+        /// Passes a list of strings into the method to make sure they come out in the right order and format. 
+        /// Checks against a prebuilt string that is a proper query string
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void MakeInsertCommandTest_Functional()
         {
@@ -71,6 +121,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(expected, test.userCommand);
         }
 
+        /// \brief Test method to test that the MakeInsertCommand method does indeed make a proper INSERT query string with conditions
+        /// \details <b>Details</b>
+        /// Passes a list of strings into the method to make sure they come out in the right order and format. 
+        /// Checks against a prebuilt string that is a proper query string
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void OverloadedMakeInsertCommandTest_Functional()
         {
@@ -82,6 +140,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(expected, test.userCommand);
         }
 
+        /// \brief Test method to test that the MakeSelectCommand method does indeed make a proper SELECT query string
+        /// \details <b>Details</b>
+        /// Passes a list of strings into the method to make sure they come out in the right order and format. 
+        /// Checks against a prebuilt string that is a proper query string
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void MakeSelectCommandTest_Functional1()
         {
@@ -93,6 +159,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(expected, test.userCommand);
         }
 
+        /// \brief Test method to test that the MakeSelectCommand method does indeed make a proper SELECT query string with conditions
+        /// \details <b>Details</b>
+        /// Passes a list of strings and a dictionary<string,string> into the method to make sure they come out in the right order and format. 
+        /// Checks against a prebuilt string that is a proper query string
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void MakeSelectCommandTest_Functional2()
         {
@@ -106,6 +180,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(expected, test.userCommand);
         }
 
+        /// \brief Test method to test that the MakeUpdateCommand method does indeed make a proper UPDATE query string
+        /// \details <b>Details</b>
+        /// Passes a string, a list of strings and a dictionary<string,string> into the method to make sure they come out in the right order and format. 
+        /// Checks against a prebuilt string that is a proper query string
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void MakeUpdateCommandTest_Functional()
         {
@@ -119,7 +201,15 @@ namespace SQFinalProject.Tests
             test.MakeUpdateCommand(table, updates, conditions);
             Assert.AreEqual(expected, test.userCommand);
         }
-
+        
+        /// \brief Test method to test that BackItUp method successfully generates a backup sql script
+        /// \details <b>Details</b>
+        /// Creates a test connection to local database and tries to back it up with the BackItUp method.  
+        /// Checks that the method returns 0, indicating a successful backup
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void BackItUpTest_Functional()
         {
@@ -128,6 +218,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(0, confirm);
         }
 
+        /// \brief Test method to test that BackItUp method catches any exception that may be thrown
+        /// \details <b>Details</b>
+        /// Creates a test connection to local database and tries to back it up with the BackItUp method.  Bad file path is provided.
+        /// Checks that the method returns 1, indicating a failed backup
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void BackItUpTest_Exception()
         {
@@ -136,6 +234,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(1, confirm);
         }
 
+        /// \brief Test method to test that Restore method successfully restores a database from a backup script
+        /// \details <b>Details</b>
+        /// Creates a test connection to local database and tries to restore it with the Restore method.  
+        /// Checks that the method returns 0, indicating a successful restore
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void RestoreTest_Functional()
         {
@@ -144,6 +250,14 @@ namespace SQFinalProject.Tests
             Assert.AreEqual(0, confirm);
         }
 
+        /// \brief Test method to test that Restore method catches any exception that may be thrown
+        /// \details <b>Details</b>
+        /// Creates a test connection to local database and tries to restore it with the Restore method.  Bad file path is provided.
+        /// Checks that the method returns 1, indicating a failed restore
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
         [TestMethod()]
         public void RestoreTest_Exception()
         {

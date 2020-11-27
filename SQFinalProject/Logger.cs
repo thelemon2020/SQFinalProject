@@ -13,7 +13,7 @@ namespace SQFinalProject
     ///
     /// \brief The static logger class to log specific application events to an external log file
     ///
-    /// \author <i>Chris Lemon</i>
+    /// \author <i>Nick Byam</i>
     ///
     public static class Logger
     {
