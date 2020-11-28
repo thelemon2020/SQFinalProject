@@ -1,0 +1,28 @@
+\hypertarget{namespace_s_q_final_project}{}\doxysection{S\+Q\+Final\+Project Namespace Reference}
+\label{namespace_s_q_final_project}\index{SQFinalProject@{SQFinalProject}}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_q_final_project_1_1_contact_mgmt_billing}{Contact\+Mgmt\+Billing}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_q_final_project_1_1_trip_planning}{Trip\+Planning}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_q_final_project_1_1_u_i}{UI}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_app}{App}}
+\begin{DoxyCompactList}\small\item\em Interaction logic for App.\+xaml \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_controller}{Controller}}
+\begin{DoxyCompactList}\small\item\em A class that handles passing data around the system In this class, the errors will be handled by returning a specified error value, either zero or null, and the calling class will then have to decide how to best handle the error. Testing for the methods in this class will be handled in a separate unit test project. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}
+\begin{DoxyCompactList}\small\item\em The purpose of this class is to act as an abstraction for the {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction}{Database\+Interaction}}}} class. It takes arguments passed in from the various {\bfseries{Window}} classes, parses them and then passes them onto the various {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction}{Database\+Interaction}}}} methods. All error handling is handled by the \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction}{Database\+Interaction}} methods, which just pass back null if there is an error. As the returns from all {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}} methods are {\bfseries{strings}} or {\bfseries{List$<$string$>$}}, a null is easily parsed as a failed query. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction}{Database\+Interaction}}
+\begin{DoxyCompactList}\small\item\em The purpose of this class is be used by \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} class objects to interact with the actual database. ~\newline
+ It contains all the logic neccesary to connect to, disconnect from, query, back up and restore a database. ~\newline
+ Each interaction is surrounded by a {\itshape try-\/catch} block to catch any exceptions and returns null to the calling method if an exception is caught. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_logger}{Logger}}
+\begin{DoxyCompactList}\small\item\em The static logger class to log specific application events to an external log file. It handles exceptions by catch any exception and returning a fail value of 1 to whichever method called it. \end{DoxyCompactList}\end{DoxyCompactItemize}
