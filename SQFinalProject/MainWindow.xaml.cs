@@ -27,25 +27,25 @@ namespace SQFinalProject {
     public partial class MainWindow : Window
     {
         //! Properties
-        public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
-        public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
-        public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info
-        Database loginDB { get; set; }                                  //<The database object for the TMS database
-        Database MarketPlace { get; set; }                              //<The database object for the Marketplace database
+        public const string configFilePath = @"..\..\config\TMS.txt";   //!<The path to the config file
+        public List<string> TMS_Database { get; set; }                  //!<The the string list to store TMS DB connection info
+        public List<string> MarketPlace_Database { get; set; }          //!<The the string list to store Marketplace DB connection info
+        Database loginDB { get; set; }                                  //!<The database object for the TMS database
+        Database MarketPlace { get; set; }                              //!<The database object for the Marketplace database
 
-        public string userName;                                         //<Stores the user name of the current user
+        public string userName;                                         //!<Stores the user name of the current user
 
         public MainWindow ( string name )
         { 
             InitializeComponent();
-            LoadConfig(); //<Call method that loads database connection info from config file
+            LoadConfig(); //!<Call method that loads database connection info from config file
             if (TMS_Database!=null)
             {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]); //< fill loginDB database object with connection info
+                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]); //!< fill loginDB database object with connection info
             }
-            if (MarketPlace_Database!=null)                             //< Connect to the Marketplace database if the config file loaded successfully
+            if (MarketPlace_Database!=null)                             //!< Connect to the Marketplace database if the config file loaded successfully
             {
-                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]); //< fill MarketPlace database object with connection info
+                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]); //!< fill MarketPlace database object with connection info
             }
 
             userName = name;
@@ -65,29 +65,29 @@ namespace SQFinalProject {
         /// 
         public void LoadConfig()
         {
-            if (File.Exists(configFilePath))                        //< If the config file exists, try to read from it
+            if (File.Exists(configFilePath))                        //!< If the config file exists, try to read from it
             {
-                StreamReader configFile = new StreamReader(configFilePath);//<open reader stream
-                string contents = configFile.ReadToEnd(); //< get string from config file
-                configFile.Close();//<close stream
+                StreamReader configFile = new StreamReader(configFilePath);//!<open reader stream
+                string contents = configFile.ReadToEnd(); //!< get string from config file
+                configFile.Close();//!<close stream
                 if (contents != "")
                 {
-                    string[] splitByDB = contents.Split('\n');//<split string by line
-                    foreach (string dbDetails in splitByDB)//<iterate through string
+                    string[] splitByDB = contents.Split('\n');//!<split string by line
+                    foreach (string dbDetails in splitByDB)//!<iterate through string
                     {
-                        string[] details = dbDetails.Split(' '); //<split string into individual fields
-                        if (details[0] == "TMS") //<If the info is for the TMS database
+                        string[] details = dbDetails.Split(' '); //!<split string into individual fields
+                        if (details[0] == "TMS") //!<If the info is for the TMS database
                         {
                             TMS_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++) //<iterate through parts of detials
+                            for (int i = 1; i < details.Count(); i++) //!<iterate through parts of detials
                             {
                                 TMS_Database.Add(details[i]);
                             }
                         }
-                        else if (details[0] == "MP")//<If the info is for the MarketPlace database
+                        else if (details[0] == "MP")//!<If the info is for the MarketPlace database
                         {
                             MarketPlace_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)//<iterate through parts of detials
+                            for (int i = 1; i < details.Count(); i++)//!<iterate through parts of detials
                             {
                                 MarketPlace_Database.Add(details[i]);
                             }
@@ -95,10 +95,10 @@ namespace SQFinalProject {
                     }
                 }
             }
-            else //<if file does not exist
+            else //!<if file does not exist
             {
-                FileStream newConfig = File.Create(configFilePath); //< create file
-                newConfig.Close();//<close file
+                FileStream newConfig = File.Create(configFilePath); //!< create file
+                newConfig.Close();//!<close file
             }                      
         }
 

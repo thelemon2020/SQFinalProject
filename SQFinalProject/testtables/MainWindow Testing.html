@@ -1,0 +1,39 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link type="text/css" rel="stylesheet" href="resources/sheet.css" >
+<style type="text/css">.ritz .waffle a { color: inherit; }.ritz .waffle .s1{background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:top;white-space:normal;overflow:hidden;word-wrap:break-word;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s0{background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}</style><div class="ritz grid-container" dir="ltr"><table class="waffle" cellspacing="0" cellpadding="0"><thead><tr><th class="row-header freezebar-origin-ltr"></th><th id="173429716C0" style="width:185px" class="column-headers-background">A</th><th id="173429716C1" style="width:203px" class="column-headers-background">B</th><th id="173429716C2" style="width:207px" class="column-headers-background">C</th><th id="173429716C3" style="width:191px" class="column-headers-background">D</th><th id="173429716C4" style="width:222px" class="column-headers-background">E</th><th id="173429716C5" style="width:163px" class="column-headers-background">F</th><th id="173429716C6" style="width:175px" class="column-headers-background">G</th><th id="173429716C7" style="width:175px" class="column-headers-background">H</th></tr></thead><tbody><tr style='height:20px;'><th id="173429716R0" style="height: 20px;" class="row-headers-background"><div class="row-header-wrapper" style="line-height: 20px;">1</div></th><td class="s0" dir="ltr">Test Name</td><td class="s0" dir="ltr">Description</td><td class="s0" dir="ltr">How is Test Conducted?</td><td class="s0" dir="ltr">Type of Test</td><td class="s0" dir="ltr">Sample Data Sets</td><td class="s0" dir="ltr">Expected Outcome</td><td class="s0" dir="ltr">Actual Outcome</td><td class="s0" dir="ltr">Notes</td></tr><tr style='height:20px;'><th id="173429716R1" style="height: 20px;" class="row-headers-background"><div class="row-header-wrapper" style="line-height: 20px;">2</div></th><td class="s1" dir="ltr">LoadConfigTest_Functional</td><td class="s1" dir="ltr">Ensure that information can be read out of the config file and loaded into variables</td><td class="s1" dir="ltr">Automated</td><td class="s1" dir="ltr">Functional</td><td class="s1" dir="ltr">filepath = &quot;C:\Users\Chris\source\repos\SQ\SQFinalProject\config\TMS.txt&quot;</td><td class="s1" dir="ltr">List&lt;string&gt; TMS_Database is not null</td><td class="s1"></td><td class="s1"></td></tr><tr style='height:20px;'><th id="173429716R2" style="height: 20px;" class="row-headers-background"><div class="row-header-wrapper" style="line-height: 20px;">3</div></th><td class="s1" dir="ltr">LoadConfigTest_Exception</td><td class="s1" dir="ltr">Ensure that if config file does not exist, that it is created</td><td class="s1" dir="ltr">Automated</td><td class="s1" dir="ltr">Functional</td><td class="s1" dir="ltr">&quot;C:\\Users\\Chris\\source\\repos\\SQ\\SQFinalProject\\config\\TMS3.txt&quot;</td><td class="s1" dir="ltr">File.Exists(&quot;C:\\Users\\Chris\\source\\repos\\SQ\\SQFinalProject\\config\\TMS3.txt&quot;) == true</td><td class="s1"></td><td class="s1"></td></tr></tbody></table></div>
+<script type='text/javascript' nonce="dJsXc4h8WXGMQ73i+PYuEg">
+function posObj(sheet, id, row, col, x, y) {
+  var rtl = false;
+  var sheetElement = document.getElementById(sheet);
+  if (!sheetElement) {
+    sheetElement = document.getElementById(sheet + '-grid-container');
+  }
+  if (sheetElement) {
+    rtl = sheetElement.getAttribute('dir') == 'rtl';
+  }
+  var r = document.getElementById(sheet+'R'+row);
+  var c = document.getElementById(sheet+'C'+col);
+  if (r && c) {
+    var objElement = document.getElementById(id);
+    var s = objElement.style;
+    var t = y;
+    while (r && r != sheetElement) {
+      t += r.offsetTop;
+      r = r.offsetParent;
+    }
+    var offsetX = x;
+    while (c && c != sheetElement) {
+      offsetX += c.offsetLeft;
+      c = c.offsetParent;
+    }
+    if (rtl) {
+      offsetX -= objElement.offsetWidth;
+    }
+    s.left = offsetX + 'px';
+    s.top = t + 'px';
+    s.display = 'block';
+    s.border = '1px solid #000000';
+  }
+};
+function posObjs() {
+};
+posObjs();</script>
