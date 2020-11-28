@@ -24,7 +24,7 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestBalancesFunctional()
         {
-            ContractDetails cd = new ContractDetails("testname", 0, 0, "Toronto", "Montreal", 0);
+            Contract cd = new Contract("testname", 0, 0, "Toronto", "Montreal", 0);
             cd.Cost = 500.0;
             cd.Distance = 1000;
             cd.Rate = 4.5;
@@ -44,8 +44,8 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestBalancesBoundary()
         {
-            ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Toronto", "Montreal", 0);
-            ContractDetails cd2 = new ContractDetails("Test2", 0, 0, "Toronto", "Montreal", 0);
+            Contract cd1 = new Contract("Test", 0, 0, "Toronto", "Montreal", 0);
+            Contract cd2 = new Contract("Test2", 0, 0, "Toronto", "Montreal", 0);
 
             cd1.Cost = 500.0;
             cd2.Cost = 499.999999999;
@@ -71,8 +71,8 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestBalancesBoundary2()
         {
-            ContractDetails cd = new ContractDetails("Test", 1, 20, "Toronto", "Montreal", 1);
-            ContractDetails cd2 = new ContractDetails("test2", 1, 20, "Toronto", "Montreal", 1);
+            Contract cd = new Contract("Test", 1, 20, "Toronto", "Montreal", 1);
+            Contract cd2 = new Contract("test2", 1, 20, "Toronto", "Montreal", 1);
             cd.LTLUpCharge = 1.08;
             cd2.LTLUpCharge = 1.079999999999999999;
             cd.ReeferUpCharge = 1.07;
@@ -99,10 +99,10 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestContractList()
         {
-            ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd2 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd3 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            List<ContractDetails> tmpList = new List<ContractDetails>();
+            Contract cd1 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd2 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd3 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            List<Contract> tmpList = new List<Contract>();
             tmpList.Add(cd1);
             tmpList.Add(cd2);
             tmpList.Add(cd3);
@@ -122,10 +122,10 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestContractList2()
         {
-            ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd2 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd3 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            List<ContractDetails> tmpList = new List<ContractDetails>();
+            Contract cd1 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd2 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd3 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            List<Contract> tmpList = new List<Contract>();
             tmpList.Add(cd1);
             tmpList.Add(cd2);
             tmpList.Add(cd3);
@@ -145,10 +145,10 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestUncalcContracts()
         {
-            ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd2 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd3 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            List<ContractDetails> tmpList = new List<ContractDetails>();
+            Contract cd1 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd2 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd3 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            List<Contract> tmpList = new List<Contract>();
             tmpList.Add(cd1);
             tmpList.Add(cd2);
             tmpList.Add(cd3);
@@ -168,10 +168,10 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void TestUncalcContracts2()
         {
-            ContractDetails cd1 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd2 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            ContractDetails cd3 = new ContractDetails("Test", 0, 0, "Windsor", "Moncton", 1);
-            List<ContractDetails> tmpList = new List<ContractDetails>();
+            Contract cd1 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd2 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            Contract cd3 = new Contract("Test", 0, 0, "Windsor", "Moncton", 1);
+            List<Contract> tmpList = new List<Contract>();
 
             cd1.Cost = 500;
             cd1.Distance = 200;

@@ -15,26 +15,26 @@ namespace SQFinalProject
             return account;
         }
 
-        public static Account CreateNewAccount(ContractDetails contract)
+        public static Account CreateNewAccount(Contract contract)
         {
             Account account = new Account(contract);
             return account;
         }
 
-        public static Account CreateNewAccount(List<ContractDetails> contracts)
+        public static Account CreateNewAccount(List<Contract> contracts)
         {
             Account account = new Account(contracts);
             return account;
         }
 
-        public static void AddContractToAccount(Account account, ContractDetails contract)
+        public static void AddContractToAccount(Account account, Contract contract)
         {
             account.AddNewContract(contract.ID, contract);
         }
 
-        public static ContractDetails CreateNewContract(string name, int job, int quant, string origin, string dest, int van)
+        public static Contract CreateNewContract(string name, int job, int quant, string origin, string dest, int van)
         {
-            ContractDetails contract = new ContractDetails(name, job, quant, origin, dest, van);
+            Contract contract = new Contract(name, job, quant, origin, dest, van);
             return contract;
         }
         

@@ -22,7 +22,7 @@ namespace SQFinalProject.ContactMgmtBilling
     /// 
     /// \author <i>Nick Byam</i>
     /// 
-    public class ContractDetails
+    public class Contract
     {
         static private int ContractID = 0;
         //! Properties
@@ -57,7 +57,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \param - dest - <b>string</b> - The destination city
         /// \param - van - <b>int</b> - The van type identified by an integer
         /// \returns - <b>Nothing</b>
-        public ContractDetails(string name, int job, int quant, string origin, string dest, int van)
+        public Contract(string name, int job, int quant, string origin, string dest, int van)
         {
             ID = ContractID;
             ClientName = name;

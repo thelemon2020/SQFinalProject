@@ -26,8 +26,8 @@ namespace SQFinalProject.ContactMgmtBilling
     public class Account
     {
         //! Properties
-        private Dictionary<int, ContractDetails> Contracts; //< A collection of all the contracts associated with an account
-        private Dictionary<int, ContractDetails> UncalculatedContracts;//< A collection of all contracts whose cost has not yet been calculated
+        private Dictionary<int, Contract> Contracts; //< A collection of all the contracts associated with an account
+        private Dictionary<int, Contract> UncalculatedContracts;//< A collection of all contracts whose cost has not yet been calculated
         public double Balance { get; set; } //< The total balance owed on an account
         public string AccountName { get; set; } //< The name of the account
         public int AccountID { get; set; } //< Th Id number of the account
@@ -40,8 +40,8 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - <b>Nothing</b>
         public Account()
         {
-            Contracts = new Dictionary<int, ContractDetails>();
-            UncalculatedContracts = new Dictionary<int, ContractDetails>();
+            Contracts = new Dictionary<int, Contract>();
+            UncalculatedContracts = new Dictionary<int, Contract>();
             Balance = 0.00;
         }
 
@@ -53,11 +53,11 @@ namespace SQFinalProject.ContactMgmtBilling
         /// dictionary.
         /// \param - contract - <b>ContractDetails</b> - The class containing all of the details relating to the contract from the marketplace
         /// \returns - <b>Nothing</b>
-        public Account(ContractDetails contract)
+        public Account(Contract contract)
         {
             AccountName = contract.ClientName;
-            Contracts = new Dictionary<int, ContractDetails>();
-            UncalculatedContracts = new Dictionary<int, ContractDetails>();
+            Contracts = new Dictionary<int, Contract>();
+            UncalculatedContracts = new Dictionary<int, Contract>();
             AddNewContract(contract.ID, contract);
         }
 
@@ -69,12 +69,12 @@ namespace SQFinalProject.ContactMgmtBilling
         /// UncalculatedContract dictionary.
         /// \param - contracts - <b>List<ContractDetails></b> - A list of contracts to be added to the same account.
         /// \returns - <b>Nothing</b>
-        public Account(List<ContractDetails> contracts)
+        public Account(List<Contract> contracts)
         {
             AccountName = contracts[0].ClientName;
-            Contracts = new Dictionary<int, ContractDetails>();
-            UncalculatedContracts = new Dictionary<int, ContractDetails>();
-            foreach (ContractDetails contract in contracts)
+            Contracts = new Dictionary<int, Contract>();
+            UncalculatedContracts = new Dictionary<int, Contract>();
+            foreach (Contract contract in contracts)
             {
                 AddNewContract(contract.ID, contract);
             }
@@ -87,7 +87,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \param - contractID - <b>int</b> - The contract's unique id number
         /// \param - contract - <b>ContractDetails</b> - The class containing all the details relating to the contract from the marketplace
         /// \returns - <b>Nothing</b>
-        public void AddNewContract(int contractID, ContractDetails contract)
+        public void AddNewContract(int contractID, Contract contract)
         {
             Contracts.Add(contractID, contract);
             if(this.AccountName == "")
@@ -108,7 +108,7 @@ namespace SQFinalProject.ContactMgmtBilling
         {
             List<string> contractList = new List<string>();
 
-            foreach(KeyValuePair<int, ContractDetails> entry in Contracts)
+            foreach(KeyValuePair<int, Contract> entry in Contracts)
             {
                 contractList.Add(entry.Value.ToString());
             }
@@ -126,7 +126,7 @@ namespace SQFinalProject.ContactMgmtBilling
         {
             List<string> contracts = new List<string>();
 
-            foreach(KeyValuePair<int, ContractDetails> entry in UncalculatedContracts)
+            foreach(KeyValuePair<int, Contract> entry in UncalculatedContracts)
             {
                 contracts.Add(entry.Value.ToString());
             }
@@ -142,7 +142,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// has not yet been calculated.
         /// \param - contract - <b>ContractDetails</b> - The contract to be evaluated to find its cost.
         /// \returns - <b>Nothing</b>
-        public void AddBalance(ContractDetails contract)
+        public void AddBalance(Contract contract)
         {
             if(contract.Cost > 0.0) // make sure a basic cost has been calculated for the contract first
             {
