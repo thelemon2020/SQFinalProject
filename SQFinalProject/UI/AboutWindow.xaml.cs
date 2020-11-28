@@ -20,7 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SQFinalProject {
+namespace SQFinalProject.UI {
     ///
     /// \class <b>AboutW</b>
     /// 
@@ -28,8 +28,8 @@ namespace SQFinalProject {
     /// 
     /// \author <i>Deric Kruse</i>
     /// 
-    public partial class AboutW : Window {
-        public AboutW () {
+    public partial class AboutWindow : Window {
+        public AboutWindow () {
             InitializeComponent();
         }
 

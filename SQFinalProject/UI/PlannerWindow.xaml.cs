@@ -16,15 +16,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SQFinalProject.ContactMgmtBilling;
 
-namespace SQFinalProject {
+namespace SQFinalProject.UI {
     ///
     /// \class <b>MainWindow</b>
     /// 
     /// \brief This class holds all the event handlers for for the main WPF window.  It has data members for the TMS database & the Marketplace database.
     /// 
-    /// \author <i>Deric Kruse, Chris Lemon</i>
+    /// \author <i>Deric Kruse</i>
     /// 
-    public partial class MainWindow : Window
+    public partial class PlannerWindow : Window
     {
         //! Properties
         public const string configFilePath = @"..\..\config\TMS.txt";   //!<The path to the config file
@@ -35,8 +35,7 @@ namespace SQFinalProject {
 
         public string userName;                                         //!<Stores the user name of the current user
 
-        public MainWindow ( string name )
-        { 
+        public PlannerWindow ( string name ) {
             InitializeComponent();
             LoadConfig(); //!<Call method that loads database connection info from config file
             if (TMS_Database!=null)
@@ -194,7 +193,7 @@ namespace SQFinalProject {
         /// \return - <b>Nothing</b>
         ///
         private void About_Click ( object sender,RoutedEventArgs e ) {
-            AboutW aboutBox = new AboutW();
+            AboutWindow aboutBox = new AboutWindow();
             aboutBox.Owner = this;
             aboutBox.ShowDialog();
         }

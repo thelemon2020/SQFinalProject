@@ -40,6 +40,7 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - <b>Nothing</b>
         /// 
         /// \see Account(Contract contract)
+        /// \see Account(List<Contract> contracts)
         public Account()
         {
             Contracts = new Dictionary<int, Contract>();
@@ -55,6 +56,9 @@ namespace SQFinalProject.ContactMgmtBilling
         /// dictionary.
         /// \param - contract - <b>ContractDetails</b> - The class containing all of the details relating to the contract from the marketplace
         /// \returns - <b>Nothing</b>
+        /// 
+        /// \see Account()
+        /// \see Account(List<Contract> contracts)
         public Account(Contract contract)
         {
             AccountName = contract.ClientName;
@@ -71,6 +75,9 @@ namespace SQFinalProject.ContactMgmtBilling
         /// UncalculatedContract dictionary.
         /// \param - contracts - <b>List<ContractDetails></b> - A list of contracts to be added to the same account.
         /// \returns - <b>Nothing</b>
+        /// 
+        /// \see Account(Contract contract)
+        /// \see Account()
         public Account(List<Contract> contracts)
         {
             AccountName = contracts[0].ClientName;
@@ -89,10 +96,11 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \param - contractID - <b>int</b> - The contract's unique id number
         /// \param - contract - <b>ContractDetails</b> - The class containing all the details relating to the contract from the marketplace
         /// \returns - <b>Nothing</b>
+        /// 
         public void AddNewContract(int contractID, Contract contract)
         {
             Contracts.Add(contractID, contract);
-            if(this.AccountName == "")
+            if(AccountName == "")
             {
                 AccountName = contract.ClientName;
             }
@@ -106,6 +114,8 @@ namespace SQFinalProject.ContactMgmtBilling
         /// The ContractDetails' overridden ToString method so that each string entry in the list is meaningful.
         /// \param - <b>Nothing</b>
         /// \returns - contractList <b>List<String></b> - A list containing all contracts expressed as strings
+        /// 
+        /// \see GetUncalcContracts()
         public List<string> GetAllContracts()
         {
             List<string> contractList = new List<string>();
@@ -119,11 +129,13 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
-        /// \brief 
+        /// \brief A method that returns a list of uncalculated contracts
         /// \ details <b>Details</b>
+        /// A Method that accesses the UncalculatedContracts Dictionary, and adds each entry to a List in its string expression
+        /// \param - <b>Nothing</b>
+        /// \returns - contracts - <b>List<string></b> - The list of uncalculated contracts in their string expression
         /// 
-        /// \param - 
-        /// \returns - 
+        /// \see GetAllContracts()
         public List<string> GetUncalcContracts()
         {
             List<string> contracts = new List<string>();
@@ -144,6 +156,9 @@ namespace SQFinalProject.ContactMgmtBilling
         /// has not yet been calculated.
         /// \param - contract - <b>ContractDetails</b> - The contract to be evaluated to find its cost.
         /// \returns - <b>Nothing</b>
+        /// 
+        /// \see AddBalance(double rate, double distance)
+        /// \see AddBalance(double rate, double distance, int quantity)
         public void AddBalance(Contract contract)
         {
             if(contract.Cost > 0.0) // make sure a basic cost has been calculated for the contract first
@@ -192,6 +207,9 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \param - rate - <b>double</b> - The rate set by a company offering a FTL delivery service
         /// \param - distance - <b>double</b> - The distance of the trip
         /// \returns - balance <b>double</b> - The balance calculated from the rate and distance
+        /// 
+        /// \see AddBalance(Contract contract)
+        /// \see AddBalance(double rate, double distance, int quantity)
         private double AddBalance(double rate, double distance)
         {
             double balance = rate * distance;
@@ -206,7 +224,10 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \param - rate - <b>double</b> - The rate set by a company offering a LTL delivery service
         /// \param - distance - <b>double</b> - The distance of the trip
         /// \param - quantity - <b>int</b> - The amount of pallets to be delivered
-        /// \returns - 
+        /// \returns - balance - <b>double</b> - The balance calculated from the rate, distance, and pallet quantity
+        /// 
+        /// \see AddBalance(Contract contract)
+        /// \see AddBalance(double rate, double distance)
         private double AddBalance(double rate, double distance, int quantity)
         {
             double balance = rate * distance * (double)quantity;
