@@ -12,7 +12,7 @@ namespace SQFinalProject
         //  METHOD:		CreateNewAccount
         /// \brief This method creates a new customer account with no parameters.
         /// \details <b>Details</b>
-        /// This method creates a new empty constructor given no parameters
+        /// This method creates a new empty customer account given no parameters
         /// \param - <b>None</b>
         /// 
         /// \return - The new Account object that was created
@@ -24,15 +24,14 @@ namespace SQFinalProject
         }
 
 
-
-        //  METHOD:		LoadConfig
-        /// \brief Loads the database connection details from an external config file
+        
+        //  METHOD:		CreateNewAccount
+        /// \brief This method creates a new customer account with a contract as a parameter.
         /// \details <b>Details</b>
-        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
-        /// and parses it out into data that is usable to connect to one or more databases
-        /// \param - <b>None</b>
+        /// This method creates a new customer account given a contract as a parameter.
+        /// \param - <b>contract:</b>  the Contract object to add to the new account
         /// 
-        /// \return - <b>Nothing</b>
+        /// \return - The new Account object that was created
         /// 
         public static Account CreateNewAccount(Contract contract)
         {
@@ -40,12 +39,33 @@ namespace SQFinalProject
             return account;
         }
 
+
+        
+        //  METHOD:		CreateNewAccount
+        /// \brief This method creates a new customer account with a list of contract objects as a parameter.
+        /// \details <b>Details</b>
+        /// This method creates a new customer account given a list of contracts currently meant for the account.
+        /// \param - <b>contracts:</b>  the list of Contract objects to initialize the new account with
+        /// 
+        /// \return - The new Account object that was created
+        /// 
         public static Account CreateNewAccount(List<Contract> contracts)
         {
             Account account = new Account(contracts);
             return account;
         }
 
+
+        
+        //  METHOD:		AddContractToAccount
+        /// \brief This method adds a contract to a given account taking both as parameters.
+        /// \details <b>Details</b>
+        /// This method takes a Contract as a parameter and adds that Contract to an Account, also given by a parameter.
+        /// \param - <b>account:</b>    the Account to add the Contract to
+        /// \param - <b>contract:</b>   the Contract object to add to the Account
+        /// 
+        /// \return - void
+        /// 
         public static void AddContractToAccount(Account account, Contract contract)
         {
             account.AddNewContract(contract.ID, contract);
