@@ -1,0 +1,153 @@
+\hypertarget{class_s_q_final_project_1_1_login_window}{}\doxysection{S\+Q\+Final\+Project.\+Login\+Window Class Reference}
+\label{class_s_q_final_project_1_1_login_window}\index{SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}}
+
+
+Interaction logic for Login\+Window.\+xaml  
+
+
+Inheritance diagram for S\+Q\+Final\+Project.\+Login\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_q_final_project_1_1_login_window}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a887f349a4b5eea3d69942741bc8a10ab}{Login\+Window}} ()
+\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a2a0febd1f0809ba80dc12db4bfe21d31}{Load\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Loads the database connection details from an external config file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a98935bd64523c512c9ee0e677f86b5df}{Initialize\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Initialize\+Component \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a98935bd64523c512c9ee0e677f86b5df}{Initialize\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Initialize\+Component \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_aa0027562e605da203ba0efa242f27740}\label{class_s_q_final_project_1_1_login_window_aa0027562e605da203ba0efa242f27740}} 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_aa0027562e605da203ba0efa242f27740}{user\+Info}}
+\begin{DoxyCompactList}\small\item\em String list to store the info on the user that is logging in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a54dd941637ab59e0ed4249eb195b3e2b}{config\+File\+Path}} = @\char`\"{}..\textbackslash{}..\textbackslash{}config\textbackslash{}\+T\+M\+S.\+txt\char`\"{}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a8f994d87a1cc5d67046d1a3882bfdd3d}\label{class_s_q_final_project_1_1_login_window_a8f994d87a1cc5d67046d1a3882bfdd3d}} 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a8f994d87a1cc5d67046d1a3882bfdd3d}{T\+M\+S\+\_\+\+Database}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The the string list to store T\+MS DB connection info. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a4f11fbaa2b4b11fd3da379d27dcaae7d}\label{class_s_q_final_project_1_1_login_window_a4f11fbaa2b4b11fd3da379d27dcaae7d}} 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_login_window_a4f11fbaa2b4b11fd3da379d27dcaae7d}{Market\+Place\+\_\+\+Database}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The the string list to store Marketplace DB connection info for the config parser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interaction logic for Login\+Window.\+xaml 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_login_window}{Login\+Window}}
+
+Definition at line 20 of file Login\+Window.\+xaml.\+cs.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a887f349a4b5eea3d69942741bc8a10ab}\label{class_s_q_final_project_1_1_login_window_a887f349a4b5eea3d69942741bc8a10ab}} 
+\index{SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}!LoginWindow@{LoginWindow}}
+\index{LoginWindow@{LoginWindow}!SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{LoginWindow()}{LoginWindow()}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Login\+Window.\+Login\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+$<$ Parse the config file
+
+$<$ Connect to the T\+MS database if the config file loaded successfully
+
+Definition at line 29 of file Login\+Window.\+xaml.\+cs.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a98935bd64523c512c9ee0e677f86b5df}\label{class_s_q_final_project_1_1_login_window_a98935bd64523c512c9ee0e677f86b5df}} 
+\index{SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}!InitializeComponent@{InitializeComponent}}
+\index{InitializeComponent@{InitializeComponent}!SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{InitializeComponent()}{InitializeComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Login\+Window.\+Initialize\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initialize\+Component 
+
+
+
+Definition at line 82 of file Login\+Window.\+g.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a98935bd64523c512c9ee0e677f86b5df}\label{class_s_q_final_project_1_1_login_window_a98935bd64523c512c9ee0e677f86b5df}} 
+\index{SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}!InitializeComponent@{InitializeComponent}}
+\index{InitializeComponent@{InitializeComponent}!SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{InitializeComponent()}{InitializeComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Login\+Window.\+Initialize\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initialize\+Component 
+
+
+
+Definition at line 82 of file Login\+Window.\+g.\+i.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a2a0febd1f0809ba80dc12db4bfe21d31}\label{class_s_q_final_project_1_1_login_window_a2a0febd1f0809ba80dc12db4bfe21d31}} 
+\index{SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}!LoadConfig@{LoadConfig}}
+\index{LoadConfig@{LoadConfig}!SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{LoadConfig()}{LoadConfig()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Login\+Window.\+Load\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Loads the database connection details from an external config file. 
+
+{\bfseries{Details}} Checks to see if the config files exists and creates it if it doesn\textquotesingle{}t. If it does, the method reads from the file and parses it out into data that is usable to connect to one or more databases 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{None}}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$ If the config file exists, try to read from it
+
+$<$ Grab each line so it can be dealt with individually
+
+$<$ Pull the individual fields from the line of the config file
+
+$<$ If the line pertains to the T\+MS database, assign the values to the T\+MS string list
+
+$<$ If the line pertains to the Marketplace database, assign the values to the Marketplace string list
+
+Definition at line 50 of file Login\+Window.\+xaml.\+cs.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_login_window_a54dd941637ab59e0ed4249eb195b3e2b}\label{class_s_q_final_project_1_1_login_window_a54dd941637ab59e0ed4249eb195b3e2b}} 
+\index{SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}!configFilePath@{configFilePath}}
+\index{configFilePath@{configFilePath}!SQFinalProject.LoginWindow@{SQFinalProject.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{configFilePath}{configFilePath}}
+{\footnotesize\ttfamily const string S\+Q\+Final\+Project.\+Login\+Window.\+config\+File\+Path = @\char`\"{}..\textbackslash{}..\textbackslash{}config\textbackslash{}\+T\+M\+S.\+txt\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. 
+
+The path to the config file 
+
+Definition at line 22 of file Login\+Window.\+xaml.\+cs.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chris/source/repos/\+S\+Q/\+S\+Q\+Final\+Project/Login\+Window.\+xaml.\+cs\item 
+C\+:/\+Users/\+Chris/source/repos/\+S\+Q/\+S\+Q\+Final\+Project/obj/\+Debug/Login\+Window.\+g.\+cs\item 
+C\+:/\+Users/\+Chris/source/repos/\+S\+Q/\+S\+Q\+Final\+Project/obj/\+Debug/Login\+Window.\+g.\+i.\+cs\end{DoxyCompactItemize}

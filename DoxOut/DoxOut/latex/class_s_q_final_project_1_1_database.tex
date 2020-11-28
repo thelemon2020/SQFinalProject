@@ -1,0 +1,354 @@
+\hypertarget{class_s_q_final_project_1_1_database}{}\doxysection{S\+Q\+Final\+Project.\+Database Class Reference}
+\label{class_s_q_final_project_1_1_database}\index{SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_database_a11e16937fe84d23fcbfc0184e930abd6}{Database}} (string db\+IP, string user\+Name, string password, string table)
+\begin{DoxyCompactList}\small\item\em To instantiate a new \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} object with arguments supplied from a config file. \end{DoxyCompactList}\item 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_database_aed09d6cf4adcbed7e0f0a87f3c7a5475}{Execute\+Command}} ()
+\begin{DoxyCompactList}\small\item\em Used to send a command to a database and get a response back. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_database_ae1fa67bbf3264335cafc8fcbe057d3e9}{Make\+Insert\+Command}} (string table, List$<$ string $>$ values)
+\begin{DoxyCompactList}\small\item\em Creates an Insert Command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_database_ab7f688bb003d9d0153067ace21259cb1}{Make\+Insert\+Command}} (string table, List$<$ string $>$ fields, List$<$ string $>$ values)
+\begin{DoxyCompactList}\small\item\em Creates an Insert Command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_database_a0f2a85c359020d28dcee30fcf9027910}{Make\+Select\+Command}} (List$<$ string $>$ fields, string table, Dictionary$<$ string, string $>$ conditions)
+\begin{DoxyCompactList}\small\item\em Creates an Select Command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_database_a096d4f1a9566c7e899f1491b42020166}{Make\+Update\+Command}} (string table, Dictionary$<$ string, string $>$ update\+Values, Dictionary$<$ string, string $>$ conditions)
+\begin{DoxyCompactList}\small\item\em Creates an Update Command. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_database_a389725cab79f42591317b9e90498b3a1}{Back\+It\+Up}} (string file\+Path)
+\begin{DoxyCompactList}\small\item\em Creates an Back\+Up script of a {\bfseries{My\+Sql\+Database}} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_database_a9f72a8978e3ca94400cb0e3626181dd1}{Restore}} (string file\+Path)
+\begin{DoxyCompactList}\small\item\em Restores a {\bfseries{My\+Sql\+Database}} from a backup script. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_database_ae567d065cbf861c810c282b016a4a1f9}{connection\+String}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_ab4b2a1eff7175dcd6e1fac9f60d47dd9}\label{class_s_q_final_project_1_1_database_ab4b2a1eff7175dcd6e1fac9f60d47dd9}} 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_database_ab4b2a1eff7175dcd6e1fac9f60d47dd9}{ip}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The ip of the database to connect to. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_ad1de976f754458947afe96d32a5ae1cc}\label{class_s_q_final_project_1_1_database_ad1de976f754458947afe96d32a5ae1cc}} 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_database_ad1de976f754458947afe96d32a5ae1cc}{user}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The username used to login to the database. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_aa013c6f885e0ec552d437f4be89e1dc4}\label{class_s_q_final_project_1_1_database_aa013c6f885e0ec552d437f4be89e1dc4}} 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_database_aa013c6f885e0ec552d437f4be89e1dc4}{pass}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The password used to login to the database. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a7cf835994f3342ed737d4d9f6fa1d601}\label{class_s_q_final_project_1_1_database_a7cf835994f3342ed737d4d9f6fa1d601}} 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_database_a7cf835994f3342ed737d4d9f6fa1d601}{schema}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The database schema to interact with. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_ab09606220689165617c2a603d4dbed2d}\label{class_s_q_final_project_1_1_database_ab09606220689165617c2a603d4dbed2d}} 
+My\+Sql\+Connection \mbox{\hyperlink{class_s_q_final_project_1_1_database_ab09606220689165617c2a603d4dbed2d}{current\+Connection}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The active connection with the database. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a399fc6e78b64b6d8b19f7ea175dea986}\label{class_s_q_final_project_1_1_database_a399fc6e78b64b6d8b19f7ea175dea986}} 
+My\+Sql\+Command \mbox{\hyperlink{class_s_q_final_project_1_1_database_a399fc6e78b64b6d8b19f7ea175dea986}{S\+Q\+L\+Command}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The command to be sent to the server. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a8f417e3c75238e5c5b3687c39cdccfbe}\label{class_s_q_final_project_1_1_database_a8f417e3c75238e5c5b3687c39cdccfbe}} 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_database_a8f417e3c75238e5c5b3687c39cdccfbe}{user\+Command}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The command to be converted to My\+Sql\+Command object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 22 of file Database.\+cs.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a11e16937fe84d23fcbfc0184e930abd6}\label{class_s_q_final_project_1_1_database_a11e16937fe84d23fcbfc0184e930abd6}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!Database@{Database}}
+\index{Database@{Database}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{Database()}{Database()}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Database.\+Database (\begin{DoxyParamCaption}\item[{string}]{db\+IP,  }\item[{string}]{user\+Name,  }\item[{string}]{password,  }\item[{string}]{table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+To instantiate a new \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} object with arguments supplied from a config file. 
+
+{\bfseries{Details}} Instantiates a \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} object, using arguments that are held in an external config file. It sets enough properties to create a My\+S\+Q\+L\+Connection object
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & db\+IP -\/ {\bfseries{string}} -\/ The ip address of the database to be connected to \\
+\hline
+{\em -\/} & user\+Name -\/ {\bfseries{string}} -\/ the username used to log in to the server \\
+\hline
+{\em -\/} & password -\/ {\bfseries{string}} -\/ the password used to log in to the server \\
+\hline
+{\em -\/} & table -\/ {\bfseries{string}} -\/ the schema to be manipulated\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$set starting properties to be able to connect to server
+
+Definition at line 45 of file Database.\+cs.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a389725cab79f42591317b9e90498b3a1}\label{class_s_q_final_project_1_1_database_a389725cab79f42591317b9e90498b3a1}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!BackItUp@{BackItUp}}
+\index{BackItUp@{BackItUp}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{BackItUp()}{BackItUp()}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Database.\+Back\+It\+Up (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates an Back\+Up script of a {\bfseries{My\+Sql\+Database}} 
+
+{\bfseries{Details}} Connects to a database and uses a 3rd party library called My\+Sql\+Back\+Up.\+Net \href{https://www.codeproject.com/Articles/256466/MySqlBackup-NET}{\texttt{ }} to create a backup script of the database. The connection is then closed
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & file\+Path -\/ {\bfseries{string}} -\/ the path to save the backup script to\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$create connection
+
+$<$try to back up database and find out if it worked or not
+
+$<$close the connection
+
+$<$return if backup was successful or not
+
+Definition at line 271 of file Database.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_aed09d6cf4adcbed7e0f0a87f3c7a5475}\label{class_s_q_final_project_1_1_database_aed09d6cf4adcbed7e0f0a87f3c7a5475}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!ExecuteCommand@{ExecuteCommand}}
+\index{ExecuteCommand@{ExecuteCommand}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{ExecuteCommand()}{ExecuteCommand()}}
+{\footnotesize\ttfamily List$<$string$>$ S\+Q\+Final\+Project.\+Database.\+Execute\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Used to send a command to a database and get a response back. 
+
+{\bfseries{Details}} Calls other methods that allow for a connection to a database to be made and a query to be made to the database
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{None}}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ S\+Q\+L\+Return -\/ {\bfseries{List$<$List$<$string$>$$>$}} -\/ This list holds whatever the response from the database was 
+\end{DoxyReturn}
+$<$ create a connection to a database
+
+$<$creat a My\+Sql\+Command object to interact with database
+
+$<$query database and get the return
+
+$<$close the connection to the database
+
+$<$catch any exception that may be thrown during the query process
+
+$<$set the query return to null to signify a problem with the query
+
+$<$return the query results to the calling function
+
+Definition at line 63 of file Database.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_ab7f688bb003d9d0153067ace21259cb1}\label{class_s_q_final_project_1_1_database_ab7f688bb003d9d0153067ace21259cb1}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!MakeInsertCommand@{MakeInsertCommand}}
+\index{MakeInsertCommand@{MakeInsertCommand}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{MakeInsertCommand()}{MakeInsertCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Database.\+Make\+Insert\+Command (\begin{DoxyParamCaption}\item[{string}]{table,  }\item[{List$<$ string $>$}]{fields,  }\item[{List$<$ string $>$}]{values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates an Insert Command. 
+
+{\bfseries{Details}} Uses a {\itshape String\+Builder} to combine parameters into a usable S\+QL Command. It can take any number of variables. ~\newline
+ This is the overloaded method that is used when the entire row isn\textquotesingle{}t being filled
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & table -\/ {\bfseries{string}} -\/ the table to be inserted into \\
+\hline
+{\em -\/} & fields -\/ {\bfseries{List$<$string$>$}} -\/ the columns to insert into \\
+\hline
+{\em -\/} & values -\/ {\bfseries{List$<$string$>$}} -\/ the new values to be inserted\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$instantiate a stringbuiler for use in building the query string
+
+$<$set the initial part of the query
+
+$<$iterate through each string in the list to format which columns to insert the data into
+
+$<$iterate through values to format the order of the data being inserted
+
+$<$ set user\+Command to the newly created query string
+
+Definition at line 123 of file Database.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_ae1fa67bbf3264335cafc8fcbe057d3e9}\label{class_s_q_final_project_1_1_database_ae1fa67bbf3264335cafc8fcbe057d3e9}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!MakeInsertCommand@{MakeInsertCommand}}
+\index{MakeInsertCommand@{MakeInsertCommand}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{MakeInsertCommand()}{MakeInsertCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Database.\+Make\+Insert\+Command (\begin{DoxyParamCaption}\item[{string}]{table,  }\item[{List$<$ string $>$}]{values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates an Insert Command. 
+
+{\bfseries{Details}} Uses a {\itshape String\+Builder} to combine parameters into a usable S\+QL Command. It can take any number of variables. ~\newline
+ This is the default method, when the number of values being inserted matched the number of columns in a table
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & table -\/ {\bfseries{string}} -\/ the table to be inserted into \\
+\hline
+{\em -\/} & values -\/ {\bfseries{List$<$string$>$}} -\/ the new values to be inserted\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$instantiate a stringbuiler for use in building the query string
+
+$<$set the initial part of the query
+
+$<$iterate through each string in the list to format the insert query string
+
+$<$set user command variable to newly created query string
+
+Definition at line 90 of file Database.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a0f2a85c359020d28dcee30fcf9027910}\label{class_s_q_final_project_1_1_database_a0f2a85c359020d28dcee30fcf9027910}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!MakeSelectCommand@{MakeSelectCommand}}
+\index{MakeSelectCommand@{MakeSelectCommand}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{MakeSelectCommand()}{MakeSelectCommand()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Database.\+Make\+Select\+Command (\begin{DoxyParamCaption}\item[{List$<$ string $>$}]{fields,  }\item[{string}]{table,  }\item[{Dictionary$<$ string, string $>$}]{conditions }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates an Select Command. 
+
+{\bfseries{Details}} Uses a {\itshape String\+Builder} to combine parameters into a usable S\+QL Command. It can take any number of variables. ~\newline
+ The command is used to get information out of the database
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & fields -\/ {\bfseries{List$<$string$>$}} -\/ the columns to be returned \\
+\hline
+{\em -\/} & table -\/ {\bfseries{string}} -\/ the table to be inserted into \\
+\hline
+{\em -\/} & conditions -\/ {\bfseries{Dictionary$<$string, string$>$}} -\/ the conditions that need to be met for a row or parts of a row to be returned\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$instantiate string builder for use in building a query string
+
+$<$ set the first part of the query string
+
+$<$iterate through the fields that are to be selected and append them to string
+
+$<$check if there are optional select conditions
+
+$<$ add conditional W\+H\+E\+RE clause
+
+$<$iterate through conditions and append them to string
+
+$<$ set user\+Command to the newly created query string
+
+Definition at line 171 of file Database.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a096d4f1a9566c7e899f1491b42020166}\label{class_s_q_final_project_1_1_database_a096d4f1a9566c7e899f1491b42020166}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!MakeUpdateCommand@{MakeUpdateCommand}}
+\index{MakeUpdateCommand@{MakeUpdateCommand}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{MakeUpdateCommand()}{MakeUpdateCommand()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Database.\+Make\+Update\+Command (\begin{DoxyParamCaption}\item[{string}]{table,  }\item[{Dictionary$<$ string, string $>$}]{update\+Values,  }\item[{Dictionary$<$ string, string $>$}]{conditions }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates an Update Command. 
+
+{\bfseries{Details}} Uses a {\itshape String\+Builder} to combine parameters into a usable S\+QL Command. It can take any number of variables. ~\newline
+ The command is used to update a field or fields in a table
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & table -\/ {\bfseries{string}} -\/ the table to be inserted into \\
+\hline
+{\em -\/} & update\+Values -\/ {\bfseries{Dictionary$<$string, string$>$}} -\/ the columns to be updated and the values to be used \\
+\hline
+{\em -\/} & conditions -\/ {\bfseries{Dictionary$<$string, string$>$}} -\/ the conditions that need to be met for a row or parts of a row to be updated\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$instantiate string builder for use in building a query string
+
+$<$set up
+
+$<$iterate through conditions and append them to string
+
+$<$ set user\+Command to the newly created query string
+
+Definition at line 224 of file Database.\+cs.
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_a9f72a8978e3ca94400cb0e3626181dd1}\label{class_s_q_final_project_1_1_database_a9f72a8978e3ca94400cb0e3626181dd1}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!Restore@{Restore}}
+\index{Restore@{Restore}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{Restore()}{Restore()}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Database.\+Restore (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Restores a {\bfseries{My\+Sql\+Database}} from a backup script. 
+
+{\bfseries{Details}} Connects to a database and uses a 3rd party library called My\+Sql\+Back\+Up.\+Net \href{https://www.codeproject.com/Articles/256466/MySqlBackup-NET}{\texttt{ }} to restore the database from a backup script. The connection is then closed
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & file\+Path -\/ {\bfseries{string}} -\/ the path that the backup script is saved to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$connect to database
+
+$<$restore database
+
+$<$close connection
+
+$<$return if it worked or not
+
+Definition at line 288 of file Database.\+cs.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_ae567d065cbf861c810c282b016a4a1f9}\label{class_s_q_final_project_1_1_database_ae567d065cbf861c810c282b016a4a1f9}} 
+\index{SQFinalProject.Database@{SQFinalProject.Database}!connectionString@{connectionString}}
+\index{connectionString@{connectionString}!SQFinalProject.Database@{SQFinalProject.Database}}
+\doxysubsubsection{\texorpdfstring{connectionString}{connectionString}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Database.\+connection\+String\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+\mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. 
+
+the string used to connect to the database via My\+Sql\+Connector 
+
+Definition at line 25 of file Database.\+cs.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chris/source/repos/\+S\+Q/\+S\+Q\+Final\+Project/\+Database/Database.\+cs\end{DoxyCompactItemize}

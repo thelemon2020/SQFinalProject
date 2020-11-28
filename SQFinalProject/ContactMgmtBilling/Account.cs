@@ -26,11 +26,11 @@ namespace SQFinalProject.ContactMgmtBilling
     public class Account
     {
         //! Properties
-        private Dictionary<int, Contract> Contracts; //< A collection of all the contracts associated with an account
-        private Dictionary<int, Contract> UncalculatedContracts;//< A collection of all contracts whose cost has not yet been calculated
-        public double Balance { get; set; } //< The total balance owed on an account
-        public string AccountName { get; set; } //< The name of the account
-        public int AccountID { get; set; } //< Th Id number of the account
+        private Dictionary<int, Contract> Contracts; //!< A collection of all the contracts associated with an account
+        private Dictionary<int, Contract> UncalculatedContracts;//!< A collection of all contracts whose cost has not yet been calculated
+        public double Balance { get; set; } //!< The total balance owed on an account
+        public string AccountName { get; set; } //!< The name of the account
+        public int AccountID { get; set; } //!< Th Id number of the account
 
 
         /// \brief A constructor for the account class

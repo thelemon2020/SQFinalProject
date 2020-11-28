@@ -26,22 +26,22 @@ namespace SQFinalProject.ContactMgmtBilling
     {
         static private int ContractID = 0;
         //! Properties
-        public double LTLUpCharge { get; set; } //<Company rate for LTL delivery contracts
-        public double FTLUpCharge { get; set; } //<Company rate for FTL delivery contracts
-        public double ReeferUpCharge { get; set; } //<Company rate for Reefer van contracts
-        public int ID { get; set; } //<Contract ID
-        public string ClientName { get; set; } //<The name of the client
-        public int JobType { get; set; } //<The type of job, represented by an integer, 0 or 1 -> FTL or LTL
-        public int Quantity { get; set; } //<Quantity of pallets to be delivered, only necessary for LTL deliveries
-        public string Origin { get; set; } //<The origin city
-        public string Destination { get; set; } //<The destination city
-        public double Distance { get; set; } //<The total distance of the trips
-        public double Rate { get; set; } //<The perk km or per pallet rate set by the carrier
-        public int VanType { get; set; } //<The van type, 0 or 1 -> Dry van or Reefer van
-        public bool TripComplete { get; set; } //<A boolean which represents if the trip has been completed or not
-        public double Cost { get; set; } //<The flat cost of the trip before rates are applied
-        public DateTime ETA { get; set; } //<
-        public string Carrier { get; set; } //<
+        public double LTLUpCharge { get; set; } /*! Company rate for LTL delivery contracts */
+        public double FTLUpCharge { get; set; } /*! Company rate for FTL delivery contracts */
+        public double ReeferUpCharge { get; set; } /*! Company rate for Reefer van contracts */
+        public int ID { get; set; } /*! Contract ID */
+        public string ClientName { get; set; } /*! The name of the client */
+        public int JobType { get; set; } /*! The type of job, represented by an integer, 0 or 1 -> FTL or LTL */
+        public int Quantity { get; set; } /*! Quantity of pallets to be delivered, only necessary for LTL deliveries */
+        public string Origin { get; set; } /*! The origin city */
+        public string Destination { get; set; } /*! The destination city */
+        public double Distance { get; set; } /*! The total distance of the trips */
+        public double Rate { get; set; } /*!<The perk km or per pallet rate set by the carrier */
+        public int VanType { get; set; } /*! The van type, 0 or 1 -> Dry van or Reefer van */
+        public bool TripComplete { get; set; } //!< A boolean which represents if the trip has been completed or not
+        public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
+        public DateTime ETA { get; set; } //!<Estimated Time of Arrival
+        public string Carrier { get; set; } //!<
         //public List<TripLine> { get; set; } 
 
 
