@@ -50,7 +50,13 @@ namespace SQFinalProject
             return sqlReturn;
         }
 
-
+        /// \brief A method that grabs a contract from the market place with conditions
+        /// \details <b>Details</b>
+        /// A method that can grab contracts from the marketplace delimited by conditions
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
         public static List<string> SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
@@ -64,11 +70,10 @@ namespace SQFinalProject
 
         /// \brief A method which creates a contract specific invoice
         /// \details <b>Details</b>
-        /// A method which will create an invoice on a contract
-        /// \param - 
-        /// \returns - 
+        /// A method which will create an invoice on a contract containing the cost, and other particulars
+        /// \param - account - <b>Account</b> - The account contains the contracts to generate invoices on
+        /// \returns - <b>Nothing</b>
         /// 
-        /// \see
         public static void GenerateInvoice(Account account)
         {
             // need to generate a report 
