@@ -82,6 +82,7 @@ namespace SQFinalProject.TripPlanning
         /// \brief Update route info at each city
         /// \details <b>Details</b>
         /// Removes the city just arrived at from the city struct list and call methods to recalculate time and distance left
+        /// 
         /// \return - <b>Nothing</b>
         ///
         private void arriveAtStop()

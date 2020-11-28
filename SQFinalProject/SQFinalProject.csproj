@@ -113,7 +113,6 @@
     <Compile Include="ContactMgmtBilling\Account.cs" />
     <Compile Include="ContactMgmtBilling\Contract.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="Customer.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DatabaseInteraction.cs" />
     <Compile Include="Logger.cs" />

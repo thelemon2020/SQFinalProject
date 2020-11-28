@@ -15,7 +15,7 @@ namespace SQFinalProject.Tests
     ///
     /// \brief Holds many test methods to ensure <b>Database</b> class is functional
     ///
-    /// \see ~Database
+    /// \see Database
     /// 
     /// \author <i>Chris Lemon</i>
     ///
