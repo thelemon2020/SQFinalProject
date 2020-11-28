@@ -17,11 +17,9 @@ using System.Threading.Tasks;
 namespace SQFinalProject.ContactMgmtBilling
 {
     /// 
-    /// \class Account
+    /// \class <b>Account</b>
     ///
     /// \brief The Purpose of this class is to be a central area to hold exisiting customer details and their contracts.
-    /// Error handling in the account class is minimal other than checking to make sure Properties are filled before attempting to use them
-    /// There is nowhere in this code that would throw exceptions.
     ///
     /// \author <i>Nick Byam</i>
     ///
@@ -36,9 +34,8 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A constructor for the account class
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// One constructor for the Account class that initializes the Contract dictionary and UncalculatedContracts dictionary. Sets the balance on the account to 0.
-        /// 
         /// \param - <b>Nothing</b>
         /// \returns - <b>Nothing</b>
         /// 
@@ -53,7 +50,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A constructor for Account class which takes a Contract
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// Instantiates an Account class with a contract, and adds that contract to the Contracts list. It also attempts to calculate and
         /// Add a payable balance to the account, but if the balance can't be calculated, the contract is added to the UncalculatedContracts
         /// dictionary.
@@ -72,7 +69,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief a constructor for the account class that accepts a list of contracts
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// Instantiate an Account class with a list of contracts to add to it. Adds all contracts and attempts to calculate and add a payable
         /// balance for eac contract to the account. For each contract where a balance can't be calculated, it is put in the 
         /// UncalculatedContract dictionary.
@@ -94,7 +91,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A method to add a new Contract into the Contracts dictionary
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// Add a new contract into the Contracts dictionary using the Contract's ID as the Key, and the contract class as the Value
         /// \param - contractID - <b>int</b> - The contract's unique id number
         /// \param - contract - <b>ContractDetails</b> - The class containing all the details relating to the contract from the marketplace
@@ -112,7 +109,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A method to return all contracts on one account as a list
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// A method which iterates through the Account's Contracts dictionary and adds each one to a List of strings. This utilizes the 
         /// The ContractDetails' overridden ToString method so that each string entry in the list is meaningful.
         /// \param - <b>Nothing</b>
@@ -133,7 +130,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A method that returns a list of uncalculated contracts
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// A Method that accesses the UncalculatedContracts Dictionary, and adds each entry to a List in its string expression
         /// \param - <b>Nothing</b>
         /// \returns - contracts - <b>List<string></b> - The list of uncalculated contracts in their string expression
@@ -153,7 +150,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief Calculates the Balance owed on an account based on contract details
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// This method calculates the balance to be added to an account based on factors of a contract including distance, rate, truck type
         /// and quantity of pallets. If the balance cannot be calculated, the contract is added into another list for contracts whose balance
         /// has not yet been calculated.
@@ -205,7 +202,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief Calculates and returns a balance
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// An overridden method that calculates balance due for a contract based on the FTL rate and distance of the trip.
         /// \param - rate - <b>double</b> - The rate set by a company offering a FTL delivery service
         /// \param - distance - <b>double</b> - The distance of the trip
@@ -221,7 +218,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief Calculates and returns a balance
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// An overridden method that calculates the balance due for a contract based on the LTL rate, the distance of the trip, and the
         /// quantity of the pallets delivered.
         /// \param - rate - <b>double</b> - The rate set by a company offering a LTL delivery service

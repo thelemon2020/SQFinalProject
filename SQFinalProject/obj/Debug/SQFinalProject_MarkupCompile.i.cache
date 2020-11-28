@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\repos\SQFinalProject\SQFinalProject\obj\Debug\
+C:\Users\Chris\source\repos\SQ\SQFinalProject\obj\Debug\
 SQFinalProject
 none
 false
 DEBUG;TRACE
-D:\repos\SQFinalProject\SQFinalProject\App.xaml
-5303328744
+C:\Users\Chris\source\repos\SQ\SQFinalProject\App.xaml
+51401462355
 
-19-1556394971
-140-165110555
-UI\AboutWindow.xaml;UI\AdminWindow.xaml;UI\BuyerWindow.xaml;UI\LoginWindow.xaml;UI\PlannerWindow.xaml;
+19-104777194
+140-1569411941
+AboutWindow.xaml;AdminWindow.xaml;BuyerWindow.xaml;LoginWindow.xaml;PlannerWindow.xaml;
 
-True
+False
 

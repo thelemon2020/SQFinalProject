@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject.TripPlanning
 {
     /// 
-    /// \class TripLine
+    /// \class <b>TripLine</b>
     ///
     /// \brief This class joins together a <b>Truck</b> with a <b>Contract</b>.  No real error handling is needed as a <b>Truck</b> and a <b>Contract</b> must exist
     /// in a usable state to get a <b>TripLine</b>
@@ -19,13 +19,13 @@ namespace SQFinalProject.TripPlanning
     ///
     class TripLine
     {
-        public int ContractID { get; set; }  //!< the contract associated with the trip line
-        public int TripID { get; set; } //!<the truck associated with the trip line
-        public int Quantity { get; set; } //!< quantity of order
-        public string Origin { get; set; } //!< origin city
-        public string Destination { get; set; } //!< destination city
-        public int EstTime { get; set; } //!< time to complete
-        public int EstKM { get; set; } //!< distance to complete
+        public int ContractID { get; set; }
+        public int TripID { get; set; }
+        public int Quantity { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
+        public int EstTime { get; set; }
+        public int EstKM { get; set; }
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>

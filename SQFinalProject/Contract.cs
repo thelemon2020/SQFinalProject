@@ -16,39 +16,36 @@ using System.Threading.Tasks;
 namespace SQFinalProject.ContactMgmtBilling
 {
     ///
-    /// \class ContractDetails
+    /// \class <b>ContractDetails</b>
     /// 
     /// \brief A class that holds all pertinent details of a contract from the contract marketplace
-    /// In this class not many errors would arise due to the fact that there is no file writing or areas where Null arguments would be a problem
-    /// Thus there is no error handling.
     /// 
     /// \author <i>Nick Byam</i>
     /// 
     public class Contract
     {
-        static private int ContractID = 0;
-        //! Properties
-        public double LTLUpCharge { get; set; } //!<Company rate for LTL delivery contracts 
-        public double FTLUpCharge { get; set; } //!< Company rate for FTL delivery contracts 
-        public double ReeferUpCharge { get; set; } //!<Company rate for Reefer van contracts 
+        static private int ContractID = 0; //!<
+        public double LTLUpCharge { get; set; } //!< Company rate for LTL delivery contracts 
+        public double FTLUpCharge { get; set; } //!<Company rate for FTL delivery contracts 
+        public double ReeferUpCharge { get; set; } //!< Company rate for Reefer van contracts 
         public int ID { get; set; } //!< Contract ID 
-        public string ClientName { get; set; } //!< The name of the client
-        public int JobType { get; set; } //!< The type of job, represented by an integer, 0 or 1 -> FTL or LTL */
-        public int Quantity { get; set; } //!< Quantity of pallets to be delivered, only necessary for LTL deliveries */
+        public string ClientName { get; set; } //!< The name of the client 
+        public int JobType { get; set; } //!< The type of job, represented by an integer, 0 or 1 -> FTL or LTL 
+        public int Quantity { get; set; } //!< Quantity of pallets to be delivered, only necessary for LTL deliveries 
         public string Origin { get; set; } //!< The origin city 
         public string Destination { get; set; } //!< The destination city 
         public double Distance { get; set; } //!< The total distance of the trips 
-        public double Rate { get; set; } //!< The perk km or per pallet rate set by the carrier
-        public int VanType { get; set; } //!< The van type, 0 or 1 -> Dry van or Reefer van 
+        public double Rate { get; set; } //!< The perk km or per pallet rate set by the carrier 
+        public int VanType { get; set; } //!<  The van type, 0 or 1 -> Dry van or Reefer van 
         public bool TripComplete { get; set; } //!< A boolean which represents if the trip has been completed or not
         public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
         public DateTime ETA { get; set; } //!<Estimated Time of Arrival
-        public string Carrier { get; set; } //!<The name of t
+        public string Carrier { get; set; } //!< 
         //public List<TripLine> { get; set; } 
 
 
         /// \brief A constructor for the ContractDetails class
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// The constructor for the ContractDetails class, it takes an assortment of parameters which are to be gathered from the contract
         /// marketplace database. A number of parameters of the class are not set until a carrier for the contract is selected from the
         /// Carrier database.
@@ -77,7 +74,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A method to reset the ID count of active contracts
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// A method which checks how many contract classes are active so a unique ID can be assigned
         /// \param - <b>Nothing</b>
         /// \returns - <b>Nothing</b>
@@ -88,7 +85,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief A method to set the current ID count
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// Sets the current ID count. On a new session if there are exisiting contracts in the database this can be used to make sure
         /// new contracts that are created are assigned a unique ID
         /// \param - number - <b>int</b> - the number to assign to the ContractID field
@@ -100,7 +97,7 @@ namespace SQFinalProject.ContactMgmtBilling
 
 
         /// \brief An overriden ToString method for ContractDetails
-        /// \details <b>Details</b>
+        /// \ details <b>Details</b>
         /// This method uses a string builder to create a formatted string of pertinent information relating to the contract
         /// \param - <b>Nothing</b>
         /// \returns - contract.ToString - <b>string</b> - The StringBuilder instance converted to a string containing the string rep of the contract

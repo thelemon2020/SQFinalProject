@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace SQFinalProject
 {   /// 
-    /// \class Database
+    /// \class <b>Database</b>
     ///
     /// \brief The purpose of this class is to act as an abstraction for the <b>DatabaseInteraction</b> class. 
     /// It takes arguments passed in from the various <b>Window</b> classes, parses them and then passes them onto the various <b>DatabaseInteraction</b> methods.
@@ -21,15 +21,15 @@ namespace SQFinalProject
     ///
     public class Database
     {
-        //! Properties
-        public string connectionString { get; set; }//!<the string used to connect to the database via MySqlConnector
-        public string ip { get; set; }//!<The ip of the database to connect to
-        public string user { get; set; }//!<The username used to login to the database
-        public string pass { get; set; }//!<The password used to login to the database
-        public string schema { get; set; }//!<The database schema to interact with
-        public MySqlConnection currentConnection { get; set; }//!<The active connection with the database
-        public MySqlCommand SQLCommand { get; set; }//!<The command to be sent to the server
-        public string userCommand { get; set; }//!<The command to be converted to MySqlCommand object
+        // Properties
+        public string connectionString { get; set; }//!< the string used to connect to the database via MySqlConnector
+        public string ip { get; set; }//!< The ip of the database to connect to
+        public string user { get; set; }//!< The username used to login to the database
+        public string pass { get; set; }//!< The password used to login to the database
+        public string schema { get; set; }//!< The database schema to interact with
+        public MySqlConnection currentConnection { get; set; }//!< The active connection with the database
+        public MySqlCommand SQLCommand { get; set; }//!< The command to be sent to the server
+        public string userCommand { get; set; }//!< The command to be converted to MySqlCommand object
 
         /// \brief To instantiate a new Database object with arguments supplied from a config file
         /// \details <b>Details</b>
@@ -65,16 +65,16 @@ namespace SQFinalProject
             List<string> SQLReturn = new List<string>();
             try
             {
-                currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // create a connection to a database
-                SQLCommand = new MySqlCommand(userCommand, currentConnection); //creat a MySqlCommand object to interact with database
-                SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand); //query database and get the return
-                DatabaseInteraction.CloseConnection(currentConnection); //close the connection to the database
+                currentConnection = DatabaseInteraction.connectToDatabase(connectionString); //  create a connection to a database
+                SQLCommand = new MySqlCommand(userCommand, currentConnection); // creat a MySqlCommand object to interact with database
+                SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand); // query database and get the return
+                DatabaseInteraction.CloseConnection(currentConnection); // close the connection to the database
             }
-            catch(Exception) //catch any exception that may be thrown during the query process
+            catch(Exception) // catch any exception that may be thrown during the query process
             {
-                SQLReturn = null; //set the query return to null to signify a problem with the query
+                SQLReturn = null; // set the query return to null to signify a problem with the query
             }          
-            return SQLReturn; //return the query results to the calling function
+            return SQLReturn; // return the query results to the calling function
         }
         
         /// \brief Creates an Insert Command
@@ -89,11 +89,11 @@ namespace SQFinalProject
         /// 
         public void MakeInsertCommand(string table, List<string> values)
         {
-            StringBuilder InsertCommand = new StringBuilder();  //instantiate a stringbuiler for use in building the query string
-            InsertCommand.AppendFormat("INSERT INTO {0} VALUES (", table); //set the initial part of the query
+            StringBuilder InsertCommand = new StringBuilder();  // instantiate a stringbuiler for use in building the query string
+            InsertCommand.AppendFormat("INSERT INTO {0} VALUES (", table); // set the initial part of the query
             int i = 0;
             int countLoops = values.Count() - 1;
-            foreach (string value in values) //iterate through each string in the list to format the insert query string
+            foreach (string value in values) // iterate through each string in the list to format the insert query string
             {
                 if (i==countLoops)
                 {
@@ -106,7 +106,7 @@ namespace SQFinalProject
                 i++;
             }
             InsertCommand.AppendFormat(")");
-            userCommand = InsertCommand.ToString();//set user command variable to newly created query string
+            userCommand = InsertCommand.ToString();// set user command variable to newly created query string
         }
 
         /// \brief Creates an Insert Command
@@ -122,11 +122,11 @@ namespace SQFinalProject
         /// 
         public void MakeInsertCommand(string table, List<string> fields, List<string> values)
         {
-            StringBuilder InsertCommand = new StringBuilder(); //instantiate a stringbuiler for use in building the query string
-            InsertCommand.AppendFormat("INSERT INTO {0} (", table);  //set the initial part of the query
+            StringBuilder InsertCommand = new StringBuilder(); // instantiate a stringbuiler for use in building the query string
+            InsertCommand.AppendFormat("INSERT INTO {0} (", table);  // set the initial part of the query
             int i = 0;
             int countLoops = fields.Count() - 1;
-            foreach(string field in fields)//iterate through each string in the list to format which columns to insert the data into
+            foreach(string field in fields)// iterate through each string in the list to format which columns to insert the data into
             {
                 if (i==countLoops)
                 {
@@ -141,7 +141,7 @@ namespace SQFinalProject
             InsertCommand.AppendFormat(" VALUES (");
             i = 0;
             countLoops = values.Count() - 1;
-            foreach (string value in values) //iterate through values to format the order of the data being inserted
+            foreach (string value in values) // iterate through values to format the order of the data being inserted
             {
                 if (i == countLoops)
                 {
@@ -170,7 +170,7 @@ namespace SQFinalProject
         /// 
         public void MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions)
         {
-            StringBuilder selectCommand = new StringBuilder(); //instantiate string builder for use in building a query string
+            StringBuilder selectCommand = new StringBuilder(); // instantiate string builder for use in building a query string
             selectCommand.AppendFormat("SELECT"); // set the first part of the query string
             int i = 0;
             int countLoops = fields.Count() - 1;
@@ -242,7 +242,7 @@ namespace SQFinalProject
             updateCommand.AppendFormat(" WHERE");
             i = 0;
             countLoops = conditions.Count() - 1;
-            foreach (KeyValuePair<string, string> entry in conditions)// iterate through conditions and append them to string
+            foreach (KeyValuePair<string, string> entry in conditions)//iterate through conditions and append them to string
             {
                 if (i == countLoops)
                 {
@@ -270,8 +270,8 @@ namespace SQFinalProject
         /// 
         public int BackItUp(string filePath)
         {
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // create connection
-            int didWork = DatabaseInteraction.BackUpDB(currentConnection,filePath); // try to back up database and find out if it worked or not
+            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); //create connection
+            int didWork = DatabaseInteraction.BackUpDB(currentConnection,filePath); //try to back up database and find out if it worked or not
             DatabaseInteraction.CloseConnection(currentConnection); //close the connection
             return didWork;//return if backup was successful or not
         }
@@ -287,10 +287,10 @@ namespace SQFinalProject
         ///
         public int Restore(string filePath)
         {
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // connect to database
-            int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);// restore database 
-            DatabaseInteraction.CloseConnection(currentConnection);// close connection
-            return didWork;// return if it worked or not
+            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); //connect to database
+            int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);//restore database 
+            DatabaseInteraction.CloseConnection(currentConnection);//close connection
+            return didWork;//return if it worked or not
         }
     }
 }

@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 namespace SQFinalProject
 {   
     /// 
-    /// \class DatabaseInteraction
+    /// \class <b>DatabaseInteraction</b>
     ///
     /// \brief The purpose of this class is be used by Database class objects to interact with the actual database.  
     /// It contains all the logic neccesary to connect to, disconnect from, query, back up and restore a database.  
@@ -29,11 +29,11 @@ namespace SQFinalProject
         /// 
         public static MySqlConnection connectToDatabase(string connectionString)
         {
-            MySqlConnection connection = null; // create MySqlConnection object           
+            MySqlConnection connection = null; //  create MySqlConnection object           
             try
             {
                 connection = new MySqlConnection(connectionString); // instantiate the MySqLConnection object
-                connection.Open(); // open connection
+                connection.Open(); //  open connection
             }
             catch
             {
@@ -56,9 +56,9 @@ namespace SQFinalProject
             try
             {
                 MySqlDataReader reader = DBCommand.ExecuteReader(); // instantiate MySqlReader to get query returns from database
-                while (reader.Read()) //read all query lines
+                while (reader.Read()) // read all query lines
                 {
-                    for (int i = 0; i < reader.FieldCount; i++) //iterate through each field
+                    for (int i = 0; i < reader.FieldCount; i++) // iterate through each field
                     {
                         SQLReturn.Add(reader.GetString(i)); // add to list of strings
                     }
@@ -66,9 +66,9 @@ namespace SQFinalProject
             }
             catch
             {
-                SQLReturn = null; //if there is an exception throw, return null
+                SQLReturn = null; // if there is an exception throw, return null
             }           
-            return SQLReturn;//return list of strings containing query returns
+            return SQLReturn;// return list of strings containing query returns
         }
 
         /// \brief Closes a database connection
@@ -117,7 +117,7 @@ namespace SQFinalProject
             }
             catch
             {
-                return 1; //returns 1 if backup fails
+                return 1; // returns 1 if backup fails
             }
             return 0; // returns 0 if backup is successful
         }
@@ -147,9 +147,9 @@ namespace SQFinalProject
             }
             catch
             {
-                return 1; //!<returns 1 if restore fails
+                return 1; // returns 1 if restore fails
             }
-            return 0;  //< returns 0 if restore is successful
+            return 0;  // returns 0 if restore is successful
         }
     }
 }
