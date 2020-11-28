@@ -18,8 +18,8 @@ namespace SQFinalProject
     ///
     public static class Logger
     {
-        static public string path { get; set; } //<path to write log file to
-        private static readonly object obj = new object(); //<object to lock writing if another thread is using the write method
+        static public string path { get; set; } //!<path to write log file to
+        private static readonly object obj = new object(); //!<object to lock writing if another thread is using the write method
 
         /// \brief Creates a string out of a message from anywhere in the application and log it into an external file
         /// \details <b>Details</b>

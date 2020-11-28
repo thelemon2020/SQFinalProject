@@ -1,0 +1,213 @@
+\hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck}{}\doxysection{S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck Class Reference}
+\label{class_s_q_final_project_1_1_trip_planning_1_1_truck}\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a84539b2af6ffa35f74451526c2acc7d1}{Truck}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the truck class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_acbf654ca9b7008fd2451b7e623ad5c98}{Continue\+Route}} ()
+\begin{DoxyCompactList}\small\item\em A method to simulate the truck continuing to the next city. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a4caeef03b9046858404bedfaaeb9e1ed}{Load}} (\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}} contract)
+\begin{DoxyCompactList}\small\item\em A method that simulates loading product onto the truck. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8add4a0d7b5cb6d21f0c388d531990e9}{Unload}} (\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}} contract)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a123166b14d003fa9f735d8ddbf70822a}{Trip\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8152318014d0c08d52324b215b5f247e}{Carrier\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_af0f164bbbd1d7bf3226115e9d39c2427}{Origin}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a6c3cd4ef14532e13a49fe95d0cdb7c20}{Destination}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_ae8cf0fcd40064cea9b8198798eb44d11}{Van\+Type}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a678e755fa6cd4870d08acf7171ab8310}{Rate}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_ab959111fde64b1f7c32bfec7936b1c80}{Hours\+Worked}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a2ce09b275190d9dd0720e6c9cd17c2ba}{Days\+Worked}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_af0693d750f85a491e08b63cd81ee5201}{Reefer\+Rate}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}} $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a79b2728c671a2d4ebfb503e08692a670}{Contracts}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const int \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a1503a7e5849b7266afe951866e0de316}{k\+Max\+Pallets}} = 26
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a84539b2af6ffa35f74451526c2acc7d1}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a84539b2af6ffa35f74451526c2acc7d1}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Truck@{Truck}}
+\index{Truck@{Truck}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Truck()}{Truck()}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Truck (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for the truck class. 
+
+{\bfseries{Details}} The constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck}{Truck}} class 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+~\newline
+ 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_acbf654ca9b7008fd2451b7e623ad5c98}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_acbf654ca9b7008fd2451b7e623ad5c98}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!ContinueRoute@{ContinueRoute}}
+\index{ContinueRoute@{ContinueRoute}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{ContinueRoute()}{ContinueRoute()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Continue\+Route (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A method to simulate the truck continuing to the next city. 
+
+{\bfseries{Details}} A method that will increase the work time equal to the number of hours to the next city then update the contracts delivered if any 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a4caeef03b9046858404bedfaaeb9e1ed}{Load(\+Trip\+Line contract)}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8add4a0d7b5cb6d21f0c388d531990e9}{Unload(\+Trip\+Line contract)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a4caeef03b9046858404bedfaaeb9e1ed}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a4caeef03b9046858404bedfaaeb9e1ed}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Load@{Load}}
+\index{Load@{Load}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}}}]{contract }\end{DoxyParamCaption})}
+
+
+
+A method that simulates loading product onto the truck. 
+
+{\bfseries{Details}} A method to simulate loading the truck with product related to a contract, it adds 2 hours to the total work time adds a new contract to the list, then updates pallet counts 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & contract {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}}}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8add4a0d7b5cb6d21f0c388d531990e9}{Unload(\+Trip\+Line contract)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8add4a0d7b5cb6d21f0c388d531990e9}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8add4a0d7b5cb6d21f0c388d531990e9}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Unload@{Unload}}
+\index{Unload@{Unload}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Unload()}{Unload()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Unload (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}}}]{contract }\end{DoxyParamCaption})}
+
+{\bfseries{Details}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a1503a7e5849b7266afe951866e0de316}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a1503a7e5849b7266afe951866e0de316}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!kMaxPallets@{kMaxPallets}}
+\index{kMaxPallets@{kMaxPallets}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{kMaxPallets}{kMaxPallets}}
+{\footnotesize\ttfamily const int S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+k\+Max\+Pallets = 26\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+\mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. 
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8152318014d0c08d52324b215b5f247e}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a8152318014d0c08d52324b215b5f247e}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!CarrierID@{CarrierID}}
+\index{CarrierID@{CarrierID}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{CarrierID}{CarrierID}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Carrier\+ID\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a79b2728c671a2d4ebfb503e08692a670}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a79b2728c671a2d4ebfb503e08692a670}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Contracts@{Contracts}}
+\index{Contracts@{Contracts}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Contracts}{Contracts}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}}$>$ S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Contracts\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a2ce09b275190d9dd0720e6c9cd17c2ba}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a2ce09b275190d9dd0720e6c9cd17c2ba}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!DaysWorked@{DaysWorked}}
+\index{DaysWorked@{DaysWorked}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{DaysWorked}{DaysWorked}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Days\+Worked\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a6c3cd4ef14532e13a49fe95d0cdb7c20}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a6c3cd4ef14532e13a49fe95d0cdb7c20}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Destination@{Destination}}
+\index{Destination@{Destination}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Destination}{Destination}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Destination\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_ab959111fde64b1f7c32bfec7936b1c80}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_ab959111fde64b1f7c32bfec7936b1c80}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!HoursWorked@{HoursWorked}}
+\index{HoursWorked@{HoursWorked}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{HoursWorked}{HoursWorked}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Hours\+Worked\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_af0f164bbbd1d7bf3226115e9d39c2427}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_af0f164bbbd1d7bf3226115e9d39c2427}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Origin@{Origin}}
+\index{Origin@{Origin}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Origin}{Origin}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Origin\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a678e755fa6cd4870d08acf7171ab8310}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a678e755fa6cd4870d08acf7171ab8310}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!Rate@{Rate}}
+\index{Rate@{Rate}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{Rate}{Rate}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Rate\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_af0693d750f85a491e08b63cd81ee5201}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_af0693d750f85a491e08b63cd81ee5201}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!ReeferRate@{ReeferRate}}
+\index{ReeferRate@{ReeferRate}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{ReeferRate}{ReeferRate}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Reefer\+Rate\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_a123166b14d003fa9f735d8ddbf70822a}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_a123166b14d003fa9f735d8ddbf70822a}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!TripID@{TripID}}
+\index{TripID@{TripID}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{TripID}{TripID}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Trip\+ID\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_truck_ae8cf0fcd40064cea9b8198798eb44d11}\label{class_s_q_final_project_1_1_trip_planning_1_1_truck_ae8cf0fcd40064cea9b8198798eb44d11}} 
+\index{SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}!VanType@{VanType}}
+\index{VanType@{VanType}!SQFinalProject.TripPlanning.Truck@{SQFinalProject.TripPlanning.Truck}}
+\doxysubsubsection{\texorpdfstring{VanType}{VanType}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Trip\+Planning.\+Truck.\+Van\+Type\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\+Trip\+Planning/\mbox{\hyperlink{_truck_8cs}{Truck.\+cs}}\end{DoxyCompactItemize}

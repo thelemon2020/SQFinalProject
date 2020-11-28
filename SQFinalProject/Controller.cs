@@ -81,14 +81,24 @@ namespace SQFinalProject
         }
 
 
-
-
+        /// \brief A method which creates a contract specific invoice
+        /// \details <b>Details</b>
+        /// A method which will create an invoice on a contract
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
         public static void GenerateInvoice(Account account)
         {
             // need to generate a report 
         }
 
-
+        /// \brief A method to generate a report of company earnings and total contracts
+        /// \details <b>Details</b>
+        /// A method that generates either a 2 week report of contracts and earnings, or an all time report of contracts and earnings
+        /// \param - weeks - <b>int</b> - The number of weeks for report generation. Must be either 2 or 0
+        /// \returns - <b>Nothing</b>
+        /// 
         public static void GenerateReport(int weeks=0)
         {
             // generate either a 2 week or all time report

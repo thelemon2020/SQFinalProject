@@ -19,14 +19,14 @@ using SQFinalProject.ContactMgmtBilling;
 namespace SQFinalProject.UI {
     ///
     /// \class PlannerWindow
-    /// 
+    ///
     /// \brief This class holds all the event handlers for for the Planner WPF window.  It has data members for the TMS database & the Marketplace database.
     /// The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating
-    /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they 
+    /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they
     /// will be used in the final program.
-    /// 
+    ///
     /// \author <i>Deric Kruse</i>
-    /// 
+    ///
     public partial class PlannerWindow : Window
     {
         //! Properties
@@ -59,12 +59,12 @@ namespace SQFinalProject.UI {
         //  METHOD:		LoadConfig
         /// \brief Loads the database connection details from an external config file
         /// \details <b>Details</b>
-        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
+        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file
         /// and parses it out into data that is usable to connect to one or more databases
         /// \param - <b>None</b>
-        /// 
+        ///
         /// \return - <b>Nothing</b>
-        /// 
+        ///
         public void LoadConfig()
         {
             if (File.Exists(configFilePath))                        // If the config file exists, try to read from it
@@ -101,7 +101,7 @@ namespace SQFinalProject.UI {
             {
                 FileStream newConfig = File.Create(configFilePath); // create file
                 newConfig.Close();//close file
-            }                      
+            }
         }
 
 
@@ -110,10 +110,10 @@ namespace SQFinalProject.UI {
         /// \brief Says when the close command can run, which is always
         /// \details <b>Details</b>
         ///     The CanExecute method says when the Close command binding can function, which is always.
-        /// 
+        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
-        /// 
+        ///
         /// \return - <b>Nothing</b>
         ///
         private void CloseCB_CanExecute ( object sender,CanExecuteRoutedEventArgs e ) {
@@ -126,10 +126,10 @@ namespace SQFinalProject.UI {
         /// \brief Dictates what happens when the close command runs
         /// \details <b>Details</b>
         ///     The Executed method says what happens the Close Command is run.  If Close is clicked, close the window.
-        /// 
+        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
-        /// 
+        ///
         /// \return - <b>Nothing</b>
         ///
         private void CloseCB_Executed ( object sender,ExecutedRoutedEventArgs e ) {
@@ -142,15 +142,15 @@ namespace SQFinalProject.UI {
         /// \brief Method that is called when the logout item on the menu is clicked
         /// \details <b>Details</b>
         ///     Closes this window and opens up the login window when the option is clicked on the menu.
-        /// 
+        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
-        /// 
+        ///
         /// \return - <b>Nothing</b>
         private void Logout_Click ( object sender,RoutedEventArgs e ) {
             LoginWindow login = new LoginWindow ();
             login.Show();
-                    
+
             this.Close();
         }
 
@@ -159,11 +159,11 @@ namespace SQFinalProject.UI {
         //  METHOD:		About_Click
         /// \brief Method that is called when the About item on the menu is clicked
         /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.  
-        /// 
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
-        /// 
+        ///
         /// \return - <b>Nothing</b>
         ///
         private void About_Click ( object sender,RoutedEventArgs e ) {

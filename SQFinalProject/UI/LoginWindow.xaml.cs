@@ -19,19 +19,19 @@ namespace SQFinalProject.UI {
     ///
     /// \brief This class holds all the event handlers for for the WPF login window.  It has data members for the TMS database & the Marketplace database.
     /// The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating
-    /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they 
+    /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they
     /// will be used in the final program.
     ///
     /// \author <i>Deric Kruse</i>
     ///
     public partial class LoginWindow : Window {
-       //! Properties
+        //! Properties
         public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
         public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
         public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info for the config parser
         Database loginDB { get; set; }                                  //<The database object for the TMS database
 
-        public List<string> userInfo;                                   //<String list to store the info on the user that is logging in
+        public List<string> userInfo;                                   //!<String list to store the info on the user that is logging in
 
         public LoginWindow () {
             InitializeComponent();
@@ -48,12 +48,12 @@ namespace SQFinalProject.UI {
         //  METHOD:		LoadConfig
         /// \brief Loads the database connection details from an external config file
         /// \details <b>Details</b>
-        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
+        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file
         /// and parses it out into data that is usable to connect to one or more databases
         /// \param - <b>None</b>
-        /// 
+        ///
         /// \return - <b>Nothing</b>
-        /// 
+        ///
         public void LoadConfig()
         {
             if (File.Exists(configFilePath))                        // If the config file exists, try to read from it
@@ -90,7 +90,7 @@ namespace SQFinalProject.UI {
             {
                 FileStream newConfig = File.Create(configFilePath);
                 newConfig.Close();
-            }                      
+            }
         }
 
 
@@ -101,12 +101,12 @@ namespace SQFinalProject.UI {
         ///     This method first checks if either the user name or password is empty, displaying appropriage messages.  If they aren't, it queries the database
         /// to see if the user name exists and if the password matches.  If both of these are true, it loads the appropriate main page for the users role and closes
         /// this window.
-        /// 
+        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
-        /// 
+        ///
         /// \return - <b>Nothing</b>
-        /// 
+        ///
         private void Login_Click ( object sender,RoutedEventArgs e ) {
             bool isValid = true;
             if ( UsrName.Text.Length == 0 ) {                   // Check if the username is blank and display an error if it is
@@ -115,18 +115,18 @@ namespace SQFinalProject.UI {
             } else {
                 NameErr.Content = "";
             }
-            
+
             if ( Password.Password.Length == 0 ) {              // Check if the username is blank and display an error if it is
                 PassErr.Content = "Password cannot be blank!";
                 isValid = false;
-            } else { 
+            } else {
                 PassErr.Content = "";
             }
-            
-            if ( isValid ) {                                   // If the two text boxes are not empty ... 
+
+            if ( isValid ) {                                   // If the two text boxes are not empty ...
                 string usrName = UsrName.Text.Trim ();
                 string usrPass = Password.Password;
-                
+
                 List<string> QueryLst = new List<string> ();   // Set up the database query and check if the user name exists in the database
                 QueryLst.Add ("username");
 
@@ -134,14 +134,14 @@ namespace SQFinalProject.UI {
                 tempDict.Add ("username", usrName);
 
                 loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-            
+
                 List<string> UsrReturn = loginDB.ExecuteCommand();
 
                 QueryLst = new List<string> ();                // Then check if the password matches
                 QueryLst.Add ("password");
 
                 loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-                            
+
                 List<string> PassReturn = loginDB.ExecuteCommand();
 
                 if ( UsrReturn == null || PassReturn == null ) {
@@ -169,7 +169,7 @@ namespace SQFinalProject.UI {
                     QueryLst.Add ("role");
 
                     loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
-                            
+
                     userInfo = loginDB.ExecuteCommand();
 
                     if ( userInfo.ElementAt(0).ToUpper().Equals( "A" ) ) {          // If the user is an admin, load the admin main page
@@ -185,10 +185,10 @@ namespace SQFinalProject.UI {
                         BuyerWindow mainWindow = new BuyerWindow (usrName);
                         mainWindow.Show();
                     }
-                    
+
                     this.Close();                               // and finally close the window
                 }
-            }        
+            }
         }
     }
 }

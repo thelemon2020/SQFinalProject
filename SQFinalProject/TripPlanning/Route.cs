@@ -17,17 +17,17 @@ namespace SQFinalProject.TripPlanning
      ///
      class Route
      {
-        private struct city //<a struct holding all the relevant information to calculate a route 
+        private struct city //!<a struct holding all the relevant information to calculate a route 
         {
-            string name { get; set; } //<name of the city
-            string next { get; set; } //< the next city
-            int distance { get; set; } //<distance to next city
-            double time { get; set; } //<time to next city           
+            string name { get; set; } //!<name of the city
+            string next { get; set; } //!< the next city
+            int distance { get; set; } //!<distance to next city
+            double time { get; set; } //!<time to next city           
         }
-        List<city> cities { get; set; } //<a list holding every city
-        private double totalTime { get; set; } //< the time it takes to complete the route
-        private int totalDistance { get; set; } //< the total distance it takes to complete the trip
-        private bool east { get; set; } //<whether the truck is going east or west
+        List<city> cities { get; set; } //!<a list holding every city
+        private double totalTime { get; set; } //!< the time it takes to complete the route
+        private int totalDistance { get; set; } //!< the total distance it takes to complete the trip
+        private bool east { get; set; } //!<whether the truck is going east or west
 
         /// \brief Route
         /// \details <b>Details</b>

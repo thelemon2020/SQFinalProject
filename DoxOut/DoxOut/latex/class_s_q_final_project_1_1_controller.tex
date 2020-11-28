@@ -1,0 +1,85 @@
+\hypertarget{class_s_q_final_project_1_1_controller}{}\doxysection{S\+Q\+Final\+Project.\+Controller Class Reference}
+\label{class_s_q_final_project_1_1_controller}\index{SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a666f0aadeb61f6cfac6edc06e45af81b}{Create\+New\+Account}} ()
+\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a26b9658961f2f6ee935d4971264a64ef}{Create\+New\+Account}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a7fdebb3ca3d543ac022e78d1be407ab1}{Create\+New\+Account}} (List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$ contracts)
+\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}{Add\+Contract\+To\+Account}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} account, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_aab4ac10051b0724b0eb4c2b73abfcd84}{Create\+New\+Contract}} (string name, int job, int quant, string origin, string dest, int van)
+\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}{Get\+All\+Contracts\+From\+DB}} (\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} mrkt\+Place)
+\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}{Select\+Contract}} (\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} mrkt\+Place, Dictionary$<$ string, string $>$ conditions)
+\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_controller_aecd3201bdefee555f0ab859833db6b16}{Generate\+Invoice}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} account)
+\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a83d6edb88e7a0ec6ddd4ccf90eba36e5}{Generate\+Report}} (int weeks=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}\label{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!AddContractToAccount@{AddContractToAccount}}
+\index{AddContractToAccount@{AddContractToAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{AddContractToAccount()}{AddContractToAccount()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Controller.\+Add\+Contract\+To\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}}]{account,  }\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a666f0aadeb61f6cfac6edc06e45af81b}\label{class_s_q_final_project_1_1_controller_a666f0aadeb61f6cfac6edc06e45af81b}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewAccount@{CreateNewAccount}}
+\index{CreateNewAccount@{CreateNewAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewAccount()}{CreateNewAccount()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Account (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a26b9658961f2f6ee935d4971264a64ef}\label{class_s_q_final_project_1_1_controller_a26b9658961f2f6ee935d4971264a64ef}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewAccount@{CreateNewAccount}}
+\index{CreateNewAccount@{CreateNewAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewAccount()}{CreateNewAccount()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a7fdebb3ca3d543ac022e78d1be407ab1}\label{class_s_q_final_project_1_1_controller_a7fdebb3ca3d543ac022e78d1be407ab1}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewAccount@{CreateNewAccount}}
+\index{CreateNewAccount@{CreateNewAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewAccount()}{CreateNewAccount()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Account (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$}]{contracts }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_aab4ac10051b0724b0eb4c2b73abfcd84}\label{class_s_q_final_project_1_1_controller_aab4ac10051b0724b0eb4c2b73abfcd84}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewContract@{CreateNewContract}}
+\index{CreateNewContract@{CreateNewContract}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewContract()}{CreateNewContract()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Contract (\begin{DoxyParamCaption}\item[{string}]{name,  }\item[{int}]{job,  }\item[{int}]{quant,  }\item[{string}]{origin,  }\item[{string}]{dest,  }\item[{int}]{van }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_aecd3201bdefee555f0ab859833db6b16}\label{class_s_q_final_project_1_1_controller_aecd3201bdefee555f0ab859833db6b16}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!GenerateInvoice@{GenerateInvoice}}
+\index{GenerateInvoice@{GenerateInvoice}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{GenerateInvoice()}{GenerateInvoice()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Controller.\+Generate\+Invoice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}}]{account }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a83d6edb88e7a0ec6ddd4ccf90eba36e5}\label{class_s_q_final_project_1_1_controller_a83d6edb88e7a0ec6ddd4ccf90eba36e5}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!GenerateReport@{GenerateReport}}
+\index{GenerateReport@{GenerateReport}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{GenerateReport()}{GenerateReport()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Controller.\+Generate\+Report (\begin{DoxyParamCaption}\item[{int}]{weeks = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}\label{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!GetAllContractsFromDB@{GetAllContractsFromDB}}
+\index{GetAllContractsFromDB@{GetAllContractsFromDB}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{GetAllContractsFromDB()}{GetAllContractsFromDB()}}
+{\footnotesize\ttfamily static List$<$string$>$ S\+Q\+Final\+Project.\+Controller.\+Get\+All\+Contracts\+From\+DB (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}]{mrkt\+Place }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}\label{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!SelectContract@{SelectContract}}
+\index{SelectContract@{SelectContract}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{SelectContract()}{SelectContract()}}
+{\footnotesize\ttfamily static List$<$string$>$ S\+Q\+Final\+Project.\+Controller.\+Select\+Contract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}]{mrkt\+Place,  }\item[{Dictionary$<$ string, string $>$}]{conditions }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\mbox{\hyperlink{_controller_8cs}{Controller.\+cs}}\end{DoxyCompactItemize}

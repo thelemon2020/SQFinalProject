@@ -1,0 +1,315 @@
+\hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{}\doxysection{S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account Class Reference}
+\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af332a03d3e4fa3fe9fe68c3ceb1f1e73}{Account}} ()
+\begin{DoxyCompactList}\small\item\em A constructor for the account class \textbackslash{} details {\bfseries{Details}} One constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class that initializes the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} dictionary and Uncalculated\+Contracts dictionary. Sets the balance on the account to 0. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a9af4164e1d63a9d6d1f141927fdc0e00}{Account}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\begin{DoxyCompactList}\small\item\em A constructor for \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class which takes a \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} \textbackslash{} details {\bfseries{Details}} Instantiates an \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class with a contract, and adds that contract to the Contracts list. It also attempts to calculate and Add a payable balance to the account, but if the balance can\textquotesingle{}t be calculated, the contract is added to the Uncalculated\+Contracts dictionary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ace1f6a7d5871d38bec1aba019a71e3d2}{Account}} (List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$ contracts)
+\begin{DoxyCompactList}\small\item\em a constructor for the account class that accepts a list of contracts \textbackslash{} details {\bfseries{Details}} Instantiate an \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class with a list of contracts to add to it. Adds all contracts and attempts to calculate and add a payable balance for eac contract to the account. For each contract where a balance can\textquotesingle{}t be calculated, it is put in the Uncalculated\+Contract dictionary. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a1bbc06b73780f18460379587e4de4545}{Add\+New\+Contract}} (int contract\+ID, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\begin{DoxyCompactList}\small\item\em A method to add a new \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} into the Contracts dictionary \textbackslash{} details {\bfseries{Details}} Add a new contract into the Contracts dictionary using the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}\textquotesingle{}s ID as the Key, and the contract class as the Value. \end{DoxyCompactList}\item 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af96996befc4398e1bad556b83af8f682}{Get\+All\+Contracts}} ()
+\begin{DoxyCompactList}\small\item\em A method to return all contracts on one account as a list \textbackslash{} details {\bfseries{Details}} A method which iterates through the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}\textquotesingle{}s Contracts dictionary and adds each one to a List of strings. This utilizes the The Contract\+Details\textquotesingle{} overridden To\+String method so that each string entry in the list is meaningful. \end{DoxyCompactList}\item 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ac289cdaa158b1132757719d74c4d1b52}{Get\+Uncalc\+Contracts}} ()
+\begin{DoxyCompactList}\small\item\em A method that returns a list of uncalculated contracts \textbackslash{} details {\bfseries{Details}} A Method that accesses the Uncalculated\+Contracts Dictionary, and adds each entry to a List in its string expression. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a4fbec53e8d5237091cb6dffd1efa6ef6}{Add\+Balance}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\begin{DoxyCompactList}\small\item\em Calculates the Balance owed on an account based on contract details \textbackslash{} details {\bfseries{Details}} This method calculates the balance to be added to an account based on factors of a contract including distance, rate, truck type and quantity of pallets. If the balance cannot be calculated, the contract is added into another list for contracts whose balance has not yet been calculated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ad8f14a83f59bba8bf68559c1369e61fb}{Balance}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The total balance owed on an account. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a53714701401d95bd5d679ee9349f1d2e}{Account\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The name of the account. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a40c777dd982a67302ebf1b0811c0cab7}{Account\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Th Id number of the account. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a7cf28542fb5142c93e709a9e873f64a9}{Add\+Balance}} (double rate, double distance)
+\begin{DoxyCompactList}\small\item\em Calculates and returns a balance \textbackslash{} details {\bfseries{Details}} An overridden method that calculates balance due for a contract based on the F\+TL rate and distance of the trip. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_abe69255194b56b80d75a84a5fb00a579}{Add\+Balance}} (double rate, double distance, int quantity)
+\begin{DoxyCompactList}\small\item\em Calculates and returns a balance \textbackslash{} details {\bfseries{Details}} An overridden method that calculates the balance due for a contract based on the L\+TL rate, the distance of the trip, and the quantity of the pallets delivered. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Dictionary$<$ int, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ae5554a90af33f182f7f0dc20d3ab085f}{Contracts}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\item 
+Dictionary$<$ int, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_aa6f324eb687627c1eceeb9d1e30149b9}{Uncalculated\+Contracts}}
+\begin{DoxyCompactList}\small\item\em A collection of all contracts whose cost has not yet been calculated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af332a03d3e4fa3fe9fe68c3ceb1f1e73}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af332a03d3e4fa3fe9fe68c3ceb1f1e73}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!Account@{Account}}
+\index{Account@{Account}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{Account()}{Account()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Account (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A constructor for the account class \textbackslash{} details {\bfseries{Details}} One constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class that initializes the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} dictionary and Uncalculated\+Contracts dictionary. Sets the balance on the account to 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a9af4164e1d63a9d6d1f141927fdc0e00}{Account(\+Contract contract)}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ace1f6a7d5871d38bec1aba019a71e3d2}{Account(\+List$<$\+Contract$>$ contracts)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a9af4164e1d63a9d6d1f141927fdc0e00}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a9af4164e1d63a9d6d1f141927fdc0e00}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!Account@{Account}}
+\index{Account@{Account}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{Account()}{Account()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})}
+
+
+
+A constructor for \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class which takes a \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} \textbackslash{} details {\bfseries{Details}} Instantiates an \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class with a contract, and adds that contract to the Contracts list. It also attempts to calculate and Add a payable balance to the account, but if the balance can\textquotesingle{}t be calculated, the contract is added to the Uncalculated\+Contracts dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & contract -\/ {\bfseries{Contract\+Details}} -\/ The class containing all of the details relating to the contract from the marketplace \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af332a03d3e4fa3fe9fe68c3ceb1f1e73}{Account()}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ace1f6a7d5871d38bec1aba019a71e3d2}{Account(\+List$<$\+Contract$>$ contracts)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ace1f6a7d5871d38bec1aba019a71e3d2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ace1f6a7d5871d38bec1aba019a71e3d2}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!Account@{Account}}
+\index{Account@{Account}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{Account()}{Account()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Account (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$}]{contracts }\end{DoxyParamCaption})}
+
+
+
+a constructor for the account class that accepts a list of contracts \textbackslash{} details {\bfseries{Details}} Instantiate an \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} class with a list of contracts to add to it. Adds all contracts and attempts to calculate and add a payable balance for eac contract to the account. For each contract where a balance can\textquotesingle{}t be calculated, it is put in the Uncalculated\+Contract dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & contracts -\/ {\bfseries{List$<$\+Contract\+Details$>$}} -\/ A list of contracts to be added to the same account. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a9af4164e1d63a9d6d1f141927fdc0e00}{Account(\+Contract contract)}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af332a03d3e4fa3fe9fe68c3ceb1f1e73}{Account()}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a4fbec53e8d5237091cb6dffd1efa6ef6}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a4fbec53e8d5237091cb6dffd1efa6ef6}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!AddBalance@{AddBalance}}
+\index{AddBalance@{AddBalance}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{AddBalance()}{AddBalance()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Add\+Balance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})}
+
+
+
+Calculates the Balance owed on an account based on contract details \textbackslash{} details {\bfseries{Details}} This method calculates the balance to be added to an account based on factors of a contract including distance, rate, truck type and quantity of pallets. If the balance cannot be calculated, the contract is added into another list for contracts whose balance has not yet been calculated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & contract -\/ {\bfseries{Contract\+Details}} -\/ The contract to be evaluated to find its cost. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a7cf28542fb5142c93e709a9e873f64a9}{Add\+Balance(double rate, double distance)}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_abe69255194b56b80d75a84a5fb00a579}{Add\+Balance(double rate, double distance, int quantity)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a7cf28542fb5142c93e709a9e873f64a9}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a7cf28542fb5142c93e709a9e873f64a9}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!AddBalance@{AddBalance}}
+\index{AddBalance@{AddBalance}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{AddBalance()}{AddBalance()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Add\+Balance (\begin{DoxyParamCaption}\item[{double}]{rate,  }\item[{double}]{distance }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates and returns a balance \textbackslash{} details {\bfseries{Details}} An overridden method that calculates balance due for a contract based on the F\+TL rate and distance of the trip. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & rate -\/ {\bfseries{double}} -\/ The rate set by a company offering a F\+TL delivery service \\
+\hline
+{\em -\/} & distance -\/ {\bfseries{double}} -\/ The distance of the trip \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ balance {\bfseries{double}} -\/ The balance calculated from the rate and distance
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a4fbec53e8d5237091cb6dffd1efa6ef6}{Add\+Balance(\+Contract contract)}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_abe69255194b56b80d75a84a5fb00a579}{Add\+Balance(double rate, double distance, int quantity)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_abe69255194b56b80d75a84a5fb00a579}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_abe69255194b56b80d75a84a5fb00a579}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!AddBalance@{AddBalance}}
+\index{AddBalance@{AddBalance}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{AddBalance()}{AddBalance()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Add\+Balance (\begin{DoxyParamCaption}\item[{double}]{rate,  }\item[{double}]{distance,  }\item[{int}]{quantity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates and returns a balance \textbackslash{} details {\bfseries{Details}} An overridden method that calculates the balance due for a contract based on the L\+TL rate, the distance of the trip, and the quantity of the pallets delivered. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & rate -\/ {\bfseries{double}} -\/ The rate set by a company offering a L\+TL delivery service \\
+\hline
+{\em -\/} & distance -\/ {\bfseries{double}} -\/ The distance of the trip \\
+\hline
+{\em -\/} & quantity -\/ {\bfseries{int}} -\/ The amount of pallets to be delivered \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ balance -\/ {\bfseries{double}} -\/ The balance calculated from the rate, distance, and pallet quantity
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a4fbec53e8d5237091cb6dffd1efa6ef6}{Add\+Balance(\+Contract contract)}} 
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a7cf28542fb5142c93e709a9e873f64a9}{Add\+Balance(double rate, double distance)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a1bbc06b73780f18460379587e4de4545}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a1bbc06b73780f18460379587e4de4545}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!AddNewContract@{AddNewContract}}
+\index{AddNewContract@{AddNewContract}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{AddNewContract()}{AddNewContract()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Add\+New\+Contract (\begin{DoxyParamCaption}\item[{int}]{contract\+ID,  }\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})}
+
+
+
+A method to add a new \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} into the Contracts dictionary \textbackslash{} details {\bfseries{Details}} Add a new contract into the Contracts dictionary using the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}\textquotesingle{}s ID as the Key, and the contract class as the Value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & contract\+ID -\/ {\bfseries{int}} -\/ The contract\textquotesingle{}s unique id number \\
+\hline
+{\em -\/} & contract -\/ {\bfseries{Contract\+Details}} -\/ The class containing all the details relating to the contract from the marketplace \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af96996befc4398e1bad556b83af8f682}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af96996befc4398e1bad556b83af8f682}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!GetAllContracts@{GetAllContracts}}
+\index{GetAllContracts@{GetAllContracts}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{GetAllContracts()}{GetAllContracts()}}
+{\footnotesize\ttfamily List$<$string$>$ S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Get\+All\+Contracts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A method to return all contracts on one account as a list \textbackslash{} details {\bfseries{Details}} A method which iterates through the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}\textquotesingle{}s Contracts dictionary and adds each one to a List of strings. This utilizes the The Contract\+Details\textquotesingle{} overridden To\+String method so that each string entry in the list is meaningful. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ contract\+List {\bfseries{List$<$\+String$>$}} -\/ A list containing all contracts expressed as strings
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ac289cdaa158b1132757719d74c4d1b52}{Get\+Uncalc\+Contracts()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ac289cdaa158b1132757719d74c4d1b52}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ac289cdaa158b1132757719d74c4d1b52}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!GetUncalcContracts@{GetUncalcContracts}}
+\index{GetUncalcContracts@{GetUncalcContracts}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{GetUncalcContracts()}{GetUncalcContracts()}}
+{\footnotesize\ttfamily List$<$string$>$ S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Get\+Uncalc\+Contracts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A method that returns a list of uncalculated contracts \textbackslash{} details {\bfseries{Details}} A Method that accesses the Uncalculated\+Contracts Dictionary, and adds each entry to a List in its string expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ contracts -\/ {\bfseries{List$<$string$>$}} -\/ The list of uncalculated contracts in their string expression
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af96996befc4398e1bad556b83af8f682}{Get\+All\+Contracts()}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ae5554a90af33f182f7f0dc20d3ab085f}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ae5554a90af33f182f7f0dc20d3ab085f}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!Contracts@{Contracts}}
+\index{Contracts@{Contracts}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{Contracts}{Contracts}}
+{\footnotesize\ttfamily Dictionary$<$int, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}$>$ S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Contracts\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. 
+
+A collection of all the contracts associated with an account \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_aa6f324eb687627c1eceeb9d1e30149b9}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_aa6f324eb687627c1eceeb9d1e30149b9}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!UncalculatedContracts@{UncalculatedContracts}}
+\index{UncalculatedContracts@{UncalculatedContracts}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{UncalculatedContracts}{UncalculatedContracts}}
+{\footnotesize\ttfamily Dictionary$<$int, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}$>$ S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Uncalculated\+Contracts\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A collection of all contracts whose cost has not yet been calculated. 
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a40c777dd982a67302ebf1b0811c0cab7}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a40c777dd982a67302ebf1b0811c0cab7}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!AccountID@{AccountID}}
+\index{AccountID@{AccountID}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{AccountID}{AccountID}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Account\+ID\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Th Id number of the account. 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a53714701401d95bd5d679ee9349f1d2e}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a53714701401d95bd5d679ee9349f1d2e}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!AccountName@{AccountName}}
+\index{AccountName@{AccountName}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{AccountName}{AccountName}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Account\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The name of the account. 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ad8f14a83f59bba8bf68559c1369e61fb}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ad8f14a83f59bba8bf68559c1369e61fb}} 
+\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}!Balance@{Balance}}
+\index{Balance@{Balance}!SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+\doxysubsubsection{\texorpdfstring{Balance}{Balance}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account.\+Balance\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The total balance owed on an account. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\+Contact\+Mgmt\+Billing/\mbox{\hyperlink{_account_8cs}{Account.\+cs}}\end{DoxyCompactItemize}
