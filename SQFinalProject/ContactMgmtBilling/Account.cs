@@ -29,8 +29,8 @@ namespace SQFinalProject.ContactMgmtBilling
         private Dictionary<int, ContractDetails> Contracts; //< A collection of all the contracts associated with an account
         private Dictionary<int, ContractDetails> UncalculatedContracts;//< A collection of all contracts whose cost has not yet been calculated
         public double Balance { get; set; } //< The total balance owed on an account
-        public string AccountName { get; set; }
-        public int AccountID { get; set; }
+        public string AccountName { get; set; } //< The name of the account
+        public int AccountID { get; set; } //< Th Id number of the account
 
 
         /// \brief A constructor for the account class
