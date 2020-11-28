@@ -10,7 +10,7 @@ namespace SQFinalProject.TripPlanning
      ///
      /// \brief This class represents the route that one truck might take along it's journey.  
      /// It holds a list of each individual stop, and methods to calculate total trip time and distance. Each <b>Truck</b> class will hold a route
-     /// Uses database queries to check for information, which offloads error handling to the 
+     /// Uses database queries to check for information, which offloads error handling to the <b>DatabaseInteraction</b> class
      ///
      /// \see Trip
      /// \author <i>Chris Lemon</i>
@@ -28,7 +28,15 @@ namespace SQFinalProject.TripPlanning
         private double totalTime { get; set; } //< the time it takes to complete the route
         private int totalDistance { get; set; } //< the total distance it takes to complete the trip
         private bool east { get; set; } //<whether the truck is going east or west
-        
+
+        /// \brief Route
+        /// \details <b>Details</b>
+        /// Constructor for the Route class.  Doesn't do anything on construction
+        /// 
+        /// \see Route
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
         public Route()
         {
 
