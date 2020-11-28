@@ -1,0 +1,208 @@
+\hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window}{}\doxysection{S\+Q\+Final\+Project.\+U\+I.\+Login\+Window Class Reference}
+\label{class_s_q_final_project_1_1_u_i_1_1_login_window}\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+
+
+\mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window}{Login\+Window}}  
+
+
+Inheritance diagram for S\+Q\+Final\+Project.\+U\+I.\+Login\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_q_final_project_1_1_u_i_1_1_login_window}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a94cf3a8805aeac859a2b81c218f0317e}{Initialize\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Initialize\+Component \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a94cf3a8805aeac859a2b81c218f0317e}{Initialize\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Initialize\+Component \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a27a3592c8227693e7ea9bbf78ccb5197}{Login\+Window}} ()
+\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_add5f13c7ed691bceb2ffd097056a1f7a}{Load\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Loads the database connection details from an external config file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_aae75bef5aba80aee180992f9439f655c}{user\+Info}}
+\begin{DoxyCompactList}\small\item\em String list to store the info on the user that is logging in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_ac5d42b03f0d3449a1d457ddf5e0c0850}{config\+File\+Path}} = @\char`\"{}..\textbackslash{}..\textbackslash{}config\textbackslash{}\+T\+M\+S.\+txt\char`\"{}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_aaeda5dd93b6a9d6f7beeeb3d2a33141b}{T\+M\+S\+\_\+\+Database}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a47f54f4c3d580a72681c5993e48af98b}{Market\+Place\+\_\+\+Database}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a211d0ab87f49757fc6155c767f7a2862}{login\+DB}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void System.\+Windows.\+Markup.\+I\+Component\+Connector. \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}{Connect}} (int connection\+Id, object target)
+\item 
+void System.\+Windows.\+Markup.\+I\+Component\+Connector. \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}{Connect}} (int connection\+Id, object target)
+\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}{Login\+\_\+\+Click}} (object sender, Routed\+Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Method that dictates what happens when the login button is clicked. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_aab2d6600aa3f1799f11029cba88de532}{\+\_\+content\+Loaded}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window}{Login\+Window}} 
+
+This class holds all the event handlers for for the W\+PF login window. It has data members for the T\+MS database \& the Marketplace database. The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they will be used in the final program.
+
+\begin{DoxyAuthor}{Author}
+{\itshape Deric Kruse} 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a27a3592c8227693e7ea9bbf78ccb5197}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a27a3592c8227693e7ea9bbf78ccb5197}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!LoginWindow@{LoginWindow}}
+\index{LoginWindow@{LoginWindow}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{LoginWindow()}{LoginWindow()}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Login\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!Connect@{Connect}}
+\index{Connect@{Connect}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{Connect()}{Connect()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void System.\+Windows.\+Markup.\+I\+Component\+Connector. S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Connect (\begin{DoxyParamCaption}\item[{int}]{connection\+Id,  }\item[{object}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!Connect@{Connect}}
+\index{Connect@{Connect}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{Connect()}{Connect()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void System.\+Windows.\+Markup.\+I\+Component\+Connector. S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Connect (\begin{DoxyParamCaption}\item[{int}]{connection\+Id,  }\item[{object}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a94cf3a8805aeac859a2b81c218f0317e}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a94cf3a8805aeac859a2b81c218f0317e}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!InitializeComponent@{InitializeComponent}}
+\index{InitializeComponent@{InitializeComponent}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{InitializeComponent()}{InitializeComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Initialize\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize\+Component 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a94cf3a8805aeac859a2b81c218f0317e}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a94cf3a8805aeac859a2b81c218f0317e}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!InitializeComponent@{InitializeComponent}}
+\index{InitializeComponent@{InitializeComponent}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{InitializeComponent()}{InitializeComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Initialize\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize\+Component 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_add5f13c7ed691bceb2ffd097056a1f7a}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_add5f13c7ed691bceb2ffd097056a1f7a}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!LoadConfig@{LoadConfig}}
+\index{LoadConfig@{LoadConfig}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{LoadConfig()}{LoadConfig()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Load\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Loads the database connection details from an external config file. 
+
+{\bfseries{Details}} Checks to see if the config files exists and creates it if it doesn\textquotesingle{}t. If it does, the method reads from the file and parses it out into data that is usable to connect to one or more databases 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{None}}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!Login\_Click@{Login\_Click}}
+\index{Login\_Click@{Login\_Click}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{Login\_Click()}{Login\_Click()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Login\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Routed\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method that dictates what happens when the login button is clicked. 
+
+{\bfseries{Details}} This method first checks if either the user name or password is empty, displaying appropriage messages. If they aren\textquotesingle{}t, it queries the database to see if the user name exists and if the password matches. If both of these are true, it loads the appropriate main page for the users role and closes this window.
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{sender\+:}} the object that called the method \\
+\hline
+{\em -\/} & {\bfseries{e\+:}} the arguments that are passed when this method is called\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_aab2d6600aa3f1799f11029cba88de532}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_aab2d6600aa3f1799f11029cba88de532}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!\_contentLoaded@{\_contentLoaded}}
+\index{\_contentLoaded@{\_contentLoaded}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{\_contentLoaded}{\_contentLoaded}}
+{\footnotesize\ttfamily bool S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+\_\+content\+Loaded\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_ac5d42b03f0d3449a1d457ddf5e0c0850}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_ac5d42b03f0d3449a1d457ddf5e0c0850}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!configFilePath@{configFilePath}}
+\index{configFilePath@{configFilePath}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{configFilePath}{configFilePath}}
+{\footnotesize\ttfamily const string S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+config\+File\+Path = @\char`\"{}..\textbackslash{}..\textbackslash{}config\textbackslash{}\+T\+M\+S.\+txt\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_aae75bef5aba80aee180992f9439f655c}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_aae75bef5aba80aee180992f9439f655c}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!userInfo@{userInfo}}
+\index{userInfo@{userInfo}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{userInfo}{userInfo}}
+{\footnotesize\ttfamily List$<$string$>$ S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+user\+Info}
+
+
+
+String list to store the info on the user that is logging in. 
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a211d0ab87f49757fc6155c767f7a2862}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a211d0ab87f49757fc6155c767f7a2862}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!loginDB@{loginDB}}
+\index{loginDB@{loginDB}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{loginDB}{loginDB}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+login\+DB\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a47f54f4c3d580a72681c5993e48af98b}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a47f54f4c3d580a72681c5993e48af98b}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!MarketPlace\_Database@{MarketPlace\_Database}}
+\index{MarketPlace\_Database@{MarketPlace\_Database}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{MarketPlace\_Database}{MarketPlace\_Database}}
+{\footnotesize\ttfamily List$<$string$>$ S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Market\+Place\+\_\+\+Database\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_aaeda5dd93b6a9d6f7beeeb3d2a33141b}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_aaeda5dd93b6a9d6f7beeeb3d2a33141b}} 
+\index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!TMS\_Database@{TMS\_Database}}
+\index{TMS\_Database@{TMS\_Database}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
+\doxysubsubsection{\texorpdfstring{TMS\_Database}{TMS\_Database}}
+{\footnotesize\ttfamily List$<$string$>$ S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+T\+M\+S\+\_\+\+Database\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/obj/\+Debug/\+U\+I/\mbox{\hyperlink{_u_i_2_login_window_8g_8cs}{Login\+Window.\+g.\+cs}}\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/obj/\+Debug/\+U\+I/\mbox{\hyperlink{_u_i_2_login_window_8g_8i_8cs}{Login\+Window.\+g.\+i.\+cs}}\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\+U\+I/\mbox{\hyperlink{_login_window_8xaml_8cs}{Login\+Window.\+xaml.\+cs}}\end{DoxyCompactItemize}

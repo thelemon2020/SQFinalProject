@@ -18,9 +18,12 @@ using SQFinalProject.ContactMgmtBilling;
 
 namespace SQFinalProject.UI {
     ///
-    /// \class <b>MainWindow</b>
+    /// \class MainWindow
     /// 
     /// \brief This class holds all the event handlers for for the main WPF window.  It has data members for the TMS database & the Marketplace database.
+    /// The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating
+    /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they 
+    /// will be used in the final program.
     /// 
     /// \author <i>Deric Kruse, Chris Lemon</i>
     /// 
@@ -37,12 +40,12 @@ namespace SQFinalProject.UI {
         public AdminWindow ( string name )
         { 
             InitializeComponent();
-            LoadConfig();                                               //< Parse the config file
-            if (TMS_Database!=null)                                     //< Connect to the TMS database if the config file loaded successfully
+            LoadConfig();                                               // Parse the config file
+            if (TMS_Database!=null)                                     // Connect to the TMS database if the config file loaded successfully
             {
                 loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]);
             }
-            if (MarketPlace_Database!=null)                             //< Connect to the Marketplace database if the config file loaded successfully
+            if (MarketPlace_Database!=null)                             // Connect to the Marketplace database if the config file loaded successfully
             {
                 MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
             }
@@ -64,18 +67,18 @@ namespace SQFinalProject.UI {
         /// 
         public void LoadConfig()
         {
-            if (File.Exists(configFilePath))                        //< If the config file exists, try to read from it
+            if (File.Exists(configFilePath))                        // If the config file exists, try to read from it
             {
                 StreamReader configFile = new StreamReader(configFilePath);
                 string contents = configFile.ReadToEnd();
                 configFile.Close();
                 if (contents != "")
                 {
-                    string[] splitByDB = contents.Split('\n');      //< Grab each line so it can be dealt with individually
+                    string[] splitByDB = contents.Split('\n');      // Grab each line so it can be dealt with individually
                     foreach (string dbDetails in splitByDB)
                     {
-                        string[] details = dbDetails.Split(' ');    //< Pull the individual fields from the line of the config file
-                        if (details[0] == "TMS")                    //< If the line pertains to the TMS database, assign the values to the TMS string list
+                        string[] details = dbDetails.Split(' ');    // Pull the individual fields from the line of the config file
+                        if (details[0] == "TMS")                    // If the line pertains to the TMS database, assign the values to the TMS string list
                         {
                             TMS_Database = new List<string>();
                             for (int i = 1; i < details.Count(); i++)
@@ -83,7 +86,7 @@ namespace SQFinalProject.UI {
                                 TMS_Database.Add(details[i]);
                             }
                         }
-                        else if (details[0] == "MP")                //< If the line pertains to the Marketplace database, assign the values to the Marketplace string list
+                        else if (details[0] == "MP")                // If the line pertains to the Marketplace database, assign the values to the Marketplace string list
                         {
                             MarketPlace_Database = new List<string>();
                             for (int i = 1; i < details.Count(); i++)

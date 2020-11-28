@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject.TripPlanning
 {
     /// 
-    /// \class <b>TripLine</b>
+    /// \class TripLine
     ///
     /// \brief This class joins together a <b>Truck</b> with a <b>Contract</b>.  No real error handling is needed as a <b>Truck</b> and a <b>Contract</b> must exist
     /// in a usable state to get a <b>TripLine</b>

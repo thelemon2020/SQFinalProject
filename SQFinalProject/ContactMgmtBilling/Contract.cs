@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject.ContactMgmtBilling
 {
     ///
-    /// \class <b>ContractDetails</b>
+    /// \class ContractDetails
     /// 
     /// \brief A class that holds all pertinent details of a contract from the contract marketplace
     /// 
@@ -41,7 +41,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public bool TripComplete { get; set; } //!< A boolean which represents if the trip has been completed or not
         public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
         public DateTime ETA { get; set; } //!<Estimated Time of Arrival
-        public string Carrier { get; set; } //!<
+        public string Carrier { get; set; } //!<The name of t
         //public List<TripLine> { get; set; } 
 
 

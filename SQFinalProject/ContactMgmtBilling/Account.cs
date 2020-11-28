@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject.ContactMgmtBilling
 {
     /// 
-    /// \class <b>Account</b>
+    /// \class Account
     ///
     /// \brief The Purpose of this class is to be a central area to hold exisiting customer details and their contracts.
     ///

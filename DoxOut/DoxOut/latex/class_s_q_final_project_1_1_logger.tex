@@ -1,0 +1,82 @@
+\hypertarget{class_s_q_final_project_1_1_logger}{}\doxysection{S\+Q\+Final\+Project.\+Logger Class Reference}
+\label{class_s_q_final_project_1_1_logger}\index{SQFinalProject.Logger@{SQFinalProject.Logger}}
+
+
+The static logger class to log specific application events to an external log file. It handles exceptions by catch any exception and returning a fail value of 1 to whichever method called it.  
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_s_q_final_project_1_1_logger_a8c9d723e65055ef65ba62f47abde536e}{Log}} (string msg)
+\begin{DoxyCompactList}\small\item\em Creates a string out of a message from anywhere in the application and log it into an external file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_s_q_final_project_1_1_logger_a381fdeffa68e36ecb685e5f585286e4a}{path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em path to write log file to \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly object \mbox{\hyperlink{class_s_q_final_project_1_1_logger_a12ef55ad72a7c4cd59e6458d32e77050}{obj}} = new object()
+\begin{DoxyCompactList}\small\item\em object to lock writing if another thread is using the write method \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The static logger class to log specific application events to an external log file. It handles exceptions by catch any exception and returning a fail value of 1 to whichever method called it. 
+
+\begin{DoxyAuthor}{Author}
+{\itshape Nick Byam} 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_logger_a8c9d723e65055ef65ba62f47abde536e}\label{class_s_q_final_project_1_1_logger_a8c9d723e65055ef65ba62f47abde536e}} 
+\index{SQFinalProject.Logger@{SQFinalProject.Logger}!Log@{Log}}
+\index{Log@{Log}!SQFinalProject.Logger@{SQFinalProject.Logger}}
+\doxysubsubsection{\texorpdfstring{Log()}{Log()}}
+{\footnotesize\ttfamily static int S\+Q\+Final\+Project.\+Logger.\+Log (\begin{DoxyParamCaption}\item[{string}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a string out of a message from anywhere in the application and log it into an external file. 
+
+{\bfseries{Details}} Takes a string as a parameter, adds a date/time to it and appends it to an external txt file. If the file doesn\textquotesingle{}t exist, it creates the file. If the file can\textquotesingle{}t be created it throws a log into the Windows \mbox{\hyperlink{class_s_q_final_project_1_1_logger}{Logger}} 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & msg -\/ {\bfseries{string}} -\/ The message that needs to be logged\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\bfseries{Nothing}} 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_logger_a12ef55ad72a7c4cd59e6458d32e77050}\label{class_s_q_final_project_1_1_logger_a12ef55ad72a7c4cd59e6458d32e77050}} 
+\index{SQFinalProject.Logger@{SQFinalProject.Logger}!obj@{obj}}
+\index{obj@{obj}!SQFinalProject.Logger@{SQFinalProject.Logger}}
+\doxysubsubsection{\texorpdfstring{obj}{obj}}
+{\footnotesize\ttfamily readonly object S\+Q\+Final\+Project.\+Logger.\+obj = new object()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+object to lock writing if another thread is using the write method 
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_logger_a381fdeffa68e36ecb685e5f585286e4a}\label{class_s_q_final_project_1_1_logger_a381fdeffa68e36ecb685e5f585286e4a}} 
+\index{SQFinalProject.Logger@{SQFinalProject.Logger}!path@{path}}
+\index{path@{path}!SQFinalProject.Logger@{SQFinalProject.Logger}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Logger.\+path\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+path to write log file to 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\mbox{\hyperlink{_logger_8cs}{Logger.\+cs}}\end{DoxyCompactItemize}
