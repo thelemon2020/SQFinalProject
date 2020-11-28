@@ -1,0 +1,247 @@
+\hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{}\doxysection{S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details Class Reference}
+\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_ac6672f2d52f22777abaa958f0d2af005}{Contract\+Details}} (string name, int job, int quant, string origin, string dest, int van)
+\begin{DoxyCompactList}\small\item\em A constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{Contract\+Details}} class \textbackslash{} details {\bfseries{Details}} The constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{Contract\+Details}} class, it takes an assortment of parameters which are to be gathered from the contract marketplace database. A number of parameters of the class are not set until a carrier for the contract is selected from the Carrier database. \end{DoxyCompactList}\item 
+override string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a296981ade5c2ded834c20c02edef1aa7}{To\+String}} ()
+\begin{DoxyCompactList}\small\item\em An overriden To\+String method for \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{Contract\+Details}} \textbackslash{} details {\bfseries{Details}} This method uses a string builder to create a formatted string of pertinent information relating to the contract. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af20580c0781d67b00d87d4830238cf39}{Reset\+Id\+Count}} ()
+\begin{DoxyCompactList}\small\item\em A method to reset the ID count of active contracts \textbackslash{} details {\bfseries{Details}} A method which checks how many contract classes are active so a unique ID can be assigned. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a0f42292c949484be7d982d468d57e16a}{Set\+Id\+Count}} (int number)
+\begin{DoxyCompactList}\small\item\em A method to set the current ID count \textbackslash{} details {\bfseries{Details}} Sets the current ID count. On a new session if there are exisiting contracts in the database this can be used to make sure new contracts that are created are assigned a unique ID. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a220d651bd46f7fa1591b16db1e40a164}{L\+T\+L\+Up\+Charge}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a98b5ec4572ef0f6e08d2141cfd37fa92}{F\+T\+L\+Up\+Charge}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af18697b95cd971dcdd2ae6ffb78b4c74}{Reefer\+Up\+Charge}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_afc7be26992a2e29bb0005cd3566206c0}{ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a3fd20fcb2eb7593ee5e0eda96ac4ca20}{Client\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a65f90549b71038d056fd0736d9d6d889}{Job\+Type}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a651045be8006d1bcc5d6f1e445842285}{Quantity}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af55275acca7f20e6900dbc254434343d}{Origin}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a2ca21911c2f1043fa4eb2621e4969ae0}{Destination}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af14515222b5d4e4e0267c6a46e62a9ff}{Distance}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aa99145c051d0102f717a3b231c08aebe}{Rate}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af1e9d7781121396e059a88f07ecacde0}{Van\+Type}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a95482b65431c4886443f102c65bd74bf}{Trip\+Complete}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aa8ba3db21eace83166141d28ac037df6}{Cost}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+Date\+Time \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_ade1b7d760cd986e49b0c0b689a3e52c0}{E\+TA}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aaa84594025e369cdbcfd0ee00a817e10}{Carrier}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_ac6672f2d52f22777abaa958f0d2af005}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_ac6672f2d52f22777abaa958f0d2af005}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ContractDetails@{ContractDetails}}
+\index{ContractDetails@{ContractDetails}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ContractDetails()}{ContractDetails()}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Contract\+Details (\begin{DoxyParamCaption}\item[{string}]{name,  }\item[{int}]{job,  }\item[{int}]{quant,  }\item[{string}]{origin,  }\item[{string}]{dest,  }\item[{int}]{van }\end{DoxyParamCaption})}
+
+
+
+A constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{Contract\+Details}} class \textbackslash{} details {\bfseries{Details}} The constructor for the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{Contract\+Details}} class, it takes an assortment of parameters which are to be gathered from the contract marketplace database. A number of parameters of the class are not set until a carrier for the contract is selected from the Carrier database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & name -\/ {\bfseries{string}} -\/ The customer\textquotesingle{}s name \\
+\hline
+{\em -\/} & job -\/ {\bfseries{int}} -\/ The job type identified by an integer \\
+\hline
+{\em -\/} & quant -\/ {\bfseries{int}} -\/ the quantity of pallets to deliver, 0 if the delivery is F\+TL \\
+\hline
+{\em -\/} & origin -\/ {\bfseries{string}} -\/ The origin city \\
+\hline
+{\em -\/} & dest -\/ {\bfseries{string}} -\/ The destination city \\
+\hline
+{\em -\/} & van -\/ {\bfseries{int}} -\/ The van type identified by an integer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af20580c0781d67b00d87d4830238cf39}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af20580c0781d67b00d87d4830238cf39}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ResetIdCount@{ResetIdCount}}
+\index{ResetIdCount@{ResetIdCount}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ResetIdCount()}{ResetIdCount()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Reset\+Id\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method to reset the ID count of active contracts \textbackslash{} details {\bfseries{Details}} A method which checks how many contract classes are active so a unique ID can be assigned. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a0f42292c949484be7d982d468d57e16a}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a0f42292c949484be7d982d468d57e16a}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!SetIdCount@{SetIdCount}}
+\index{SetIdCount@{SetIdCount}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{SetIdCount()}{SetIdCount()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Set\+Id\+Count (\begin{DoxyParamCaption}\item[{int}]{number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method to set the current ID count \textbackslash{} details {\bfseries{Details}} Sets the current ID count. On a new session if there are exisiting contracts in the database this can be used to make sure new contracts that are created are assigned a unique ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & number -\/ {\bfseries{int}} -\/ the number to assign to the Contract\+ID field \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a296981ade5c2ded834c20c02edef1aa7}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a296981ade5c2ded834c20c02edef1aa7}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ToString@{ToString}}
+\index{ToString@{ToString}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily override string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+An overriden To\+String method for \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details}{Contract\+Details}} \textbackslash{} details {\bfseries{Details}} This method uses a string builder to create a formatted string of pertinent information relating to the contract. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{Nothing}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ contract.\+To\+String -\/ {\bfseries{string}} -\/ The String\+Builder instance converted to a string containing the string rep of the contract 
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aaa84594025e369cdbcfd0ee00a817e10}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aaa84594025e369cdbcfd0ee00a817e10}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Carrier@{Carrier}}
+\index{Carrier@{Carrier}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Carrier}{Carrier}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Carrier\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a3fd20fcb2eb7593ee5e0eda96ac4ca20}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a3fd20fcb2eb7593ee5e0eda96ac4ca20}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ClientName@{ClientName}}
+\index{ClientName@{ClientName}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ClientName}{ClientName}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Client\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aa8ba3db21eace83166141d28ac037df6}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aa8ba3db21eace83166141d28ac037df6}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Cost@{Cost}}
+\index{Cost@{Cost}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Cost}{Cost}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Cost\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a2ca21911c2f1043fa4eb2621e4969ae0}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a2ca21911c2f1043fa4eb2621e4969ae0}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Destination@{Destination}}
+\index{Destination@{Destination}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Destination}{Destination}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Destination\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af14515222b5d4e4e0267c6a46e62a9ff}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af14515222b5d4e4e0267c6a46e62a9ff}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Distance@{Distance}}
+\index{Distance@{Distance}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Distance}{Distance}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Distance\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_ade1b7d760cd986e49b0c0b689a3e52c0}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_ade1b7d760cd986e49b0c0b689a3e52c0}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ETA@{ETA}}
+\index{ETA@{ETA}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ETA}{ETA}}
+{\footnotesize\ttfamily Date\+Time S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+E\+TA\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a98b5ec4572ef0f6e08d2141cfd37fa92}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a98b5ec4572ef0f6e08d2141cfd37fa92}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!FTLUpCharge@{FTLUpCharge}}
+\index{FTLUpCharge@{FTLUpCharge}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{FTLUpCharge}{FTLUpCharge}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+F\+T\+L\+Up\+Charge\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_afc7be26992a2e29bb0005cd3566206c0}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_afc7be26992a2e29bb0005cd3566206c0}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ID@{ID}}
+\index{ID@{ID}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ID}{ID}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+ID\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a65f90549b71038d056fd0736d9d6d889}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a65f90549b71038d056fd0736d9d6d889}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!JobType@{JobType}}
+\index{JobType@{JobType}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{JobType}{JobType}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Job\+Type\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a220d651bd46f7fa1591b16db1e40a164}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a220d651bd46f7fa1591b16db1e40a164}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!LTLUpCharge@{LTLUpCharge}}
+\index{LTLUpCharge@{LTLUpCharge}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{LTLUpCharge}{LTLUpCharge}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+L\+T\+L\+Up\+Charge\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+\mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af55275acca7f20e6900dbc254434343d}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af55275acca7f20e6900dbc254434343d}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Origin@{Origin}}
+\index{Origin@{Origin}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Origin}{Origin}}
+{\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Origin\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a651045be8006d1bcc5d6f1e445842285}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a651045be8006d1bcc5d6f1e445842285}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Quantity@{Quantity}}
+\index{Quantity@{Quantity}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Quantity}{Quantity}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Quantity\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aa99145c051d0102f717a3b231c08aebe}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_aa99145c051d0102f717a3b231c08aebe}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!Rate@{Rate}}
+\index{Rate@{Rate}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{Rate}{Rate}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Rate\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af18697b95cd971dcdd2ae6ffb78b4c74}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af18697b95cd971dcdd2ae6ffb78b4c74}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!ReeferUpCharge@{ReeferUpCharge}}
+\index{ReeferUpCharge@{ReeferUpCharge}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{ReeferUpCharge}{ReeferUpCharge}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Reefer\+Up\+Charge\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a95482b65431c4886443f102c65bd74bf}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_a95482b65431c4886443f102c65bd74bf}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!TripComplete@{TripComplete}}
+\index{TripComplete@{TripComplete}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{TripComplete}{TripComplete}}
+{\footnotesize\ttfamily bool S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Trip\+Complete\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af1e9d7781121396e059a88f07ecacde0}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_details_af1e9d7781121396e059a88f07ecacde0}} 
+\index{SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}!VanType@{VanType}}
+\index{VanType@{VanType}!SQFinalProject.ContactMgmtBilling.ContractDetails@{SQFinalProject.ContactMgmtBilling.ContractDetails}}
+\doxysubsubsection{\texorpdfstring{VanType}{VanType}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract\+Details.\+Van\+Type\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+S\+Q\+Final\+Project/\+Contact\+Mgmt\+Billing/\mbox{\hyperlink{_contract_details_8cs}{Contract\+Details.\+cs}}\end{DoxyCompactItemize}

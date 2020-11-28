@@ -125,6 +125,7 @@
     <Compile Include="TripPlanning\Routes.cs" />
     <Compile Include="TripPlanning\Trip.cs" />
     <Compile Include="TripPlanning\TripLine.cs" />
+    <Compile Include="TripPlanning\Truck.cs" />
     <Compile Include="UI.cs" />
     <Page Include="AboutW.xaml">
       <SubType>Designer</SubType>
