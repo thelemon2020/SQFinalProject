@@ -1,7 +1,7 @@
 var searchData=
 [
   ['about_5fclick_1',['About_Click',['../class_s_q_final_project_1_1_u_i_1_1_admin_window.html#a06125b0cb4b357abde8e7e9491b71d6d',1,'SQFinalProject.UI.AdminWindow.About_Click()'],['../class_s_q_final_project_1_1_u_i_1_1_buyer_window.html#a6bb4ba3d3f9dd22313e4854b4532db36',1,'SQFinalProject.UI.BuyerWindow.About_Click()'],['../class_s_q_final_project_1_1_u_i_1_1_planner_window.html#a6c398dc03ee011778415f990c8312f80',1,'SQFinalProject.UI.PlannerWindow.About_Click()']]],
-  ['aboutw_2',['AboutW',['../class_s_q_final_project_1_1_about_w.html',1,'SQFinalProject']]],
+  ['aboutw_2',['AboutW',['../class_s_q_final_project_1_1_about_w.html',1,'SQFinalProject.AboutW'],['../class_about_w.html',1,'AboutW']]],
   ['aboutw_2eg_2ecs_3',['AboutW.g.cs',['../_about_w_8g_8cs.html',1,'']]],
   ['aboutw_2eg_2ei_2ecs_4',['AboutW.g.i.cs',['../_about_w_8g_8i_8cs.html',1,'']]],
   ['aboutwindow_5',['AboutWindow',['../class_s_q_final_project_1_1_u_i_1_1_about_window.html',1,'SQFinalProject.UI.AboutWindow'],['../class_s_q_final_project_1_1_u_i_1_1_about_window.html#a1ca64f35e88c7065479bb53974cecf8d',1,'SQFinalProject.UI.AboutWindow.AboutWindow()']]],

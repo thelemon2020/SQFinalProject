@@ -1,5 +1,10 @@
 \hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{}\doxysection{S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Account Class Reference}
 \label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}\index{SQFinalProject.ContactMgmtBilling.Account@{SQFinalProject.ContactMgmtBilling.Account}}
+
+
+The Purpose of this class is to be a central area to hold exisiting customer details and their contracts.  
+
+
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -12,7 +17,7 @@
 void \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a1bbc06b73780f18460379587e4de4545}{Add\+New\+Contract}} (int contract\+ID, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
 \begin{DoxyCompactList}\small\item\em A method to add a new \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} into the Contracts dictionary \textbackslash{} details {\bfseries{Details}} Add a new contract into the Contracts dictionary using the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}\textquotesingle{}s ID as the Key, and the contract class as the Value. \end{DoxyCompactList}\item 
 List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_af96996befc4398e1bad556b83af8f682}{Get\+All\+Contracts}} ()
-\begin{DoxyCompactList}\small\item\em A method to return all contracts on one account as a list \textbackslash{} details {\bfseries{Details}} A method which iterates through the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}\textquotesingle{}s Contracts dictionary and adds each one to a List of strings. This utilizes the The Contract\+Details\textquotesingle{} overridden To\+String method so that each string entry in the list is meaningful. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A method to return all contracts on one account as a list \textbackslash{} details {\bfseries{Details}} A method which iterates through the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}\textquotesingle{}s Contracts dictionary and adds each one to a List of strings. This utilizes the The \mbox{\hyperlink{class_contract_details}{Contract\+Details}}\textquotesingle{} overridden To\+String method so that each string entry in the list is meaningful. \end{DoxyCompactList}\item 
 List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_ac289cdaa158b1132757719d74c4d1b52}{Get\+Uncalc\+Contracts}} ()
 \begin{DoxyCompactList}\small\item\em A method that returns a list of uncalculated contracts \textbackslash{} details {\bfseries{Details}} A Method that accesses the Uncalculated\+Contracts Dictionary, and adds each entry to a List in its string expression. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_a4fbec53e8d5237091cb6dffd1efa6ef6}{Add\+Balance}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
@@ -40,6 +45,14 @@ Dictionary$<$ int, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_bil
 \begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_s_q_final_project_1_1_properties}{Properties}}. \end{DoxyCompactList}\item 
 Dictionary$<$ int, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account_aa6f324eb687627c1eceeb9d1e30149b9}{Uncalculated\+Contracts}}
 \begin{DoxyCompactList}\small\item\em A collection of all contracts whose cost has not yet been calculated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The Purpose of this class is to be a central area to hold exisiting customer details and their contracts. 
+
+\begin{DoxyAuthor}{Author}
+{\itshape Nick Byam} 
+\end{DoxyAuthor}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
@@ -78,7 +91,7 @@ A constructor for \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_bill
 
 
 \begin{DoxyParams}{Parameters}
-{\em -\/} & contract -\/ {\bfseries{Contract\+Details}} -\/ The class containing all of the details relating to the contract from the marketplace \\
+{\em -\/} & contract -\/ {\bfseries{\mbox{\hyperlink{class_contract_details}{Contract\+Details}}}} -\/ The class containing all of the details relating to the contract from the marketplace \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -127,7 +140,7 @@ Calculates the Balance owed on an account based on contract details \textbacksla
 
 
 \begin{DoxyParams}{Parameters}
-{\em -\/} & contract -\/ {\bfseries{Contract\+Details}} -\/ The contract to be evaluated to find its cost. \\
+{\em -\/} & contract -\/ {\bfseries{\mbox{\hyperlink{class_contract_details}{Contract\+Details}}}} -\/ The contract to be evaluated to find its cost. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -204,7 +217,7 @@ A method to add a new \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_
 \begin{DoxyParams}{Parameters}
 {\em -\/} & contract\+ID -\/ {\bfseries{int}} -\/ The contract\textquotesingle{}s unique id number \\
 \hline
-{\em -\/} & contract -\/ {\bfseries{Contract\+Details}} -\/ The class containing all the details relating to the contract from the marketplace \\
+{\em -\/} & contract -\/ {\bfseries{\mbox{\hyperlink{class_contract_details}{Contract\+Details}}}} -\/ The class containing all the details relating to the contract from the marketplace \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -218,7 +231,7 @@ A method to add a new \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_
 
 
 
-A method to return all contracts on one account as a list \textbackslash{} details {\bfseries{Details}} A method which iterates through the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}\textquotesingle{}s Contracts dictionary and adds each one to a List of strings. This utilizes the The Contract\+Details\textquotesingle{} overridden To\+String method so that each string entry in the list is meaningful. 
+A method to return all contracts on one account as a list \textbackslash{} details {\bfseries{Details}} A method which iterates through the \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}\textquotesingle{}s Contracts dictionary and adds each one to a List of strings. This utilizes the The \mbox{\hyperlink{class_contract_details}{Contract\+Details}}\textquotesingle{} overridden To\+String method so that each string entry in the list is meaningful. 
 
 
 \begin{DoxyParams}{Parameters}

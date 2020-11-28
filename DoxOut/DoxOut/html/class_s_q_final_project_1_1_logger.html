@@ -74,6 +74,9 @@ $(function() {
 <div class="title">SQFinalProject.Logger Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The static logger class to log specific application events to an external log file. It handles exceptions by catch any exception and returning a fail value of 1 to whichever method called it.  
+ <a href="class_s_q_final_project_1_1_logger.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -93,7 +96,10 @@ Static Private Attributes</h2></td></tr>
 <tr class="memdesc:a12ef55ad72a7c4cd59e6458d32e77050"><td class="mdescLeft">&#160;</td><td class="mdescRight">object to lock writing if another thread is using the write method  <a href="class_s_q_final_project_1_1_logger.html#a12ef55ad72a7c4cd59e6458d32e77050">More...</a><br /></td></tr>
 <tr class="separator:a12ef55ad72a7c4cd59e6458d32e77050"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The static logger class to log specific application events to an external log file. It handles exceptions by catch any exception and returning a fail value of 1 to whichever method called it. </p>
+<dl class="section author"><dt>Author</dt><dd><em>Nick Byam</em> </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8c9d723e65055ef65ba62f47abde536e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8c9d723e65055ef65ba62f47abde536e">&#9670;&nbsp;</a></span>Log()</h2>
 
@@ -119,7 +125,7 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a string out of a message from anywhere in the application and log it into an external file. </p>
-<p><b>Details</b> Takes a string as a parameter, adds a date/time to it and appends it to an external txt file. If the file doesn't exist, it creates the file. If the file can't be created it throws a log into the Windows <a class="el" href="class_s_q_final_project_1_1_logger.html">Logger</a> </p><dl class="params"><dt>Parameters</dt><dd>
+<p><b>Details</b> Takes a string as a parameter, adds a date/time to it and appends it to an external txt file. If the file doesn't exist, it creates the file. If the file can't be created it throws a log into the Windows <a class="el" href="class_s_q_final_project_1_1_logger.html" title="The static logger class to log specific application events to an external log file....">Logger</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">-</td><td>msg - <b>string</b> - The message that needs to be logged</td></tr>
   </table>

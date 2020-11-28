@@ -60,7 +60,12 @@ bool \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window_aab2d6600
 \doxysubsection{Detailed Description}
 \mbox{\hyperlink{class_s_q_final_project_1_1_u_i_1_1_login_window}{Login\+Window}} 
 
-Interaction logic for Login\+Window.\+xaml
+This class holds all the event handlers for for the W\+PF login window. It has data members for the T\+MS database \& the Marketplace database. The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they will be used in the final program.
+
+\begin{DoxyAuthor}{Author}
+{\itshape Deric Kruse} 
+\end{DoxyAuthor}
+
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a27a3592c8227693e7ea9bbf78ccb5197}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a27a3592c8227693e7ea9bbf78ccb5197}} 
@@ -69,9 +74,7 @@ Interaction logic for Login\+Window.\+xaml
 \doxysubsubsection{\texorpdfstring{LoginWindow()}{LoginWindow()}}
 {\footnotesize\ttfamily S\+Q\+Final\+Project.\+U\+I.\+Login\+Window.\+Login\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-$<$ Parse the config file
 
-$<$ Connect to the T\+MS database if the config file loaded successfully
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_a0390af72becf2e2ce99f1ff470388efd}} 
@@ -124,15 +127,7 @@ Loads the database connection details from an external config file.
 \begin{DoxyReturn}{Returns}
 -\/ {\bfseries{Nothing}} 
 \end{DoxyReturn}
-$<$ If the config file exists, try to read from it
-
-$<$ Grab each line so it can be dealt with individually
-
-$<$ Pull the individual fields from the line of the config file
-
-$<$ If the line pertains to the T\+MS database, assign the values to the T\+MS string list
-
-$<$ If the line pertains to the Marketplace database, assign the values to the Marketplace string list\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}} 
+\mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_ab1f73f66f103abaa616eb8cf710f4cd9}} 
 \index{SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}!Login\_Click@{Login\_Click}}
 \index{Login\_Click@{Login\_Click}!SQFinalProject.UI.LoginWindow@{SQFinalProject.UI.LoginWindow}}
 \doxysubsubsection{\texorpdfstring{Login\_Click()}{Login\_Click()}}
@@ -154,27 +149,7 @@ Method that dictates what happens when the login button is clicked.
 \begin{DoxyReturn}{Returns}
 -\/ {\bfseries{Nothing}} 
 \end{DoxyReturn}
-$<$ Check if the username is blank and display an error if it is
 
-$<$ Check if the username is blank and display an error if it is
-
-$<$ If the two text boxes are not empty ...
-
-$<$ Set up the database query and check if the user name exists in the database
-
-$<$ Then check if the password matches
-
-$<$ If the User name is not found, print an error message ...
-
-$<$ and if the password doesn\textquotesingle{}t match, print an error message
-
-$<$ Otherwise clear all the errors
-
-$<$ If no errors were found ...
-
-$<$ Set up the database query and get the user\textquotesingle{}s role from the database
-
-$<$ and finally close the window
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{class_s_q_final_project_1_1_u_i_1_1_login_window_aab2d6600aa3f1799f11029cba88de532}\label{class_s_q_final_project_1_1_u_i_1_1_login_window_aab2d6600aa3f1799f11029cba88de532}} 

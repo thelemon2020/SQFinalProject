@@ -139,7 +139,8 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_s_q_final_project_1_1_u_i_1_1_login_window.html" title="LoginWindow">LoginWindow</a> </p>
-<p>Interaction logic for LoginWindow.xaml</p>
+<p>This class holds all the event handlers for for the WPF login window. It has data members for the TMS database &amp; the Marketplace database. The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they will be used in the final program.</p>
+<dl class="section author"><dt>Author</dt><dd><em>Deric Kruse</em> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a27a3592c8227693e7ea9bbf78ccb5197"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27a3592c8227693e7ea9bbf78ccb5197">&#9670;&nbsp;</a></span>LoginWindow()</h2>
@@ -155,8 +156,6 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&lt; Parse the config file</p>
-<p>&lt; Connect to the TMS database if the config file loaded successfully</p>
 
 </div>
 </div>
@@ -294,11 +293,6 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>- <b>Nothing</b> </dd></dl>
-<p>&lt; If the config file exists, try to read from it</p>
-<p>&lt; Grab each line so it can be dealt with individually</p>
-<p>&lt; Pull the individual fields from the line of the config file</p>
-<p>&lt; If the line pertains to the TMS database, assign the values to the TMS string list</p>
-<p>&lt; If the line pertains to the Marketplace database, assign the values to the Marketplace string list</p>
 
 </div>
 </div>
@@ -346,17 +340,6 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>- <b>Nothing</b> </dd></dl>
-<p>&lt; Check if the username is blank and display an error if it is</p>
-<p>&lt; Check if the username is blank and display an error if it is</p>
-<p>&lt; If the two text boxes are not empty ...</p>
-<p>&lt; Set up the database query and check if the user name exists in the database</p>
-<p>&lt; Then check if the password matches</p>
-<p>&lt; If the User name is not found, print an error message ...</p>
-<p>&lt; and if the password doesn't match, print an error message</p>
-<p>&lt; Otherwise clear all the errors</p>
-<p>&lt; If no errors were found ...</p>
-<p>&lt; Set up the database query and get the user's role from the database</p>
-<p>&lt; and finally close the window</p>
 
 </div>
 </div>

@@ -87,6 +87,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4caeef03b9046858404bedfaaeb9e1ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method that simulates loading product onto the truck.  <a href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a4caeef03b9046858404bedfaaeb9e1ed">More...</a><br /></td></tr>
 <tr class="separator:a4caeef03b9046858404bedfaaeb9e1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8add4a0d7b5cb6d21f0c388d531990e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a8add4a0d7b5cb6d21f0c388d531990e9">Unload</a> (<a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html">TripLine</a> contract)</td></tr>
+<tr class="memdesc:a8add4a0d7b5cb6d21f0c388d531990e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method that simulates unloading the truck.  <a href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a8add4a0d7b5cb6d21f0c388d531990e9">More...</a><br /></td></tr>
 <tr class="separator:a8add4a0d7b5cb6d21f0c388d531990e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -173,7 +174,7 @@ Static Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>- <b>Nothing</b></dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a4caeef03b9046858404bedfaaeb9e1ed" title="A method that simulates loading product onto the truck.">Load(TripLine contract)</a> </dd>
 <dd>
-<a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a8add4a0d7b5cb6d21f0c388d531990e9">Unload(TripLine contract)</a> </dd></dl>
+<a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a8add4a0d7b5cb6d21f0c388d531990e9" title="A method that simulates unloading the truck.">Unload(TripLine contract)</a> </dd></dl>
 
 </div>
 </div>
@@ -196,12 +197,12 @@ Static Private Attributes</h2></td></tr>
 <p>A method that simulates loading product onto the truck. </p>
 <p><b>Details</b> A method to simulate loading the truck with product related to a contract, it adds 2 hours to the total work time adds a new contract to the list, then updates pallet counts </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">-</td><td>contract <b><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html">TripLine</a></b> </td></tr>
+    <tr><td class="paramname">-</td><td>contract <b><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html" title="This class joins together a Truck with a Contract. No real error handling is needed as a Truck and a ...">TripLine</a></b> - The trip details of the contract </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>- <b>Nothing</b></dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a8add4a0d7b5cb6d21f0c388d531990e9">Unload(TripLine contract)</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a8add4a0d7b5cb6d21f0c388d531990e9" title="A method that simulates unloading the truck.">Unload(TripLine contract)</a> </dd></dl>
 
 </div>
 </div>
@@ -220,15 +221,16 @@ Static Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><b>Details</b></p>
-<dl class="params"><dt>Parameters</dt><dd>
+
+<p>A method that simulates unloading the truck. </p>
+<p><b>Details</b> A method that simulates unloading an order from the truck. Adds 2 hours to the work time, removes a contract from the list, and then updates the number of pallets in the truck </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">-</td><td></td></tr>
+    <tr><td class="paramname">-</td><td>contract - <b><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html" title="This class joins together a Truck with a Contract. No real error handling is needed as a Truck and a ...">TripLine</a></b> - The trip details of the contract </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>-</dd></dl>
-<dl class="section see"><dt>See also</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>- <b>Nothing</b></dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_s_q_final_project_1_1_trip_planning_1_1_truck.html#a4caeef03b9046858404bedfaaeb9e1ed" title="A method that simulates loading product onto the truck.">Load(TripLine contract)</a> </dd></dl>
 
 </div>
 </div>
