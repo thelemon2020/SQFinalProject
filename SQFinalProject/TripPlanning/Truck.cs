@@ -22,27 +22,27 @@ namespace SQFinalProject.TripPlanning
 
         public Truck()
         {
-            
+
         }
 
         public void ContinueRoute()
         {
-            // Move to the next city and simulate the passage of time
-            
+            // increase work time, move to next city
         }
 
         public void Load(TripLine contract)
         {
-            // minus 2 hours from work day
-            // add new contract to List
-            // update quantity of pallets
+            // update pallet count
+            // Increase work time by 2 hours
+            // Add a new TripLine to the List
         }
 
         public void Unload(TripLine contract)
         {
-            // minus 2 hours from the work day
-            // remove contract from list
-            // update quantity of pallets
+            // update pallet count
+            // Increase work time by 2 hours
+            // Remove tripline from the List
         }
+
     }
 }

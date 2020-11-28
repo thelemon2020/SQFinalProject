@@ -38,6 +38,8 @@ namespace SQFinalProject.ContactMgmtBilling
         /// One constructor for the Account class that initializes the Contract dictionary and UncalculatedContracts dictionary. Sets the balance on the account to 0.
         /// \param - <b>Nothing</b>
         /// \returns - <b>Nothing</b>
+        /// 
+        /// \see Account(Contract contract)
         public Account()
         {
             Contracts = new Dictionary<int, ContractDetails>();
