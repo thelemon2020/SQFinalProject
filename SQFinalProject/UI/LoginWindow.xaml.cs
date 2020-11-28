@@ -13,12 +13,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SQFinalProject {
+namespace SQFinalProject.UI {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
     public partial class LoginWindow : Window {
-        //! Properties
+       //! Properties
         public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
         public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
         public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info for the config parser
@@ -166,16 +166,16 @@ namespace SQFinalProject {
                     userInfo = loginDB.ExecuteCommand();
 
                     if ( userInfo.ElementAt(0).ToUpper().Equals( "A" ) ) {          //< If the user is an admin, load the admin main page
-                        MainWindow mainWindow = new MainWindow (usrName);
+                        AdminWindow mainWindow = new AdminWindow (usrName);
                         mainWindow.Show();
                     } else if ( userInfo.ElementAt(0).ToUpper().Equals( "B" ) ) {   //< If the user is a buyer, load the buyer main page
-                        MainWindow mainWindow = new MainWindow (usrName);
+                        BuyerWindow mainWindow = new BuyerWindow (usrName);
                         mainWindow.Show();
                     } else if ( userInfo.ElementAt(0).ToUpper().Equals( "P" ) ) {   //< If the user is a planner, load the buyer main page
-                        MainWindow mainWindow = new MainWindow (usrName);
+                        PlannerWindow mainWindow = new PlannerWindow (usrName);
                         mainWindow.Show();
                     } else {
-                        MainWindow mainWindow = new MainWindow (usrName);
+                        BuyerWindow mainWindow = new BuyerWindow (usrName);
                         mainWindow.Show();
                     }
                     
