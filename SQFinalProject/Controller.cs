@@ -62,14 +62,25 @@ namespace SQFinalProject
         }
 
 
-
-
+        /// \brief 
+        /// \details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
         public static void GenerateInvoice(Account account)
         {
             // need to generate a report 
         }
 
-
+        /// \brief 
+        /// \details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
         public static void GenerateReport(int weeks=0)
         {
             // generate either a 2 week or all time report

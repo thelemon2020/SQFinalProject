@@ -1,17 +1,37 @@
 \hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route}{}\doxysection{S\+Q\+Final\+Project.\+Trip\+Planning.\+Route Class Reference}
 \label{class_s_q_final_project_1_1_trip_planning_1_1_route}\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_q_final_project_1_1_trip_planning_1_1_route_1_1city}{city}}
+\begin{DoxyCompactList}\small\item\em $<$a struct holding all the relevant information to calculate a route \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_ab2e1ed9dbb5b508b44aa2d2c2ee5c924}{Route}} ()
 \begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route}{Route}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
-
-
-\doxysubsection{Detailed Description}
-
-
-Definition at line 18 of file Route.\+cs.
-
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{struct_s_q_final_project_1_1_trip_planning_1_1_route_1_1city}{city}} $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_a632477394db70cca23b58d9cfe994947}{cities}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em a list holding every city \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_a701059f76614de6756d1c01e1e5a3d76}{total\+Time}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em the time it takes to complete the route \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_ad43b14017c73151594497f1fbc8c0343}{total\+Distance}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em the total distance it takes to complete the trip \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_a4ac049fffc26616087a1d2b13682f964}{east}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em whether the truck is going east or west \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_aff040c14b4c6c7f383ccf61bffabc9ec}{Get\+Cities}} (string origin, string end)
+\begin{DoxyCompactList}\small\item\em Create a list of cities. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_aec85698a0d1efebe77bb2ac7a344b3ed}{calculate\+Total\+Time}} ()
+\begin{DoxyCompactList}\small\item\em Calculate total time remaining on route. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_a5eacbb1145ffc995a3d4df44481a9e91}{calculate\+Total\+KM}} ()
+\begin{DoxyCompactList}\small\item\em Calculate total KM remaining on route. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route_acc9226f8c8a30bd07129b271de4b75b2}{arrive\+At\+Stop}} ()
+\begin{DoxyCompactList}\small\item\em Update route info at each city. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
@@ -19,7 +39,7 @@ Definition at line 18 of file Route.\+cs.
 \index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!Route@{Route}}
 \index{Route@{Route}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
 \doxysubsubsection{\texorpdfstring{Route()}{Route()}}
-{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+Route (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+Route (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -35,10 +55,120 @@ Definition at line 18 of file Route.\+cs.
 \end{DoxyReturn}
 
 
-Definition at line 40 of file Route.\+cs.
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_acc9226f8c8a30bd07129b271de4b75b2}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_acc9226f8c8a30bd07129b271de4b75b2}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!arriveAtStop@{arriveAtStop}}
+\index{arriveAtStop@{arriveAtStop}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{arriveAtStop()}{arriveAtStop()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+arrive\+At\+Stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update route info at each city. 
+
+{\bfseries{Details}} Removes the city just arrived at from the city struct list and call methods to recalculate time and distance left
+
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_a5eacbb1145ffc995a3d4df44481a9e91}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_a5eacbb1145ffc995a3d4df44481a9e91}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!calculateTotalKM@{calculateTotalKM}}
+\index{calculateTotalKM@{calculateTotalKM}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{calculateTotalKM()}{calculateTotalKM()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+calculate\+Total\+KM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculate total KM remaining on route. 
+
+{\bfseries{Details}} Iterates through list of cities and adds together the each km to next city, and stores in in the total\+Distance class property
+
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_aec85698a0d1efebe77bb2ac7a344b3ed}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_aec85698a0d1efebe77bb2ac7a344b3ed}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!calculateTotalTime@{calculateTotalTime}}
+\index{calculateTotalTime@{calculateTotalTime}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{calculateTotalTime()}{calculateTotalTime()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+calculate\+Total\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculate total time remaining on route. 
+
+{\bfseries{Details}} Iterates through list of cities and adds together the travel times, and stores in in the total\+Time class property
+
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_aff040c14b4c6c7f383ccf61bffabc9ec}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_aff040c14b4c6c7f383ccf61bffabc9ec}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!GetCities@{GetCities}}
+\index{GetCities@{GetCities}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{GetCities()}{GetCities()}}
+{\footnotesize\ttfamily void S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+Get\+Cities (\begin{DoxyParamCaption}\item[{string}]{origin,  }\item[{string}]{end }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Create a list of cities. 
+
+{\bfseries{Details}} Creates a list of cities that the truck must go through to complete it\textquotesingle{}s route. ~\newline
+ Queries database in a loop to compile whole list, starting at origin and ending at the end point
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & origin -\/ {\bfseries{string}} -\/ the origin city of the truck \\
+\hline
+{\em -\/} & end -\/ {\bfseries{string}} -\/ the final stop of truck\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_a632477394db70cca23b58d9cfe994947}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_a632477394db70cca23b58d9cfe994947}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!cities@{cities}}
+\index{cities@{cities}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{cities}{cities}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{struct_s_q_final_project_1_1_trip_planning_1_1_route_1_1city}{city}}$>$ S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+cities\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+a list holding every city 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_a4ac049fffc26616087a1d2b13682f964}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_a4ac049fffc26616087a1d2b13682f964}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!east@{east}}
+\index{east@{east}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{east}{east}}
+{\footnotesize\ttfamily bool S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+east\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+whether the truck is going east or west 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_ad43b14017c73151594497f1fbc8c0343}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_ad43b14017c73151594497f1fbc8c0343}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!totalDistance@{totalDistance}}
+\index{totalDistance@{totalDistance}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{totalDistance}{totalDistance}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+total\+Distance\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+the total distance it takes to complete the trip 
+
+\mbox{\Hypertarget{class_s_q_final_project_1_1_trip_planning_1_1_route_a701059f76614de6756d1c01e1e5a3d76}\label{class_s_q_final_project_1_1_trip_planning_1_1_route_a701059f76614de6756d1c01e1e5a3d76}} 
+\index{SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}!totalTime@{totalTime}}
+\index{totalTime@{totalTime}!SQFinalProject.TripPlanning.Route@{SQFinalProject.TripPlanning.Route}}
+\doxysubsubsection{\texorpdfstring{totalTime}{totalTime}}
+{\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Trip\+Planning.\+Route.\+total\+Time\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [private]}}
+
+
+
+the time it takes to complete the route 
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Chris/source/repos/\+S\+Q/\+S\+Q\+Final\+Project/\+Trip\+Planning/Route.\+cs\end{DoxyCompactItemize}
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\+Trip\+Planning/\mbox{\hyperlink{_route_8cs}{Route.\+cs}}\end{DoxyCompactItemize}

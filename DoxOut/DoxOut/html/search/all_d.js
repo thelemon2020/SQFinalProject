@@ -1,7 +1,13 @@
 var searchData=
 [
-  ['user_40',['user',['../class_s_q_final_project_1_1_database.html#ad1de976f754458947afe96d32a5ae1cc',1,'SQFinalProject::Database']]],
-  ['usercommand_41',['userCommand',['../class_s_q_final_project_1_1_database.html#a8f417e3c75238e5c5b3687c39cdccfbe',1,'SQFinalProject::Database']]],
-  ['userinfo_42',['userInfo',['../class_s_q_final_project_1_1_login_window.html#aa0027562e605da203ba0efa242f27740',1,'SQFinalProject::LoginWindow']]],
-  ['username_43',['userName',['../class_s_q_final_project_1_1_main_window.html#ae8c5cc60bd72478b3d1f4cad7aded9ef',1,'SQFinalProject::MainWindow']]]
+  ['main_100',['Main',['../class_s_q_final_project_1_1_app.html#a3e23ce1ca0669f533b9ee697110182fd',1,'SQFinalProject.App.Main()'],['../class_s_q_final_project_1_1_app.html#a3e23ce1ca0669f533b9ee697110182fd',1,'SQFinalProject.App.Main()'],['../class_s_q_final_project_1_1_app.html#a3e23ce1ca0669f533b9ee697110182fd',1,'SQFinalProject.App.Main()']]],
+  ['mainwindow_101',['MainWindow',['../class_s_q_final_project_1_1_main_window.html',1,'SQFinalProject']]],
+  ['mainwindow_2eg_2ecs_102',['MainWindow.g.cs',['../_debug_2_main_window_8g_8cs.html',1,'(Global Namespace)'],['../_release_2_main_window_8g_8cs.html',1,'(Global Namespace)']]],
+  ['mainwindow_2eg_2ei_2ecs_103',['MainWindow.g.i.cs',['../_main_window_8g_8i_8cs.html',1,'']]],
+  ['makeinsertcommand_104',['MakeInsertCommand',['../class_s_q_final_project_1_1_database.html#ae1fa67bbf3264335cafc8fcbe057d3e9',1,'SQFinalProject.Database.MakeInsertCommand(string table, List&lt; string &gt; values)'],['../class_s_q_final_project_1_1_database.html#ab7f688bb003d9d0153067ace21259cb1',1,'SQFinalProject.Database.MakeInsertCommand(string table, List&lt; string &gt; fields, List&lt; string &gt; values)']]],
+  ['makeselectcommand_105',['MakeSelectCommand',['../class_s_q_final_project_1_1_database.html#a0f2a85c359020d28dcee30fcf9027910',1,'SQFinalProject::Database']]],
+  ['makeupdatecommand_106',['MakeUpdateCommand',['../class_s_q_final_project_1_1_database.html#a096d4f1a9566c7e899f1491b42020166',1,'SQFinalProject::Database']]],
+  ['marketplace_107',['MarketPlace',['../class_s_q_final_project_1_1_u_i_1_1_admin_window.html#ab0d85b35c98c7e7ae87501d84ce94fc2',1,'SQFinalProject.UI.AdminWindow.MarketPlace()'],['../class_s_q_final_project_1_1_u_i_1_1_buyer_window.html#a6bf0c0937013d4163a370a629b8a0add',1,'SQFinalProject.UI.BuyerWindow.MarketPlace()'],['../class_s_q_final_project_1_1_u_i_1_1_planner_window.html#a5ae0f5e6a79e32385818b7d89abecbae',1,'SQFinalProject.UI.PlannerWindow.MarketPlace()']]],
+  ['marketplace_5fdatabase_108',['MarketPlace_Database',['../class_s_q_final_project_1_1_u_i_1_1_admin_window.html#a9a9d1673fa45041d13c0effcbe97eb85',1,'SQFinalProject.UI.AdminWindow.MarketPlace_Database()'],['../class_s_q_final_project_1_1_u_i_1_1_buyer_window.html#a31c693f001f11f13a2de73246315673d',1,'SQFinalProject.UI.BuyerWindow.MarketPlace_Database()'],['../class_s_q_final_project_1_1_u_i_1_1_login_window.html#a47f54f4c3d580a72681c5993e48af98b',1,'SQFinalProject.UI.LoginWindow.MarketPlace_Database()'],['../class_s_q_final_project_1_1_u_i_1_1_planner_window.html#aba8b2c96d057e72f25c75b7c60286dfc',1,'SQFinalProject.UI.PlannerWindow.MarketPlace_Database()']]],
+  ['marketrtn_109',['MarketRtn',['../class_s_q_final_project_1_1_u_i_1_1_buyer_window.html#acec1564eacf9a6e0b68701c2ec00bbc4',1,'SQFinalProject.UI.BuyerWindow.MarketRtn()'],['../class_s_q_final_project_1_1_u_i_1_1_planner_window.html#ab7eaa346e8f2e33d8b7c7ee8897567ba',1,'SQFinalProject.UI.PlannerWindow.MarketRtn()']]]
 ];

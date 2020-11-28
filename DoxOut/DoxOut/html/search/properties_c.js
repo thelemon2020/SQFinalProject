@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['schema_184',['schema',['../class_s_q_final_project_1_1_database.html#a7cf835994f3342ed737d4d9f6fa1d601',1,'SQFinalProject::Database']]],
-  ['sqlcommand_185',['SQLCommand',['../class_s_q_final_project_1_1_database.html#a399fc6e78b64b6d8b19f7ea175dea986',1,'SQFinalProject::Database']]]
+  ['origin_324',['Origin',['../class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract.html#a1f5a43524ce33f74e8d1992c1b646d0e',1,'SQFinalProject.ContactMgmtBilling.Contract.Origin()'],['../class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html#ab576a37e6c028280c557ca684710d3eb',1,'SQFinalProject.TripPlanning.TripLine.Origin()'],['../class_s_q_final_project_1_1_trip_planning_1_1_truck.html#af0f164bbbd1d7bf3226115e9d39c2427',1,'SQFinalProject.TripPlanning.Truck.Origin()']]]
 ];

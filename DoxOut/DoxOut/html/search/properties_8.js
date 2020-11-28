@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['user_91',['user',['../class_s_q_final_project_1_1_database.html#ad1de976f754458947afe96d32a5ae1cc',1,'SQFinalProject::Database']]],
-  ['usercommand_92',['userCommand',['../class_s_q_final_project_1_1_database.html#a8f417e3c75238e5c5b3687c39cdccfbe',1,'SQFinalProject::Database']]]
+  ['jobtype_317',['JobType',['../class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract.html#a02fa4b1bf1ce0f8f8812538d2a634f5e',1,'SQFinalProject::ContactMgmtBilling::Contract']]]
 ];

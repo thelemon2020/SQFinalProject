@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tripline_76',['TripLine',['../class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html#a36b3d1e36e7944b3e243042767766be7',1,'SQFinalProject::TripPlanning::TripLine']]]
+  ['okbutton_5fclick_272',['OKButton_Click',['../class_s_q_final_project_1_1_u_i_1_1_about_window.html#a4277023f525551ca936630564a5a2d47',1,'SQFinalProject::UI::AboutWindow']]]
 ];

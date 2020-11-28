@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vantype_221',['VanType',['../class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract.html#a420bfe5db40fb306aa4306bfabbf4ffb',1,'SQFinalProject.ContactMgmtBilling.Contract.VanType()'],['../class_s_q_final_project_1_1_trip_planning_1_1_truck.html#ae8cf0fcd40064cea9b8198798eb44d11',1,'SQFinalProject.TripPlanning.Truck.VanType()']]]
+  ['user_339',['user',['../class_s_q_final_project_1_1_database.html#ad1de976f754458947afe96d32a5ae1cc',1,'SQFinalProject::Database']]],
+  ['usercommand_340',['userCommand',['../class_s_q_final_project_1_1_database.html#a8f417e3c75238e5c5b3687c39cdccfbe',1,'SQFinalProject::Database']]]
 ];

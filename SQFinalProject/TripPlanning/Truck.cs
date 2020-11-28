@@ -33,7 +33,7 @@ namespace SQFinalProject.TripPlanning
 
 
         /// \brief Constructor for the truck class
-        /// \ details <b>Details</b>
+        /// \details <b>Details</b>
         /// The constructor for the Truck class
         /// \param - <b>Nothing</b>
         /// \returns - <b>Nothing</b>
@@ -45,26 +45,28 @@ namespace SQFinalProject.TripPlanning
         }
 
 
-        /// \brief A method to simulate the truck 
-        /// \ details <b>Details</b>
+        /// \brief A method to simulate the truck continuing to the next city
+        /// \details <b>Details</b>
+        /// A method that will increase the work time equal to the number of hours to the next city then update the contracts delivered if any
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         /// 
-        /// \param - 
-        /// \returns - 
-        /// 
-        /// \see
+        /// \see Load(TripLine contract)
+        /// \see Unload(TripLine contract)
         public void ContinueRoute()
         {
             // increase work time, move to next city
         }
 
 
-        /// \brief 
-        /// \ details <b>Details</b>
+        /// \brief A method that simulates loading product onto the truck
+        /// \details <b>Details</b>
+        /// A method to simulate loading the truck with product related to a contract, it adds 2 hours to the total work time
+        /// adds a new contract to the list, then updates pallet counts
+        /// \param - contract <b>TripLine</b> - The trip details of the contract
+        /// \returns - <b>Nothing</b>
         /// 
-        /// \param - 
-        /// \returns - 
-        /// 
-        /// \see
+        /// \see Unload(TripLine contract)
         public void Load(TripLine contract)
         {
             // update pallet count
@@ -73,13 +75,14 @@ namespace SQFinalProject.TripPlanning
         }
 
 
-        /// \brief 
-        /// \ details <b>Details</b>
+        /// \brief A method that simulates unloading the truck
+        /// \details <b>Details</b>
+        /// A method that simulates unloading an order from the truck. Adds 2 hours to the work time, removes a contract from the list,
+        /// and then updates the number of pallets in the truck
+        /// \param - contract - <b>TripLine</b> - The trip details of the contract
+        /// \returns - <b>Nothing</b>
         /// 
-        /// \param - 
-        /// \returns - 
-        /// 
-        /// \see
+        /// \see Load(TripLine contract)
         public void Unload(TripLine contract)
         {
             // update pallet count

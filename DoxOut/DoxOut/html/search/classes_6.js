@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['tripline_52',['TripLine',['../class_s_q_final_project_1_1_trip_planning_1_1_trip_line.html',1,'SQFinalProject::TripPlanning']]],
-  ['truck_53',['Truck',['../class_s_q_final_project_1_1_trip_planning_1_1_truck.html',1,'SQFinalProject::TripPlanning']]]
+  ['plannerwindow_180',['PlannerWindow',['../class_s_q_final_project_1_1_u_i_1_1_planner_window.html',1,'SQFinalProject::UI']]]
 ];

@@ -42,12 +42,17 @@ double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_con
 int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a420bfe5db40fb306aa4306bfabbf4ffb}{Van\+Type}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \item 
 bool \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ac6fa8cb491636f4304f71b7c43ee0657}{Trip\+Complete}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
+\begin{DoxyCompactList}\small\item\em A boolean which represents if the trip has been completed or not. \end{DoxyCompactList}\item 
 double \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ab3bd1b76543131fcb1c142e82746dfe1}{Cost}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
+\begin{DoxyCompactList}\small\item\em The flat cost of the trip before rates are applied. \end{DoxyCompactList}\item 
 Date\+Time \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a7e333696ccc0e30dbd87c6fc898f09d2}{E\+TA}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
+\begin{DoxyCompactList}\small\item\em Estimated Time of Arrival. \end{DoxyCompactList}\item 
 string \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_af507cc971809f82d480afabd234fee22}{Carrier}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a090e57b46d7105392f17a8c416ed44ac}{Contract\+ID}} = 0
 \end{DoxyCompactItemize}
 
 
@@ -139,6 +144,15 @@ An overriden To\+String method for Contract\+Details \textbackslash{} details {\
 \end{DoxyReturn}
 
 
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a090e57b46d7105392f17a8c416ed44ac}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a090e57b46d7105392f17a8c416ed44ac}} 
+\index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!ContractID@{ContractID}}
+\index{ContractID@{ContractID}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
+\doxysubsubsection{\texorpdfstring{ContractID}{ContractID}}
+{\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Contract\+ID = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
 \doxysubsection{Property Documentation}
 \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_af507cc971809f82d480afabd234fee22}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_af507cc971809f82d480afabd234fee22}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!Carrier@{Carrier}}
@@ -152,11 +166,15 @@ An overriden To\+String method for Contract\+Details \textbackslash{} details {\
 \doxysubsubsection{\texorpdfstring{ClientName}{ClientName}}
 {\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Client\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ab3bd1b76543131fcb1c142e82746dfe1}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ab3bd1b76543131fcb1c142e82746dfe1}} 
+\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} ID \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ab3bd1b76543131fcb1c142e82746dfe1}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ab3bd1b76543131fcb1c142e82746dfe1}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!Cost@{Cost}}
 \index{Cost@{Cost}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{Cost}{Cost}}
 {\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Cost\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The flat cost of the trip before rates are applied. 
 
 \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a80d01781e50bbbd377bd9d0d8ca0bc7f}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a80d01781e50bbbd377bd9d0d8ca0bc7f}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!Destination@{Destination}}
@@ -164,17 +182,21 @@ An overriden To\+String method for Contract\+Details \textbackslash{} details {\
 \doxysubsubsection{\texorpdfstring{Destination}{Destination}}
 {\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Destination\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a1d95ef159b4b1c47e65f1973d02a5ac4}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a1d95ef159b4b1c47e65f1973d02a5ac4}} 
+The origin city \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a1d95ef159b4b1c47e65f1973d02a5ac4}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a1d95ef159b4b1c47e65f1973d02a5ac4}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!Distance@{Distance}}
 \index{Distance@{Distance}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{Distance}{Distance}}
 {\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Distance\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a7e333696ccc0e30dbd87c6fc898f09d2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a7e333696ccc0e30dbd87c6fc898f09d2}} 
+The destination city \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a7e333696ccc0e30dbd87c6fc898f09d2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a7e333696ccc0e30dbd87c6fc898f09d2}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!ETA@{ETA}}
 \index{ETA@{ETA}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{ETA}{ETA}}
 {\footnotesize\ttfamily Date\+Time S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+E\+TA\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Estimated Time of Arrival. 
 
 \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ababd45d1ae8b815aee2673f9226a95fd}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ababd45d1ae8b815aee2673f9226a95fd}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!FTLUpCharge@{FTLUpCharge}}
@@ -182,19 +204,19 @@ An overriden To\+String method for Contract\+Details \textbackslash{} details {\
 \doxysubsubsection{\texorpdfstring{FTLUpCharge}{FTLUpCharge}}
 {\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+F\+T\+L\+Up\+Charge\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a6a811bf020d97ef1f149060a94bad6df}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a6a811bf020d97ef1f149060a94bad6df}} 
+Company rate for L\+TL delivery contracts \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a6a811bf020d97ef1f149060a94bad6df}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a6a811bf020d97ef1f149060a94bad6df}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!ID@{ID}}
 \index{ID@{ID}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{ID}{ID}}
 {\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+ID\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a02fa4b1bf1ce0f8f8812538d2a634f5e}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a02fa4b1bf1ce0f8f8812538d2a634f5e}} 
+Company rate for Reefer van contracts \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a02fa4b1bf1ce0f8f8812538d2a634f5e}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a02fa4b1bf1ce0f8f8812538d2a634f5e}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!JobType@{JobType}}
 \index{JobType@{JobType}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{JobType}{JobType}}
 {\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Job\+Type\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a722835375d054ae50da50118c2b8cfaa}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a722835375d054ae50da50118c2b8cfaa}} 
+The name of the client \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a722835375d054ae50da50118c2b8cfaa}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a722835375d054ae50da50118c2b8cfaa}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!LTLUpCharge@{LTLUpCharge}}
 \index{LTLUpCharge@{LTLUpCharge}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{LTLUpCharge}{LTLUpCharge}}
@@ -210,31 +232,35 @@ An overriden To\+String method for Contract\+Details \textbackslash{} details {\
 \doxysubsubsection{\texorpdfstring{Origin}{Origin}}
 {\footnotesize\ttfamily string S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Origin\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a2e5853281c6e7e8f63b68489ecfb8ae1}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a2e5853281c6e7e8f63b68489ecfb8ae1}} 
+Quantity of pallets to be delivered, only necessary for L\+TL deliveries \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a2e5853281c6e7e8f63b68489ecfb8ae1}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a2e5853281c6e7e8f63b68489ecfb8ae1}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!Quantity@{Quantity}}
 \index{Quantity@{Quantity}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{Quantity}{Quantity}}
 {\footnotesize\ttfamily int S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Quantity\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a53046c5a070ead7333896d9dd6f930c2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a53046c5a070ead7333896d9dd6f930c2}} 
+The type of job, represented by an integer, 0 or 1 -\/$>$ F\+TL or L\+TL \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a53046c5a070ead7333896d9dd6f930c2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a53046c5a070ead7333896d9dd6f930c2}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!Rate@{Rate}}
 \index{Rate@{Rate}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{Rate}{Rate}}
 {\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Rate\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ad037fe4eb10579ed9dd161c1ac49ecc2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ad037fe4eb10579ed9dd161c1ac49ecc2}} 
+The total distance of the trips The perk km or per pallet rate set by the carrier \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ad037fe4eb10579ed9dd161c1ac49ecc2}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ad037fe4eb10579ed9dd161c1ac49ecc2}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!ReeferUpCharge@{ReeferUpCharge}}
 \index{ReeferUpCharge@{ReeferUpCharge}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{ReeferUpCharge}{ReeferUpCharge}}
 {\footnotesize\ttfamily double S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Reefer\+Up\+Charge\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ac6fa8cb491636f4304f71b7c43ee0657}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ac6fa8cb491636f4304f71b7c43ee0657}} 
+Company rate for F\+TL delivery contracts \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ac6fa8cb491636f4304f71b7c43ee0657}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_ac6fa8cb491636f4304f71b7c43ee0657}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!TripComplete@{TripComplete}}
 \index{TripComplete@{TripComplete}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{TripComplete}{TripComplete}}
 {\footnotesize\ttfamily bool S\+Q\+Final\+Project.\+Contact\+Mgmt\+Billing.\+Contract.\+Trip\+Complete\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
-\mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a420bfe5db40fb306aa4306bfabbf4ffb}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a420bfe5db40fb306aa4306bfabbf4ffb}} 
+
+
+A boolean which represents if the trip has been completed or not. 
+
+The van type, 0 or 1 -\/$>$ Dry van or Reefer van \mbox{\Hypertarget{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a420bfe5db40fb306aa4306bfabbf4ffb}\label{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract_a420bfe5db40fb306aa4306bfabbf4ffb}} 
 \index{SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}!VanType@{VanType}}
 \index{VanType@{VanType}!SQFinalProject.ContactMgmtBilling.Contract@{SQFinalProject.ContactMgmtBilling.Contract}}
 \doxysubsubsection{\texorpdfstring{VanType}{VanType}}
@@ -244,4 +270,4 @@ An overriden To\+String method for Contract\+Details \textbackslash{} details {\
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Chris/source/repos/\+S\+Q/\+S\+Q\+Final\+Project/\+Contact\+Mgmt\+Billing/\mbox{\hyperlink{_contract_8cs}{Contract.\+cs}}\end{DoxyCompactItemize}
+C\+:/\+Users/\+Nick\+\_\+/source/repos/\+S\+Q\+Final\+Project/\+S\+Q\+Final\+Project/\+Contact\+Mgmt\+Billing/\mbox{\hyperlink{_contract_8cs}{Contract.\+cs}}\end{DoxyCompactItemize}
