@@ -19,13 +19,13 @@ namespace SQFinalProject.TripPlanning
     ///
     class TripLine
     {
-        public int ContractID { get; set; }
-        public int TripID { get; set; }
-        public int Quantity { get; set; }
-        public string Origin { get; set; }
-        public string Destination { get; set; }
-        public int EstTime { get; set; }
-        public int EstKM { get; set; }
+        public int ContractID { get; set; }  //!< the contract associated with the trip line
+        public int TripID { get; set; } //!<the truck associated with the trip line
+        public int Quantity { get; set; } //!< quantity of order
+        public string Origin { get; set; } //!< origin city
+        public string Destination { get; set; } //!< destination city
+        public int EstTime { get; set; } //!< time to complete
+        public int EstKM { get; set; } //!< distance to complete
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>

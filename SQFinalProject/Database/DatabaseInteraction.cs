@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace SQFinalProject.Database
+namespace SQFinalProject
 {   
     /// 
     /// \class DatabaseInteraction

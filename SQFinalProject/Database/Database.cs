@@ -8,7 +8,7 @@ using System.Windows.Markup;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace SQFinalProject.Database
+namespace SQFinalProject
 {   /// 
     /// \class Database
     ///
