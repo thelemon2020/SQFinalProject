@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject.TripPlanning
 {
     /// 
-    /// \class <b>Truck</b>
+    /// \class Truck
     ///
     /// \brief This class represents the truck and driver that will be delivering the products. It keeps track of its depot city and destination
     /// city, as well as a list of contracts it has onboard, the total hours the driver has worked, and associated rates used to calculate the cost
