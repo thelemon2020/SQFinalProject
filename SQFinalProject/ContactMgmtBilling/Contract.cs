@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject.ContactMgmtBilling
 {
     ///
-    /// \class <b>ContractDetails</b>
+    /// \class ContractDetails
     /// 
     /// \brief A class that holds all pertinent details of a contract from the contract marketplace
     /// 
