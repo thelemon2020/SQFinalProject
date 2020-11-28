@@ -11,6 +11,8 @@ namespace SQFinalProject
     /// \class Controller
     ///
     /// \brief A class that handles passing data around the system
+    /// In this class, the errors will be handled by returning a specified error value, either zero or null, and the calling class will then 
+    /// have to decide how to best handle the error.  Testing for the methods in this class will be handled in a separate unit test project.
     /// 
     /// \author <i>Nick Byam</i>
     public static class Controller
