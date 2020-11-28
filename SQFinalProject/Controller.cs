@@ -57,6 +57,19 @@ namespace SQFinalProject
             account.AddNewContract(contract.ID, contract);
         }
 
+
+        /// \brief A method that creates a new contract
+        /// \details <b>Details</b>
+        /// A method that allows the controller to create a new contract, but not associate it with a class yet
+        /// \param - name - <b>string</b> - the name of the client
+        /// \param - job - <b>int</b> - the job type
+        /// \param - quant - <b>int</b> - the quantity of pallets
+        /// \param - origin - <b>string</b> - The origin city
+        /// \param - dest - <b>string</b> - The destination city
+        /// \param - van - <b>int</b> - The van type
+        /// \returns - contract - <b>Contract</b> - The newly created contract
+        /// 
+        /// \see AddContractToAccount(Account account, Contract contract)
         public static Contract CreateNewContract(string name, int job, int quant, string origin, string dest, int van)
         {
             Contract contract = new Contract(name, job, quant, origin, dest, van);
