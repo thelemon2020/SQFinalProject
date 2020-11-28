@@ -11,14 +11,15 @@ namespace SQFinalProject
     /// 
     /// \class <b>Logger</b>
     ///
-    /// \brief The static logger class to log specific application events to an external log file
+    /// \brief The static logger class to log specific application events to an external log file.  It handles exceptions by catch any exception and 
+    /// returning a fail value of 1 to whichever method called it
     ///
     /// \author <i>Nick Byam</i>
     ///
     public static class Logger
     {
-        static public string path { get; set; }
-        private static readonly object obj = new object();
+        static public string path { get; set; } //<path to write log file to
+        private static readonly object obj = new object(); //<object to lock writing if another thread is using the write method
 
         /// \brief Creates a string out of a message from anywhere in the application and log it into an external file
         /// \details <b>Details</b>

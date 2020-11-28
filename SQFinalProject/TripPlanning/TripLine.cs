@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQFinalProject.ContactMgmtBilling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,15 +31,16 @@ namespace SQFinalProject.TripPlanning
         /// \details <b>Details</b>
         /// Sets some general properties based on arguments passed in from another method 
         /// 
-        /// \param - connectionString - <b>string</b> - a string holding all the information neccessary to connect to a database
+        /// \param - contract - <b>Contract</b> - the contract to be loaded onto a <b>Truck</b>
+        /// \param - truck - <b>Truck</b> - the <b>Truck</b> to load the contract on to
         /// 
         /// \return - connection - <b>MySqlConnection</b> - The object that represents the connection to a database
         /// 
-        public TripLine(int contract, int trip, int qty)
+        public TripLine(Contract contract, Truck truck)
         {
-            ContractID = contract;
-            TripID = trip;
-            Quantity = qty;
+            ContractID = contract.ID;
+            TripID = truck.TripID;
+            Quantity = contract.Quantity;
             EstTime = 0;
         }
     }
