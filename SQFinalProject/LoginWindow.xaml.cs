@@ -14,13 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace SQFinalProject {
-    ///
-    /// \class <b>LoginWindow</b>
-    /// 
-    /// \brief This class holds all the event handlers for for the WPF login window.  It has data members for the TMS database & the Marketplace database.
-    /// 
-    /// \author <i>Deric Kruse</i>
-    /// 
+    /// <summary>
+    /// Interaction logic for LoginWindow.xaml
+    /// </summary>
     public partial class LoginWindow : Window {
         //! Properties
         public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
