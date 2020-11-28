@@ -12,7 +12,10 @@ namespace SQFinalProject
 {   /// 
     /// \class <b>Database</b>
     ///
-    /// \brief The purpose of this class is to connect to and interact with a MYSQL Database
+    /// \brief The purpose of this class is to act as an abstraction for the <b>DatabaseInteraction</b> class. 
+    /// It takes arguments passed in from the various <b>Window</b> classes, parses them and then passes them onto the various <b>DatabaseInteraction</b> methods.
+    /// All error handling is handled by the DatabaseInteraction methods, which just pass back null if there is an error.  As the returns from all <b>Database</b>
+    /// methods are <b>strings</b> or <b>List<string></b>, a null is easily parsed as a failed query
     ///
     /// \author <i>Chris Lemon</i>
     ///

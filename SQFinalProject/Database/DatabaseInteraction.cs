@@ -11,7 +11,9 @@ namespace SQFinalProject
 {   /// 
     /// \class <b>DatabaseInteraction</b>
     ///
-    /// \brief The purpose of this class is be used by Database class objects to interact with the actual database
+    /// \brief The purpose of this class is be used by Database class objects to interact with the actual database.  
+    /// It contains all the logic neccesary to connect to, disconnect from, query, back up and restore a database.  
+    /// Each interaction is surrounded by a <i>try-catch</i> block to catch any exceptions and returns null to the calling method if an exception is caught
     ///
     /// \author <i>Chris Lemon</i>
     ///

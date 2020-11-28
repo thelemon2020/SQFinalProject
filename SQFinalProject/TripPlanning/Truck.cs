@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SQFinalProject.TripPlanning
 {
-    class Trip
+    class Truck
     {
         public int TripID { get; set; }
         public int CarrierID { get; set; }
@@ -17,10 +17,14 @@ namespace SQFinalProject.TripPlanning
         public int Rate { get; set; }
         public List<TripLine> Contracts { get; set; }
 
-        public Trip()
+        public Truck()
         {
-            
+
         }
 
+        private void MakeRoute()
+        {
+
+        }
     }
 }
