@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SQFinalProject
 {
     /// 
-    /// \class <b>Logger</b>
+    /// \class Logger
     ///
     /// \brief The static logger class to log specific application events to an external log file.  It handles exceptions by catch any exception and 
     /// returning a fail value of 1 to whichever method called it

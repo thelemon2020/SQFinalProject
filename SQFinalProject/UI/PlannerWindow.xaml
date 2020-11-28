@@ -43,27 +43,7 @@
 
         <!-- Main Tabbed Window section -->
         <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl">
-            <TabItem Header="Contact MarketPlace">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"  />
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="4*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <ListBox Grid.Column="0" x:Name="MarketList" ItemsSource="{Binding Path=MarketRtn}" DisplayMemberPath="Source">
-
-                        </ListBox>
-
-                        <Button Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
-                    </Grid>
-                </Grid>
-            </TabItem>
+            <TabItem Header="Contact MarketPlace"></TabItem>
             <TabItem Header="Security" />
             <TabItem Header="Details" />
             <TabItem Header="Testing">

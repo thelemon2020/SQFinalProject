@@ -22,9 +22,12 @@ using System.Windows.Shapes;
 
 namespace SQFinalProject.UI {
     ///
-    /// \class <b>AboutW</b>
+    /// \class AboutW
     /// 
     /// \brief This class holds the event handlers for the about window.  
+    /// As this class is just a simple about window, no errors are expected. The testing for this class will be mainly done 
+    /// manually as this is the most efficient way to access the event handlers in the way that they 
+    /// will be used in the final program.
     /// 
     /// \author <i>Deric Kruse</i>
     /// 
