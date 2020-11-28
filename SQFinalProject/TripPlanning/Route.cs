@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SQFinalProject.TripPlanning
 {    /// 
-     /// \class <b>Route</b>
+     /// \class Route
      ///
      /// \brief This class represents the route that one truck might take along it's journey.  
      /// It holds a list of each individual stop, and methods to calculate total trip time and distance. Each <b>Truck</b> class will hold a route

@@ -9,12 +9,31 @@ namespace SQFinalProject
 {
     public static class Controller
     {
+        //  METHOD:		CreateNewAccount
+        /// \brief This method creates a new customer account with no parameters.
+        /// \details <b>Details</b>
+        /// This method creates a new empty constructor given no parameters
+        /// \param - <b>None</b>
+        /// 
+        /// \return - The new Account object that was created
+        /// 
         public static Account CreateNewAccount()
         {
             Account account = new Account();
             return account;
         }
 
+
+
+        //  METHOD:		LoadConfig
+        /// \brief Loads the database connection details from an external config file
+        /// \details <b>Details</b>
+        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
+        /// and parses it out into data that is usable to connect to one or more databases
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        /// 
         public static Account CreateNewAccount(Contract contract)
         {
             Account account = new Account(contract);
