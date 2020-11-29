@@ -17,7 +17,7 @@ namespace SQFinalProject.TripPlanning
     /// \see Contract
     /// \author <i>Chris Lemon</i>
     ///
-    class TripLine
+    public class TripLine
     {
         public int ContractID { get; set; }  //!< the contract associated with the trip line
         public int TripID { get; set; } //!<the truck associated with the trip line
