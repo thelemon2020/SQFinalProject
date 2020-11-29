@@ -16,7 +16,7 @@ namespace SQFinalProject.TripPlanning
     /// \see Route
     /// \author <i>Nick Byam</i>
     ///
-    class Truck
+    public class Truck
     {
         //! Properties
         private const int kMaxPallets = 26; //<The max number of pallets allowed on one truck

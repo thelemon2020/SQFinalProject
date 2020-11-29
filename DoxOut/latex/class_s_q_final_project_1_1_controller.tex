@@ -1,0 +1,229 @@
+\hypertarget{class_s_q_final_project_1_1_controller}{}\doxysection{S\+Q\+Final\+Project.\+Controller Class Reference}
+\label{class_s_q_final_project_1_1_controller}\index{SQFinalProject.Controller@{SQFinalProject.Controller}}
+
+
+A class that handles passing data around the system In this class, the errors will be handled by returning a specified error value, either zero or null, and the calling class will then have to decide how to best handle the error. Testing for the methods in this class will be handled in a separate unit test project.  
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a666f0aadeb61f6cfac6edc06e45af81b}{Create\+New\+Account}} ()
+\begin{DoxyCompactList}\small\item\em This method creates a new customer account with no parameters. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a26b9658961f2f6ee935d4971264a64ef}{Create\+New\+Account}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\begin{DoxyCompactList}\small\item\em This method creates a new customer account with a contract as a parameter. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a7fdebb3ca3d543ac022e78d1be407ab1}{Create\+New\+Account}} (List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$ contracts)
+\begin{DoxyCompactList}\small\item\em This method creates a new customer account with a list of contract objects as a parameter. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}{Add\+Contract\+To\+Account}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} account, \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} contract)
+\begin{DoxyCompactList}\small\item\em This method adds a contract to a given account taking both as parameters. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} \mbox{\hyperlink{class_s_q_final_project_1_1_controller_aab4ac10051b0724b0eb4c2b73abfcd84}{Create\+New\+Contract}} (string name, int job, int quant, string origin, string dest, int van)
+\begin{DoxyCompactList}\small\item\em A method that creates a new contract. \end{DoxyCompactList}\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}{Get\+All\+Contracts\+From\+DB}} (\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} mrkt\+Place)
+\begin{DoxyCompactList}\small\item\em A method to grab all contracts available on the contract marketplace. \end{DoxyCompactList}\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}{Select\+Contract}} (\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} mrkt\+Place, Dictionary$<$ string, string $>$ conditions)
+\begin{DoxyCompactList}\small\item\em A method that grabs a contract from the market place with conditions. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_controller_aecd3201bdefee555f0ab859833db6b16}{Generate\+Invoice}} (\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} account)
+\begin{DoxyCompactList}\small\item\em A method which creates a contract specific invoice. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_s_q_final_project_1_1_controller_a83d6edb88e7a0ec6ddd4ccf90eba36e5}{Generate\+Report}} (int weeks=0)
+\begin{DoxyCompactList}\small\item\em A method to generate a report of company earnings and total contracts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that handles passing data around the system In this class, the errors will be handled by returning a specified error value, either zero or null, and the calling class will then have to decide how to best handle the error. Testing for the methods in this class will be handled in a separate unit test project. 
+
+\begin{DoxyAuthor}{Author}
+{\itshape Nick Byam} 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}\label{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!AddContractToAccount@{AddContractToAccount}}
+\index{AddContractToAccount@{AddContractToAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{AddContractToAccount()}{AddContractToAccount()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Controller.\+Add\+Contract\+To\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}}]{account,  }\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This method adds a contract to a given account taking both as parameters. 
+
+{\bfseries{Details}} This method takes a Contract as a parameter and adds that Contract to an Account, also given by a parameter. 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{account\+:}} the Account to add the Contract to \\
+\hline
+{\em -\/} & {\bfseries{contract\+:}} the Contract object to add to the Account\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a666f0aadeb61f6cfac6edc06e45af81b}\label{class_s_q_final_project_1_1_controller_a666f0aadeb61f6cfac6edc06e45af81b}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewAccount@{CreateNewAccount}}
+\index{CreateNewAccount@{CreateNewAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewAccount()}{CreateNewAccount()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Account (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This method creates a new customer account with no parameters. 
+
+{\bfseries{Details}} This method creates a new empty customer account given no parameters 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{None}}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ The new Account object that was created 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a26b9658961f2f6ee935d4971264a64ef}\label{class_s_q_final_project_1_1_controller_a26b9658961f2f6ee935d4971264a64ef}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewAccount@{CreateNewAccount}}
+\index{CreateNewAccount@{CreateNewAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewAccount()}{CreateNewAccount()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}}}]{contract }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This method creates a new customer account with a contract as a parameter. 
+
+{\bfseries{Details}} This method creates a new customer account given a contract as a parameter. 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{contract\+:}} the Contract object to add to the new account\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ The new Account object that was created 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a7fdebb3ca3d543ac022e78d1be407ab1}\label{class_s_q_final_project_1_1_controller_a7fdebb3ca3d543ac022e78d1be407ab1}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewAccount@{CreateNewAccount}}
+\index{CreateNewAccount@{CreateNewAccount}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewAccount()}{CreateNewAccount()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Account (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} $>$}]{contracts }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This method creates a new customer account with a list of contract objects as a parameter. 
+
+{\bfseries{Details}} This method creates a new customer account given a list of contracts currently meant for the account. 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & {\bfseries{contracts\+:}} the list of Contract objects to initialize the new account with\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ The new Account object that was created 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_aab4ac10051b0724b0eb4c2b73abfcd84}\label{class_s_q_final_project_1_1_controller_aab4ac10051b0724b0eb4c2b73abfcd84}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!CreateNewContract@{CreateNewContract}}
+\index{CreateNewContract@{CreateNewContract}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{CreateNewContract()}{CreateNewContract()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_contract}{Contract}} S\+Q\+Final\+Project.\+Controller.\+Create\+New\+Contract (\begin{DoxyParamCaption}\item[{string}]{name,  }\item[{int}]{job,  }\item[{int}]{quant,  }\item[{string}]{origin,  }\item[{string}]{dest,  }\item[{int}]{van }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method that creates a new contract. 
+
+{\bfseries{Details}} A method that allows the controller to create a new contract, but not associate it with a class yet 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & name -\/ {\bfseries{string}} -\/ the name of the client \\
+\hline
+{\em -\/} & job -\/ {\bfseries{int}} -\/ the job type \\
+\hline
+{\em -\/} & quant -\/ {\bfseries{int}} -\/ the quantity of pallets \\
+\hline
+{\em -\/} & origin -\/ {\bfseries{string}} -\/ The origin city \\
+\hline
+{\em -\/} & dest -\/ {\bfseries{string}} -\/ The destination city \\
+\hline
+{\em -\/} & van -\/ {\bfseries{int}} -\/ The van type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ contract -\/ {\bfseries{Contract}} -\/ The newly created contract
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_controller_ab157aa484476b0122e88dc1cff1233bf}{Add\+Contract\+To\+Account(\+Account account, Contract contract)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_aecd3201bdefee555f0ab859833db6b16}\label{class_s_q_final_project_1_1_controller_aecd3201bdefee555f0ab859833db6b16}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!GenerateInvoice@{GenerateInvoice}}
+\index{GenerateInvoice@{GenerateInvoice}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{GenerateInvoice()}{GenerateInvoice()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Controller.\+Generate\+Invoice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_contact_mgmt_billing_1_1_account}{Account}}}]{account }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method which creates a contract specific invoice. 
+
+{\bfseries{Details}} A method which will create an invoice on a contract containing the cost, and other particulars 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & account -\/ {\bfseries{Account}} -\/ The account contains the contracts to generate invoices on \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a83d6edb88e7a0ec6ddd4ccf90eba36e5}\label{class_s_q_final_project_1_1_controller_a83d6edb88e7a0ec6ddd4ccf90eba36e5}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!GenerateReport@{GenerateReport}}
+\index{GenerateReport@{GenerateReport}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{GenerateReport()}{GenerateReport()}}
+{\footnotesize\ttfamily static void S\+Q\+Final\+Project.\+Controller.\+Generate\+Report (\begin{DoxyParamCaption}\item[{int}]{weeks = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method to generate a report of company earnings and total contracts. 
+
+{\bfseries{Details}} A method that generates either a 2 week report of contracts and earnings, or an all time report of contracts and earnings 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & weeks -\/ {\bfseries{int}} -\/ The number of weeks for report generation. Must be either 2 or 0 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}\label{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!GetAllContractsFromDB@{GetAllContractsFromDB}}
+\index{GetAllContractsFromDB@{GetAllContractsFromDB}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{GetAllContractsFromDB()}{GetAllContractsFromDB()}}
+{\footnotesize\ttfamily static List$<$string$>$ S\+Q\+Final\+Project.\+Controller.\+Get\+All\+Contracts\+From\+DB (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}]{mrkt\+Place }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method to grab all contracts available on the contract marketplace. 
+
+{\bfseries{Details}} A method that returns all entries in the contract marketplace as a List of strings 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & mrkt\+Place -\/ {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}} -\/ The database to connect to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ sqlreturn -\/ {\bfseries{List$<$string, string$>$}} -\/ -\/ a list of results from the database query
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}{Select\+Contract(\+Database mrkt\+Place, Dictionary$<$string, string$>$ conditions)}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}\label{class_s_q_final_project_1_1_controller_a9cbe5584d856aa42d52619a6d560fd95}} 
+\index{SQFinalProject.Controller@{SQFinalProject.Controller}!SelectContract@{SelectContract}}
+\index{SelectContract@{SelectContract}!SQFinalProject.Controller@{SQFinalProject.Controller}}
+\doxysubsubsection{\texorpdfstring{SelectContract()}{SelectContract()}}
+{\footnotesize\ttfamily static List$<$string$>$ S\+Q\+Final\+Project.\+Controller.\+Select\+Contract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}]{mrkt\+Place,  }\item[{Dictionary$<$ string, string $>$}]{conditions }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A method that grabs a contract from the market place with conditions. 
+
+{\bfseries{Details}} A method that can grab contracts from the marketplace delimited by conditions 
+\begin{DoxyParams}{Parameters}
+{\em -\/} & mrkt\+Place -\/ {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}}}} -\/ the database to connect to \\
+\hline
+{\em -\/} & conditions -\/ {\bfseries{Dictionary$<$string, string$>$}} -\/ The dictionary containing key value pairs of conditions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ sql\+Return -\/ {\bfseries{List$<$string$>$}} -\/ The results returned from the query as a list of strings
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_s_q_final_project_1_1_controller_a06184a3b24c33700e7e1019a4b73317e}{Get\+All\+Contracts\+From\+D\+B(\+Database mrkt\+Place)}} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_controller_8cs}{Controller.\+cs}}\end{DoxyCompactItemize}

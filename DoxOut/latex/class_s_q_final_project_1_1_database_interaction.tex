@@ -1,0 +1,144 @@
+\hypertarget{class_s_q_final_project_1_1_database_interaction}{}\doxysection{S\+Q\+Final\+Project.\+Database\+Interaction Class Reference}
+\label{class_s_q_final_project_1_1_database_interaction}\index{SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}}
+
+
+The purpose of this class is be used by \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} class objects to interact with the actual database. ~\newline
+ It contains all the logic neccesary to connect to, disconnect from, query, back up and restore a database. ~\newline
+ Each interaction is surrounded by a {\itshape try-\/catch} block to catch any exceptions and returns null to the calling method if an exception is caught.  
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static My\+Sql\+Connection \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction_add88b27f0df919f264235cf786403fa0}{connect\+To\+Database}} (string connection\+String)
+\begin{DoxyCompactList}\small\item\em Used to connect to a database. \end{DoxyCompactList}\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction_a9634142748348ded98833e959e4ea968}{Command\+Database}} (My\+Sql\+Command D\+B\+Command)
+\begin{DoxyCompactList}\small\item\em Sends a query to the database and gets back a response. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction_a537d35e038acfab1ba9e8bf9f8723221}{Close\+Connection}} (My\+Sql\+Connection database)
+\begin{DoxyCompactList}\small\item\em Closes a database connection. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction_a45e2349d37bfbe318a2fb876a6f38c1c}{Back\+Up\+DB}} (My\+Sql\+Connection conn, string file\+Path)
+\begin{DoxyCompactList}\small\item\em Backup a {\bfseries{My\+Sql\+Database}} with a generated .sql script. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction_aed50ee2d16b74c9900d4e1ca11fec100}{Restore\+DB}} (My\+Sql\+Connection conn, string file\+Path)
+\begin{DoxyCompactList}\small\item\em Restores a {\bfseries{My\+Sql\+Database}} from a backup script. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The purpose of this class is be used by \mbox{\hyperlink{class_s_q_final_project_1_1_database}{Database}} class objects to interact with the actual database. ~\newline
+ It contains all the logic neccesary to connect to, disconnect from, query, back up and restore a database. ~\newline
+ Each interaction is surrounded by a {\itshape try-\/catch} block to catch any exceptions and returns null to the calling method if an exception is caught. 
+
+\begin{DoxyAuthor}{Author}
+{\itshape Chris Lemon} 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_interaction_a45e2349d37bfbe318a2fb876a6f38c1c}\label{class_s_q_final_project_1_1_database_interaction_a45e2349d37bfbe318a2fb876a6f38c1c}} 
+\index{SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}!BackUpDB@{BackUpDB}}
+\index{BackUpDB@{BackUpDB}!SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}}
+\doxysubsubsection{\texorpdfstring{BackUpDB()}{BackUpDB()}}
+{\footnotesize\ttfamily static int S\+Q\+Final\+Project.\+Database\+Interaction.\+Back\+Up\+DB (\begin{DoxyParamCaption}\item[{My\+Sql\+Connection}]{conn,  }\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Backup a {\bfseries{My\+Sql\+Database}} with a generated .sql script. 
+
+{\bfseries{Details}} Uses a 3rd party library called My\+Sql\+Back\+Up.\+Net \href{https://www.codeproject.com/Articles/256466/MySqlBackup-NET}{\texttt{ }} to backup the database with a .sql script.
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & conn -\/ {\bfseries{My\+Sql\+Connection}} -\/ the database to be restored \\
+\hline
+{\em -\/} & file\+Path -\/ {\bfseries{string}} -\/ the path that the backup script is saved to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_interaction_a537d35e038acfab1ba9e8bf9f8723221}\label{class_s_q_final_project_1_1_database_interaction_a537d35e038acfab1ba9e8bf9f8723221}} 
+\index{SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}!CloseConnection@{CloseConnection}}
+\index{CloseConnection@{CloseConnection}!SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}}
+\doxysubsubsection{\texorpdfstring{CloseConnection()}{CloseConnection()}}
+{\footnotesize\ttfamily static bool S\+Q\+Final\+Project.\+Database\+Interaction.\+Close\+Connection (\begin{DoxyParamCaption}\item[{My\+Sql\+Connection}]{database }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Closes a database connection. 
+
+{\bfseries{Details}} Closes the current connection and checks that it closed correctly
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & database -\/ {\bfseries{My\+Sql\+Connection}} -\/ the current database connection\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_interaction_a9634142748348ded98833e959e4ea968}\label{class_s_q_final_project_1_1_database_interaction_a9634142748348ded98833e959e4ea968}} 
+\index{SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}!CommandDatabase@{CommandDatabase}}
+\index{CommandDatabase@{CommandDatabase}!SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}}
+\doxysubsubsection{\texorpdfstring{CommandDatabase()}{CommandDatabase()}}
+{\footnotesize\ttfamily static List$<$string$>$ S\+Q\+Final\+Project.\+Database\+Interaction.\+Command\+Database (\begin{DoxyParamCaption}\item[{My\+Sql\+Command}]{D\+B\+Command }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sends a query to the database and gets back a response. 
+
+{\bfseries{Details}} Uses a {\itshape My\+Sql\+Command} object to query the database and creates a {\itshape My\+Sql\+Data\+Reader} to get back the the query results
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & D\+B\+Command -\/ {\bfseries{My\+Sql\+Command}} -\/ an object that holds the connection and the query to be executed on the database\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ results -\/ {\bfseries{List$<$List$<$string$>$$>$}} -\/ A lists of lists that holds each row and each column of the returned query 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_interaction_add88b27f0df919f264235cf786403fa0}\label{class_s_q_final_project_1_1_database_interaction_add88b27f0df919f264235cf786403fa0}} 
+\index{SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}!connectToDatabase@{connectToDatabase}}
+\index{connectToDatabase@{connectToDatabase}!SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}}
+\doxysubsubsection{\texorpdfstring{connectToDatabase()}{connectToDatabase()}}
+{\footnotesize\ttfamily static My\+Sql\+Connection S\+Q\+Final\+Project.\+Database\+Interaction.\+connect\+To\+Database (\begin{DoxyParamCaption}\item[{string}]{connection\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Used to connect to a database. 
+
+{\bfseries{Details}} Creates a {\itshape My\+Sql\+Connection} and uses it to open a connection to a database and returns that connection for further use
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & connection\+String -\/ {\bfseries{string}} -\/ a string holding all the information neccessary to connect to a database\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ connection -\/ {\bfseries{My\+Sql\+Connection}} -\/ The object that represents the connection to a database 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_s_q_final_project_1_1_database_interaction_aed50ee2d16b74c9900d4e1ca11fec100}\label{class_s_q_final_project_1_1_database_interaction_aed50ee2d16b74c9900d4e1ca11fec100}} 
+\index{SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}!RestoreDB@{RestoreDB}}
+\index{RestoreDB@{RestoreDB}!SQFinalProject.DatabaseInteraction@{SQFinalProject.DatabaseInteraction}}
+\doxysubsubsection{\texorpdfstring{RestoreDB()}{RestoreDB()}}
+{\footnotesize\ttfamily static int S\+Q\+Final\+Project.\+Database\+Interaction.\+Restore\+DB (\begin{DoxyParamCaption}\item[{My\+Sql\+Connection}]{conn,  }\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Restores a {\bfseries{My\+Sql\+Database}} from a backup script. 
+
+{\bfseries{Details}} Uses a 3rd party library called My\+Sql\+Back\+Up.\+Net \href{https://www.codeproject.com/Articles/256466/MySqlBackup-NET}{\texttt{ }} to restore the database from a backup script.
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & conn -\/ {\bfseries{My\+Sql\+Connection}} -\/ the database to be restored \\
+\hline
+{\em -\/} & file\+Path -\/ {\bfseries{string}} -\/ the path that the backup script is saved to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ {\bfseries{Nothing}} 
+\end{DoxyReturn}
+$<$returns 1 if restore fails
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Database/\mbox{\hyperlink{_database_interaction_8cs}{Database\+Interaction.\+cs}}\end{DoxyCompactItemize}

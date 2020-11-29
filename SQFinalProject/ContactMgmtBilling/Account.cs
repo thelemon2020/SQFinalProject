@@ -20,6 +20,8 @@ namespace SQFinalProject.ContactMgmtBilling
     /// \class Account
     ///
     /// \brief The Purpose of this class is to be a central area to hold exisiting customer details and their contracts.
+    /// Error handling in the account class is minimal other than checking to make sure Properties are filled before attempting to use them
+    /// There is nowhere in this code that would throw exceptions.
     ///
     /// \author <i>Nick Byam</i>
     ///

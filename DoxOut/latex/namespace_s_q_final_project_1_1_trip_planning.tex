@@ -1,0 +1,12 @@
+\hypertarget{namespace_s_q_final_project_1_1_trip_planning}{}\doxysection{S\+Q\+Final\+Project.\+Trip\+Planning Namespace Reference}
+\label{namespace_s_q_final_project_1_1_trip_planning}\index{SQFinalProject.TripPlanning@{SQFinalProject.TripPlanning}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_route}{Route}}
+\begin{DoxyCompactList}\small\item\em This class represents the route that one truck might take along it\textquotesingle{}s journey. ~\newline
+ It holds a list of each individual stop, and methods to calculate total trip time and distance. Each {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck}{Truck}}}} class will hold a route Uses database queries to check for information, which offloads error handling to the {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_database_interaction}{Database\+Interaction}}}} class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}}
+\begin{DoxyCompactList}\small\item\em This class joins together a {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck}{Truck}}}} with a {\bfseries{Contract}}. No real error handling is needed as a {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck}{Truck}}}} and a {\bfseries{Contract}} must exist in a usable state to get a {\bfseries{\mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_trip_line}{Trip\+Line}}}} \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_q_final_project_1_1_trip_planning_1_1_truck}{Truck}}
+\begin{DoxyCompactList}\small\item\em This class represents the truck and driver that will be delivering the products. It keeps track of its depot city and destination city, as well as a list of contracts it has onboard, the total hours the driver has worked, and associated rates used to calculate the cost. \end{DoxyCompactList}\end{DoxyCompactItemize}

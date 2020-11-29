@@ -19,6 +19,8 @@ namespace SQFinalProject.ContactMgmtBilling
     /// \class ContractDetails
     /// 
     /// \brief A class that holds all pertinent details of a contract from the contract marketplace
+    /// In this class not many errors would arise due to the fact that there is no file writing or areas where Null arguments would be a problem
+    /// Thus there is no error handling.
     /// 
     /// \author <i>Nick Byam</i>
     /// 
