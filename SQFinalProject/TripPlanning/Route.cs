@@ -79,7 +79,7 @@ namespace SQFinalProject.TripPlanning
         /// 
         public void GetCities(string origin, string end)
         {
-            Database tms = new Database("108.168.17.4", "tmsadmin", "12345", "tms"); /*Consider how to do this... need to not hardcode*/
+            Database tms = new Database("108.168.17.4","3306", "tmsadmin", "12345", "tms"); /*Consider how to do this... need to not hardcode*/
             string curCity = origin;
             List<string> retValues = new List<string>();
             List<string> endValues = new List<string>();

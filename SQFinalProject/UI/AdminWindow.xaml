@@ -42,10 +42,78 @@
         </StatusBar>
 
         <!-- Main Tabbed Window section -->
-        <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl">
-            <TabItem Header="Contact MarketPlace"></TabItem>
-            <TabItem Header="Customers" />
-            <TabItem Header="New Orders" />
+        <TabControl DockPanel.Dock="Top" SelectionChanged="TabsCtrl_SelectionChanged" x:Name="TabsCtrl">
+            <TabItem x:Name="Config" Header="Config" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="47*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2" Margin="0,0,0,0.286"></Border>
+                    <TextBlock Grid.Row="0" Text="TMS Database" FontSize="30" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"></TextBlock>
+                    <TextBox Name="TMS_IP" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,106,0,105.286" Width="175" Height="35" Grid.ColumnSpan="2"></TextBox>
+                    <TextBox Name="TMS_Port" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,106,0,105.286" Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <TextBox Name="TMS_User" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,106,0,105.286" Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <PasswordBox Name="TMS_Password" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,106,0,105.286" Width="175" Height="35" Grid.Column="1"></PasswordBox>
+                    <TextBlock Text="IP Address" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,68,0,143.286" Width="175" Height="35" Grid.ColumnSpan="2"></TextBlock>
+                    <TextBlock Text="Port" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,68,0,143.286" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Text="Username" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,68,0,143.286" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Text="Password" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,68,0,143.286" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2" Margin="0,246,0,-0.429" Grid.RowSpan="2"/>
+                    <TextBlock Text="Marketplace Database" FontSize="30" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,246,0,0" Grid.RowSpan="2"/>
+                    <TextBox Grid.Row="1" Name="MP_IP" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,105.714,0,105.571" Width="175" Height="35" Grid.ColumnSpan="2"></TextBox>
+                    <TextBox Grid.Row="1" Name="MP_Port" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,105.714,0,105.571" Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <TextBox Grid.Row="1" Name="MP_User" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,105.714,0,105.571" Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <PasswordBox Grid.Row="1" Name="MP_Password" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,105.714,0,105.571" Width="175" Height="35" Grid.Column="1"></PasswordBox>
+                    <TextBlock Grid.Row="1" Text="IP Address" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,67.714,0,143.571" Width="175" Height="35" Grid.ColumnSpan="2"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Port" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,67.714,0,143.571" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Username" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,67.714,0,143.571" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Password" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,67.714,0,143.571" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <Button Grid.Row="0" Click="TMSChange_Click" Content="Apply" Margin="323.877,0,419,10.286" FontSize="20" Name="TMSChange" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="150" Grid.Column="1" ></Button>
+                    <Button Grid.Row="1" Click="MPChange_Click" Content="Apply" Margin="323.877,0,419,9.571" FontSize="20" Name="MPChange" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="150" Grid.Column="1" ></Button>
+                </Grid>
+            </TabItem>
+            <TabItem Name="Log" Header="Log File">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height=".2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="border" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
+                        <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
+                            <ScrollViewer x:Name="Log_Viewer" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible"/>
+                        </Border>
+                    </Border>
+                    <Button Grid.Row="1" Name="ChangePath" Click="ChangePath_Click" VerticalAlignment="Center" Width="150" Height="40" Content="Change..."></Button>
+                    <TextBox Focusable="False" x:Name="FilePath" VerticalAlignment="Center" Grid.Row="1" BorderBrush="Black"  Background="LightGray" HorizontalAlignment="Left" Margin="30,0,0,0" Width="300" Height="37"></TextBox>
+
+                </Grid>
+            </TabItem>
+            <TabItem Name="CarrierTab" Header="Carriers">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width=".2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Name="CarrierData" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Carrier ID" Binding="{Binding CarrierID}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Carrier Name" Binding="{Binding CarrierName}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="FTL Rate" Binding="{Binding FTLRate}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="LTLRate" Binding="{Binding LTLRate}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Reef Charge" Binding="{Binding ReefCharge}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Create New Carrier" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Margin="0,75,0,0" Width="125" Click="Create_Click"></Button>
+                </Grid>
+            </TabItem>
             <TabItem Header="Completed Orders" />
             <TabItem Header="Testing">
                 <TextBox x:Name="txtMain"

@@ -46,5 +46,25 @@ namespace SQFinalProject
             }
             return 0;
         }
+
+        public static string ReadLog()
+        {
+            string logFile;
+            lock (obj)
+            {
+                try
+                {
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        logFile = sr.ReadToEnd();
+                    }
+                }
+                catch
+                {
+                    logFile = null;
+                }
+            }
+            return logFile;
+        }
     }
 }

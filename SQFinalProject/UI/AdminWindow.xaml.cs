@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -37,23 +39,26 @@ namespace SQFinalProject.UI {
 
         public string userName;                                         //<Stores the user name of the current user
 
-        public AdminWindow ( string name )
-        { 
+        public AdminWindow(string name)
+        {
             InitializeComponent();
             LoadConfig();                                               // Parse the config file
-            if (TMS_Database!=null)                                     // Connect to the TMS database if the config file loaded successfully
-            {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]);
-            }
-            if (MarketPlace_Database!=null)                             // Connect to the Marketplace database if the config file loaded successfully
-            {
-                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
-            }
-
+            CreateDatabases();
             userName = name;
             lblUsrInfo.Content = "User Name:  " + userName;
         }
 
+        private void CreateDatabases()
+        {
+            if (TMS_Database != null)                                     // Connect to the TMS database if the config file loaded successfully
+            {
+                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
+            }
+            if (MarketPlace_Database != null)                             // Connect to the Marketplace database if the config file loaded successfully
+            {
+                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3], MarketPlace_Database[4]);
+}
+        }
 
 
         //  METHOD:		LoadConfig
@@ -101,7 +106,7 @@ namespace SQFinalProject.UI {
             {
                 FileStream newConfig = File.Create(configFilePath);
                 newConfig.Close();
-            }                      
+            }
         }
 
 
@@ -116,7 +121,7 @@ namespace SQFinalProject.UI {
         /// 
         /// \return - <b>Nothing</b>
         ///
-        private void CloseCB_CanExecute ( object sender,CanExecuteRoutedEventArgs e ) {
+        private void CloseCB_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
         }
 
@@ -132,7 +137,7 @@ namespace SQFinalProject.UI {
         /// 
         /// \return - <b>Nothing</b>
         ///
-        private void CloseCB_Executed ( object sender,ExecutedRoutedEventArgs e ) {
+        private void CloseCB_Executed(object sender, ExecutedRoutedEventArgs e) {
             this.Close();
         }
 
@@ -147,10 +152,10 @@ namespace SQFinalProject.UI {
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
         /// 
         /// \return - <b>Nothing</b>
-        private void Logout_Click ( object sender,RoutedEventArgs e ) {
-            LoginWindow login = new LoginWindow ();
+        private void Logout_Click(object sender, RoutedEventArgs e) {
+            LoginWindow login = new LoginWindow();
             login.Show();
-                    
+
             this.Close();
         }
 
@@ -166,10 +171,163 @@ namespace SQFinalProject.UI {
         /// 
         /// \return - <b>Nothing</b>
         ///
-        private void About_Click ( object sender,RoutedEventArgs e ) {
+        private void About_Click(object sender, RoutedEventArgs e) {
             AboutWindow aboutBox = new AboutWindow();
             aboutBox.Owner = this;
             aboutBox.ShowDialog();
+        }
+
+        private void TMSChange_Click(object sender, RoutedEventArgs e)
+        {
+            IPAddress temp;
+            int temp1;
+            if (IPAddress.TryParse(TMS_IP.Text, out temp) && (int.TryParse(TMS_Port.Text, out temp1)))
+            {
+                string newWrite = "TMS " + TMS_IP.Text + " " + TMS_Port.Text + " " + TMS_User.Text + " " + TMS_Password.Password.ToString() + " " + loginDB.schema + "\n" 
+                    + "MP " + MarketPlace_Database[0] + " " + MarketPlace_Database[1] + " " + MarketPlace_Database[2] + " " + MarketPlace_Database[3] + " " + MarketPlace_Database[4] + "\n" + "LOGGER " + Logger.path; 
+                StreamWriter sw = new StreamWriter(configFilePath,false);
+                sw.Write(newWrite);
+                sw.Close();
+                TMS_Database = null;
+                MarketPlace_Database = null;
+                loginDB = null;
+                MarketPlace = null;
+                LoadConfig();
+                CreateDatabases();
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Connection Information Not Formatted properly", "Bad Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+        }
+
+        private void MPChange_Click(object sender, RoutedEventArgs e)
+        {
+            IPAddress temp;
+            int temp1;
+            if (IPAddress.TryParse(TMS_IP.Text, out temp) && (int.TryParse(TMS_Port.Text, out temp1)))
+            {
+                string newWrite = "MP " + MP_IP.Text + " " + MP_Port.Text + " " + MP_User.Text + " " + MP_Password.Password.ToString() + " " + loginDB.schema + "\n"
+                    + "MP " + TMS_Database[0] + " " + TMS_Database[1] + " " + TMS_Database[2] + " " + TMS_Database[3] + " " + TMS_Database[4] + "\n" + "LOGGER " + Logger.path;
+                StreamWriter sw = new StreamWriter(configFilePath, false);
+                sw.Write(newWrite);
+                sw.Close();
+                TMS_Database = null;
+                MarketPlace_Database = null;
+                loginDB = null;
+                MarketPlace = null;
+                LoadConfig();
+                CreateDatabases();
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Connection Information Not Formatted properly", "Bad Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TabsCtrl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Config.IsSelected)
+            {
+                FillFields();
+            }
+            else if(Log.IsSelected)
+            {
+                LoadLogger();
+            }
+            else if (CarrierTab.IsSelected)
+            {
+                LoadCarriers();
+            }
+        }
+
+        private void LoadCarriers()
+        {
+            ObservableCollection<Carrier> carrierData = GetCarrierData();
+            CarrierData.DataContext = carrierData;
+        }
+
+        private ObservableCollection<Carrier> GetCarrierData()
+        {
+            ObservableCollection<Carrier> carrierCollection = new ObservableCollection<Carrier>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            loginDB.MakeSelectCommand(fields, "carrier", null);
+            fields = loginDB.ExecuteCommand();
+            foreach (string field in fields)
+            {
+                string[] columns = field.Split(',');
+                int carrierID;
+                int.TryParse(columns[0], out carrierID);
+                double FTL;
+                double LTL;
+                double reef;
+                double.TryParse(columns[2], out FTL);
+                double.TryParse(columns[3], out LTL);
+                double.TryParse(columns[4], out reef);
+                Carrier c = new Carrier(carrierID,columns[1],FTL, LTL, reef);
+                carrierCollection.Add(c);
+            }
+            return carrierCollection;
+        }
+        private void LoadLogger()
+        {
+            FilePath.Text = Logger.path;
+            string logFile = Logger.ReadLog();
+            if (logFile == null)
+            {
+                Log_Viewer.Content = "Log File Failed To Open";
+            }
+            else
+            {
+                Log_Viewer.Content = logFile;
+            }
+        }
+        private void FillFields()
+        {
+            TMS_IP.Text = loginDB.ip;
+            TMS_Port.Text = loginDB.port;
+            TMS_User.Text = loginDB.user;
+            TMS_Password.Password = loginDB.pass;
+            MP_IP.Text = MarketPlace.ip;
+            MP_Port.Text = MarketPlace.port;
+            MP_User.Text = MarketPlace.user;
+            MP_Password.Password = MarketPlace.pass;
+        }
+
+        private void ChangePath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.InitialDirectory = Logger.path;
+            of.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            of.FilterIndex = 2;
+            if (of.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string temp = Logger.path;   
+                Logger.path = of.FileName;
+                string configContents;
+                using (StreamReader sr = new StreamReader(configFilePath))
+                {
+                    configContents = sr.ReadToEnd();
+                }
+                string toWrite = configContents.Replace(temp, Logger.path);
+                using (StreamWriter sw = new StreamWriter(configFilePath, false))
+                {
+                    sw.Write(toWrite);
+                }
+                LoadLogger();
+            }
+        }
+
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            AddCarrier ac = new AddCarrier();
+            ac.ShowDialog();
+            if (ac.canCreate == true)
+            {
+                //Carrier c = new Carrier();
+            }
         }
     }
 }

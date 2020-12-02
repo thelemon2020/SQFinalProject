@@ -39,7 +39,7 @@ namespace SQFinalProject.UI {
             LoadConfig();                                               // Parse the config file
             if (TMS_Database!=null)                                     // Connect to the TMS database if the config file loaded successfully
             {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]);
+                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
             }
         }
 
@@ -82,6 +82,10 @@ namespace SQFinalProject.UI {
                             {
                                 MarketPlace_Database.Add(details[i]);
                             }
+                        }
+                        else if (details[0] == "LOGGER")
+                        {
+                            Logger.path = details[1];
                         }
                     }
                 }
@@ -153,7 +157,7 @@ namespace SQFinalProject.UI {
                     PassErr.Content = "";
                     isValid = false;
 
-                } else if ( PassReturn.Count() == 0 || !usrPass.Equals ( PassReturn.ElementAt(0) ) ) {
+                } else if (( PassReturn.Count() == 0) || (!usrPass.Equals ( PassReturn.ElementAt(0) ))) {
                                                                 // and if the password doesn't match, print an error message
                     NameErr.Content = "";
                     PassErr.Content = "Password incorrect for user!";
