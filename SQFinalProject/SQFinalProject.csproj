@@ -116,6 +116,7 @@
     <Compile Include="Database\DatabaseInteraction.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="TripPlanning\Route.cs" />
+    <Compile Include="TripPlanning\RouteCity.cs" />
     <Compile Include="TripPlanning\Truck.cs" />
     <Compile Include="TripPlanning\TripLine.cs" />
     <Compile Include="UI\AddCarrier.xaml.cs">

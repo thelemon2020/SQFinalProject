@@ -84,7 +84,7 @@ namespace SQFinalProject
                     row.Clear();
                 }
             }
-            catch
+            catch(Exception e)
             {
                 SQLReturn = null; //if there is an exception throw, return null
             }           

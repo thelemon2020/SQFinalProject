@@ -62,7 +62,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="LoggerTests.cs" />
-    <Compile Include="MainWindowTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

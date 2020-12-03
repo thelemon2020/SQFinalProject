@@ -137,14 +137,14 @@ namespace SQFinalProject.UI {
                 Dictionary<string, string> tempDict = new Dictionary<string, string>();
                 tempDict.Add ("username", usrName);
 
-                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
+                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict,null);
 
                 List<string> UsrReturn = loginDB.ExecuteCommand();
 
                 QueryLst = new List<string> ();                // Then check if the password matches
                 QueryLst.Add ("password");
 
-                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
+                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict, null);
 
                 List<string> PassReturn = loginDB.ExecuteCommand();
 
@@ -172,7 +172,7 @@ namespace SQFinalProject.UI {
                     QueryLst = new List<string> ();             // Set up the database query and get the user's role from the database
                     QueryLst.Add ("role");
 
-                    loginDB.MakeSelectCommand ( QueryLst, "login", tempDict );
+                    loginDB.MakeSelectCommand ( QueryLst, "login", tempDict, null);
 
                     userInfo = loginDB.ExecuteCommand();
 

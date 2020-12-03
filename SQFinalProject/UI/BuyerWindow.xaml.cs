@@ -195,7 +195,7 @@ namespace SQFinalProject.UI {
             //Dictionary<string, string> tempDict = new Dictionary<string, string>();
             //tempDict.Add ("username", usrName);
 
-            loginDB.MakeSelectCommand ( QueryLst, "login", null );
+            loginDB.MakeSelectCommand ( QueryLst, "login", null, null);
 
             List<string> tmp = loginDB.ExecuteCommand();
             //txtMain.Text = tmp.ElementAt(0) + tmp.ElementAt(1) + tmp.ElementAt(2);
