@@ -327,6 +327,15 @@ namespace SQFinalProject
         }
 
 
+        /// \brief A method that allows for INNER JOIN Select queries to be made to the database
+        /// \details <b>Details</b>
+        /// A method that is used to make INNER JOIN Select queries to the database of the user's choice
+        /// \param - fields - <b>List<string></b> - The fields the user wants to be shown
+        /// \param - tables - <b>List<string></b> - The tables to inner join on
+        /// \param - IDs - <b>List<string></b> - The values to be compared for the join
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions, Dictionary<string, string> order)
         public void MakeInnerJoinSelect(List<string> fields, List<string> tables, List<string> IDs)
         {
             StringBuilder selectCmd = new StringBuilder();
@@ -359,7 +368,5 @@ namespace SQFinalProject
             }
             userCommand = selectCmd.ToString();
         }
-
-        // SELECT orders.CustomerID, contactName FROM customers INNER JOIN orders ON customers.CustomerID = orders.CustomerID;
     }
 }
