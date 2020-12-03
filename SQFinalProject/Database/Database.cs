@@ -330,7 +330,7 @@ namespace SQFinalProject
         public void MakeInnerJoinSelect(List<string> fields, List<string> tables, List<string> IDs)
         {
             StringBuilder selectCmd = new StringBuilder();
-            selectCmd.Append("SELECT");
+            selectCmd.Append("SELECT ");
             int countLoops = fields.Count() - 1;
             int i = 0;
 
@@ -354,7 +354,7 @@ namespace SQFinalProject
                 {
                     selectCmd.Append("INNER JOIN ");
                     selectCmd.AppendFormat("{0} ON ", tables[j]);
-                    selectCmd.AppendFormat("{0}.{1} = {2}.{1}", tables[j - 1], IDs[j - 1], tables[j]);
+                    selectCmd.AppendFormat("{0}.{1} = {2}.{1} ", tables[j - 1], IDs[j - 1], tables[j]);
                 }
             }
             userCommand = selectCmd.ToString();

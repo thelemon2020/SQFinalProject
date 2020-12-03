@@ -92,7 +92,7 @@
                         </Border>
                     </Border>
                     <Button Grid.Row="1" Name="ChangePath" Click="ChangePath_Click" VerticalAlignment="Center" Width="150" Height="40" Content="Change..."></Button>
-                    <TextBox Focusable="False" x:Name="FilePath" VerticalAlignment="Center" Grid.Row="1" BorderBrush="Black"  Background="LightGray" HorizontalAlignment="Left" Margin="30,0,0,0" Width="300" Height="37"></TextBox>
+                    <TextBox Focusable="False" x:Name="FilePath" VerticalAlignment="Center" Grid.Row="1" BorderBrush="Black"  Background="LightGray" HorizontalAlignment="Left" Margin="30,0,0,0" Width="300" Height="37" ></TextBox>
 
                 </Grid>
             </TabItem>

@@ -210,7 +210,7 @@ namespace SQFinalProject
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Account";
-            tmsDB.MakeSelectCommand(fields, table, conditions);
+            tmsDB.MakeSelectCommand(fields, table, conditions, null);
             List<string> sqlReturn = tmsDB.ExecuteCommand();
             return sqlReturn;
         }
