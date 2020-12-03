@@ -110,7 +110,7 @@ namespace SQFinalProject
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Contract";
-            mrktPlace.MakeSelectCommand(fields, table, null);
+            mrktPlace.MakeSelectCommand(fields, table, null, null);
             List<string> sqlReturn = new List<string>();
             sqlReturn = mrktPlace.ExecuteCommand();
             return sqlReturn;
@@ -129,7 +129,7 @@ namespace SQFinalProject
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Route";
-            tms.MakeSelectCommand(fields, table, conditions);
+            tms.MakeSelectCommand(fields, table, conditions, null);
             //List<string> sqlReturn = new List<string>();
             List<string> sqlReturn = tms.ExecuteCommand();
             return sqlReturn;
@@ -148,7 +148,7 @@ namespace SQFinalProject
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Contract";
-            mrktPlace.MakeSelectCommand(fields, table, conditions);
+            mrktPlace.MakeSelectCommand(fields, table, conditions, null);
             List<string> sqlReturn = mrktPlace.ExecuteCommand();
             return sqlReturn;
         }

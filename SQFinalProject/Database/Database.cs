@@ -170,7 +170,7 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         /// 
-        public void MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions)
+        public void MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions, Dictionary<string, string> order)
         {
             StringBuilder selectCommand = new StringBuilder(); //instantiate string builder for use in building a query string
             selectCommand.AppendFormat("SELECT"); // set the first part of the query string
@@ -194,6 +194,37 @@ namespace SQFinalProject
                 selectCommand.AppendFormat(" WHERE"); // add conditional WHERE clause
                 i = 0;
                 countLoops = conditions.Count() - 1;
+                foreach (KeyValuePair<string, string> entry in conditions)  // iterate through conditions and append them to string
+                {
+                    if (i == countLoops)
+                    {
+                        selectCommand.AppendFormat(" {0} = '{1}'", entry.Key, entry.Value);
+                    }
+                    else
+                    {
+                        selectCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, entry.Value);
+                    }
+                    i++;
+                }
+            }
+            if (order!=null)
+            {
+                selectCommand.AppendFormat(" ORDER BY {0} {1}", order.Keys.First(), order.Values.First());
+            }
+            selectCommand.AppendFormat(";");
+            userCommand = selectCommand.ToString(); // set userCommand to the newly created query string
+        }
+
+        public void MakeDeleteCommand(string table, Dictionary<string, string> conditions)
+        {
+            StringBuilder selectCommand = new StringBuilder(); //instantiate string builder for use in building a query string
+            selectCommand.AppendFormat("DELETE FROM {0}", table); // set the first part of the query string
+            int i = 0;           
+            if (conditions != null) // check if there are optional select conditions
+            {
+                selectCommand.AppendFormat(" WHERE"); // add conditional WHERE clause
+                i = 0;
+                int countLoops = conditions.Count() - 1;
                 foreach (KeyValuePair<string, string> entry in conditions)  // iterate through conditions and append them to string
                 {
                     if (i == countLoops)

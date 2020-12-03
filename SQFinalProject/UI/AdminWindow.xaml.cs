@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SQFinalProject.ContactMgmtBilling;
+using SQFinalProject.TripPlanning;
 
 namespace SQFinalProject.UI {
     ///
@@ -32,11 +33,13 @@ namespace SQFinalProject.UI {
     public partial class AdminWindow : Window {
         //! Properties
         public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
+        public string DBBackUp { get; set; }
         public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
         public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info
-        Database loginDB { get; set; }                                  //<The database object for the TMS database
-        Database MarketPlace { get; set; }                              //<The database object for the Marketplace database
-
+        private Database loginDB { get; set; }                                  //<The database object for the TMS database
+        private Database MarketPlace { get; set; }                              //<The database object for the Marketplace database
+        private ObservableCollection<Carrier> carrierCollection { get;set;}
+        private ObservableCollection<RouteCity> cityCollection { get; set; }
         public string userName;                                         //<Stores the user name of the current user
 
         public AdminWindow(string name)
@@ -98,6 +101,14 @@ namespace SQFinalProject.UI {
                             {
                                 MarketPlace_Database.Add(details[i]);
                             }
+                        }
+                        else if (details[0] == "LOGGER")
+                        {
+                            Logger.path = details[1];
+                        }
+                        else if (details[0] == "BACKUP")
+                        {
+                            DBBackUp = details[1];
                         }
                     }
                 }
@@ -239,21 +250,79 @@ namespace SQFinalProject.UI {
             else if (CarrierTab.IsSelected)
             {
                 LoadCarriers();
+                UpdateCarrierComboBox();
             }
+            else if (RouteTab.IsSelected)
+            {
+                LoadCities();
+                UpdateRouteComboBox();
+            }
+            else if (RateTab.IsSelected)
+            {
+                LoadRates();
+            }
+            else if (BackUpTab.IsSelected)
+            {
+                BackUpPath.Text = DBBackUp;
+            }
+        }
+
+        private void LoadRates()
+        {
+            List<string> field = new List<string>();
+            field.Add("*");
+            loginDB.MakeSelectCommand(field, "rates", null, null);
+            List<string> returns = loginDB.ExecuteCommand();
+            string[] rates = returns[0].Split(',');
+            FTLRate.Text = rates[0].ToString();
+            LTLRate.Text = rates[1].ToString();
+        }
+        private void LoadCities()
+        {
+            cityCollection = GetCityData();
+            RouteData.DataContext = cityCollection;
+        }
+        private ObservableCollection<RouteCity> GetCityData()
+        {
+            cityCollection = new ObservableCollection<RouteCity>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            Dictionary<string, string> order = new Dictionary<string, string>();
+            order.Add("routeID", "ASC");
+            loginDB.MakeSelectCommand(fields, "route", null, order);
+            fields = loginDB.ExecuteCommand();
+            foreach (string field in fields)
+            {
+                string[] columns = field.Split(',');
+                int cityID;
+                int.TryParse(columns[0], out cityID);
+                int kmToEast;
+                int kmToWest;
+                double hToEast;
+                double hToWest;
+                int.TryParse(columns[2], out kmToEast);
+                int.TryParse(columns[3], out kmToWest);
+                double.TryParse(columns[4], out hToEast);
+                double.TryParse(columns[5], out hToWest);
+                RouteCity c = new RouteCity(cityID, columns[1], kmToEast, kmToWest, hToEast, hToWest,columns[6], columns[7]);
+                c.newlyCreated = false;
+                cityCollection.Add(c);
+            }
+            return cityCollection;
         }
 
         private void LoadCarriers()
         {
-            ObservableCollection<Carrier> carrierData = GetCarrierData();
-            CarrierData.DataContext = carrierData;
+            carrierCollection = GetCarrierData();
+            CarrierData.DataContext = carrierCollection;
         }
 
         private ObservableCollection<Carrier> GetCarrierData()
         {
-            ObservableCollection<Carrier> carrierCollection = new ObservableCollection<Carrier>();
+            carrierCollection = new ObservableCollection<Carrier>();
             List<string> fields = new List<string>();
             fields.Add("*");
-            loginDB.MakeSelectCommand(fields, "carrier", null);
+            loginDB.MakeSelectCommand(fields, "carrier", null, null);
             fields = loginDB.ExecuteCommand();
             foreach (string field in fields)
             {
@@ -267,6 +336,7 @@ namespace SQFinalProject.UI {
                 double.TryParse(columns[3], out LTL);
                 double.TryParse(columns[4], out reef);
                 Carrier c = new Carrier(carrierID,columns[1],FTL, LTL, reef);
+                c.newlyCreated = false;
                 carrierCollection.Add(c);
             }
             return carrierCollection;
@@ -322,12 +392,249 @@ namespace SQFinalProject.UI {
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-            AddCarrier ac = new AddCarrier();
-            ac.ShowDialog();
-            if (ac.canCreate == true)
+            Carrier c = new Carrier();
+            c.newlyCreated = true;
+            carrierCollection.Add(c);
+            UpdateCarrierComboBox();
+        }
+
+        private void UpdateRouteComboBox()
+        {
+            RouteCityList.Items.Clear();
+            foreach (RouteCity c in cityCollection)
             {
-                //Carrier c = new Carrier();
+                RouteCityList.Items.Add(c.routeID);
             }
+        }
+
+        private void UpdateCarrierComboBox()
+        {
+            DeleteCarrierList.Items.Clear();
+            foreach (Carrier c in carrierCollection)
+            {
+                DeleteCarrierList.Items.Add(c.CarrierID);
+            }
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            int whichDelete = (int)DeleteCarrierList.SelectedIndex;
+            carrierCollection.RemoveAt(whichDelete);
+            UpdateCarrierComboBox();
+        }
+
+        private void DeleteCarrierList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            if (DeleteCarrierList.SelectedIndex.ToString() !="")
+            {
+                Delete.IsEnabled = true;
+            }
+            else
+            {
+                Delete.IsEnabled = false;
+            }
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {          
+            List<string> fields = new List<string>();
+            fields.Add("carrierid");
+            loginDB.MakeSelectCommand(fields, "carrier", null, null);
+            List<string> results = loginDB.ExecuteCommand();
+            foreach (string result in results)
+            {
+                bool toDelete = true;
+                int temp;
+                int.TryParse(result, out temp);
+                foreach (Carrier c in carrierCollection)
+                {
+                    if (temp == c.CarrierID)
+                    {
+                        Dictionary<string, string> updateValues = new Dictionary<string, string>();
+                        updateValues.Add("carrierID", c.CarrierID.ToString());
+                        if (c.CarrierName.Contains("'"))
+                        {
+                            c.CarrierName = c.CarrierName.Replace("'", "''");
+                        }
+                        updateValues.Add("carriername", c.CarrierName);
+                        updateValues.Add("ftlrate", c.FTLRate.ToString());
+                        updateValues.Add("ltlrate", c.LTLRate.ToString());
+                        updateValues.Add("reefcharge", c.ReefCharge.ToString());
+                        Dictionary<string, string> conditions = new Dictionary<string, string>();
+                        conditions.Add("carrierID", temp.ToString());
+                        loginDB.MakeUpdateCommand("carrier", updateValues, conditions);
+                        loginDB.ExecuteCommand();
+                        toDelete = false;
+                        break;
+                    }
+                }
+                if (toDelete == true)
+                {
+                    Dictionary<string, string> conditions = new Dictionary<string, string>();
+                    conditions.Add("carrierid", temp.ToString());
+                    loginDB.MakeDeleteCommand("carrier", conditions);
+                    loginDB.ExecuteCommand();
+                }                                     
+            }
+            foreach (Carrier newC in carrierCollection)
+            {
+                if (newC.newlyCreated == true)
+                {
+                    List<string> values = new List<string>();
+                    values.Add(newC.CarrierID.ToString());
+                    if (newC.CarrierName.Contains("'"))
+                    {
+                        newC.CarrierName = newC.CarrierName.Replace("'", "''");
+                    }
+                    values.Add(newC.CarrierName);
+                    values.Add(newC.FTLRate.ToString());
+                    values.Add(newC.LTLRate.ToString());
+                    values.Add(newC.ReefCharge.ToString());
+                    loginDB.MakeInsertCommand("carrier", values);
+                    loginDB.ExecuteCommand();
+                }
+            }
+        }
+
+        private void RouteDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int whichDelete = (int)RouteCityList.SelectedIndex;
+            cityCollection.RemoveAt(whichDelete);
+            UpdateRouteComboBox();
+        }
+
+        private void CarrierData_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            UpdateCarrierComboBox();
+        }
+
+        private void DeleteCityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            if (RouteCityList.SelectedIndex.ToString() != "")
+            {
+                RouteDelete.IsEnabled = true;
+            }
+            else
+            {
+                RouteDelete.IsEnabled = false;
+            }
+        }
+
+        private void CreateRoute_Click(object sender, RoutedEventArgs e)
+        {
+            RouteCity c = new RouteCity();
+            c.newlyCreated = true;
+            cityCollection.Add(c);
+            UpdateRouteComboBox();
+        }
+
+        private void RouteUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> fields = new List<string>();
+            fields.Add("routeid");
+            loginDB.MakeSelectCommand(fields, "route", null, null);
+            List<string> results = loginDB.ExecuteCommand();
+            foreach (string result in results)
+            {
+                bool toDelete = true;
+                int temp;
+                int.TryParse(result, out temp);
+                foreach (RouteCity c in cityCollection)
+                {
+                    if (temp == c.routeID)
+                    {
+                        Dictionary<string, string> updateValues = new Dictionary<string, string>();
+                        updateValues.Add("routeID", c.routeID.ToString());
+                        updateValues.Add("destCity", c.cityName);
+                        updateValues.Add("kmToEast", c.kmToEast.ToString());
+                        updateValues.Add("kmToWest", c.kmToWest.ToString());
+                        updateValues.Add("hToEast", c.hToEast.ToString());
+                        updateValues.Add("hToWest", c.hToWest.ToString());
+                        updateValues.Add("east", c.east);
+                        updateValues.Add("west", c.west);
+                        Dictionary<string, string> conditions = new Dictionary<string, string>();
+                        conditions.Add("carrierID", temp.ToString());
+                        loginDB.MakeUpdateCommand("carrier", updateValues, conditions);
+                        loginDB.ExecuteCommand();
+                        toDelete = false;
+                        break;
+                    }
+                }
+                if (toDelete == true)
+                {
+                    Dictionary<string, string> conditions = new Dictionary<string, string>();
+                    conditions.Add("routeid", temp.ToString());
+                    loginDB.MakeDeleteCommand("route", conditions);
+                    loginDB.ExecuteCommand();
+                }
+            }
+            foreach (RouteCity newC in cityCollection)
+            {
+                if (newC.newlyCreated == true)
+                {
+                    List<string> values = new List<string>();
+                    values.Add(newC.routeID.ToString());
+                    values.Add(newC.cityName);
+                    values.Add(newC.kmToEast.ToString());
+                    values.Add(newC.kmToWest.ToString());
+                    values.Add(newC.hToEast.ToString());
+                    values.Add(newC.hToWest.ToString());
+                    values.Add(newC.east);
+                    values.Add(newC.west);
+                    loginDB.MakeInsertCommand("route", values);
+                    loginDB.ExecuteCommand();
+                }
+            }
+        }
+
+        private void RouteData_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            UpdateRouteComboBox();
+        }
+
+        private void RateAppy_Click(object sender, RoutedEventArgs e)
+        {
+            loginDB.MakeDeleteCommand("rates", null);
+            loginDB.ExecuteCommand();
+            List<string> toInsert = new List<string>();
+            toInsert.Add(FTLRate.Text);
+            toInsert.Add(LTLRate.Text);
+            loginDB.MakeInsertCommand("rates", toInsert);
+            loginDB.ExecuteCommand();
+        }
+
+        private void ChangeUpdatePath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.InitialDirectory = DBBackUp;
+            of.Filter = "sql files (*.sql)|*.sql|All files (*.*)|*.*";
+            of.FilterIndex = 2;
+            if (of.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string temp = DBBackUp;
+                DBBackUp = of.FileName;
+                BackUpPath.Text = DBBackUp;
+                string configContents;
+                using (StreamReader sr = new StreamReader(configFilePath))
+                {
+                    configContents = sr.ReadToEnd();
+                }
+                string toWrite = configContents.Replace(temp, DBBackUp);
+                using (StreamWriter sw = new StreamWriter(configFilePath, false))
+                {
+                    sw.Write(toWrite);
+                }
+            }
+        }
+        private void BackUp_Click(object sender, RoutedEventArgs e)
+        {
+            loginDB.BackItUp(DBBackUp);
+        }
+        private void Restore_Click(object sender, RoutedEventArgs e)
+        {
+            loginDB.Restore(DBBackUp);
         }
     }
 }
