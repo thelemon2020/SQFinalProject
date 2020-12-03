@@ -33,6 +33,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public double Balance { get; set; } //!< The total balance owed on an account
         public string AccountName { get; set; } //!< The name of the account
         public int AccountID { get; set; } //!< Th Id number of the account
+        public DateTime LastPayment { get; set; }
 
 
         /// \brief A constructor for the account class
@@ -235,6 +236,14 @@ namespace SQFinalProject.ContactMgmtBilling
         {
             double balance = rate * distance * (double)quantity;
             return balance;
+        }
+
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("{0},{1},{2},{3}", AccountID, AccountName, Balance, LastPayment);
+            return sb.ToString();
         }
     }
 }

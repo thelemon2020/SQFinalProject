@@ -126,7 +126,7 @@ namespace SQFinalProject.ContactMgmtBilling
             {
                 tmpVanType = "REF";
             }
-            contract.AppendFormat("ID:{0} Name:{1} Job:{2} Quantity:{3} Origin:{4} Destination:{5} Van:{6} Delivery Complete: {7}",ID, ClientName, tmpJobType, Quantity, Origin, Destination, tmpVanType, TripComplete.ToString());
+            contract.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}",ID, ClientName, tmpJobType, Quantity, Origin, Destination, tmpVanType, TripComplete.ToString());
             return contract.ToString();
         }
     }

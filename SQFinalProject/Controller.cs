@@ -154,6 +154,68 @@ namespace SQFinalProject
         }
 
 
+        /// \brief A method that is used to add an account to the tms database
+        /// \details <b>Details</b>
+        /// A method which takes a single account, breaks down its values into string, and adds them into a list to be
+        /// added to the Account table in the TMS database.
+        /// \param - tmsDB - <b>Database</b> - The TMS database object used to access the tms database and build a command to insert and account
+        /// \param - ac - <b>Account</b> - The account to be added to the Account table in the tms database
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see AddAccountToTMS(Database tmsDB, List<Account> accounts)
+        public static void AddAccountToTMS(Database tmsDB, Account ac)
+        {
+            List<string> values = new List<string>();
+            string acStr = ac.ToString(); // get the string representation of the account
+            string[] tmp = acStr.Split(','); // break it down into individual values
+
+            foreach (string s in tmp) // add each value to a list
+            {
+                values.Add(s);
+            }
+            tmsDB.MakeInsertCommand("Account", values); // make the isnert command
+            tmsDB.ExecuteCommand(); // execute said command
+        }
+
+
+        /// \brief An overload of the AddAccountToTMS That takes a list of accounts
+        /// \details <b>Details</b>
+        /// A method that calls upon the other add account to TMS method to add multiple accounts to the database.
+        /// \param - tmsDB - <b>Database</b> - The database object that grants access to the TMS database
+        /// \param - accounts - <b>List<Account></b> - A list of accounts to be added to the TMS database
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see AddAccountToTMS(Database tmsDB, Account ac)
+        public static void AddAccountToTMS(Database tmsDB, List<Account> accounts)
+        {
+            foreach(Account ac in accounts) //Add all accounts in the list to the database.
+            {
+                AddAccountToTMS(tmsDB, ac);
+            }
+        }
+
+
+        /// \brief A method that gets contracts from the database
+        /// \details <b>Details</b>
+        /// A method which is used to get contracts from the TMS database. By passing null to the conditions all accounts will be selected
+        /// but conditions can be added to narrow the selection.
+        /// \param - tmsDB - <b>Database</b> - The database object used to connect to the tms database
+        /// \param - conditions - <b>Dictionary<string, string></b> - The dictionary of key value pairs to be used as search conditions
+        /// \returns - sqlReturn - <b>List<string></b> - The results of the Selection
+        /// 
+        /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
+        /// \see GetAllContractsFromDB(Database mrktPlace)
+        public static List<string> GetAccountsFromTMS(Database tmsDB, Dictionary<string, string> conditions)
+        {
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            string table = "Account";
+            tmsDB.MakeSelectCommand(fields, table, conditions);
+            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            return sqlReturn;
+        }
+
+
         /// \brief A method which creates a contract specific invoice
         /// \details <b>Details</b>
         /// A method which will create an invoice on a contract containing the cost, and other particulars

@@ -294,5 +294,41 @@ namespace SQFinalProject
             DatabaseInteraction.CloseConnection(currentConnection);// close connection
             return didWork;// return if it worked or not
         }
+
+
+        public void MakeInnerJoinSelect(List<string> fields, List<string> tables, List<string> IDs)
+        {
+            StringBuilder selectCmd = new StringBuilder();
+            selectCmd.Append("SELECT");
+            int countLoops = fields.Count() - 1;
+            int i = 0;
+
+            foreach(string field in fields)
+            {
+                if(i == countLoops)
+                {
+                    selectCmd.AppendFormat("{0} ", field);
+                }
+                else
+                {
+                    selectCmd.AppendFormat("{0}, ", field);
+                }
+                i++;
+            }
+            selectCmd.AppendFormat("FROM {0} ", tables[0]);
+
+            for(int j = 0; j < tables.Count; j++)
+            {
+                if(j > 0)
+                {
+                    selectCmd.Append("INNER JOIN ");
+                    selectCmd.AppendFormat("{0} ON ", tables[j]);
+                    selectCmd.AppendFormat("{0}.{1} = {2}.{1}", tables[j - 1], IDs[j - 1], tables[j]);
+                }
+            }
+            userCommand = selectCmd.ToString();
+        }
+
+        // SELECT orders.CustomerID, contactName FROM customers INNER JOIN orders ON customers.CustomerID = orders.CustomerID;
     }
 }
