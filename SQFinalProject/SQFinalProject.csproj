@@ -83,6 +83,7 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -108,6 +109,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ContactMgmtBilling\Account.cs" />
+    <Compile Include="ContactMgmtBilling\Carrier.cs" />
     <Compile Include="ContactMgmtBilling\Contract.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Database\Database.cs" />
@@ -116,10 +118,17 @@
     <Compile Include="TripPlanning\Route.cs" />
     <Compile Include="TripPlanning\Truck.cs" />
     <Compile Include="TripPlanning\TripLine.cs" />
+    <Compile Include="UI\AddCarrier.xaml.cs">
+      <DependentUpon>AddCarrier.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\PlannerWindow.xaml.cs">
       <DependentUpon>PlannerWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="UI\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\AddCarrier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

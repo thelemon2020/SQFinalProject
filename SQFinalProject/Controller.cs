@@ -102,7 +102,7 @@ namespace SQFinalProject
         /// \details <b>Details</b>
         /// A method that returns all entries in the contract marketplace as a List of strings
         /// \param - mrktPlace - <b>Database</b> - The database to connect to
-        /// \returns - sqlreturn - <b>List<string, string></b> - - a list of results from the database query
+        /// \returns - sqlreturn - <b>List<string, string></b> - a list of results from the database query
         /// 
         /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
         public static List<string> GetAllContractsFromDB(Database mrktPlace)
@@ -113,6 +113,25 @@ namespace SQFinalProject
             mrktPlace.MakeSelectCommand(fields, table, null);
             List<string> sqlReturn = new List<string>();
             sqlReturn = mrktPlace.ExecuteCommand();
+            return sqlReturn;
+        }
+
+        /// \brief A method to grab a city from the TMS database
+        /// \details <b>Details</b>
+        /// A method that returns a city from the routes table, specified by the conditions parameter
+        /// \param - tms - <b>Database</b> - The database to connect to
+        /// \param - conditions - <b>Dictionary<string, string></b> - A Dictionary key-value pair where the key is a column name and the value is a city
+        /// \returns - sqlreturn - <b>List<string, string></b> - a list of results from the database query
+        /// 
+        /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
+        public static List<string> GetCityFromDB(Database tms, Dictionary<string, string> conditions)
+        {
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            string table = "Route";
+            tms.MakeSelectCommand(fields, table, conditions);
+            //List<string> sqlReturn = new List<string>();
+            List<string> sqlReturn = tms.ExecuteCommand();
             return sqlReturn;
         }
 

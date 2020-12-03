@@ -58,10 +58,30 @@ namespace SQFinalProject
                 MySqlDataReader reader = DBCommand.ExecuteReader(); // instantiate MySqlReader to get query returns from database
                 while (reader.Read()) //read all query lines
                 {
+                    StringBuilder row = new StringBuilder();
                     for (int i = 0; i < reader.FieldCount; i++) //iterate through each field
-                    {
-                        SQLReturn.Add(reader.GetString(i)); // add to list of strings
+                    {                        
+                        string type = reader.GetDataTypeName(i);
+                        type = type.ToLower();
+                        if (type.Contains("varchar"))
+                        {
+                            row.AppendFormat("{0}", reader.GetString(i)); // add to list of strings
+                        }
+                        else if(type.Contains("int"))
+                        {
+                            row.AppendFormat("{0}", reader.GetInt64(i).ToString()); // add to list of strings
+                        }
+                        else if (type.Contains("double"))
+                        {
+                            row.AppendFormat("{0}", reader.GetDouble(i).ToString()) ; // add to list of strings
+                        }
+                        if (i !=reader.FieldCount - 1)
+                        {
+                            row.AppendFormat(",");
+                        }
                     }
+                    SQLReturn.Add(row.ToString());
+                    row.Clear();
                 }
             }
             catch

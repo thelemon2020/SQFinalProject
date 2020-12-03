@@ -44,11 +44,11 @@ namespace SQFinalProject.UI {
             LoadConfig();                                               // Parse the config file
             if (TMS_Database!=null)                                     // Connect to the TMS database if the config file loaded successfully
             {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3]);
+                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
             }
             if (MarketPlace_Database!=null)                             // Connect to the Marketplace database if the config file loaded successfully
             {
-                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3]);
+                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3], MarketPlace_Database[4]);
             }
 
             userName = name;

@@ -25,6 +25,7 @@ namespace SQFinalProject
         public string connectionString { get; set; }//!<the string used to connect to the database via MySqlConnector
         public string ip { get; set; }//!<The ip of the database to connect to
         public string user { get; set; }//!<The username used to login to the database
+        public string port { get; set; }
         public string pass { get; set; }//!<The password used to login to the database
         public string schema { get; set; }//!<The database schema to interact with
         public MySqlConnection currentConnection { get; set; }//!<The active connection with the database
@@ -42,14 +43,15 @@ namespace SQFinalProject
         /// 
         /// \return - <b>Nothing</b>
         ///
-        public Database(string dbIP, string userName, string password, string table)
+        public Database(string dbIP, string userport, string userName, string password, string table)
         {
             //!<set starting properties to be able to connect to server
             ip = dbIP;
             user = userName;
             pass = password;
             schema = table;
-            connectionString = "server=" + ip + ";uid=" + user + ";pwd=" + pass + ";database=" + schema;
+            port = userport;
+            connectionString = "server=" + ip + ";port=" + port + ";uid=" + user + ";pwd=" + pass + ";database=" + schema;
         }
         
         /// \brief Used to send a command to a database and get a response back
