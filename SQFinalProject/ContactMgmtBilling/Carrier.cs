@@ -19,7 +19,9 @@ namespace SQFinalProject.ContactMgmtBilling
         public int CarrierID { get; set; }
         public string CarrierName { get; set; }
         public double FTLRate { get; set; }
+        public int FTLA { get; set; }
         public double LTLRate { get; set; }
+        public int LTLA { get; set; }
         public double ReefCharge { get; set; }
         public bool newlyCreated { get; set; }
         public List<string> DepotCities { get; set; }
@@ -37,6 +39,8 @@ namespace SQFinalProject.ContactMgmtBilling
             FTLRate = double.Parse(details[2]);
             LTLRate = double.Parse(details[3]);
             ReefCharge = double.Parse(details[4]);
+            FTLA = int.Parse(details[5]);
+            LTLA = int.Parse(details[6]);
         }
 
         public double CalculateCost(Contract contract)

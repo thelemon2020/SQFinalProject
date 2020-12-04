@@ -245,6 +245,13 @@ namespace SQFinalProject
         }
 
 
+        /// \brief 
+        /// \details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
         public static List<string> GetCarrierDepotCities(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
@@ -266,8 +273,15 @@ namespace SQFinalProject
             return sqlReturn;
         }
 
-        
-        public static List<Carrier> SetDepotsToCarriers(Database tmsDB)
+
+        /// \brief 
+        /// \details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
+        public static List<Carrier> SetupCarriers(Database tmsDB)
         {
             List<Carrier> carriers = new List<Carrier>();
             List<string> carrierDetails = GetCarriersFromTMS(tmsDB, null, null); // get all the carriers in the db
@@ -282,7 +296,9 @@ namespace SQFinalProject
             List<string> fields = new List<string>();
             fields.Add("carrierName");
             fields.Add("depotCity");
-            List<string> depotCities = GetCarrierDepotCities(tmsDB, fields, null);
+            fields.Add("FTLA");
+            fields.Add("LTLA");
+            List<string> depotCities = GetCarrierDepotCities(tmsDB, fields, null); // do an inner join on the carrier table and depot table
 
             foreach(Carrier c in carriers)
             {
@@ -292,6 +308,8 @@ namespace SQFinalProject
                     if(tmpSplit[0] == c.CarrierName)
                     {
                         c.DepotCities.Add(tmpSplit[1]);
+                        c.FTLA = int.Parse(tmpSplit[2]); // adding the availability could likely use some work. this should ideally be
+                        c.LTLA = int.Parse(tmpSplit[3]); // added for every depot city rather than just to the carrier as a whole.
                     }
                 }
             }
@@ -300,11 +318,45 @@ namespace SQFinalProject
         }
 
 
-        public static bool AssignContractToCarrier(Contract contract, Carrier carrier)
+        /// \brief 
+        /// \details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
+        public static List<string> FindCarriersForContract(Contract contract, List<Carrier> carriers)
         {
-            bool assigned = false;
-            // need to do some logic to check which city the contract starts at.
-            return assigned;
+            List<string> possibleCarrier = new List<string>();
+
+            foreach(Carrier carrier in carriers) //iterate through all carriers, they should already be setup
+            {
+                foreach(string city in carrier.DepotCities) // for one carrier, check through all their depot cities to see if one matches
+                {                                           // the contract origin city
+                    if(contract.Origin == city) // if the contract origin city matches one of the depot cities of a carrier we check next
+                    {                           // to see if they have availability of trucks matching a job type.
+                        if(contract.JobType == 0) // FTL job
+                        {
+                            if(carrier.FTLA > 0) // if the carrier has availability, add them to the list of possible carriers
+                            {
+                                string tmp = carrier.CarrierName + "," + city;
+                                possibleCarrier.Add(tmp);
+                            }
+                        }
+                        else // LTL job
+                        {
+                            if(carrier.LTLA > 0) // if the carrier has an LTL truck available, add them to list of possible carriers for the job
+                            {
+                                string tmp = carrier.CarrierName + "," + city;
+                                possibleCarrier.Add(tmp);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return possibleCarrier;
+
         }
 
 
