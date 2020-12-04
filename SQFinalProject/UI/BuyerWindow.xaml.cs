@@ -38,6 +38,9 @@ namespace SQFinalProject.UI {
 
         public string userName;                                         //<Stores the user name of the current user
 
+        ObservableCollection<Contract> contractCollection { get; set; }
+        ObservableCollection<Contract> ordersCollection { get; set; }
+
         public BuyerWindow ( string name )
         {
             InitializeComponent();
@@ -174,9 +177,6 @@ namespace SQFinalProject.UI {
         }
 
 
-
-        public ObservableCollection<string> MarketRtn;
-
         //  METHOD:		GetContracts
         /// \brief This method gets the currently available contracts from the marketplace and displays them to the screen.
         /// \details <b>Details</b>
@@ -189,18 +189,113 @@ namespace SQFinalProject.UI {
         /// \return - <b>Nothing</b>
         ///
         private void GetContracts ( object sender,RoutedEventArgs e ) {
+            contractCollection = new ObservableCollection<Contract>();
             List<string> QueryLst = new List<string> ();
-            QueryLst.Add ("*");
+            QueryLst.Add("*");
+            MarketPlace.MakeSelectCommand ( QueryLst, "Contract", null, null);
+            List<string> contracts = MarketPlace.ExecuteCommand();
+            foreach (string contract in contracts)
+            {
+                Contract c = new Contract(contract);
+                contractCollection.Add(c);
+            }
+            MarketList.ItemsSource = contractCollection;
+        }
 
-            //Dictionary<string, string> tempDict = new Dictionary<string, string>();
-            //tempDict.Add ("username", usrName);
+        //  METHOD:		TakeContracts
+        /// \brief This method gets the currently selected contract from the list, removes it from the list and adds it to the TMS database
+        /// \details <b>Details</b>
+        ///     Creates an insert query string to insert the new contract into our database.  
+        ///     Also calls methods that check if we have the client in our system and adds them in if not.
+        /// 
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
+        private void TakeContracts(object sender, RoutedEventArgs e)
+        {
+            Contract selectedContract = (Contract)MarketList.SelectedItem;
+            contractCollection.Remove(selectedContract);
+            selectedContract.status = "NEW";
+            if (!CheckAccount(selectedContract.ClientName))
+            {
+                AddAccount(selectedContract.ClientName);
+            }
+            List<string> fields = new List<string>();
+            fields.Add("clientname");
+            fields.Add("jobtype");
+            fields.Add("skidQuant");
+            fields.Add("depotCity");
+            fields.Add("destCity");
+            fields.Add("vantype");
+            fields.Add("status");
+            List<string> values = new List<string>();
+            values.Add(selectedContract.ClientName);
+            values.Add(selectedContract.JobType.ToString());
+            values.Add(selectedContract.Quantity.ToString());
+            values.Add(selectedContract.Origin);
+            values.Add(selectedContract.Destination);
+            values.Add(selectedContract.VanType.ToString());
+            values.Add(selectedContract.status);
+            loginDB.MakeInsertCommand("orders", fields, values);
+            loginDB.ExecuteCommand();
+        }
+        private bool CheckAccount(string name)
+        {
+            bool isIn = false;
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("clientname", name);
+            loginDB.MakeSelectCommand(fields, "account", conditions, null);
+            if (loginDB.ExecuteCommand().Count > 0)
+            {
+                isIn = true;
+            }
+            return isIn;
+        }
+        private void AddAccount(string name)
+        {
+            List<string> fields = new List<string>();
+            fields.Add("clientName");
+            List<string> values = new List<string>();
+            values.Add(name);
+            loginDB.MakeInsertCommand("account",fields,values);
+            loginDB.ExecuteCommand();
+        }
 
-            loginDB.MakeSelectCommand ( QueryLst, "login", null, null);
+        private void TabsCtrl_Buyer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Orders.IsSelected)
+            {
+                GetOrders();
+                OrderList.ItemsSource = ordersCollection;
+            }
+        }
 
-            List<string> tmp = loginDB.ExecuteCommand();
-            //txtMain.Text = tmp.ElementAt(0) + tmp.ElementAt(1) + tmp.ElementAt(2);
-
-            MarketRtn = new ObservableCollection <string> ( loginDB.ExecuteCommand() );
+        private void GetOrders()
+        {
+            ordersCollection = new ObservableCollection<Contract>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            loginDB.MakeSelectCommand(fields, "orders", null, null);
+            List<string> results = loginDB.ExecuteCommand();
+            foreach (string result in results)
+            {
+                string[] splitResult = result.Split(',');
+                StringBuilder recombine = new StringBuilder();
+                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
+                Contract c = new Contract(recombine.ToString());
+                int temp;
+                int.TryParse(splitResult[0], out temp);
+                c.ID = temp;
+                c.status = splitResult[7];
+                ordersCollection.Add(c);
+            }
+            
         }
     }
+
 }

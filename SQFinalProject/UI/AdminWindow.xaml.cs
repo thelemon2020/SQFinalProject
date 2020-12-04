@@ -188,6 +188,17 @@ namespace SQFinalProject.UI {
             aboutBox.ShowDialog();
         }
 
+
+        //  METHOD:		TMSChange_Click
+        /// \brief Changes the TMS Database settings stored in the config file
+        /// \details <b>Details</b>
+        ///     Creates a new string that contains the updated information and overwrites the old text file
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void TMSChange_Click(object sender, RoutedEventArgs e)
         {
             IPAddress temp;
@@ -195,7 +206,7 @@ namespace SQFinalProject.UI {
             if (IPAddress.TryParse(TMS_IP.Text, out temp) && (int.TryParse(TMS_Port.Text, out temp1)))
             {
                 string newWrite = "TMS " + TMS_IP.Text + " " + TMS_Port.Text + " " + TMS_User.Text + " " + TMS_Password.Password.ToString() + " " + loginDB.schema + "\n" 
-                    + "MP " + MarketPlace_Database[0] + " " + MarketPlace_Database[1] + " " + MarketPlace_Database[2] + " " + MarketPlace_Database[3] + " " + MarketPlace_Database[4] + "\n" + "LOGGER " + Logger.path; 
+                    + "MP " + MarketPlace_Database[0] + " " + MarketPlace_Database[1] + " " + MarketPlace_Database[2] + " " + MarketPlace_Database[3] + " " + MarketPlace_Database[4] + "\n" + "LOGGER " + Logger.path + "\n" + "BACKUP " + DBBackUp; 
                 StreamWriter sw = new StreamWriter(configFilePath,false);
                 sw.Write(newWrite);
                 sw.Close();
@@ -213,6 +224,17 @@ namespace SQFinalProject.UI {
             
         }
 
+
+        //  METHOD:		MPChange_Click
+        /// \brief Changes the Market Place Database settings stored in the config file
+        /// \details <b>Details</b>
+        ///     Creates a new string that contains the updated information and overwrites the old text file
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void MPChange_Click(object sender, RoutedEventArgs e)
         {
             IPAddress temp;
@@ -220,7 +242,7 @@ namespace SQFinalProject.UI {
             if (IPAddress.TryParse(TMS_IP.Text, out temp) && (int.TryParse(TMS_Port.Text, out temp1)))
             {
                 string newWrite = "MP " + MP_IP.Text + " " + MP_Port.Text + " " + MP_User.Text + " " + MP_Password.Password.ToString() + " " + loginDB.schema + "\n"
-                    + "MP " + TMS_Database[0] + " " + TMS_Database[1] + " " + TMS_Database[2] + " " + TMS_Database[3] + " " + TMS_Database[4] + "\n" + "LOGGER " + Logger.path;
+                    + "MP " + TMS_Database[0] + " " + TMS_Database[1] + " " + TMS_Database[2] + " " + TMS_Database[3] + " " + TMS_Database[4] + "\n" + "LOGGER " + Logger.path + "\n" + "BACKUP " + DBBackUp;
                 StreamWriter sw = new StreamWriter(configFilePath, false);
                 sw.Write(newWrite);
                 sw.Close();
@@ -237,6 +259,15 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		TabsCtrl_SelectionChange
+        /// \brief Governs the behavior of the Admin window
+        /// \details <b>Details</b>
+        ///     Checks which tab is selected and loads the required data to fill out that t
+        /// 
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void TabsCtrl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Config.IsSelected)
@@ -267,6 +298,15 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void LoadRates()
         {
             List<string> field = new List<string>();
@@ -277,11 +317,31 @@ namespace SQFinalProject.UI {
             FTLRate.Text = rates[0].ToString();
             LTLRate.Text = rates[1].ToString();
         }
+
+        //  METHOD:		LoadCities
+        /// \brief Gets City Information from DB and loads it into table
+        /// \details <b>Details</b>
+        ///     Calls a method that loads the cities data from DB and then sets the datacontext of the datagrid to that of the city collection
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void LoadCities()
         {
             cityCollection = GetCityData();
             RouteData.DataContext = cityCollection;
         }
+
+        //  METHOD:		LoadCities
+        /// \brief Gets City Information from DB and loads it into an Observable collection
+        /// \details <b>Details</b>
+        ///     Generates a SELECT query to get all routecity entries from the route database.  Adds to observable collection
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - cityCollection -<b>ObservableCollection<RouteCity></b> - a collection to be used to fill a data grid
+        ///
         private ObservableCollection<RouteCity> GetCityData()
         {
             cityCollection = new ObservableCollection<RouteCity>();
@@ -311,12 +371,30 @@ namespace SQFinalProject.UI {
             return cityCollection;
         }
 
+        //  METHOD:		LoadCarriers
+        /// \brief Gets Carrier Information from DB and loads it into table
+        /// \details <b>Details</b>
+        ///     Calls a method that loads the carrier data from DB and then sets the datacontext of the datagrid to that of the carrier collection
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void LoadCarriers()
         {
             carrierCollection = GetCarrierData();
             CarrierData.DataContext = carrierCollection;
         }
 
+        //  METHOD:		GetCarrierData
+        /// \brief Gets City Information from DB and loads it into an observable collection
+        /// \details <b>Details</b>
+        ///     Generates a SELECT query to get all carrier entries from the carrier database.  Adds to observable collection
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - carrierCollection -<b>ObservableCollection<RouteCity></b> - a collection to be used to fill a data grid
+        ///
         private ObservableCollection<Carrier> GetCarrierData()
         {
             carrierCollection = new ObservableCollection<Carrier>();
@@ -327,20 +405,27 @@ namespace SQFinalProject.UI {
             foreach (string field in fields)
             {
                 string[] columns = field.Split(',');
-                int carrierID;
-                int.TryParse(columns[0], out carrierID);
-                double FTL;
-                double LTL;
-                double reef;
-                double.TryParse(columns[2], out FTL);
-                double.TryParse(columns[3], out LTL);
-                double.TryParse(columns[4], out reef);
-                Carrier c = new Carrier(carrierID,columns[1],FTL, LTL, reef);
+                List<string> arguments = new List<string>();
+                foreach (string column in columns)
+                {
+                    arguments.Add(column);
+                }
+                Carrier c = new Carrier(arguments);
                 c.newlyCreated = false;
                 carrierCollection.Add(c);
             }
             return carrierCollection;
         }
+
+        //  METHOD:		LoadLogger
+        /// \brief Opens logger file and displays it on the screen
+        /// \details <b>Details</b>
+        ///     Calls a logger method that returns the string of whatever is in the log file
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void LoadLogger()
         {
             FilePath.Text = Logger.path;
@@ -354,6 +439,15 @@ namespace SQFinalProject.UI {
                 Log_Viewer.Content = logFile;
             }
         }
+        //  METHOD:		FillFields
+        /// \brief Sets up the default fields in the config panel
+        /// \details <b>Details</b>
+        ///     Copies from database properties to fill in default field values
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void FillFields()
         {
             TMS_IP.Text = loginDB.ip;
@@ -366,6 +460,16 @@ namespace SQFinalProject.UI {
             MP_Password.Password = MarketPlace.pass;
         }
 
+        //  METHOD:		ChangePath_Click
+        /// \brief Changes the Logger file path
+        /// \details <b>Details</b>
+        ///     Opens an OpenFIleDialog window to allow the user to change the location of the logger file
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void ChangePath_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
@@ -390,6 +494,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		Create_Click
+        /// \brief Adds a new row to the datagrid
+        /// \details <b>Details</b>
+        ///     Creates a new Carrier object and adds it to the carrier collection and updates the combo box
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void Create_Click(object sender, RoutedEventArgs e)
         {
             Carrier c = new Carrier();
@@ -398,6 +512,15 @@ namespace SQFinalProject.UI {
             UpdateCarrierComboBox();
         }
 
+        //  METHOD:		UpdateRouteComboBox
+        /// \brief Makes sure the combo box is up to date
+        /// \details <b>Details</b>
+        ///     Clears the combo box and adds all ids in the city collection to the combo box
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UpdateRouteComboBox()
         {
             RouteCityList.Items.Clear();
@@ -407,6 +530,15 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		UpdateCarrierComboBox
+        /// \brief Makes sure the combo box is up to date
+        /// \details <b>Details</b>
+        ///     Clears the combo box and adds all ids in the carrier collection to the combo box
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UpdateCarrierComboBox()
         {
             DeleteCarrierList.Items.Clear();
@@ -416,6 +548,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		Delete_Click
+        /// \brief Removes an entry in the data grid
+        /// \details <b>Details</b>
+        ///     Gets the index of the selected item from the combo box and removes it from the collection
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             int whichDelete = (int)DeleteCarrierList.SelectedIndex;
@@ -423,6 +565,16 @@ namespace SQFinalProject.UI {
             UpdateCarrierComboBox();
         }
 
+        //  METHOD:		DeleteCarrierList_SelectionChange
+        /// \brief Checks that the delete button can be pressed
+        /// \details <b>Details</b>
+        ///     Checks that an actual value has been selected and if it has, enable the delete button
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DeleteCarrierList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -436,6 +588,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		Update_Click
+        /// \brief Sends all data in the datagrid back to the database
+        /// \details <b>Details</b>
+        ///     Creates a series of inserts, update and delete query statements to send to the server to update the database
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void Update_Click(object sender, RoutedEventArgs e)
         {          
             List<string> fields = new List<string>();
@@ -497,6 +659,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		RouteDelete_Click
+        /// \brief Removes an entry in the data grid
+        /// \details <b>Details</b>
+        ///     Gets the index of the selected item from the combo box and removes it from the collection
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        //
         private void RouteDelete_Click(object sender, RoutedEventArgs e)
         {
             int whichDelete = (int)RouteCityList.SelectedIndex;
@@ -504,11 +676,31 @@ namespace SQFinalProject.UI {
             UpdateRouteComboBox();
         }
 
+        //  METHOD:		CarrierData_AddingNewItem
+        /// \brief If an item is added to the grid, update the combobox
+        /// \details <b>Details</b>
+        ///     Calls the UpdateCarrierComboBox() method if a new item is added
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        //
         private void CarrierData_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             UpdateCarrierComboBox();
         }
 
+        //  METHOD:		DeleteCityList_SelectionChange
+        /// \brief Checks that the delete button can be pressed
+        /// \details <b>Details</b>
+        ///     Checks that an actual value has been selected and if it has, enable the delete button
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DeleteCityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -522,6 +714,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		CreateRoute_Click
+        /// \brief Adds a new row to the datagrid
+        /// \details <b>Details</b>
+        ///     Creates a new RouteCity object and adds it to the carrier collection and updates the combo box
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void CreateRoute_Click(object sender, RoutedEventArgs e)
         {
             RouteCity c = new RouteCity();
@@ -530,6 +732,16 @@ namespace SQFinalProject.UI {
             UpdateRouteComboBox();
         }
 
+        //  METHOD:		RouteUpdate_Click
+        /// \brief Sends all data in the datagrid back to the database
+        /// \details <b>Details</b>
+        ///     Creates a series of inserts, update and delete query statements to send to the server to update the database
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void RouteUpdate_Click(object sender, RoutedEventArgs e)
         {
             List<string> fields = new List<string>();
@@ -589,11 +801,31 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		RouteData_AddingNewItem
+        /// \brief If an item is added to the grid, update the combobox
+        /// \details <b>Details</b>
+        ///     Calls the UpdateRouteComboBox() method if a new item is added
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void RouteData_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             UpdateRouteComboBox();
         }
 
+        //  METHOD:		RateApply_Click
+        /// \brief Updates the rate db table with new values
+        /// \details <b>Details</b>
+        ///     Deletes the old row in the rates table and inserts a new one
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void RateAppy_Click(object sender, RoutedEventArgs e)
         {
             loginDB.MakeDeleteCommand("rates", null);
@@ -605,6 +837,16 @@ namespace SQFinalProject.UI {
             loginDB.ExecuteCommand();
         }
 
+        //  METHOD:		ChangeUpdatePath_Click
+        /// \brief Changes the path that the database file is stored at
+        /// \details <b>Details</b>
+        ///     Opens a file dialog box that allows the user to choose a new path to save and open a backup file
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void ChangeUpdatePath_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
@@ -614,7 +856,7 @@ namespace SQFinalProject.UI {
             if (of.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string temp = DBBackUp;
-                DBBackUp = of.FileName;
+                DBBackUp = of.FileName; 
                 BackUpPath.Text = DBBackUp;
                 string configContents;
                 using (StreamReader sr = new StreamReader(configFilePath))
@@ -628,10 +870,32 @@ namespace SQFinalProject.UI {
                 }
             }
         }
+
+        //  METHOD:		BackUp_Click
+        /// \brief Backs up the database
+        /// \details <b>Details</b>
+        ///     Calls a database method that backs up the whole database
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void BackUp_Click(object sender, RoutedEventArgs e)
         {
             loginDB.BackItUp(DBBackUp);
         }
+
+        //  METHOD:		Restore_Click
+        /// \brief Restores the database
+        /// \details <b>Details</b>
+        ///     Calls a database method that restores the database from a backup file
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void Restore_Click(object sender, RoutedEventArgs e)
         {
             loginDB.Restore(DBBackUp);

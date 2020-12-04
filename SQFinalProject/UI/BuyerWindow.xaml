@@ -42,12 +42,11 @@
         </StatusBar>
 
         <!-- Main Tabbed Window section -->
-        <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl">
-            <TabItem Header="Contact MarketPlace">
+        <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl_Buyer" SelectionChanged="TabsCtrl_Buyer_SelectionChanged">
+            <TabItem Header="Contract Marketplace">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"  />
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -55,17 +54,131 @@
                             <ColumnDefinition Width="4*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-
-                        <ListBox Grid.Column="0" x:Name="MarketList" ItemsSource="{Binding Path=MarketRtn}" DisplayMemberPath="Source">
-
-                        </ListBox>
-
-                        <Button Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
+                        <Border x:Name="border" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
+                            <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
+                                <ListBox Grid.Column="0" Name="MarketList">
+                                    <ListBox.Template>
+                                        <ControlTemplate>
+                                            <DockPanel LastChildFill="True">
+                                                <Grid DockPanel.Dock="Top" Height="30">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Grid.Column="0">Customer Name</Label>
+                                                    <Label Grid.Column="1">Job Type</Label>
+                                                    <Label Grid.Column="2">Quantity</Label>
+                                                    <Label Grid.Column="3">Starting City</Label>
+                                                    <Label Grid.Column="4">Ending City</Label>
+                                                </Grid>
+                                                <ItemsPresenter></ItemsPresenter>
+                                            </DockPanel>
+                                        </ControlTemplate>
+                                    </ListBox.Template>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="100" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ClientName}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding JobType}" />
+                                                <TextBlock Grid.Column="2" Text="{Binding Quantity}" />
+                                                <TextBlock Grid.Column="3" Text="{Binding Origin}" />
+                                                <TextBlock Grid.Column="4" Text="{Binding Destination}" />
+                                                <TextBlock Grid.Column="5" Text="{Binding VanType}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </Border>
+                        <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
+                        <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Name="Orders" Header="Orders">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"  />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="border1" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
+                        <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
+                            <ListBox Name="OrderList">
+                                <ListBox.Template>
+                                <ControlTemplate>
+                                    <DockPanel LastChildFill="True">
+                                        <Grid DockPanel.Dock="Top" Height="30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0">Order Number</Label>
+                                            <Label Grid.Column="1">Customer Name</Label>
+                                            <Label Grid.Column="2">Job Type</Label>
+                                            <Label Grid.Column="3">Quantity</Label>
+                                            <Label Grid.Column="4">Van Type</Label>
+                                            <Label Grid.Column="5">Starting City</Label>
+                                            <Label Grid.Column="6">Ending City</Label>
+                                            <Label Grid.Column="7">Status</Label>
+                                        </Grid>
+                                        <ItemsPresenter></ItemsPresenter>
+                                    </DockPanel>
+                                </ControlTemplate>
+                                </ListBox.Template>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ID}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding ClientName}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding JobType}" />
+                                            <TextBlock Grid.Column="3" Text="{Binding Quantity}" />
+                                            <TextBlock Grid.Column="4" Text="{Binding VanType}" />
+                                            <TextBlock Grid.Column="5" Text="{Binding Origin}" />
+                                            <TextBlock Grid.Column="6" Text="{Binding Destination}" />
+                                            <ComboBox Grid.Column="7" ItemsSource="{Binding Statuses}" 
+                                                      DisplayMemberPath="Statuses"
+                                                      SelectedValuePath="status"
+                                                      SelectedValue="{Binding status}"></ComboBox>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </Border>
+                </Grid>
+                
+            </TabItem>
             <TabItem Header="Customers" />
-            <TabItem Header="New Orders" />
             <TabItem Header="Completed Orders" />
             <TabItem Header="Testing">
                 <TextBox x:Name="txtMain"

@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,9 @@ namespace SQFinalProject.ContactMgmtBilling
         public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
         public Carrier Carrier { get; set; } //!<The name of the carrier delivering the contract
         public List<TripLine> Trips { get; set; } //!< A list of the trips required to deliver the full order
+        public string status { get; set; }
+        public ObservableCollection<string> Statuses { get; set; }
+
 
         /// \brief A constructor for the ContractDetails class
         /// \details <b>Details</b>
@@ -54,14 +58,16 @@ namespace SQFinalProject.ContactMgmtBilling
         /// Carrier database.
         /// \param - details - <b>List<string></b> - A list of contract details retrieved from the contract marketplace database
         /// \returns - <b>Nothing</b>
-        public Contract(List<string> details)
+        public Contract(string details)
         {
-            string[] splitDetails = details[0].Split(',');
+            Statuses = new ObservableCollection<string>();
+            Statuses.Add("NEW");
+            Statuses.Add("IN-PROGRESS");
+            Statuses.Add("COMPLETED");
+            Statuses.Add("CLOSED");
+            string[] splitDetails = details.Split(',');
 
-            ID = ContractID;
-            ContractID++;
-
-            ClientName = details[0];
+            ClientName = splitDetails[0];
             JobType = int.Parse(splitDetails[1]);
             Quantity = int.Parse(splitDetails[2]);
             Origin = splitDetails[3];

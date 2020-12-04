@@ -89,7 +89,7 @@ namespace SQFinalProject
         /// \returns - contract - <b>Contract</b> - The newly created contract
         /// 
         /// \see AddContractToAccount(Account account, Contract contract)
-        public static Contract CreateNewContract(List<string> details)
+        public static Contract CreateNewContract(string details)
         {
             Contract contract = new Contract(details);
             return contract;
