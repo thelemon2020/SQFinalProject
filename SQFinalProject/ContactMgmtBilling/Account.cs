@@ -160,87 +160,32 @@ namespace SQFinalProject.ContactMgmtBilling
 
         /// \brief Calculates the Balance owed on an account based on contract details
         /// \details <b>Details</b>
-        /// This method calculates the balance to be added to an account based on factors of a contract including distance, rate, truck type
-        /// and quantity of pallets. If the balance cannot be calculated, the contract is added into another list for contracts whose balance
-        /// has not yet been calculated.
+        /// This method calculates the balance to be added to an account based on the existing calculated cost on a contract, multiplied
+        /// by the set company rate on the type of trip being made.
         /// \param - contract - <b>ContractDetails</b> - The contract to be evaluated to find its cost.
         /// \returns - <b>Nothing</b>
         /// 
-        /// \see AddBalance(double rate, double distance)
-        /// \see AddBalance(double rate, double distance, int quantity)
         public void AddBalance(Contract contract)
         {
-            if(contract.Cost > 0.0) // make sure a basic cost has been calculated for the contract first
+            if(contract.Cost != 0.00)
             {
-                if (contract.VanType == 0) // the van type is a Dry Van, no upcharge associated
+                // First apply upcharge to current cost on Contract
+                if (contract.JobType == 0) //FTL
                 {
-                    if (contract.Quantity == 0) // the trip is FTL
-                    {
-                        double tmp = AddBalance(contract.Rate, contract.Distance);
-                        Balance += tmp * contract.FTLUpCharge;
-                    }
-                    else //the trip is LTL
-                    {
-                        double tmp = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
-                        Balance += tmp * contract.LTLUpCharge;
-                    }
+                    contract.Cost *= Contract.FTLUpCharge;
                 }
-                else // The van type is a Reefer Van there is an associate upcharge
+                else
                 {
-                    if (contract.Quantity == 0) // FTL in a Reefer van
-                    {
-                        double tmpBal = AddBalance(contract.Rate, contract.Distance);
-                        tmpBal *= contract.ReeferUpCharge;
-                        tmpBal *= contract.FTLUpCharge;
-                        Balance += tmpBal;
-                    }
-                    else // LTL in a Reefer van
-                    {
-                        double tmpBal = AddBalance(contract.Rate, contract.Distance, contract.Quantity);
-                        tmpBal *= contract.ReeferUpCharge;
-                        tmpBal *= contract.LTLUpCharge;
-                        Balance += tmpBal;
-                    }
+                    contract.Cost *= Contract.LTLUpCharge;
                 }
+                // update the Balance
+                Balance += contract.Cost;
             }
-            else // flat cost not assessed yet, add the contract to the UncalculatedContracts dictionary to be assessed at a later time.
+            else
             {
                 UncalculatedContracts.Add(contract.ID, contract);
             }
-        }
-
-
-        /// \brief Calculates and returns a balance
-        /// \details <b>Details</b>
-        /// An overridden method that calculates balance due for a contract based on the FTL rate and distance of the trip.
-        /// \param - rate - <b>double</b> - The rate set by a company offering a FTL delivery service
-        /// \param - distance - <b>double</b> - The distance of the trip
-        /// \returns - balance <b>double</b> - The balance calculated from the rate and distance
-        /// 
-        /// \see AddBalance(Contract contract)
-        /// \see AddBalance(double rate, double distance, int quantity)
-        private double AddBalance(double rate, double distance)
-        {
-            double balance = rate * distance;
-            return balance;
-        }
-
-
-        /// \brief Calculates and returns a balance
-        /// \details <b>Details</b>
-        /// An overridden method that calculates the balance due for a contract based on the LTL rate, the distance of the trip, and the
-        /// quantity of the pallets delivered.
-        /// \param - rate - <b>double</b> - The rate set by a company offering a LTL delivery service
-        /// \param - distance - <b>double</b> - The distance of the trip
-        /// \param - quantity - <b>int</b> - The amount of pallets to be delivered
-        /// \returns - balance - <b>double</b> - The balance calculated from the rate, distance, and pallet quantity
-        /// 
-        /// \see AddBalance(Contract contract)
-        /// \see AddBalance(double rate, double distance)
-        private double AddBalance(double rate, double distance, int quantity)
-        {
-            double balance = rate * distance * (double)quantity;
-            return balance;
+            
         }
 
 

@@ -195,19 +195,116 @@ namespace SQFinalProject
         /// A method which is used to get contracts from the TMS database. By passing null to the conditions all accounts will be selected
         /// but conditions can be added to narrow the selection.
         /// \param - tmsDB - <b>Database</b> - The database object used to connect to the tms database
+        /// \param - values - <b>List<string></b> - The column values the user specifically wants to see 
         /// \param - conditions - <b>Dictionary<string, string></b> - The dictionary of key value pairs to be used as search conditions
         /// \returns - sqlReturn - <b>List<string></b> - The results of the Selection
         /// 
         /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
         /// \see GetAllContractsFromDB(Database mrktPlace)
-        public static List<string> GetAccountsFromTMS(Database tmsDB, Dictionary<string, string> conditions)
+        public static List<string> GetAccountsFromTMS(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
-            fields.Add("*");
+            if (values != null)
+            {
+                fields = values;
+            }
+            else
+            {
+                fields.Add("*");
+            }
             string table = "Account";
             tmsDB.MakeSelectCommand(fields, table, conditions, null); // this can be not null if necessary
             List<string> sqlReturn = tmsDB.ExecuteCommand();
             return sqlReturn;
+        }
+
+
+        /// \brief A method to get carriers from the tms database
+        /// \details <b>Details</b>
+        /// A method which returns the carriers in the tms database, the fields shown can be specified by the user, and can be conditional
+        /// \param - tmsDB - <b>Database</b> - The database object which grants access to the tms database
+        /// \param - values - <b>List<string></b> - The column values the user specifically wants to see 
+        /// \param - condtions - <b>Dictionary<string, string></b> - The key value pairs that define the conditions
+        /// \returns - sqlReturn - <b>List<string></b> - A list of the results generated from the database query.
+        /// 
+        public static List<string> GetCarriersFromTMS(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
+        {
+            List<string> fields = new List<string>();
+            if(values != null)
+            {
+                fields = values;
+            }
+            else
+            {
+                fields.Add("*");
+            }
+            string table = "carrier";
+            tmsDB.MakeSelectCommand(fields, table, conditions, null);
+            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            return sqlReturn;
+        }
+
+
+        public static List<string> GetCarrierDepotCities(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
+        {
+            List<string> fields = new List<string>();
+            List<string> tables = new List<string>();
+            List<string> ids = new List<string>();
+            if(values != null)
+            {
+                fields = values;
+            }
+            else
+            {
+                fields.Add("*");
+            }
+            tables.Add("carrier");
+            tables.Add("depot");
+            ids.Add("carrierid");
+            tmsDB.MakeInnerJoinSelect(fields, tables, ids, conditions);
+            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            return sqlReturn;
+        }
+
+        
+        public static List<Carrier> SetDepotsToCarriers(Database tmsDB)
+        {
+            List<Carrier> carriers = new List<Carrier>();
+            List<string> carrierDetails = GetCarriersFromTMS(tmsDB, null, null); // get all the carriers in the db
+
+            foreach(string row in carrierDetails) // instantiate all the the carrier classes with details from the db
+            {
+                string[] tmpSplit = row.Split(',');
+                List<string> tmpList = tmpSplit.ToList();
+                carriers.Add(new Carrier(tmpList));
+            }
+
+            List<string> fields = new List<string>();
+            fields.Add("carrierName");
+            fields.Add("depotCity");
+            List<string> depotCities = GetCarrierDepotCities(tmsDB, fields, null);
+
+            foreach(Carrier c in carriers)
+            {
+                foreach(string row in depotCities)
+                {
+                    string[] tmpSplit = row.Split(',');
+                    if(tmpSplit[0] == c.CarrierName)
+                    {
+                        c.DepotCities.Add(tmpSplit[1]);
+                    }
+                }
+            }
+
+            return carriers;
+        }
+
+
+        public static bool AssignContractToCarrier(Contract contract, Carrier carrier)
+        {
+            bool assigned = false;
+            // need to do some logic to check which city the contract starts at.
+            return assigned;
         }
 
 

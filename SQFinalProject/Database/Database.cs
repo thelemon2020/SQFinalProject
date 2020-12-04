@@ -336,7 +336,7 @@ namespace SQFinalProject
         /// \returns - <b>Nothing</b>
         /// 
         /// \see MakeSelectCommand(List<string> fields, string table, Dictionary<string, string> conditions, Dictionary<string, string> order)
-        public void MakeInnerJoinSelect(List<string> fields, List<string> tables, List<string> IDs)
+        public void MakeInnerJoinSelect(List<string> fields, List<string> tables, List<string> IDs, Dictionary<string, string> conditions)
         {
             StringBuilder selectCmd = new StringBuilder();
             selectCmd.Append("SELECT ");
@@ -366,6 +366,24 @@ namespace SQFinalProject
                     selectCmd.AppendFormat("{0}.{1} = {2}.{1} ", tables[j - 1], IDs[j - 1], tables[j]);
                 }
             }
+            if (conditions != null)
+            {
+                selectCmd.Append("WHERE");
+                countLoops = conditions.Count() - 1;
+                i = 0;
+                foreach(KeyValuePair<string, string> entry in conditions)
+                {
+                    if(i == countLoops)
+                    {
+                        selectCmd.AppendFormat("{0} = {1}", entry.Key, entry.Value);
+                    }
+                    else
+                    {
+                        selectCmd.AppendFormat("{0} = {1}, ", entry.Key, entry.Value);
+                    }
+                }
+            }
+
             selectCmd.Append(";");
             userCommand = selectCmd.ToString();
         }
