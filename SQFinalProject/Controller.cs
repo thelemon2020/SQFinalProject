@@ -392,9 +392,51 @@ namespace SQFinalProject
         /// \param - weeks - <b>int</b> - The number of weeks for report generation. Must be either 2 or 0
         /// \returns - <b>Nothing</b>
         /// 
-        public static void GenerateReport(int weeks=0)
+        public static string GenerateReport(Database tmsDB, int weeks=0)
         {
-            
+            string start = "";
+            string end = "";
+            if(weeks == 0) // this will be an "all-time" reports
+            {
+                start = DateTime.MinValue.ToString();
+                end = DateTime.MaxValue.ToString();
+            }
+            else
+            {
+                end = DateTime.Now.AddDays(1.0).ToString();
+                start = DateTime.Now.Subtract(TimeSpan.FromDays(14)).ToString();
+            }
+            List<string> fields = new List<string>();
+            fields.Add("cost");
+            Dictionary<string, string> searchPoints = new Dictionary<string, string>();
+            searchPoints.Add("invoiceDate", start);
+            searchPoints.Add("invoiceDate", end);
+            string table = "invoice";
+
+            tmsDB.MakeBetweenSelect(fields, table, searchPoints);
+
+            List<string> sqlReturn = tmsDB.ExecuteCommand();
+
+            double totalCost = 0.00;
+            int invoiceCount = sqlReturn.Count;
+
+            foreach(string row in sqlReturn)
+            {
+                totalCost += double.Parse(row);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Append("TMS Internal Report:\n\n");
+            if (weeks == 0)
+            {
+                sb.Append("Period: All-Time, ");
+            }
+            else
+            {
+                sb.AppendFormat("Period: {0} - {1}, ", start, end);
+            }
+            sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}", invoiceCount, totalCost);
+
+            return sb.ToString();
         }
 
         public static int GetLastTripID(Database tmsDB)

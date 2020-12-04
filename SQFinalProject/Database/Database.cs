@@ -387,5 +387,64 @@ namespace SQFinalProject
             selectCmd.Append(";");
             userCommand = selectCmd.ToString();
         }
+
+
+        /// \brief A method that generates a SQL Select command using a BETWEEN Clause
+        /// \details <b>Details</b>
+        /// A method that takes a list of fields to select, a table to select from, a dictionary of conditions that act as delimiters
+        /// for a WHERE - BETWEEN clause. The dictionary cannot be null or empty here else an exception will be thrown. The values of the 
+        /// kv pairs in the dictionary hold the start or end point for the between condtions, the key is the column.
+        /// \param - fields - <b>List<string></b> - The columns the user specifically wants to select
+        /// \param - table - <b>string</b> - the table the user wants to perform a select on
+        /// \param - searchPoints - <b>Dictionary<string, string></b> - The dictionary containing the column names and value limits to search between.
+        /// \returns - <b>Nothing</b> 
+        /// 
+        public void MakeBetweenSelect(List<string> fields, string table, Dictionary<string, string> searchPoints)
+        {
+            if(searchPoints == null || searchPoints.Count == 0 )
+            {
+                throw new ArgumentNullException("searchPoints", "This value cannot be null or empty");
+            }
+
+            StringBuilder selectCmd = new StringBuilder();
+            selectCmd.Append("SELECT ");
+            int countLoops = fields.Count() - 1;
+            int i = 0;
+
+            foreach (string field in fields)
+            {
+                if (i == countLoops)
+                {
+                    selectCmd.AppendFormat("{0} ", field);
+                }
+                else
+                {
+                    selectCmd.AppendFormat("{0}, ", field);
+                }
+                i++;
+            }
+            selectCmd.AppendFormat("FROM {0} WHERE ", table);
+
+            i = 0;
+            foreach(KeyValuePair<string, string> entry in searchPoints)
+            {
+                if(i%2 == 0)
+                {
+                    selectCmd.AppendFormat("{0} BETWEEN {1} AND ", entry.Key, entry.Value);
+                }
+                else
+                {
+                    selectCmd.AppendFormat("{0}", entry.Value);
+                    if(i != searchPoints.Count - 1)
+                    {
+                        selectCmd.Append(", ");
+                    }
+                }
+                i++;
+            }
+
+            selectCmd.Append(";");
+            userCommand = selectCmd.ToString();
+        }
     }
 }
