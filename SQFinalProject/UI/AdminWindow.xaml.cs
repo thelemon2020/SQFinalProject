@@ -398,20 +398,9 @@ namespace SQFinalProject.UI {
         private ObservableCollection<Carrier> GetCarrierData()
         {
             carrierCollection = new ObservableCollection<Carrier>();
-            List<string> fields = new List<string>();
-            fields.Add("*");
-            loginDB.MakeSelectCommand(fields, "carrier", null, null);
-            fields = loginDB.ExecuteCommand();
-            foreach (string field in fields)
+            List<Carrier> tmpCarriers = Controller.SetupCarriers(loginDB);
+            foreach(Carrier c in tmpCarriers)
             {
-                string[] columns = field.Split(',');
-                List<string> arguments = new List<string>();
-                foreach (string column in columns)
-                {
-                    arguments.Add(column);
-                }
-                Carrier c = new Carrier(arguments);
-                c.newlyCreated = false;
                 carrierCollection.Add(c);
             }
             return carrierCollection;
