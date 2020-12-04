@@ -47,7 +47,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
         public Carrier Carrier { get; set; } //!<The name of the carrier delivering the contract
         public List<TripLine> Trips { get; set; } //!< A list of the trips required to deliver the full order
-        public string status { get; set; }
+        public string Status { get; set; }
         public ObservableCollection<string> Statuses { get; set; }
 
 
