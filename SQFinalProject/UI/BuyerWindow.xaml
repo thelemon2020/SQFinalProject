@@ -117,33 +117,33 @@
                     </Grid.ColumnDefinitions>
                     <Border x:Name="border1" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
                         <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
-                            <ListBox Name="OrderList">
+                            <ListBox Name="OrderList" SelectionChanged="OrderList_SelectionChanged">
                                 <ListBox.Template>
-                                <ControlTemplate>
-                                    <DockPanel LastChildFill="True">
-                                        <Grid DockPanel.Dock="Top" Height="30">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="75"></ColumnDefinition>
-                                                <ColumnDefinition Width="125"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0">Order Number</Label>
-                                            <Label Grid.Column="1">Customer Name</Label>
-                                            <Label Grid.Column="2">Job Type</Label>
-                                            <Label Grid.Column="3">Quantity</Label>
-                                            <Label Grid.Column="4">Van Type</Label>
-                                            <Label Grid.Column="5">Starting City</Label>
-                                            <Label Grid.Column="6">Ending City</Label>
-                                            <Label Grid.Column="7">Status</Label>
-                                        </Grid>
-                                        <ItemsPresenter></ItemsPresenter>
-                                    </DockPanel>
-                                </ControlTemplate>
+                                    <ControlTemplate>
+                                        <DockPanel LastChildFill="True">
+                                            <Grid DockPanel.Dock="Top" Height="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="125"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0">Order #</Label>
+                                                <Label Grid.Column="1">Client Name</Label>
+                                                <Label Grid.Column="2">Job Type</Label>
+                                                <Label Grid.Column="3">Quantity</Label>
+                                                <Label Grid.Column="4">Van Type</Label>
+                                                <Label Grid.Column="5">Starting City</Label>
+                                                <Label Grid.Column="6">Ending City</Label>
+                                                <Label Grid.Column="7">Status</Label>
+                                            </Grid>
+                                            <ItemsPresenter></ItemsPresenter>
+                                        </DockPanel>
+                                    </ControlTemplate>
                                 </ListBox.Template>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
@@ -172,8 +172,10 @@
                             </ListBox>
                         </Border>
                     </Border>
+                    <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Send To Planner" Click="SendToPlanner_Click" Name="SendPlanner" IsEnabled="False"/>
+                    <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0" Width="100" Content="Generate Invoice" Click="GenerateInvoice_Click" Name="GenInvoice" IsEnabled="False"/>
                 </Grid>
-                
+               
             </TabItem>
             <TabItem Header="Customers" />
             <TabItem Header="Completed Orders" />

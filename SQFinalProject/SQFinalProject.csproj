@@ -119,17 +119,10 @@
     <Compile Include="TripPlanning\RouteCity.cs" />
     <Compile Include="TripPlanning\Truck.cs" />
     <Compile Include="TripPlanning\TripLine.cs" />
-    <Compile Include="UI\AddCarrier.xaml.cs">
-      <DependentUpon>AddCarrier.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\PlannerWindow.xaml.cs">
       <DependentUpon>PlannerWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="UI\AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\AddCarrier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

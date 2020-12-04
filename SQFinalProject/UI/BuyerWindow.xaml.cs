@@ -296,5 +296,53 @@ namespace SQFinalProject.UI {
             }
             
         }
+
+        private void SendToPlanner_Click(object sender, RoutedEventArgs e)
+        {
+            Contract toSend = (Contract)OrderList.SelectedItem;
+            toSend.Status = "IN-PROGRESS";
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("status", toSend.Status);
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("clientname", toSend.ClientName);
+            loginDB.MakeUpdateCommand("orders",values,conditions);
+            loginDB.ExecuteCommand();
+            OrderList.ItemsSource = null;
+            OrderList.ItemsSource = ordersCollection;
+        }
+
+        private void GenerateInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OrderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            Contract c = (Contract)OrderList.SelectedItem;
+            if (c != null)
+            {
+                if (c.Status == "NEW")
+                {
+                    SendPlanner.IsEnabled = true;
+                    GenInvoice.IsEnabled = false;
+                }
+                else if (c.Status == "COMPLETED")
+                {
+                    SendPlanner.IsEnabled = false;
+                    GenInvoice.IsEnabled = true;
+                }
+                else
+                {
+                    SendPlanner.IsEnabled = false;
+                    GenInvoice.IsEnabled = false;
+                }
+            }
+            else
+            {
+                SendPlanner.IsEnabled = false;
+                GenInvoice.IsEnabled = false;
+            }
+        }
     }
 }
