@@ -77,7 +77,7 @@ namespace SQFinalProject.Tests
 
             test.GetCities("Windsor", "Ottawa");
 
-            Assert.AreEqual(test.cities.Last().name, "Ottawa");
+            Assert.AreEqual("Ottawa", test.cities.Last().name);
 
         }
 
@@ -98,7 +98,7 @@ namespace SQFinalProject.Tests
             test.GetCities("London", "Toronto");
             test.CalculateTotalTime();
 
-            Assert.AreEqual(test.totalTime, 3);
+            Assert.AreEqual(3, test.totalTime);
 
         }
 
@@ -119,7 +119,7 @@ namespace SQFinalProject.Tests
             test.GetCities("Windsor", "Ottawa");
             test.CalculateTotalTime();
 
-            Assert.AreEqual(test.totalTime, 12.15);
+            Assert.AreEqual(12.15, test.totalTime);
 
         }
 
@@ -140,7 +140,28 @@ namespace SQFinalProject.Tests
             test.GetCities("London", "Toronto");
             test.CalculateTotalKM();
 
-            Assert.AreEqual(test.totalDistance, 196);
+            Assert.AreEqual(196, test.totalDistance);
+
+        }
+
+        /// \brief Test method to test that the ArriveAtStop Method can properly remove a city
+        /// \details <b>Details</b>
+        /// Creates a test routefrom London to Toronto and checks to make sure the ArriveAtStop
+        /// method removes London so the first city should be Hamilton
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <B>Nothing</B>
+        /// 
+        [TestMethod()]
+        public void ArriveAtStopTest_Functional1()
+        {
+
+            Route test = new Route();
+
+            test.GetCities("London", "Toronto");
+            test.ArriveAtStop();
+
+            Assert.AreEqual("Hamilton", test.cities[0].name);
 
         }
     }

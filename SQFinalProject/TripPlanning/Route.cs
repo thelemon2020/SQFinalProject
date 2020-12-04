@@ -19,10 +19,10 @@ namespace SQFinalProject.TripPlanning
      {
         public struct City //!<a struct holding all the relevant information to calculate a route 
         {
-            public string name { get; set; }    //!<name of the city
-            public string next { get; set; }    //!< the next city
-            public int distance { get; set; }   //!<distance to next city
-            public double time { get; set; }    //!<time to next city
+            public string Name { get; set; }    //!<name of the city
+            public string Next { get; set; }    //!< the next city
+            public int Distance { get; set; }   //!<distance to next city
+            public double Time { get; set; }    //!<time to next city
             
             /// \brief City
             /// \details <b>Details</b>
@@ -39,16 +39,16 @@ namespace SQFinalProject.TripPlanning
             /// 
             public City(string newName, string newNext, int newDistance, double newTime)
             {
-                name = newName;
-                next = newNext;
-                distance = newDistance;
-                time = newTime;
+                Name = newName;
+                Next = newNext;
+                Distance = newDistance;
+                Time = newTime;
             }
         }
-        public List<City> cities { get; set; }  //!<a list holding every city
-        public double totalTime { get; set; }   //!< the time it takes to complete the route
-        public int totalDistance { get; set; }  //!< the total distance it takes to complete the trip
-        public bool east { get; set; }          //!<whether the truck is going east or west
+        public List<City> Cities { get; set; }  //!<a list holding every city
+        public double TotalTime { get; set; }   //!< the time it takes to complete the route
+        public int TotalDistance { get; set; }  //!< the total distance it takes to complete the trip
+        public bool East { get; set; }          //!<whether the truck is going east or west
 
         /// \brief Route
         /// \details <b>Details</b>
@@ -60,10 +60,10 @@ namespace SQFinalProject.TripPlanning
         /// 
         public Route()
         {
-            cities = new List<City>();
-            totalTime = 0.0;
-            totalDistance = 0;
-            east = false;
+            Cities = new List<City>();
+            TotalTime = 0.0;
+            TotalDistance = 0;
+            East = false;
         }
 
         /// \brief Create a list of cities
@@ -77,9 +77,8 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \return - <b>Nothing</b>
         /// 
-        public void GetCities(string origin, string end)
+        public void GetCities(Database tms, string origin, string end)
         {
-            Database tms = new Database("108.168.17.4","3306", "tmsadmin", "12345", "tms"); /*Consider how to do this... need to not hardcode*/
             string curCity = origin;
             List<string> retValues = new List<string>();
             List<string> endValues = new List<string>();
@@ -93,9 +92,9 @@ namespace SQFinalProject.TripPlanning
 
             if (int.Parse(retValues[0]) < int.Parse(endValues[0]))
             {
-                east = true;
+                East = true;
             }
-            else east = false;
+            else East = false;
 
             string newName = "";
             string newNext = "";
@@ -106,7 +105,7 @@ namespace SQFinalProject.TripPlanning
             {
                 newName = retValues[1];
                 newNext = retValues[6];
-                if (east)
+                if (East)
                 {
                     if (!int.TryParse(retValues[2], out newDistance))
                     {
@@ -132,8 +131,7 @@ namespace SQFinalProject.TripPlanning
                         return;
                     }
                 }
-                City tmpCity = new City(newName, newNext, newDistance, newTime);
-                cities.Add(tmpCity);
+                Cities.Add(new City(newName, newNext, newDistance, newTime));
                 
                 curCity = newNext;
 
@@ -144,35 +142,35 @@ namespace SQFinalProject.TripPlanning
 
         /// \brief Calculate total time remaining on route
         /// \details <b>Details</b>
-        /// Iterates through list of cities and adds together the travel times, and stores in in the totalTime class property
+        /// Iterates through list of cities and adds together the travel times, and stores in in the TotalTime class property
         /// 
         /// \return - <b>Nothing</b>
         /// 
         public void CalculateTotalTime()
         {
-            totalTime = 0.0;
+            TotalTime = 0.0;
 
-            foreach (City thisCity in cities)
+            foreach (City thisCity in Cities)
             {
-                if (thisCity.name != cities.Last().name) totalTime+= thisCity.time;
+                if (thisCity.Name != Cities.Last().Name) TotalTime+= thisCity.Time;
             }
             //Round to 2 decimal places
-            totalTime = Math.Round(totalTime, 2);
+            TotalTime = Math.Round(TotalTime, 2);
         }
 
         /// \brief Calculate total KM remaining on route
         /// \details <b>Details</b>
-        /// Iterates through list of cities and adds together the each km to next city, and stores in in the totalDistance class property
+        /// Iterates through list of cities and adds together the each km to next city, and stores in in the TotalDistance class property
         /// 
         /// \return - <b>Nothing</b>
         ///
         public void CalculateTotalKM()
         {
-            totalDistance = 0;
+            TotalDistance = 0;
 
-            foreach (City thisCity in cities)
+            foreach (City thisCity in Cities)
             {
-                if (thisCity.name != cities.Last().name) totalDistance += thisCity.distance;
+                if (thisCity.Name != Cities.Last().Name) TotalDistance += thisCity.Distance;
             }
         }
 
@@ -182,9 +180,9 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \return - <b>Nothing</b>
         ///
-        public void arriveAtStop()
+        public void ArriveAtStop()
         {
-            cities.Remove(cities[0]);
+            Cities.Remove(Cities[0]);
             CalculateTotalKM();
             CalculateTotalTime();
         }

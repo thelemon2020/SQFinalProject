@@ -17,6 +17,8 @@ namespace SQFinalProject
     /// \author <i>Nick Byam</i>
     public static class Controller
     {
+        static public Database TMS { get; set; }
+
         //  METHOD:		CreateNewAccount
         /// \brief This method creates a new customer account with no parameters.
         /// \details <b>Details</b>
@@ -380,6 +382,17 @@ namespace SQFinalProject
         public static void GenerateReport(int weeks=0)
         {
             // generate either a 2 week or all time report
+        }
+
+        public static int GetLastTripID(Database tmsDB)
+        {
+            List<string> fields = new List<string>();
+            fields.Add("MAX(TripID)");
+            string table = "Trip";
+            tmsDB.MakeSelectCommand(fields, table, null, null);
+            List<string> LastTripID = tmsDB.ExecuteCommand();
+
+            return int.Parse(LastTripID.First());
         }
     }
 }

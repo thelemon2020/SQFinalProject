@@ -19,13 +19,13 @@ namespace SQFinalProject.TripPlanning
     ///
     public class TripLine
     {
-        public int ContractID { get; set; }  //!< the contract associated with the trip line
-        public int TripID { get; set; } //!<the truck associated with the trip line
-        public int Quantity { get; set; } //!< quantity of order
-        public string Origin { get; set; } //!< origin city
+        public int ContractID { get; set; }     //!< the contract associated with the trip line
+        public int TripID { get; set; }         //!<the truck associated with the trip line
+        public int Quantity { get; set; }       //!< quantity of order
         public string Destination { get; set; } //!< destination city
-        public int EstTime { get; set; } //!< time to complete
-        public int EstKM { get; set; } //!< distance to complete
+        public int EstTime { get; set; }        //!< time to complete
+        public int EstKM { get; set; }          //!< distance to complete
+        public bool IsDelivered { get; set; }   //!< Flag to mark the payload delivered
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
@@ -33,15 +33,37 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \param - contract - <b>Contract</b> - the contract to be loaded onto a <b>Truck</b>
         /// \param - truck - <b>Truck</b> - the <b>Truck</b> to load the contract on to
+        /// \param - qty -<b>int</b> - number of pallets to be fulfilled on this trip
         /// 
-        /// \return - connection - <b>MySqlConnection</b> - The object that represents the connection to a database
+        /// \return N/A
         /// 
-        public TripLine(Contract contract, Truck truck)
+        public TripLine(Contract contract, int tripID, int qty)
         {
             ContractID = contract.ID;
-            TripID = truck.TripID;
-            Quantity = contract.Quantity;
+            TripID = tripID;
+            Quantity = qty;
+            Destination = contract.Destination;
             EstTime = 0;
+            EstKM = 0;
+            IsDelivered = false;
+        }
+
+        /// \brief Constructor for the TripLine class
+        /// \details <b>Details</b>
+        /// Creates a tripline method from TMS database for the contract class to process after completion
+        /// 
+        /// \param - details - <b>List<string></b> - the query return of a tripline from the tms db
+        /// 
+        /// \return N/A
+        /// 
+        public TripLine(List<string> details)
+        {
+
+        }
+
+        public void SaveToDB()
+        {
+
         }
     }
 }
