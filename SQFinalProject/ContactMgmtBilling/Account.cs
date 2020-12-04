@@ -99,16 +99,21 @@ namespace SQFinalProject.ContactMgmtBilling
         /// Add a new contract into the Contracts dictionary using the Contract's ID as the Key, and the contract class as the Value
         /// \param - contractID - <b>int</b> - The contract's unique id number
         /// \param - contract - <b>ContractDetails</b> - The class containing all the details relating to the contract from the marketplace
-        /// \returns - <b>Nothing</b>
+        /// \returns - <b>bool</b> - either true if the contract was added, or false if it wasn't
         /// 
-        public void AddNewContract(int contractID, Contract contract)
+        public bool AddNewContract(int contractID, Contract contract)
         {
-            Contracts.Add(contractID, contract);
-            if(AccountName == "")
+            if(AccountName == "" || contract.ClientName == AccountName)
             {
                 AccountName = contract.ClientName;
+                Contracts.Add(contractID, contract);
+                AddBalance(contract);
             }
-            AddBalance(contract);
+            else if(contract.ClientName != AccountName)
+            {
+                return false;
+            }
+            return true;
         }
 
 

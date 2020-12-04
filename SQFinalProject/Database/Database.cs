@@ -357,7 +357,7 @@ namespace SQFinalProject
             }
             selectCmd.AppendFormat("FROM {0} ", tables[0]);
 
-            for(int j = 0; j < tables.Count; j++)
+            for(int j = 0; j < tables.Count; j++) // this is the area that requires a little work.
             {
                 if(j > 0)
                 {
@@ -366,6 +366,7 @@ namespace SQFinalProject
                     selectCmd.AppendFormat("{0}.{1} = {2}.{1} ", tables[j - 1], IDs[j - 1], tables[j]);
                 }
             }
+            selectCmd.Append(";");
             userCommand = selectCmd.ToString();
         }
     }

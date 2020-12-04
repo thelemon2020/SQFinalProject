@@ -21,13 +21,20 @@ namespace SQFinalProject.ContactMgmtBilling
 
         }
         
-        public Carrier(int cID, string cName, double fRate, double lRate, double rCharge)
+        public Carrier(List<string> details)
         {
-            CarrierID = cID;
-            CarrierName = cName;
-            FTLRate = fRate;
-            LTLRate = lRate;
-            ReefCharge = rCharge;
+            string[] splitDetails = details[0].Split(',');
+
+            CarrierID = int.Parse(splitDetails[0]);
+            CarrierName = splitDetails[1];
+            FTLRate = double.Parse(details[2]);
+            LTLRate = double.Parse(details[3]);
+            ReefCharge = double.Parse(details[4]);
+        }
+
+        public double CalculateCost(Contract contract)
+        {
+
         }
     }
 }

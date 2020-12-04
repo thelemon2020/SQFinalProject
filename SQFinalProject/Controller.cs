@@ -83,18 +83,13 @@ namespace SQFinalProject
         /// \brief A method that creates a new contract
         /// \details <b>Details</b>
         /// A method that allows the controller to create a new contract, but not associate it with a class yet
-        /// \param - name - <b>string</b> - the name of the client
-        /// \param - job - <b>int</b> - the job type
-        /// \param - quant - <b>int</b> - the quantity of pallets
-        /// \param - origin - <b>string</b> - The origin city
-        /// \param - dest - <b>string</b> - The destination city
-        /// \param - van - <b>int</b> - The van type
+        /// \param - details - <b>List<string></b> - A List of strings gathered from the Contract database
         /// \returns - contract - <b>Contract</b> - The newly created contract
         /// 
         /// \see AddContractToAccount(Account account, Contract contract)
-        public static Contract CreateNewContract(string name, int job, int quant, string origin, string dest, int van)
+        public static Contract CreateNewContract(List<string> details)
         {
-            Contract contract = new Contract(name, job, quant, origin, dest, van);
+            Contract contract = new Contract(details);
             return contract;
         }
 
@@ -210,7 +205,7 @@ namespace SQFinalProject
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Account";
-            tmsDB.MakeSelectCommand(fields, table, conditions, null);
+            tmsDB.MakeSelectCommand(fields, table, conditions, null); // this can be not null if necessary
             List<string> sqlReturn = tmsDB.ExecuteCommand();
             return sqlReturn;
         }
