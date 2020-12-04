@@ -215,7 +215,7 @@ namespace SQFinalProject.UI {
         {
             Contract selectedContract = (Contract)MarketList.SelectedItem;
             contractCollection.Remove(selectedContract);
-            selectedContract.status = "NEW";
+            selectedContract.Status = "NEW";
             if (!CheckAccount(selectedContract.ClientName))
             {
                 AddAccount(selectedContract.ClientName);
@@ -235,7 +235,7 @@ namespace SQFinalProject.UI {
             values.Add(selectedContract.Origin);
             values.Add(selectedContract.Destination);
             values.Add(selectedContract.VanType.ToString());
-            values.Add(selectedContract.status);
+            values.Add(selectedContract.Status);
             loginDB.MakeInsertCommand("orders", fields, values);
             loginDB.ExecuteCommand();
         }
@@ -288,11 +288,10 @@ namespace SQFinalProject.UI {
                 int temp;
                 int.TryParse(splitResult[0], out temp);
                 c.ID = temp;
-                c.status = splitResult[7];
+                c.Status = splitResult[7];
                 ordersCollection.Add(c);
             }
             
         }
     }
-
 }

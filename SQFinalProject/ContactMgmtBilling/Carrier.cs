@@ -32,15 +32,11 @@ namespace SQFinalProject.ContactMgmtBilling
         
         public Carrier(List<string> details)
         {
-            string[] splitDetails = details[0].Split(',');
-
-            CarrierID = int.Parse(splitDetails[0]);
-            CarrierName = splitDetails[1];
+            CarrierID = int.Parse(details[0]);
+            CarrierName = details[1];
             FTLRate = double.Parse(details[2]);
             LTLRate = double.Parse(details[3]);
             ReefCharge = double.Parse(details[4]);
-            FTLA = int.Parse(details[5]);
-            LTLA = int.Parse(details[6]);
         }
 
         public double CalculateCost(Contract contract)
