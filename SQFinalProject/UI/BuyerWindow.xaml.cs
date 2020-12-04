@@ -190,10 +190,7 @@ namespace SQFinalProject.UI {
         ///
         private void GetContracts ( object sender,RoutedEventArgs e ) {
             contractCollection = new ObservableCollection<Contract>();
-            List<string> QueryLst = new List<string> ();
-            QueryLst.Add("*");
-            MarketPlace.MakeSelectCommand ( QueryLst, "Contract", null, null);
-            List<string> contracts = MarketPlace.ExecuteCommand();
+            List<string> contracts = Controller.GetAllContractsFromDB(MarketPlace);
             foreach (string contract in contracts)
             {
                 Contract c = new Contract(contract);
