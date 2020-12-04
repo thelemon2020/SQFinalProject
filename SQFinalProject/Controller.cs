@@ -368,9 +368,22 @@ namespace SQFinalProject
         /// \param - account - <b>Account</b> - The account contains the contracts to generate invoices on
         /// \returns - <b>Nothing</b>
         /// 
-        public static void GenerateInvoice(Account account)
+        public static string GenerateInvoice(Account account, Contract contract)
         {
-            // need to generate a report 
+            if (!contract.TripComplete)
+            {
+                return null;
+            }
+            else
+            {
+                string date = DateTime.Now.ToString();
+                string invoiceID = account.AccountID.ToString() + contract.ID.ToString();
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", invoiceID, contract.ID, account.AccountID, date, contract.Cost, contract.JobType, contract.Quantity, contract.VanType);
+
+                account.Invoices.Add(sb.ToString());
+                return sb.ToString();
+            }
         }
 
         /// \brief A method to generate a report of company earnings and total contracts
@@ -381,7 +394,7 @@ namespace SQFinalProject
         /// 
         public static void GenerateReport(int weeks=0)
         {
-            // generate either a 2 week or all time report
+            
         }
 
         public static int GetLastTripID(Database tmsDB)
