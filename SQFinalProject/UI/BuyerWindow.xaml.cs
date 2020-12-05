@@ -31,7 +31,8 @@ namespace SQFinalProject.UI {
     {
         //! Properties
         public string userName;                                         //<Stores the user name of the current user
-
+         
+        ObservableCollection<Contract> customerPageCollection { get; set; }
         ObservableCollection<Contract> contractCollection { get; set; }
         ObservableCollection<Contract> ordersCollection { get; set; }
 
@@ -140,7 +141,6 @@ namespace SQFinalProject.UI {
         ///     Creates an insert query string to insert the new contract into our database.  
         ///     Also calls methods that check if we have the client in our system and adds them in if not.
         /// 
-        ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
         ///
@@ -174,6 +174,17 @@ namespace SQFinalProject.UI {
             Controller.TMS.MakeInsertCommand("orders", fields, values);
             Controller.TMS.ExecuteCommand();
         }
+
+        //  METHOD:		CheckAccount
+        /// \brief This method checks if a client  has an account in the TMS database
+        /// \details <b>Details</b>
+        ///     Creates a select query string that tries to get a single entry from the database, representing 
+        ///     an account held by a specific client. 
+        /// 
+        /// \param - <b>name</b> - the name of the client to be checked for  
+        ///
+        /// \return - <b>isIn</b> - a bool that marks whether the account is present or not
+        ///
         private bool CheckAccount(string name)
         {
             bool isIn = false;
@@ -188,6 +199,16 @@ namespace SQFinalProject.UI {
             }
             return isIn;
         }
+
+        //  METHOD:		AddAccount
+        /// \brief This method makes a new entry in the account database
+        /// \details <b>Details</b>
+        ///     If the client does not have an account, the method creates an insert query to insert the information into the database
+        /// 
+        /// \param - <b>name</b> - the name of the client to be checked for  
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void AddAccount(string name)
         {
             List<string> fields = new List<string>();
@@ -198,6 +219,16 @@ namespace SQFinalProject.UI {
             Controller.TMS.ExecuteCommand();
         }
 
+        //  METHOD:		TabsCtrl_Buyer_SelectionChanged
+        /// \brief This method controls the behavior of the individual tabs in the buyer page
+        /// \details <b>Details</b>
+        ///     Checks which tab is selected and executes code as appropriate
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void TabsCtrl_Buyer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Orders.IsSelected)
@@ -205,14 +236,43 @@ namespace SQFinalProject.UI {
                 GetOrders();
                 OrderList.ItemsSource = ordersCollection;
             }
+            else if(CustomerTab.IsSelected)
+            {
+                GetCustomers();
+                
+            }
         }
 
+        private void GetCustomers()
+        {
+            CustomerCombo.Items.Clear();
+            List<string> fields = new List<string>();
+            fields.Add("clientName");
+            Controller.TMS.MakeSelectCommand(fields,"account",null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                CustomerCombo.Items.Add(result);
+            }
+        }
+
+        //  METHOD:		GetOrders
+        /// \brief This method displays all the orders in the database
+        /// \details <b>Details</b>
+        ///     Creates a select query statement that gets all rows from the orders table
+        ///     and then converts each row into a Contract object which is then added to an
+        ///     ObservableCollection which is used to bind with a ListBox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void GetOrders()
         {
             ordersCollection = new ObservableCollection<Contract>();
             List<string> fields = new List<string>();
             fields.Add("*");
-            Controller.TMS.MakeSelectCommand(fields, "orders", null, null);
+            Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
             List<string> results = Controller.TMS.ExecuteCommand();
             foreach (string result in results)
             {
@@ -229,15 +289,26 @@ namespace SQFinalProject.UI {
             
         }
 
+        //  METHOD:		SendToPlanner_Click
+        /// \brief Sets the status of the contract to In-Progress and updates the database
+        /// \details <b>Details</b>
+        ///     Gets the selected order from the ListWindow and sets it's status to In-Progress.
+        ///     It then creates an update query to update the database with the new information
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void SendToPlanner_Click(object sender, RoutedEventArgs e)
         {
             Contract toSend = (Contract)OrderList.SelectedItem;
-            toSend.Status = "IN-PROGRESS";
+            toSend.Status = "PLANNING";
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", toSend.Status);
             Dictionary<string, string> conditions = new Dictionary<string, string>();
             conditions.Add("clientname", toSend.ClientName);
-            Controller.TMS.MakeUpdateCommand("orders",values,conditions);
+            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
             Controller.TMS.ExecuteCommand();
             OrderList.ItemsSource = null;
             OrderList.ItemsSource = ordersCollection;
@@ -245,9 +316,22 @@ namespace SQFinalProject.UI {
 
         private void GenerateInvoice_Click(object sender, RoutedEventArgs e)
         {
-
+            Contract toSend = (Contract)OrderList.SelectedItem;
+            toSend.Status = "CLOSED";
+            OrderList.ItemsSource = null;
+            OrderList.ItemsSource = ordersCollection;
         }
 
+        //  METHOD:		OrderList_SelectionChanged
+        /// \brief Enables buttons depending on what is selected
+        /// \details <b>Details</b>
+        ///     Gets the current item selected, and enables a button based on the status of the order
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void OrderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -275,6 +359,63 @@ namespace SQFinalProject.UI {
                 SendPlanner.IsEnabled = false;
                 GenInvoice.IsEnabled = false;
             }
+        }
+
+        private void CustomerCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            CustomerList.ItemsSource = null;
+            getCustomerContracts();
+            CustomerList.ItemsSource = customerPageCollection;
+        }
+
+        private void getCustomerContracts()
+        {
+            double totalCost = 0;
+            customerPageCollection = new ObservableCollection<Contract>();
+            string cbi = (string)CustomerCombo.SelectedItem;
+            List<string> fields = new List<string>();
+            fields.Add("contractID");
+            fields.Add("status");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("clientname", cbi);
+            Controller.TMS.MakeSelectCommand(fields, "contract", conditions, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                Contract c = new Contract();
+                string[] splitResult = result.Split(',');
+                int temp;
+                int.TryParse(splitResult[0], out temp);
+                c.ID = temp;
+                c.Status = splitResult[1];
+                if (c.Status == "CLOSED")
+                {
+                    List<string> newFields = new List<string>();
+                    newFields.Add("invoiceID");
+                    newFields.Add("cost");
+                    Dictionary<string, string> moreConditions = new Dictionary<string, string>();
+                    moreConditions.Add("contractID", c.ID.ToString());
+                    Controller.TMS.MakeSelectCommand(newFields, "invoice", moreConditions, null);
+                    List<string> moreResults = Controller.TMS.ExecuteCommand();
+                    foreach (string moreResult in moreResults)
+                    {
+                        string[] moreSplit = moreResult.Split(',');
+                        int.TryParse(moreSplit[0], out temp);
+                        c.invoiceNum = temp;
+                        int.TryParse(moreSplit[1], out temp);
+                        c.Cost = temp;
+                        totalCost = totalCost + c.Cost;
+                    }
+                }
+                AmountOwing.Text = totalCost.ToString();
+                customerPageCollection.Add(c);
+            }
+        }
+
+        private void CustomerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

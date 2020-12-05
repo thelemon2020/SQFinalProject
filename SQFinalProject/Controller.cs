@@ -61,7 +61,7 @@ namespace SQFinalProject
                         }
                         else if (details[0] == "MP")//If the info is for the MarketPlace database
                         {
-                            List<string> MrktPMarketPlace_Databaselace_DB = new List<string>();
+                            List<string> MarketPlace_Database = new List<string>();
                             for (int i = 1; i < details.Count(); i++)//iterate through parts of detials
                             {
                                 MarketPlace_Database.Add(details[i]);

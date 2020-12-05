@@ -39,46 +39,46 @@ namespace SQFinalProject.ContactMgmtBilling
             ReefCharge = double.Parse(details[4]);
         }
 
-        public double CalculateCost(Contract contract)
-        {
-            double cost = 0.00;
+        //public double CalculateCost(Contract contract)
+        //{
+        //    double cost = 0.00;
 
-            foreach (TripLine trip in contract.Trips)
-            {
-                if (contract.VanType == DryVan) // dry van
-                {
-                    if (trip.Quantity == FTLMaxLoad) // FTL
-                    {
-                        cost += FTLRate * trip.EstKM;
-                    }
-                    else // LTL 
-                    {
-                        cost += trip.Quantity * LTLRate * trip.EstKM;
-                    }
-                }
-                else if (contract.VanType == ReefVan) // Reefer Van
-                {
-                    if (trip.Quantity == 0) // FTL
-                    {
-                        cost += FTLRate * trip.EstKM * ReefCharge;
-                    }
-                    else // LTL
-                    {
-                        cost += trip.Quantity * LTLRate * ReefCharge * trip.EstKM;
-                    }
-                }
+        //    foreach (TripLine trip in contract.Trips)
+        //    {
+        //        if (contract.VanType == DryVan) // dry van
+        //        {
+        //            if (trip.Quantity == FTLMaxLoad) // FTL
+        //            {
+        //                cost += FTLRate * trip.EstKM;
+        //            }
+        //            else // LTL 
+        //            {
+        //                cost += trip.Quantity * LTLRate * trip.EstKM;
+        //            }
+        //        }
+        //        else if (contract.VanType == ReefVan) // Reefer Van
+        //        {
+        //            if (trip.Quantity == 0) // FTL
+        //            {
+        //                cost += FTLRate * trip.EstKM * ReefCharge;
+        //            }
+        //            else // LTL
+        //            {
+        //                cost += trip.Quantity * LTLRate * ReefCharge * trip.EstKM;
+        //            }
+        //        }
 
-                if (trip.EstTime > workDay)
-                {
-                    cost += 150.00; // add 150.00 for the first extra day
-                    double timeRemaining = trip.EstTime % 12; // check if more than one extra day in delivery time is needed
-                    while (timeRemaining > workDay) // for every extra delivery day, add another 150.00
-                    {
-                        cost += 150.00;
-                    }
-                }
-            }
-            return cost;
-        }
+        //        if (trip.EstTime > workDay)
+        //        {
+        //            cost += 150.00; // add 150.00 for the first extra day
+        //            double timeRemaining = trip.EstTime % 12; // check if more than one extra day in delivery time is needed
+        //            while (timeRemaining > workDay) // for every extra delivery day, add another 150.00
+        //            {
+        //                cost += 150.00;
+        //            }
+        //        }
+        //    }
+        //    return cost;
+        //}
     }
 }

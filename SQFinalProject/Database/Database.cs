@@ -72,8 +72,9 @@ namespace SQFinalProject
                 SQLReturn = DatabaseInteraction.CommandDatabase(SQLCommand); //query database and get the return
                 DatabaseInteraction.CloseConnection(currentConnection); //close the connection to the database
             }
-            catch(Exception) //catch any exception that may be thrown during the query process
+            catch(Exception e) //catch any exception that may be thrown during the query process
             {
+                Logger.Log("MySQL Command Failed - " + e.Message);
                 SQLReturn = null; //set the query return to null to signify a problem with the query
             }          
             return SQLReturn; //return the query results to the calling function
@@ -303,10 +304,19 @@ namespace SQFinalProject
         /// 
         public int BackItUp(string filePath)
         {
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // create connection
-            int didWork = DatabaseInteraction.BackUpDB(currentConnection,filePath); // try to back up database and find out if it worked or not
-            DatabaseInteraction.CloseConnection(currentConnection); //close the connection
-            return didWork;//return if backup was successful or not
+            try
+            {
+                currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // create connection
+                int didWork = DatabaseInteraction.BackUpDB(currentConnection, filePath); // try to back up database and find out if it worked or not
+                DatabaseInteraction.CloseConnection(currentConnection); //close the connection
+                return didWork;//return if backup was successful or not
+            }
+            catch (Exception e)
+            {
+                Logger.Log("DB Backup Failed - " + e.Message);
+                return 1;
+            }
+            
         }
 
         /// \brief Restores a <b>MySqlDatabase</b> from a backup script
@@ -320,10 +330,18 @@ namespace SQFinalProject
         ///
         public int Restore(string filePath)
         {
-            currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // connect to database
-            int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);// restore database 
-            DatabaseInteraction.CloseConnection(currentConnection);// close connection
-            return didWork;// return if it worked or not
+            try
+            {
+                currentConnection = DatabaseInteraction.connectToDatabase(connectionString); // connect to database
+                int didWork = DatabaseInteraction.RestoreDB(currentConnection, filePath);// restore database 
+                DatabaseInteraction.CloseConnection(currentConnection);// close connection
+                return didWork;// return if it worked or not
+            }
+            catch (Exception e)
+            {
+                Logger.Log("DB Backup Failed - " + e.Message);
+                return 1;
+            }
         }
 
 
@@ -368,18 +386,18 @@ namespace SQFinalProject
             }
             if (conditions != null)
             {
-                selectCmd.Append("WHERE");
+                selectCmd.Append("WHERE ");
                 countLoops = conditions.Count() - 1;
                 i = 0;
                 foreach(KeyValuePair<string, string> entry in conditions)
                 {
                     if(i == countLoops)
                     {
-                        selectCmd.AppendFormat("{0} = {1}", entry.Key, entry.Value);
+                        selectCmd.AppendFormat("{0} = '{1}'", entry.Key, entry.Value);
                     }
                     else
                     {
-                        selectCmd.AppendFormat("{0} = {1}, ", entry.Key, entry.Value);
+                        selectCmd.AppendFormat("{0} = '{1}', ", entry.Key, entry.Value);
                     }
                 }
             }
