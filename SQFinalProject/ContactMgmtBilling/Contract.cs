@@ -33,6 +33,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public const double LTLUpCharge = 1.05; //!<Company rate for LTL delivery contracts 
         public const double FTLUpCharge = 1.08; //!< Company rate for FTL delivery contracts 
         public double ReeferUpCharge { get; set; } //!<Company rate for Reefer van contracts 
+        public int invoiceNum { get; set; }
         public int ID { get; set; } //!< Contract ID 
         public int AccountID { get; set; } //!< The Related account ID of which the contract belongs to
         public string ClientName { get; set; } //!< The name of the client
@@ -60,11 +61,6 @@ namespace SQFinalProject.ContactMgmtBilling
         /// \returns - <b>Nothing</b>
         public Contract(string details)
         {
-            Statuses = new ObservableCollection<string>();
-            Statuses.Add("NEW");
-            Statuses.Add("IN-PROGRESS");
-            Statuses.Add("COMPLETED");
-            Statuses.Add("CLOSED");
             string[] splitDetails = details.Split(',');
 
             ClientName = splitDetails[0];
@@ -75,6 +71,10 @@ namespace SQFinalProject.ContactMgmtBilling
             VanType = int.Parse(splitDetails[5]);
         }
 
+        public Contract()
+        {
+
+        }
 
         /// \brief A method to reset the ID count of active contracts
         /// \details <b>Details</b>

@@ -177,15 +177,62 @@
                 </Grid>
                
             </TabItem>
-            <TabItem Header="Customers" />
-            <TabItem Header="Completed Orders" />
-            <TabItem Header="Testing">
-                <TextBox x:Name="txtMain"
-                 AcceptsReturn="True"
-                 AcceptsTab="True"
-                 TextWrapping="NoWrap"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>
+            <TabItem Name="CustomerTab" Header="Customers">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"  />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
+                        <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
+                            <ListBox Name="CustomerList" SelectionChanged="CustomerList_SelectionChanged">
+                                <ListBox.Template>
+                                    <ControlTemplate>
+                                        <DockPanel LastChildFill="True">
+                                            <Grid DockPanel.Dock="Top" Height="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0">Order #</Label>
+                                                <Label Grid.Column="1">Status</Label>
+                                                <Label Grid.Column="2">Invoice #</Label>
+                                                <Label Grid.Column="3">Amount Owing</Label>
+                                            </Grid>
+                                            <ItemsPresenter></ItemsPresenter>
+                                        </DockPanel>
+                                    </ControlTemplate>
+                                </ListBox.Template>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="100" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ID}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Status}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding invoiceNum}" />
+                                            <TextBlock Grid.Column="3" Text="{Binding Cost}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </Border>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,50" Text="Customer:"></TextBlock>
+                    <ComboBox Name="CustomerCombo" Grid.Column="1" VerticalAlignment="Center" Width="100" SelectionChanged="CustomerCombo_SelectionChanged"></ComboBox>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,65,0" Text="Amount Owing: "></TextBlock>
+                    <TextBlock Grid.Column="1" Name="AmountOwing" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,100,0,0"></TextBlock>
+                    <TextBlock Name="LastPaid" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,200,100,0" Text="Last Paid:"></TextBlock>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

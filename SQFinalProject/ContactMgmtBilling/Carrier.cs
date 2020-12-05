@@ -19,12 +19,12 @@ namespace SQFinalProject.ContactMgmtBilling
         public int CarrierID { get; set; }
         public string CarrierName { get; set; }
         public double FTLRate { get; set; }
+        public int FTLA { get; set; }
         public double LTLRate { get; set; }
+        public int LTLA { get; set; }
         public double ReefCharge { get; set; }
         public bool newlyCreated { get; set; }
         public List<string> DepotCities { get; set; }
-        public List<int> FTLA { get; set; }
-        public List<int> LTLA { get; set; }
         public Carrier()
         {
 
@@ -39,41 +39,46 @@ namespace SQFinalProject.ContactMgmtBilling
             ReefCharge = double.Parse(details[4]);
         }
 
-        public double CalculateCost(Contract contract)
-        {
-            double cost = 0.00;
+        //public double CalculateCost(Contract contract)
+        //{
+        //    double cost = 0.00;
 
-            foreach (TripLine trip in contract.Trips)
-            {
-                if (contract.VanType == DryVan) // dry van
-                {
-                    if (trip.Quantity == FTLMaxLoad) // FTL
-                    {
-                        cost += FTLRate * trip.Distance;
-                    }
-                    else // LTL 
-                    {
-                        cost += trip.Quantity * LTLRate * trip.Distance;
-                    }
-                }
-                else if (contract.VanType == ReefVan) // Reefer Van
-                {
-                    if (trip.Quantity == 0) // FTL
-                    {
-                        cost += FTLRate * trip.Distance * ReefCharge;
-                    }
-                    else // LTL
-                    {
-                        cost += trip.Quantity * LTLRate * ReefCharge * trip.Distance;
-                    }
-                }
+        //    foreach (TripLine trip in contract.Trips)
+        //    {
+        //        if (contract.VanType == DryVan) // dry van
+        //        {
+        //            if (trip.Quantity == FTLMaxLoad) // FTL
+        //            {
+        //                cost += FTLRate * trip.EstKM;
+        //            }
+        //            else // LTL 
+        //            {
+        //                cost += trip.Quantity * LTLRate * trip.EstKM;
+        //            }
+        //        }
+        //        else if (contract.VanType == ReefVan) // Reefer Van
+        //        {
+        //            if (trip.Quantity == 0) // FTL
+        //            {
+        //                cost += FTLRate * trip.EstKM * ReefCharge;
+        //            }
+        //            else // LTL
+        //            {
+        //                cost += trip.Quantity * LTLRate * ReefCharge * trip.EstKM;
+        //            }
+        //        }
 
-                if (trip.DaysWorked > 1)
-                {
-                    cost += 150.00 * trip.DaysWorked; // add 150.00 for each extra day
-                }
-            }
-            return cost;
-        }
+        //        if (trip.EstTime > workDay)
+        //        {
+        //            cost += 150.00; // add 150.00 for the first extra day
+        //            double timeRemaining = trip.EstTime % 12; // check if more than one extra day in delivery time is needed
+        //            while (timeRemaining > workDay) // for every extra delivery day, add another 150.00
+        //            {
+        //                cost += 150.00;
+        //            }
+        //        }
+        //    }
+        //    return cost;
+        //}
     }
 }

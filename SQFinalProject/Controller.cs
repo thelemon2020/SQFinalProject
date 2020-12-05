@@ -24,6 +24,8 @@ namespace SQFinalProject
         static public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
         static public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info
 
+        static public string DBBackUpPath { get; set; }
+
         //  METHOD:		LoadConfig
         /// \brief Loads the database connection details from an external config file
         /// \details <b>Details</b>
@@ -61,7 +63,7 @@ namespace SQFinalProject
                         }
                         else if (details[0] == "MP")//If the info is for the MarketPlace database
                         {
-                            List<string> MrktPMarketPlace_Databaselace_DB = new List<string>();
+                            List<string> MarketPlace_Database = new List<string>();
                             for (int i = 1; i < details.Count(); i++)//iterate through parts of detials
                             {
                                 MarketPlace_Database.Add(details[i]);
@@ -69,6 +71,14 @@ namespace SQFinalProject
                             MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3], MarketPlace_Database[4]);
 
                             success = true;
+                        }
+                        else if (details[0] == "BACKUP")
+                        {
+                            DBBackUpPath = details[1];
+                        }
+                        else if (details[0] == "LOGGER")
+                        {
+                            Logger.path = details[1];
                         }
                     }
                 }

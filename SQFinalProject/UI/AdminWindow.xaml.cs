@@ -792,7 +792,11 @@ namespace SQFinalProject.UI {
         ///
         private void BackUp_Click(object sender, RoutedEventArgs e)
         {
-            Controller.TMS.BackItUp(DBBackUp);
+            if (Controller.TMS.BackItUp(DBBackUp) == 1)
+            {
+                System.Windows.Forms.MessageBox.Show("Backup Failed", "Error", (MessageBoxButtons)MessageBoxButton.OK, MessageBoxIcon.Error);
+
+            }
         }
 
         //  METHOD:		Restore_Click
@@ -807,7 +811,10 @@ namespace SQFinalProject.UI {
         ///
         private void Restore_Click(object sender, RoutedEventArgs e)
         {
-            Controller.TMS.Restore(DBBackUp);
+            if (Controller.TMS.Restore(DBBackUp) == 1)
+            {
+                System.Windows.Forms.MessageBox.Show("Restore Failed", "Error", (MessageBoxButtons)MessageBoxButton.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
