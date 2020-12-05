@@ -39,8 +39,7 @@ namespace SQFinalProject.UI {
 
         public AdminWindow(string name)
         {
-            InitializeComponent();
-            Controller.LoadConfig();                                               // Load databases from config file
+            InitializeComponent();                                              // Load databases from config file
             userName = name;
             lblUsrInfo.Content = "User Name:  " + userName;
         }

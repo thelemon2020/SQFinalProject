@@ -37,7 +37,6 @@ namespace SQFinalProject.UI {
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
-            Controller.LoadConfig(); //Call method that loads database connection info from config file
 
             userName = name;
             lblUsrInfo.Content = "User Name:  " + userName;

@@ -26,78 +26,14 @@ namespace SQFinalProject.UI {
     ///
     public partial class LoginWindow : Window {
         //! Properties
-        public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
-        public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
-        public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info for the config parser
-        Database loginDB { get; set; }                                  //<The database object for the TMS database
 
         public List<string> userInfo;                                   //!<String list to store the info on the user that is logging in
 
         public LoginWindow () {
             InitializeComponent();
 
-            LoadConfig();                                               // Parse the config file
-            if (TMS_Database!=null)                                     // Connect to the TMS database if the config file loaded successfully
-            {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
-            }
+            Controller.LoadConfig();                                    // Parse the config file and initialize the databases for the program
         }
-
-
-
-        //  METHOD:		LoadConfig
-        /// \brief Loads the database connection details from an external config file
-        /// \details <b>Details</b>
-        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file
-        /// and parses it out into data that is usable to connect to one or more databases
-        /// \param - <b>None</b>
-        ///
-        /// \return - <b>Nothing</b>
-        ///
-        public void LoadConfig()
-        {
-            if (File.Exists(configFilePath))                        // If the config file exists, try to read from it
-            {
-                StreamReader configFile = new StreamReader(configFilePath);
-                string contents = configFile.ReadToEnd();
-                configFile.Close();
-                if (contents != "")
-                {
-                    string[] splitByDB = contents.Split('\n');      // Grab each line so it can be dealt with individually
-                    foreach (string dbDetails in splitByDB)
-                    {
-                        string[] details = dbDetails.Split(' ');    // Pull the individual fields from the line of the config file
-                        if (details[0] == "TMS")                    // If the line pertains to the TMS database, assign the values to the TMS string list
-                        {
-                            TMS_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)
-                            {
-                                TMS_Database.Add(details[i]);
-                            }
-                        }
-                        else if (details[0] == "MP")                // If the line pertains to the Marketplace database, assign the values to the Marketplace string list
-                        {
-                            MarketPlace_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)
-                            {
-                                MarketPlace_Database.Add(details[i]);
-                            }
-                        }
-                        else if (details[0] == "LOGGER")
-                        {
-                            Logger.path = details[1];
-                        }
-                    }
-                }
-            }
-            else
-            {
-                FileStream newConfig = File.Create(configFilePath);
-                newConfig.Close();
-            }
-        }
-
-
 
         //  METHOD:		Login_Click
         /// \brief Method that dictates what happens when the login button is clicked.
@@ -137,16 +73,16 @@ namespace SQFinalProject.UI {
                 Dictionary<string, string> tempDict = new Dictionary<string, string>();
                 tempDict.Add ("username", usrName);
 
-                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict,null);
+                Controller.TMS.MakeSelectCommand ( QueryLst, "login", tempDict,null);
 
-                List<string> UsrReturn = loginDB.ExecuteCommand();
+                List<string> UsrReturn = Controller.TMS.ExecuteCommand();
 
                 QueryLst = new List<string> ();                // Then check if the password matches
                 QueryLst.Add ("password");
 
-                loginDB.MakeSelectCommand ( QueryLst, "login", tempDict, null);
+                Controller.TMS.MakeSelectCommand ( QueryLst, "login", tempDict, null);
 
-                List<string> PassReturn = loginDB.ExecuteCommand();
+                List<string> PassReturn = Controller.TMS.ExecuteCommand();
 
                 if ( UsrReturn == null || PassReturn == null ) {
                     // Connection failed!!!
@@ -172,9 +108,9 @@ namespace SQFinalProject.UI {
                     QueryLst = new List<string> ();             // Set up the database query and get the user's role from the database
                     QueryLst.Add ("role");
 
-                    loginDB.MakeSelectCommand ( QueryLst, "login", tempDict, null);
+                    Controller.TMS.MakeSelectCommand ( QueryLst, "login", tempDict, null);
 
-                    userInfo = loginDB.ExecuteCommand();
+                    userInfo = Controller.TMS.ExecuteCommand();
 
                     if ( userInfo.ElementAt(0).ToUpper().Equals( "A" ) ) {          // If the user is an admin, load the admin main page
                         AdminWindow mainWindow = new AdminWindow (usrName);

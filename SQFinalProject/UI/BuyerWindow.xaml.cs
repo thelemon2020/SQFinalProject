@@ -37,8 +37,7 @@ namespace SQFinalProject.UI {
 
         public BuyerWindow ( string name )
         {
-            InitializeComponent();
-            Controller.LoadConfig();                                               // Parse the config file
+            InitializeComponent();                                             // Parse the config file
 
             userName = name;
             lblUsrInfo.Content = "User Name:  " + userName;
