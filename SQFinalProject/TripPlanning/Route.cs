@@ -85,10 +85,10 @@ namespace SQFinalProject.TripPlanning
             Dictionary<string, string> conditions = new Dictionary<string, string>();
 
             conditions.Add("destCity", origin);                           
-            retValues = Controller.GetCityFromDB(tms, conditions);
+            retValues = Controller.GetCityFromDB(conditions);
 
             conditions["destCity"] = end;
-            endValues = Controller.GetCityFromDB(tms, conditions);
+            endValues = Controller.GetCityFromDB(conditions);
 
             if (int.Parse(retValues[0]) < int.Parse(endValues[0]))
             {
@@ -136,7 +136,7 @@ namespace SQFinalProject.TripPlanning
                 curCity = newNext;
 
                 conditions["destCity"] = curCity;
-                retValues = Controller.GetCityFromDB(tms, conditions);
+                retValues = Controller.GetCityFromDB(conditions);
             }
         }
 

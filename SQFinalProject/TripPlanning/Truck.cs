@@ -53,7 +53,7 @@ namespace SQFinalProject.TripPlanning
         {
             if (LastID == 0)
             {
-                LastID = Controller.GetLastTripID(tms);
+                LastID = Controller.GetLastTripID();
             }
 
             LastID++;
@@ -62,16 +62,26 @@ namespace SQFinalProject.TripPlanning
             Origin = contract.Origin;
             Destination = contract.Destination;
             VanType = contract.VanType;
-            Rate = 0;
-            Contracts = new List<TripLine> { new TripLine(contract, TripID, qty) };
+            Rate = 0.0;
+            HoursWorked = 0.0;
+            HoursDriven = 0.0;
+            DaysWorked = 0;
+            ReeferRate = 0.0;
+            BillTotal = 0.0;
             IsComplete = false;
+            Contracts = new List<TripLine> { new TripLine(contract, TripID, qty) };
+            ThisRoute = null;
         }
 
+        public void TotalCost()
+        {
+
+        }
         //
         public void SimulateDay()
         {
-            HoursWorked = 0;
-            HoursDriven = 0;
+            HoursWorked = 0.0;
+            HoursDriven = 0.0;
 
             if (ThisRoute.Cities[0].Name == Origin)
             {   // Load contracts if the truck is still in the origin city
@@ -152,7 +162,8 @@ namespace SQFinalProject.TripPlanning
 
         public void SaveToDB()
         {
-
+            foreach (TripLine c in Contracts) c.SaveToDB();
+            Controller.SaveTripToDB(this);
         }
     }
 }

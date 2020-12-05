@@ -32,12 +32,7 @@ namespace SQFinalProject.UI {
     /// 
     public partial class AdminWindow : Window {
         //! Properties
-        public const string configFilePath = @"..\..\config\TMS.txt";   //<The path to the config file
         public string DBBackUp { get; set; }
-        public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
-        public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info
-        private Database loginDB { get; set; }                                  //<The database object for the TMS database
-        private Database MarketPlace { get; set; }                              //<The database object for the Marketplace database
         private ObservableCollection<Carrier> carrierCollection { get;set;}
         private ObservableCollection<RouteCity> cityCollection { get; set; }
         public string userName;                                         //<Stores the user name of the current user
@@ -45,81 +40,10 @@ namespace SQFinalProject.UI {
         public AdminWindow(string name)
         {
             InitializeComponent();
-            LoadConfig();                                               // Parse the config file
-            CreateDatabases();
+            Controller.LoadConfig();                                               // Load databases from config file
             userName = name;
             lblUsrInfo.Content = "User Name:  " + userName;
         }
-
-        private void CreateDatabases()
-        {
-            if (TMS_Database != null)                                     // Connect to the TMS database if the config file loaded successfully
-            {
-                loginDB = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
-            }
-            if (MarketPlace_Database != null)                             // Connect to the Marketplace database if the config file loaded successfully
-            {
-                MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3], MarketPlace_Database[4]);
-}
-        }
-
-
-        //  METHOD:		LoadConfig
-        /// \brief Loads the database connection details from an external config file
-        /// \details <b>Details</b>
-        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file 
-        /// and parses it out into data that is usable to connect to one or more databases
-        /// \param - <b>None</b>
-        /// 
-        /// \return - <b>Nothing</b>
-        /// 
-        public void LoadConfig()
-        {
-            if (File.Exists(configFilePath))                        // If the config file exists, try to read from it
-            {
-                StreamReader configFile = new StreamReader(configFilePath);
-                string contents = configFile.ReadToEnd();
-                configFile.Close();
-                if (contents != "")
-                {
-                    string[] splitByDB = contents.Split('\n');      // Grab each line so it can be dealt with individually
-                    foreach (string dbDetails in splitByDB)
-                    {
-                        string[] details = dbDetails.Split(' ');    // Pull the individual fields from the line of the config file
-                        if (details[0] == "TMS")                    // If the line pertains to the TMS database, assign the values to the TMS string list
-                        {
-                            TMS_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)
-                            {
-                                TMS_Database.Add(details[i]);
-                            }
-                        }
-                        else if (details[0] == "MP")                // If the line pertains to the Marketplace database, assign the values to the Marketplace string list
-                        {
-                            MarketPlace_Database = new List<string>();
-                            for (int i = 1; i < details.Count(); i++)
-                            {
-                                MarketPlace_Database.Add(details[i]);
-                            }
-                        }
-                        else if (details[0] == "LOGGER")
-                        {
-                            Logger.path = details[1];
-                        }
-                        else if (details[0] == "BACKUP")
-                        {
-                            DBBackUp = details[1];
-                        }
-                    }
-                }
-            }
-            else
-            {
-                FileStream newConfig = File.Create(configFilePath);
-                newConfig.Close();
-            }
-        }
-
 
 
         //  METHOD:	CloseCB_CanExecute
@@ -205,17 +129,14 @@ namespace SQFinalProject.UI {
             int temp1;
             if (IPAddress.TryParse(TMS_IP.Text, out temp) && (int.TryParse(TMS_Port.Text, out temp1)))
             {
-                string newWrite = "TMS " + TMS_IP.Text + " " + TMS_Port.Text + " " + TMS_User.Text + " " + TMS_Password.Password.ToString() + " " + loginDB.schema + "\n" 
-                    + "MP " + MarketPlace_Database[0] + " " + MarketPlace_Database[1] + " " + MarketPlace_Database[2] + " " + MarketPlace_Database[3] + " " + MarketPlace_Database[4] + "\n" + "LOGGER " + Logger.path + "\n" + "BACKUP " + DBBackUp; 
-                StreamWriter sw = new StreamWriter(configFilePath,false);
+                string newWrite = "TMS " + TMS_IP.Text + " " + TMS_Port.Text + " " + TMS_User.Text + " " + TMS_Password.Password.ToString() + " " + Controller.TMS.schema + "\n" 
+                    + "MP " + Controller.MarketPlace_Database[0] + " " + Controller.MarketPlace_Database[1] + " " + Controller.MarketPlace_Database[2] + " " + Controller.MarketPlace_Database[3] + " " + Controller.MarketPlace_Database[4] + "\n" + "LOGGER " + Logger.path + "\n" + "BACKUP " + DBBackUp; 
+                StreamWriter sw = new StreamWriter(Controller.ConfigPath,false);
                 sw.Write(newWrite);
                 sw.Close();
-                TMS_Database = null;
-                MarketPlace_Database = null;
-                loginDB = null;
-                MarketPlace = null;
-                LoadConfig();
-                CreateDatabases();
+                Controller.TMS_Database = null;
+                Controller.MarketPlace_Database = null;
+                Controller.LoadConfig();
             }
             else
             {
@@ -239,19 +160,19 @@ namespace SQFinalProject.UI {
         {
             IPAddress temp;
             int temp1;
+
             if (IPAddress.TryParse(TMS_IP.Text, out temp) && (int.TryParse(TMS_Port.Text, out temp1)))
             {
-                string newWrite = "MP " + MP_IP.Text + " " + MP_Port.Text + " " + MP_User.Text + " " + MP_Password.Password.ToString() + " " + loginDB.schema + "\n"
-                    + "MP " + TMS_Database[0] + " " + TMS_Database[1] + " " + TMS_Database[2] + " " + TMS_Database[3] + " " + TMS_Database[4] + "\n" + "LOGGER " + Logger.path + "\n" + "BACKUP " + DBBackUp;
-                StreamWriter sw = new StreamWriter(configFilePath, false);
+                string newWrite = "MP " + MP_IP.Text + " " + MP_Port.Text + " " + MP_User.Text + " " + MP_Password.Password.ToString() + " " + Controller.TMS.schema + "\n"
+                    + "MP " + Controller.TMS_Database[0] + " " + Controller.TMS_Database[1] + " " + Controller.TMS_Database[2] + " " + Controller.TMS_Database[3] + " " + Controller.TMS_Database[4] + "\n" + "LOGGER " + Logger.path + "\n" + "BACKUP " + DBBackUp;
+                StreamWriter sw = new StreamWriter(Controller.ConfigPath, false);
                 sw.Write(newWrite);
                 sw.Close();
-                TMS_Database = null;
-                MarketPlace_Database = null;
-                loginDB = null;
-                MarketPlace = null;
-                LoadConfig();
-                CreateDatabases();
+                Controller.TMS_Database = null;
+                Controller.MarketPlace_Database = null;
+                Controller.TMS = null;
+                Controller.MarketPlace = null;
+                Controller.LoadConfig();
             }
             else
             {
@@ -311,8 +232,8 @@ namespace SQFinalProject.UI {
         {
             List<string> field = new List<string>();
             field.Add("*");
-            loginDB.MakeSelectCommand(field, "rates", null, null);
-            List<string> returns = loginDB.ExecuteCommand();
+            Controller.TMS.MakeSelectCommand(field, "rates", null, null);
+            List<string> returns = Controller.TMS.ExecuteCommand();
             string[] rates = returns[0].Split(',');
             FTLRate.Text = rates[0].ToString();
             LTLRate.Text = rates[1].ToString();
@@ -349,8 +270,8 @@ namespace SQFinalProject.UI {
             fields.Add("*");
             Dictionary<string, string> order = new Dictionary<string, string>();
             order.Add("routeID", "ASC");
-            loginDB.MakeSelectCommand(fields, "route", null, order);
-            fields = loginDB.ExecuteCommand();
+            Controller.TMS.MakeSelectCommand(fields, "route", null, order);
+            fields = Controller.TMS.ExecuteCommand();
             foreach (string field in fields)
             {
                 string[] columns = field.Split(',');
@@ -398,7 +319,7 @@ namespace SQFinalProject.UI {
         private ObservableCollection<Carrier> GetCarrierData()
         {
             carrierCollection = new ObservableCollection<Carrier>();
-            List<Carrier> tmpCarriers = Controller.SetupCarriers(loginDB);
+            List<Carrier> tmpCarriers = Controller.SetupCarriers();
             foreach(Carrier c in tmpCarriers)
             {
                 carrierCollection.Add(c);
@@ -439,14 +360,14 @@ namespace SQFinalProject.UI {
         ///
         private void FillFields()
         {
-            TMS_IP.Text = loginDB.ip;
-            TMS_Port.Text = loginDB.port;
-            TMS_User.Text = loginDB.user;
-            TMS_Password.Password = loginDB.pass;
-            MP_IP.Text = MarketPlace.ip;
-            MP_Port.Text = MarketPlace.port;
-            MP_User.Text = MarketPlace.user;
-            MP_Password.Password = MarketPlace.pass;
+            TMS_IP.Text = Controller.TMS.ip;
+            TMS_Port.Text = Controller.TMS.port;
+            TMS_User.Text = Controller.TMS.user;
+            TMS_Password.Password = Controller.TMS.pass;
+            MP_IP.Text = Controller.MarketPlace.ip;
+            MP_Port.Text = Controller.MarketPlace.port;
+            MP_User.Text = Controller.MarketPlace.user;
+            MP_Password.Password = Controller.MarketPlace.pass;
         }
 
         //  METHOD:		ChangePath_Click
@@ -470,12 +391,12 @@ namespace SQFinalProject.UI {
                 string temp = Logger.path;   
                 Logger.path = of.FileName;
                 string configContents;
-                using (StreamReader sr = new StreamReader(configFilePath))
+                using (StreamReader sr = new StreamReader(Controller.ConfigPath))
                 {
                     configContents = sr.ReadToEnd();
                 }
                 string toWrite = configContents.Replace(temp, Logger.path);
-                using (StreamWriter sw = new StreamWriter(configFilePath, false))
+                using (StreamWriter sw = new StreamWriter(Controller.ConfigPath, false))
                 {
                     sw.Write(toWrite);
                 }
@@ -591,8 +512,8 @@ namespace SQFinalProject.UI {
         {          
             List<string> fields = new List<string>();
             fields.Add("carrierid");
-            loginDB.MakeSelectCommand(fields, "carrier", null, null);
-            List<string> results = loginDB.ExecuteCommand();
+            Controller.TMS.MakeSelectCommand(fields, "carrier", null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
             foreach (string result in results)
             {
                 bool toDelete = true;
@@ -614,8 +535,8 @@ namespace SQFinalProject.UI {
                         updateValues.Add("reefcharge", c.ReefCharge.ToString());
                         Dictionary<string, string> conditions = new Dictionary<string, string>();
                         conditions.Add("carrierID", temp.ToString());
-                        loginDB.MakeUpdateCommand("carrier", updateValues, conditions);
-                        loginDB.ExecuteCommand();
+                        Controller.TMS.MakeUpdateCommand("carrier", updateValues, conditions);
+                        Controller.TMS.ExecuteCommand();
                         toDelete = false;
                         break;
                     }
@@ -624,8 +545,8 @@ namespace SQFinalProject.UI {
                 {
                     Dictionary<string, string> conditions = new Dictionary<string, string>();
                     conditions.Add("carrierid", temp.ToString());
-                    loginDB.MakeDeleteCommand("carrier", conditions);
-                    loginDB.ExecuteCommand();
+                    Controller.TMS.MakeDeleteCommand("carrier", conditions);
+                    Controller.TMS.ExecuteCommand();
                 }                                     
             }
             foreach (Carrier newC in carrierCollection)
@@ -642,8 +563,8 @@ namespace SQFinalProject.UI {
                     values.Add(newC.FTLRate.ToString());
                     values.Add(newC.LTLRate.ToString());
                     values.Add(newC.ReefCharge.ToString());
-                    loginDB.MakeInsertCommand("carrier", values);
-                    loginDB.ExecuteCommand();
+                    Controller.TMS.MakeInsertCommand("carrier", values);
+                    Controller.TMS.ExecuteCommand();
                 }
             }
         }
@@ -735,8 +656,8 @@ namespace SQFinalProject.UI {
         {
             List<string> fields = new List<string>();
             fields.Add("routeid");
-            loginDB.MakeSelectCommand(fields, "route", null, null);
-            List<string> results = loginDB.ExecuteCommand();
+            Controller.TMS.MakeSelectCommand(fields, "route", null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
             foreach (string result in results)
             {
                 bool toDelete = true;
@@ -757,8 +678,8 @@ namespace SQFinalProject.UI {
                         updateValues.Add("west", c.west);
                         Dictionary<string, string> conditions = new Dictionary<string, string>();
                         conditions.Add("carrierID", temp.ToString());
-                        loginDB.MakeUpdateCommand("carrier", updateValues, conditions);
-                        loginDB.ExecuteCommand();
+                        Controller.TMS.MakeUpdateCommand("carrier", updateValues, conditions);
+                        Controller.TMS.ExecuteCommand();
                         toDelete = false;
                         break;
                     }
@@ -767,8 +688,8 @@ namespace SQFinalProject.UI {
                 {
                     Dictionary<string, string> conditions = new Dictionary<string, string>();
                     conditions.Add("routeid", temp.ToString());
-                    loginDB.MakeDeleteCommand("route", conditions);
-                    loginDB.ExecuteCommand();
+                    Controller.TMS.MakeDeleteCommand("route", conditions);
+                    Controller.TMS.ExecuteCommand();
                 }
             }
             foreach (RouteCity newC in cityCollection)
@@ -784,8 +705,8 @@ namespace SQFinalProject.UI {
                     values.Add(newC.hToWest.ToString());
                     values.Add(newC.east);
                     values.Add(newC.west);
-                    loginDB.MakeInsertCommand("route", values);
-                    loginDB.ExecuteCommand();
+                    Controller.TMS.MakeInsertCommand("route", values);
+                    Controller.TMS.ExecuteCommand();
                 }
             }
         }
@@ -817,13 +738,13 @@ namespace SQFinalProject.UI {
         ///
         private void RateAppy_Click(object sender, RoutedEventArgs e)
         {
-            loginDB.MakeDeleteCommand("rates", null);
-            loginDB.ExecuteCommand();
+            Controller.TMS.MakeDeleteCommand("rates", null);
+            Controller.TMS.ExecuteCommand();
             List<string> toInsert = new List<string>();
             toInsert.Add(FTLRate.Text);
             toInsert.Add(LTLRate.Text);
-            loginDB.MakeInsertCommand("rates", toInsert);
-            loginDB.ExecuteCommand();
+            Controller.TMS.MakeInsertCommand("rates", toInsert);
+            Controller.TMS.ExecuteCommand();
         }
 
         //  METHOD:		ChangeUpdatePath_Click
@@ -848,12 +769,12 @@ namespace SQFinalProject.UI {
                 DBBackUp = of.FileName; 
                 BackUpPath.Text = DBBackUp;
                 string configContents;
-                using (StreamReader sr = new StreamReader(configFilePath))
+                using (StreamReader sr = new StreamReader(Controller.ConfigPath))
                 {
                     configContents = sr.ReadToEnd();
                 }
                 string toWrite = configContents.Replace(temp, DBBackUp);
-                using (StreamWriter sw = new StreamWriter(configFilePath, false))
+                using (StreamWriter sw = new StreamWriter(Controller.ConfigPath, false))
                 {
                     sw.Write(toWrite);
                 }
@@ -872,7 +793,7 @@ namespace SQFinalProject.UI {
         ///
         private void BackUp_Click(object sender, RoutedEventArgs e)
         {
-            loginDB.BackItUp(DBBackUp);
+            Controller.TMS.BackItUp(DBBackUp);
         }
 
         //  METHOD:		Restore_Click
@@ -887,7 +808,7 @@ namespace SQFinalProject.UI {
         ///
         private void Restore_Click(object sender, RoutedEventArgs e)
         {
-            loginDB.Restore(DBBackUp);
+            Controller.TMS.Restore(DBBackUp);
         }
     }
 }

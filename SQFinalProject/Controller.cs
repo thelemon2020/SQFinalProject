@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,69 @@ namespace SQFinalProject
     /// \author <i>Nick Byam</i>
     public static class Controller
     {
-        static public Database TMS { get; set; }
+        public const string ConfigPath = @"..\..\config\TMS.txt";   //<The path to the config file
+        static public Database TMS { get; set; }                    //<The database object for the TMS database
+        static public Database MarketPlace { get; set; }            //<The database object for the Marketplace database
+        static public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
+        static public List<string> MarketPlace_Database { get; set; }          //<The the string list to store Marketplace DB connection info
+
+        //  METHOD:		LoadConfig
+        /// \brief Loads the database connection details from an external config file
+        /// \details <b>Details</b>
+        /// Checks to see if the config files exists and creates it if it doesn't.  If it does, the method reads from the file
+        /// and parses it out into data that is usable to connect to one or more databases
+        /// \param - <b>None</b>
+        ///
+        /// \return - success - <b>bool</b> - true if config loaded databases correctly, false if error
+        ///
+        public static bool LoadConfig()
+        {
+            bool success = false;
+
+            if (File.Exists(ConfigPath))                        // If the config file exists, try to read from it
+            {
+                StreamReader configFile = new StreamReader(ConfigPath);//open reader stream
+                string contents = configFile.ReadToEnd(); // get string from config file
+                configFile.Close();//close stream
+                if (contents != "")
+                {
+                    string[] splitByDB = contents.Split('\n');//split string by line
+                    foreach (string dbDetails in splitByDB)//iterate through string
+                    {
+                        string[] details = dbDetails.Split(' '); //split string into individual fields
+                        if (details[0] == "TMS") //If the info is for the TMS database
+                        {
+                            List<string> TMS_Database = new List<string>();
+                            for (int i = 1; i < details.Count(); i++) //iterate through parts of detials
+                            {
+                                TMS_Database.Add(details[i]);
+                            }
+                            TMS = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
+
+                            success = true;
+                        }
+                        else if (details[0] == "MP")//If the info is for the MarketPlace database
+                        {
+                            List<string> MrktPMarketPlace_Databaselace_DB = new List<string>();
+                            for (int i = 1; i < details.Count(); i++)//iterate through parts of detials
+                            {
+                                MarketPlace_Database.Add(details[i]);
+                            }
+                            MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3], MarketPlace_Database[4]);
+
+                            success = true;
+                        }
+                    }
+                }
+            }
+            else //if file does not exist
+            {
+                FileStream newConfig = File.Create(ConfigPath); // create file
+                newConfig.Close();//close file
+            }
+
+            return success;
+        }
 
         //  METHOD:		CreateNewAccount
         /// \brief This method creates a new customer account with no parameters.
@@ -98,55 +161,53 @@ namespace SQFinalProject
         /// \brief A method to grab all contracts available on the contract marketplace
         /// \details <b>Details</b>
         /// A method that returns all entries in the contract marketplace as a List of strings
-        /// \param - mrktPlace - <b>Database</b> - The database to connect to
+        /// \param - N/A
         /// \returns - sqlreturn - <b>List<string, string></b> - a list of results from the database query
         /// 
-        /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
-        public static List<string> GetAllContractsFromDB(Database mrktPlace)
+        /// \see SelectContract(Dictionary<string, string> conditions)
+        public static List<string> GetAllContractsFromDB()
         {
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Contract";
-            mrktPlace.MakeSelectCommand(fields, table, null, null);
+            MarketPlace.MakeSelectCommand(fields, table, null, null);
             List<string> sqlReturn = new List<string>();
-            sqlReturn = mrktPlace.ExecuteCommand();
+            sqlReturn = MarketPlace.ExecuteCommand();
             return sqlReturn;
         }
 
         /// \brief A method to grab a city from the TMS database
         /// \details <b>Details</b>
         /// A method that returns a city from the routes table, specified by the conditions parameter
-        /// \param - tms - <b>Database</b> - The database to connect to
         /// \param - conditions - <b>Dictionary<string, string></b> - A Dictionary key-value pair where the key is a column name and the value is a city
         /// \returns - sqlreturn - <b>List<string, string></b> - a list of results from the database query
         /// 
-        /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
-        public static List<string> GetCityFromDB(Database tms, Dictionary<string, string> conditions)
+        /// \see SelectContract(Dictionary<string, string> conditions)
+        public static List<string> GetCityFromDB(Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Route";
-            tms.MakeSelectCommand(fields, table, conditions, null);
+            TMS.MakeSelectCommand(fields, table, conditions, null);
             //List<string> sqlReturn = new List<string>();
-            List<string> sqlReturn = tms.ExecuteCommand();
+            List<string> sqlReturn = TMS.ExecuteCommand();
             return sqlReturn;
         }
 
         /// \brief A method that grabs a contract from the market place with conditions
         /// \details <b>Details</b>
         /// A method that can grab contracts from the marketplace delimited by conditions
-        /// \param - mrktPlace - <b>Database</b> - the database to connect to
         /// \param - conditions - <b>Dictionary<string, string></b> - The dictionary containing key value pairs of conditions
         /// \returns - sqlReturn - <b>List<string></b> - The results returned from the query as a list of strings
         /// 
-        /// \see GetAllContractsFromDB(Database mrktPlace)
-        public static List<string> SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
+        /// \see GetAllContractsFromDB()
+        public static List<string> SelectContract(Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
             fields.Add("*");
             string table = "Contract";
-            mrktPlace.MakeSelectCommand(fields, table, conditions, null);
-            List<string> sqlReturn = mrktPlace.ExecuteCommand();
+            MarketPlace.MakeSelectCommand(fields, table, conditions, null);
+            List<string> sqlReturn = MarketPlace.ExecuteCommand();
             return sqlReturn;
         }
 
@@ -155,12 +216,11 @@ namespace SQFinalProject
         /// \details <b>Details</b>
         /// A method which takes a single account, breaks down its values into string, and adds them into a list to be
         /// added to the Account table in the TMS database.
-        /// \param - tmsDB - <b>Database</b> - The TMS database object used to access the tms database and build a command to insert and account
         /// \param - ac - <b>Account</b> - The account to be added to the Account table in the tms database
         /// \returns - <b>Nothing</b>
         /// 
-        /// \see AddAccountToTMS(Database tmsDB, List<Account> accounts)
-        public static void AddAccountToTMS(Database tmsDB, Account ac)
+        /// \see AddAccountToTMS(List<Account> accounts)
+        public static void AddAccountToTMS(Account ac)
         {
             List<string> values = new List<string>();
             string acStr = ac.ToString(); // get the string representation of the account
@@ -170,24 +230,23 @@ namespace SQFinalProject
             {
                 values.Add(s);
             }
-            tmsDB.MakeInsertCommand("Account", values); // make the isnert command
-            tmsDB.ExecuteCommand(); // execute said command
+            TMS.MakeInsertCommand("Account", values); // make the isnert command
+            TMS.ExecuteCommand(); // execute said command
         }
 
 
         /// \brief An overload of the AddAccountToTMS That takes a list of accounts
         /// \details <b>Details</b>
         /// A method that calls upon the other add account to TMS method to add multiple accounts to the database.
-        /// \param - tmsDB - <b>Database</b> - The database object that grants access to the TMS database
         /// \param - accounts - <b>List<Account></b> - A list of accounts to be added to the TMS database
         /// \returns - <b>Nothing</b>
         /// 
-        /// \see AddAccountToTMS(Database tmsDB, Account ac)
-        public static void AddAccountToTMS(Database tmsDB, List<Account> accounts)
+        /// \see AddAccountToTMS(Account ac)
+        public static void AddAccountToTMS(List<Account> accounts)
         {
             foreach(Account ac in accounts) //Add all accounts in the list to the database.
             {
-                AddAccountToTMS(tmsDB, ac);
+                AddAccountToTMS(ac);
             }
         }
 
@@ -196,14 +255,13 @@ namespace SQFinalProject
         /// \details <b>Details</b>
         /// A method which is used to get contracts from the TMS database. By passing null to the conditions all accounts will be selected
         /// but conditions can be added to narrow the selection.
-        /// \param - tmsDB - <b>Database</b> - The database object used to connect to the tms database
         /// \param - values - <b>List<string></b> - The column values the user specifically wants to see 
         /// \param - conditions - <b>Dictionary<string, string></b> - The dictionary of key value pairs to be used as search conditions
         /// \returns - sqlReturn - <b>List<string></b> - The results of the Selection
         /// 
-        /// \see SelectContract(Database mrktPlace, Dictionary<string, string> conditions)
-        /// \see GetAllContractsFromDB(Database mrktPlace)
-        public static List<string> GetAccountsFromTMS(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
+        /// \see SelectContract(Dictionary<string, string> conditions)
+        /// \see GetAllContractsFromDB()
+        public static List<string> GetAccountsFromTMS(List<string> values, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
             if (values != null)
@@ -215,8 +273,8 @@ namespace SQFinalProject
                 fields.Add("*");
             }
             string table = "Account";
-            tmsDB.MakeSelectCommand(fields, table, conditions, null); // this can be not null if necessary
-            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            TMS.MakeSelectCommand(fields, table, conditions, null); // this can be not null if necessary
+            List<string> sqlReturn = TMS.ExecuteCommand();
             return sqlReturn;
         }
 
@@ -224,12 +282,11 @@ namespace SQFinalProject
         /// \brief A method to get carriers from the tms database
         /// \details <b>Details</b>
         /// A method which returns the carriers in the tms database, the fields shown can be specified by the user, and can be conditional
-        /// \param - tmsDB - <b>Database</b> - The database object which grants access to the tms database
         /// \param - values - <b>List<string></b> - The column values the user specifically wants to see 
         /// \param - condtions - <b>Dictionary<string, string></b> - The key value pairs that define the conditions
         /// \returns - sqlReturn - <b>List<string></b> - A list of the results generated from the database query.
         /// 
-        public static List<string> GetCarriersFromTMS(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
+        public static List<string> GetCarriersFromTMS(List<string> values, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
             if(values != null)
@@ -241,8 +298,8 @@ namespace SQFinalProject
                 fields.Add("*");
             }
             string table = "carrier";
-            tmsDB.MakeSelectCommand(fields, table, conditions, null);
-            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            TMS.MakeSelectCommand(fields, table, conditions, null);
+            List<string> sqlReturn = TMS.ExecuteCommand();
             return sqlReturn;
         }
 
@@ -254,7 +311,7 @@ namespace SQFinalProject
         /// \returns - 
         /// 
         /// \see
-        public static List<string> GetCarrierDepotCities(Database tmsDB, List<string> values, Dictionary<string, string> conditions)
+        public static List<string> GetCarrierDepotCities(List<string> values, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
             List<string> tables = new List<string>();
@@ -270,8 +327,8 @@ namespace SQFinalProject
             tables.Add("carrier");
             tables.Add("depot");
             ids.Add("carrierid");
-            tmsDB.MakeInnerJoinSelect(fields, tables, ids, conditions);
-            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            TMS.MakeInnerJoinSelect(fields, tables, ids, conditions);
+            List<string> sqlReturn = TMS.ExecuteCommand();
             return sqlReturn;
         }
 
@@ -283,10 +340,10 @@ namespace SQFinalProject
         /// \returns - 
         /// 
         /// \see
-        public static List<Carrier> SetupCarriers(Database tmsDB)
+        public static List<Carrier> SetupCarriers()
         {
             List<Carrier> carriers = new List<Carrier>();
-            List<string> carrierDetails = GetCarriersFromTMS(tmsDB, null, null); // get all the carriers in the db
+            List<string> carrierDetails = GetCarriersFromTMS(null, null); // get all the carriers in the db
 
             foreach(string row in carrierDetails) // instantiate all the the carrier classes with details from the db
             {
@@ -300,7 +357,7 @@ namespace SQFinalProject
             fields.Add("depotCity");
             fields.Add("FTLA");
             fields.Add("LTLA");
-            List<string> depotCities = GetCarrierDepotCities(tmsDB, fields, null); // do an inner join on the carrier table and depot table
+            List<string> depotCities = GetCarrierDepotCities(fields, null); // do an inner join on the carrier table and depot table
 
             foreach(Carrier c in carriers)
             {
@@ -392,7 +449,7 @@ namespace SQFinalProject
         /// \param - weeks - <b>int</b> - The number of weeks for report generation. Must be either 2 or 0
         /// \returns - <b>Nothing</b>
         /// 
-        public static string GenerateReport(Database tmsDB, int weeks=0)
+        public static string GenerateReport(int weeks=0)
         {
             string start = "";
             string end = "";
@@ -413,9 +470,9 @@ namespace SQFinalProject
             searchPoints.Add("invoiceDate", end);
             string table = "invoice";
 
-            tmsDB.MakeBetweenSelect(fields, table, searchPoints);
+            TMS.MakeBetweenSelect(fields, table, searchPoints);
 
-            List<string> sqlReturn = tmsDB.ExecuteCommand();
+            List<string> sqlReturn = TMS.ExecuteCommand();
 
             double totalCost = 0.00;
             int invoiceCount = sqlReturn.Count;
@@ -439,15 +496,23 @@ namespace SQFinalProject
             return sb.ToString();
         }
 
-        public static int GetLastTripID(Database tmsDB)
+        public static int GetLastTripID()
         {
             List<string> fields = new List<string>();
             fields.Add("MAX(TripID)");
             string table = "Trip";
-            tmsDB.MakeSelectCommand(fields, table, null, null);
-            List<string> LastTripID = tmsDB.ExecuteCommand();
+            TMS.MakeSelectCommand(fields, table, null, null);
+            List<string> LastTripID = TMS.ExecuteCommand();
 
             return int.Parse(LastTripID.First());
+        }
+
+        public static void SaveTripToDB(TripPlanning.Truck truck)
+        {
+            List<string> fields = new List<string>();
+            
+            fields.Add(truck.TripID.ToString());
+            //fields.Add(morethings);
         }
     }
 }
