@@ -42,10 +42,101 @@
         </StatusBar>
 
         <!-- Main Tabbed Window section -->
-        <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl">
-            <TabItem Header="Contact MarketPlace"></TabItem>
-            <TabItem Header="Security" />
-            <TabItem Header="Details" />
+        <TabControl DockPanel.Dock="Top" x:Name="TabsCtrl_Planner" SelectionChanged="TabsCtrl_Planner_SelectionChanged">
+            <TabItem Header="Orders"></TabItem>
+            <TabItem Name="Summary" Header="Summary">
+                <Grid>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border x:Name="border1" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0">
+                        <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
+                            <ListBox Name="SummaryList">
+                                <ListBox.Template>
+                                    <ControlTemplate>
+                                        <DockPanel LastChildFill="True">
+                                            <Grid DockPanel.Dock="Top" Height="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="125"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0">Order #</Label>
+                                                <Label Grid.Column="1">Cust. Name</Label>
+                                                <Label Grid.Column="2">Job Type</Label>
+                                                <Label Grid.Column="3">Quantity</Label>
+                                                <Label Grid.Column="4">Van Type</Label>
+                                                <Label Grid.Column="5">Starting City</Label>
+                                                <Label Grid.Column="6">Ending City</Label>
+                                                <Label Grid.Column="7">Status</Label>
+                                            </Grid>
+                                            <ItemsPresenter></ItemsPresenter>
+                                        </DockPanel>
+                                    </ControlTemplate>
+                                </ListBox.Template>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="125" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ID}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding ClientName}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding JobType}" />
+                                            <TextBlock Grid.Column="3" Text="{Binding Quantity}" />
+                                            <TextBlock Grid.Column="4" Text="{Binding VanType}" />
+                                            <TextBlock Grid.Column="5" Text="{Binding Origin}" />
+                                            <TextBlock Grid.Column="6" Text="{Binding Destination}" />
+                                            <TextBlock Grid.Column="7" Text="{Binding Status}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </Border>
+
+                    <Grid Grid.Column="1" Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0"  Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Summary Time Frame:" FontWeight="Bold" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="SummaryTimeFrame" Width="150" SelectedIndex="0">
+                            <ComboBoxItem Content="Current"/>
+                            <ComboBoxItem Content="Past 2 Weeks"/>
+                            <ComboBoxItem Content="All Time"/>
+                        </ComboBox>
+
+                        <Label Grid.Row="1"  Grid.Column="0" Margin="0,5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Time to Advance:" FontWeight="Bold" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="NumDays" Width="150"></TextBox>
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="05" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="AdvTimeBtn" Width="150" Content="Advance Time"/>
+
+                        <Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="GenReportBtn" Width="150" Content="Generate Report"/>
+                    </Grid>
+                </Grid>
+
+            </TabItem>
             <TabItem Header="Testing">
                 <TextBox x:Name="txtMain"
                  AcceptsReturn="True"

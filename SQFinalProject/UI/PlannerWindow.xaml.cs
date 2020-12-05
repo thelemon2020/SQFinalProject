@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SQFinalProject.ContactMgmtBilling;
+using SQFinalProject.TripPlanning;
 
 namespace SQFinalProject.UI {
     ///
@@ -37,6 +38,7 @@ namespace SQFinalProject.UI {
         Database MarketPlace { get; set; }                              //<The database object for the Marketplace database
 
         public string userName;                                         //<Stores the user name of the current user
+        ObservableCollection<Contract> ordersCollection { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
@@ -170,6 +172,42 @@ namespace SQFinalProject.UI {
             AboutWindow aboutBox = new AboutWindow();
             aboutBox.Owner = this;
             aboutBox.ShowDialog();
+        }
+
+
+        /////////////////////////////////////////////////////////////////
+        
+
+        private void TabsCtrl_Planner_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+
+            if (Summary.IsSelected)
+            {
+                GetOrders();
+                SummaryList.ItemsSource = ordersCollection;
+            }
+        }
+
+        private void GetOrders()
+        {
+            ordersCollection = new ObservableCollection<Contract>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            loginDB.MakeSelectCommand(fields, "orders", null, null);
+            List<string> results = loginDB.ExecuteCommand();
+            foreach (string result in results)
+            {
+                string[] splitResult = result.Split(',');
+                StringBuilder recombine = new StringBuilder();
+                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
+                Contract c = new Contract(recombine.ToString());
+                int temp;
+                int.TryParse(splitResult[0], out temp);
+                c.ID = temp;
+                c.Status = splitResult[7];
+                ordersCollection.Add(c);
+            }            
         }
     }
 }
