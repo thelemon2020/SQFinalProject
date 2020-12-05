@@ -46,8 +46,8 @@ namespace SQFinalProject.TripPlanning
             }
         }
         public List<City> Cities { get; set; }  //!<a list holding every city
-        public double TotalTime { get; set; }   //!< the time it takes to complete the route
-        public int TotalDistance { get; set; }  //!< the total distance it takes to complete the trip
+        public double TotalTime { get; set; }   //!<the time it takes to complete the route
+        public int TotalDistance { get; set; }  //!<the total distance it takes to complete the trip
         public bool East { get; set; }          //!<whether the truck is going east or west
 
         /// \brief Route
@@ -138,6 +138,9 @@ namespace SQFinalProject.TripPlanning
                 conditions["destCity"] = curCity;
                 retValues = Controller.GetCityFromDB(conditions);
             }
+
+            CalculateTotalKM();
+            CalculateTotalTime();
         }
 
         /// \brief Adds a potential city as the new destination if it is further than the old one

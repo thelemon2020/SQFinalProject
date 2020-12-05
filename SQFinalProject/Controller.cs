@@ -344,6 +344,7 @@ namespace SQFinalProject
         {
             List<Carrier> carriers = new List<Carrier>();
             List<string> carrierDetails = GetCarriersFromTMS(null, null); // get all the carriers in the db
+            int i = 0;
 
             foreach(string row in carrierDetails) // instantiate all the the carrier classes with details from the db
             {
@@ -367,9 +368,10 @@ namespace SQFinalProject
                     if(tmpSplit[0] == c.CarrierName)
                     {
                         c.DepotCities.Add(tmpSplit[1]);
-                        c.FTLA = int.Parse(tmpSplit[2]); // adding the availability could likely use some work. this should ideally be
-                        c.LTLA = int.Parse(tmpSplit[3]); // added for every depot city rather than just to the carrier as a whole.
+                        c.FTLA[i] = int.Parse(tmpSplit[2]); // adding the availability could likely use some work. this should ideally be
+                        c.LTLA[i] = int.Parse(tmpSplit[3]); // added for every depot city rather than just to the carrier as a whole.
                     }
+                    i++;
                 }
             }
 
@@ -387,6 +389,7 @@ namespace SQFinalProject
         public static List<string> FindCarriersForContract(Contract contract, List<Carrier> carriers)
         {
             List<string> possibleCarrier = new List<string>();
+            int i = 0;
 
             foreach(Carrier carrier in carriers) //iterate through all carriers, they should already be setup
             {
@@ -396,7 +399,7 @@ namespace SQFinalProject
                     {                           // to see if they have availability of trucks matching a job type.
                         if(contract.JobType == 0) // FTL job
                         {
-                            if(carrier.FTLA > 0) // if the carrier has availability, add them to the list of possible carriers
+                            if(carrier.FTLA[i] > 0) // if the carrier has availability, add them to the list of possible carriers
                             {
                                 string tmp = carrier.CarrierName + "," + city;
                                 possibleCarrier.Add(tmp);
@@ -404,13 +407,14 @@ namespace SQFinalProject
                         }
                         else // LTL job
                         {
-                            if(carrier.LTLA > 0) // if the carrier has an LTL truck available, add them to list of possible carriers for the job
+                            if(carrier.LTLA[i] > 0) // if the carrier has an LTL truck available, add them to list of possible carriers for the job
                             {
                                 string tmp = carrier.CarrierName + "," + city;
                                 possibleCarrier.Add(tmp);
                             }
                         }
                     }
+                    i++; // Keep an iterator for depotcities
                 }
             }
 

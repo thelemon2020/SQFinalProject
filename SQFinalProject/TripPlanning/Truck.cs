@@ -35,7 +35,7 @@ namespace SQFinalProject.TripPlanning
         public double Rate { get; set; }                //<Either the LTL rate or FTL rate depending on quantity
         public double HoursWorked { get; set; }         //<The amount of hours that the driver has worked
         public double HoursDriven { get; set; }         //<The amount of hours that the driver has driven
-        public int DaysWorked { get; set; }             //<The total days the trip will take to complete
+        public int DaysWorked { get; set; }             //<The total days past the first the trip will take to complete
         public double ReeferRate { get; set; }          //<The reefer rate of the carrier if the truck is a reefer truck
         public double BillTotal { get; set; }           //<The total price charged by the carrier for the trip
         public bool IsComplete { get; set; }            //<Flag to set trip to complete
@@ -90,9 +90,16 @@ namespace SQFinalProject.TripPlanning
             if (contract.Quantity + TotalQuantity <= kMaxPallets)
             {
                 Contracts.Add(contract);
-                if (ThisRoute.AddCity(contract.Destination))    // False if final destination changed
+                if (!ThisRoute.AddCity(contract.Destination))    // False if route was modified
                 {
                     Destination = contract.Destination;
+                    contract.Distance = ThisRoute.TotalDistance;
+                }
+                else
+                {
+                    Route tmpRt = new Route();
+                    tmpRt.GetCities(Origin, contract.Destination);
+                    contract.Distance = tmpRt.TotalDistance;
                 }
                 TotalQuantity += contract.Quantity;
             }

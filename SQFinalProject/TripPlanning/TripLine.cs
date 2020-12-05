@@ -23,7 +23,7 @@ namespace SQFinalProject.TripPlanning
         public int TripID { get; set; }         //!<the truck associated with the trip line
         public int Quantity { get; set; }       //!< quantity of order
         public string Destination { get; set; } //!< destination city
-        public int DaysWorked { get; set; }     //!< days taken to complete
+        public int DaysWorked { get; set; }     //!< days(past the first) taken to complete
         public int Distance { get; set; }       //!< distance to complete
         public bool IsDelivered { get; set; }   //!< Flag to mark the payload delivered
 
@@ -56,21 +56,22 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \return N/A
         /// 
-        public TripLine(string details)
+        public TripLine(string details, string destination)
         {
             string[] splitDetails = details.Split();
             ContractID = int.Parse(splitDetails[0]);
             TripID = int.Parse(splitDetails[1]);
             Quantity = int.Parse(splitDetails[2]);
-            Destination = splitDetails[3];
-            DaysWorked = int.Parse(splitDetails[4]);
-            Distance = int.Parse(splitDetails[5]);
-            IsDelivered = bool.Parse(splitDetails[6]);
+            Destination = destination;
+            DaysWorked = int.Parse(splitDetails[3]);
+            Distance = int.Parse(splitDetails[4]);
+            IsDelivered = bool.Parse(splitDetails[5]);
         }
 
         public void SaveToDB()
         {
-
+            //Update contract with distance
+            //Modify tripline
         }
     }
 }
