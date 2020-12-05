@@ -23,8 +23,8 @@ namespace SQFinalProject.TripPlanning
         public int TripID { get; set; }         //!<the truck associated with the trip line
         public int Quantity { get; set; }       //!< quantity of order
         public string Destination { get; set; } //!< destination city
-        public int EstTime { get; set; }        //!< time to complete
-        public int EstKM { get; set; }          //!< distance to complete
+        public int DaysWorked { get; set; }     //!< days taken to complete
+        public int Distance { get; set; }       //!< distance to complete
         public bool IsDelivered { get; set; }   //!< Flag to mark the payload delivered
 
         /// \brief Constructor for the TripLine class
@@ -43,8 +43,8 @@ namespace SQFinalProject.TripPlanning
             TripID = tripID;
             Quantity = qty;
             Destination = contract.Destination;
-            EstTime = 0;
-            EstKM = 0;
+            DaysWorked = 0;
+            Distance = 0;
             IsDelivered = false;
         }
 
@@ -56,9 +56,16 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \return N/A
         /// 
-        public TripLine(List<string> details)
+        public TripLine(string details)
         {
-
+            string[] splitDetails = details.Split();
+            ContractID = int.Parse(splitDetails[0]);
+            TripID = int.Parse(splitDetails[1]);
+            Quantity = int.Parse(splitDetails[2]);
+            Destination = splitDetails[3];
+            DaysWorked = int.Parse(splitDetails[4]);
+            Distance = int.Parse(splitDetails[5]);
+            IsDelivered = bool.Parse(splitDetails[6]);
         }
 
         public void SaveToDB()

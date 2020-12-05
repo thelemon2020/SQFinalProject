@@ -24,13 +24,15 @@ namespace SQFinalProject.TripPlanning
         private const int kMaxPallets = 26;             //<The max number of pallets allowed on one truck
         private const int kMaxTotalHours = 12;          //<The max number of hours drivers can spend working in total per day
         private const int kMaxDrivingHours = 8;         //<The max number of hours drivers can spend driving per day
+        private const int kLoadTime = 2;                //<The time it takes to load or unload cargo
         static private int LastID { get; set; } = 0;    //<Static ID value to assign new IDs incrementally
         public int TripID { get; set; }                 //<The ID number of the trip
         public int CarrierID { get; set; }              //<The ID number of the carrier
         public string Origin { get; set; }              //<The Origin city that the carrier departs from
         public string Destination { get; set; }         //<The end destination of the truck
-        public int VanType { get; set; }                //<The Truck type
-        public double Rate { get; set; }                //<Either the LTL rate or FTL rate depending on job type
+        public int VanType { get; set; }                //<The Truck type, 0 = dry van, 1 = reefer
+        public int TotalQuantity { get; set; }          //<Quantity to be updated as cargo is added
+        public double Rate { get; set; }                //<Either the LTL rate or FTL rate depending on quantity
         public double HoursWorked { get; set; }         //<The amount of hours that the driver has worked
         public double HoursDriven { get; set; }         //<The amount of hours that the driver has driven
         public int DaysWorked { get; set; }             //<The total days the trip will take to complete
@@ -43,13 +45,12 @@ namespace SQFinalProject.TripPlanning
 
         /// \brief Constructor for the truck class
         /// \details <b>Details</b>
-        /// The constructor for the Truck class
-        /// \param - <b>Database</b> - 
-        /// \param - <b>Contract</b> - 
+        /// The constructor for the Truck class 
+        /// \param - <b>contract</b> - 
         /// \returns - <b>Nothing</b>
         /// 
         /// \see 
-        public Truck(Database tms, Contract contract, Carrier carrier, int qty)
+        public Truck(Contract contract, Carrier carrier, int qty)
         {
             if (LastID == 0)
             {
@@ -66,20 +67,43 @@ namespace SQFinalProject.TripPlanning
             HoursWorked = 0.0;
             HoursDriven = 0.0;
             DaysWorked = 0;
-            ReeferRate = 0.0;
+            ReeferRate = carrier.ReefCharge;
             BillTotal = 0.0;
             IsComplete = false;
             Contracts = new List<TripLine> { new TripLine(contract, TripID, qty) };
-            ThisRoute = null;
+            ThisRoute = new Route();
+            ThisRoute.GetCities(Origin, Destination);
+            Contracts[0].Distance = ThisRoute.TotalDistance;
         }
 
-        public void TotalCost()
+        /// \brief Method to add cargo from a contract to the trip
+        /// \details <b>Details</b>
+        /// The constructor for the Truck class
+        /// \param - contract - <b>TripLine</b> - an instantiated tripline
+        /// \returns - success - <b>bool</b> - flag letting the calling method know if the contract was successfully added to the trip
+        /// 
+        /// \see 
+        public bool AddContract(TripLine contract)
         {
+            bool success = false;
 
+            if (contract.Quantity + TotalQuantity <= kMaxPallets)
+            {
+                Contracts.Add(contract);
+                if (ThisRoute.AddCity(contract.Destination))    // False if final destination changed
+                {
+                    Destination = contract.Destination;
+                }
+                TotalQuantity += contract.Quantity;
+            }
+
+            return success;
         }
+
         //
         public void SimulateDay()
         {
+
             HoursWorked = 0.0;
             HoursDriven = 0.0;
 
@@ -91,7 +115,7 @@ namespace SQFinalProject.TripPlanning
             {
                 for (int i = 0; i < Contracts.Count(); i++)
                 {
-                    if (Contracts[i].Destination == ThisRoute.Cities[0].Name)
+                    if (Contracts[i].Destination == ThisRoute.Cities[0].Name && kMaxTotalHours > HoursWorked + 2)
                     {
                         Unload(i);
                     }
@@ -116,7 +140,7 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \see Load(TripLine contract)
         /// \see Unload(TripLine contract)
-        public void ContinueRoute()
+        private void ContinueRoute()
         {
             HoursDriven += ThisRoute.Cities[0].Time;
             HoursWorked += ThisRoute.Cities[0].Time;
@@ -132,7 +156,7 @@ namespace SQFinalProject.TripPlanning
         /// \returns - <b>Nothing</b>
         /// 
         /// \see Unload(TripLine contract)
-        public void LoadContracts()
+        private void LoadContracts()
         {
             for (int i = 0; i < Contracts.Count(); i++)
             {
@@ -149,15 +173,23 @@ namespace SQFinalProject.TripPlanning
         /// \returns - <b>Nothing</b>
         /// 
         /// \see Load(TripLine contract)
-        public void Unload(int index)
+        private void Unload(int index)
         {
+            bool allDelivered = true;
             HoursWorked += 2;
             Contracts[index].IsDelivered = true;
-            if (index + 1 == Contracts.Count())
+
+            foreach (TripLine c in Contracts) if (c.IsDelivered == false) allDelivered = false;
+            if (Contracts[index].Destination == Destination && allDelivered == true)
             {
                 IsComplete = true;
                 //SaveToDB()? or use button idk
             }
+        }
+        
+        public void TotalCost()
+        {
+            
         }
 
         public void SaveToDB()

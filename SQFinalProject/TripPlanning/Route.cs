@@ -77,12 +77,17 @@ namespace SQFinalProject.TripPlanning
         /// 
         /// \return - <b>Nothing</b>
         /// 
-        public void GetCities(Database tms, string origin, string end)
+        public void GetCities(string origin, string end)
         {
-            string curCity = origin;
             List<string> retValues = new List<string>();
             List<string> endValues = new List<string>();
             Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            string curCity = origin;
+            string newName = "";
+            string newNext = "";
+            int newDistance = 0;
+            double newTime = 0.0;
 
             conditions.Add("destCity", origin);                           
             retValues = Controller.GetCityFromDB(conditions);
@@ -95,13 +100,8 @@ namespace SQFinalProject.TripPlanning
                 East = true;
             }
             else East = false;
-
-            string newName = "";
-            string newNext = "";
-            int newDistance = 0;
-            double newTime = 0.0;
-
-            while (curCity != endValues[6])
+            
+            while (curCity != endValues[6]) // Stop when current city is the destination's next
             {
                 newName = retValues[1];
                 newNext = retValues[6];
@@ -138,6 +138,36 @@ namespace SQFinalProject.TripPlanning
                 conditions["destCity"] = curCity;
                 retValues = Controller.GetCityFromDB(conditions);
             }
+        }
+
+        /// \brief Adds a potential city as the new destination if it is further than the old one
+        /// \details <b>Details</b>
+        /// Creates a list of cities that the truck must go through to complete it's route.  
+        /// Queries database to determine direction, then in a loop to compile a whole list, 
+        /// starting at origin and ending at the end point
+        /// 
+        /// \param - origin - <b>string</b> - the origin city of the truck
+        /// \param - end - <b>string</b> - the final stop of truck 
+        /// 
+        /// \return - exists - <b>bool</b> - tells the truck if the new city is a new destination or just another stop
+        /// 
+        public bool AddCity(string newDest)
+        {
+            bool exists = false;
+            foreach (City c in Cities)
+            {   // Look for new city in current list
+                if (c.Name == newDest)
+                {
+                    exists = true;
+                }
+            }
+            // Add to the list and recalculate totals if it's not already there
+            if (!exists)
+            {
+                GetCities(Cities.Last().Next, newDest);
+            }
+
+            return exists;
         }
 
         /// \brief Calculate total time remaining on route
