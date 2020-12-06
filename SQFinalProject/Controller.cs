@@ -505,12 +505,17 @@ namespace SQFinalProject
             fields.Add("cost");
             Dictionary<string, string> searchPoints = new Dictionary<string, string>();
             searchPoints.Add("invoiceDate", start);
-            searchPoints.Add("invoiceDate", end);
+            searchPoints.Add("invoice", end);
             string table = "invoice";
 
             TMS.MakeBetweenSelect(fields, table, searchPoints);
 
             List<string> sqlReturn = TMS.ExecuteCommand();
+
+            if(sqlReturn == null || sqlReturn.Count == 0)
+            {
+                return null;
+            }
 
             double totalCost = 0.00;
             int invoiceCount = sqlReturn.Count;

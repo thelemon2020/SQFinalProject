@@ -250,7 +250,7 @@ namespace SQFinalProject.UI {
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append("TMS Internal Report:\n\n");
-                sb.AppendFormat("Period: {0} - {1}, ", split[2], split[3]);
+                sb.AppendFormat("Period: {0} - {1}\n", split[2], split[3]);
                 sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
 
                 TwoWeekReportBlock.Text += sb.ToString();
@@ -284,7 +284,7 @@ namespace SQFinalProject.UI {
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append("TMS Internal Report:\n\n");
-                sb.AppendFormat("Period: {0}, ", split[1]);
+                sb.AppendFormat("Period: {0}\n", split[1]);
                 sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
 
                 AllTimeReportBlock.Text += sb.ToString();
