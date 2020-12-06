@@ -34,6 +34,7 @@ namespace SQFinalProject.UI {
 
         public string userName;                                         //<Stores the user name of the current user
         ObservableCollection<Contract> ordersCollection { get; set; }
+        ObservableCollection<Contract> orderDetails { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
@@ -116,9 +117,14 @@ namespace SQFinalProject.UI {
         {
             e.Handled = true;
 
-            if (Summary.IsSelected)
+            GetOrders();
+
+            if (Orders.IsSelected)
             {
-                GetOrders();
+                OrderList.ItemsSource = ordersCollection;
+            }
+            else if (Summary.IsSelected)
+            {
                 SummaryList.ItemsSource = ordersCollection;
             }
         }
@@ -128,7 +134,7 @@ namespace SQFinalProject.UI {
             ordersCollection = new ObservableCollection<Contract>();
             List<string> fields = new List<string>();
             fields.Add("*");
-            Controller.TMS.MakeSelectCommand(fields, "orders", null, null);
+            Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
             List<string> results = Controller.TMS.ExecuteCommand();
             foreach (string result in results)
             {
@@ -142,6 +148,21 @@ namespace SQFinalProject.UI {
                 c.Status = splitResult[7];
                 ordersCollection.Add(c);
             }            
+        }
+
+        private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e ) 
+        {
+            e.Handled = true;
+
+            OrderDetails.ItemsSource = null;
+
+            orderDetails = new ObservableCollection<Contract>();
+
+            if ( OrderList.SelectedIndex != -1 ) {
+                orderDetails.Add( (Contract) OrderList.SelectedItem );
+            }
+
+            OrderDetails.ItemsSource = orderDetails;
         }
     }
 }
