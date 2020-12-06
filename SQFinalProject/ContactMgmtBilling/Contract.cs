@@ -69,6 +69,7 @@ namespace SQFinalProject.ContactMgmtBilling
             Origin = splitDetails[3];
             Destination = splitDetails[4];
             VanType = int.Parse(splitDetails[5]);
+            
         }
 
         public Contract()

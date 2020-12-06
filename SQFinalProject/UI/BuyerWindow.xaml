@@ -51,10 +51,11 @@
 
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="4*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="151*" />
+                            <ColumnDefinition Width="639*"/>
+                            <ColumnDefinition Width="198*" />
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="border" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
+                        <Border x:Name="border" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.ColumnSpan="2" Margin="0,0,0.4,-0.2">
                             <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
                                 <ListBox Grid.Column="0" Name="MarketList">
                                     <ListBox.Template>
@@ -101,8 +102,8 @@
                                 </ListBox>
                             </Border>
                         </Border>
-                        <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
-                        <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
+                        <Button Grid.Column="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="48.6,100,49,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
+                        <Button Grid.Column="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="48.6,200,49,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -175,7 +176,7 @@
                     <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Send To Planner" Click="SendToPlanner_Click" Name="SendPlanner" IsEnabled="False"/>
                     <Button Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0" Width="100" Content="Generate Invoice" Click="GenerateInvoice_Click" Name="GenInvoice" IsEnabled="False"/>
                 </Grid>
-               
+
             </TabItem>
             <TabItem Name="CustomerTab" Header="Customers">
                 <Grid>
