@@ -35,9 +35,10 @@ namespace SQFinalProject
                 connection = new MySqlConnection(connectionString); // instantiate the MySqLConnection object
                 connection.Open(); // open connection
             }
-            catch
+            catch (Exception e)
             {
                 connection = null;
+                Logger.Log("Failed to connect to server - " + e.Message);
             }
             return connection; // return the MySqlConnection object
         }
@@ -108,6 +109,7 @@ namespace SQFinalProject
             catch(Exception e)
             {
                 SQLReturn = null; //if there is an exception throw, return null
+                Logger.Log("MySQL Query Failed- " + e.Message);
             }           
             return SQLReturn;//return list of strings containing query returns
         }
@@ -126,8 +128,9 @@ namespace SQFinalProject
             {
                 database.Close(); // close the database connection
             }
-            catch
+            catch(Exception e)
             {
+                Logger.Log("Failed to close connection to server - " + e.Message);
                 return false; //return false if something goes wrong
             }
             return true; // return true if connection closes successfully 
@@ -156,8 +159,9 @@ namespace SQFinalProject
                     }
                 }
             }
-            catch
+            catch(Exception e)
             {
+                Logger.Log("Failed to backup Database - " + e.Message);
                 return 1; //returns 1 if backup fails
             }
             return 0; // returns 0 if backup is successful
@@ -186,8 +190,9 @@ namespace SQFinalProject
                     }
                 }
             }
-            catch
+            catch(Exception e)
             {
+                Logger.Log("Failed to restore Database - " + e.Message);
                 return 1; //!<returns 1 if restore fails
             }
             return 0;  //< returns 0 if restore is successful

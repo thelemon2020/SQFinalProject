@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteTests.cs" />
+    <Compile Include="TruckTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
