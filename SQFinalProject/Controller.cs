@@ -597,20 +597,26 @@ namespace SQFinalProject
             values.Add(tmpFlag.ToString());
             TMS.MakeInsertCommand("Trip", values);
             TMS.ExecuteCommand();
-            foreach (TripPlanning.TripLine line in truck.Contracts)
-            {
-                values.Clear();
-                values.Add(line.ContractID.ToString());
-                values.Add(line.TripID.ToString());
-                values.Add(line.Quantity.ToString());
-                values.Add(line.DaysWorked.ToString());
-                values.Add(line.Distance.ToString());
-                if (line.IsDelivered) tmpFlag = 1;
-                else tmpFlag = 0;
-                values.Add(tmpFlag.ToString());
-                TMS.MakeInsertCommand("tripline", values);
-                TMS.ExecuteCommand();
-            }
+        }
+
+
+        // Saves the truck to `trip` and each tripline to `tripline` in TMS
+        public static void SaveTripLineToDB(TripPlanning.TripLine line)
+        {
+            List<string> values = new List<string>();
+            int tmpFlag = 0;
+
+            values.Clear();
+            values.Add(line.ContractID.ToString());
+            values.Add(line.TripID.ToString());
+            values.Add(line.Quantity.ToString());
+            values.Add(line.DaysWorked.ToString());
+            values.Add(line.Distance.ToString());
+            if (line.IsDelivered) tmpFlag = 1;
+            else tmpFlag = 0;
+            values.Add(tmpFlag.ToString());
+            TMS.MakeInsertCommand("tripline", values);
+            TMS.ExecuteCommand();
         }
     }
 }
