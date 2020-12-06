@@ -52,7 +52,7 @@
                         <Label DockPanel.Dock="Top" Grid.Row="1"  Grid.Column="0" HorizontalAlignment="Center" Content="Orders" FontWeight="Bold" />
 
                         <Border x:Name="HeightLimiter">
-                            <ListBox Name="OrderList" Height="{Binding Path=ActualHeight, ElementName=HeightLimiter}" SelectionChanged="OrderList_SelectionChanged" >
+                            <ListBox x:Name="OrderList" Height="{Binding Path=ActualHeight, ElementName=HeightLimiter}" SelectionChanged="OrderList_SelectionChanged" >
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Margin="0,2">
@@ -80,7 +80,7 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" x:Name="DetailsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0">
                             <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
-                                <ListBox Name="OrderDetails">
+                                <ListBox x:Name="OrderDetails">
                                     <ListBox.Template>
                                         <ControlTemplate>
                                             <DockPanel LastChildFill="True">

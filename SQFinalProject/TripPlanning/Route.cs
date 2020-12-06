@@ -79,8 +79,8 @@ namespace SQFinalProject.TripPlanning
         /// 
         public void GetCities(string origin, string end)
         {
-            List<string> retValues = new List<string>();
-            List<string> endValues = new List<string>();
+            string[] retValues = new string[20];
+            string[] endValues = new string[20];
             Dictionary<string, string> conditions = new Dictionary<string, string>();
 
             string curCity = origin;
@@ -90,10 +90,10 @@ namespace SQFinalProject.TripPlanning
             double newTime = 0.0;
 
             conditions.Add("destCity", origin);                           
-            retValues = Controller.GetCityFromDB(conditions);
+            retValues = Controller.GetCityFromDB(conditions).First().Split(',');
 
             conditions["destCity"] = end;
-            endValues = Controller.GetCityFromDB(conditions);
+            endValues = Controller.GetCityFromDB(conditions).First().Split(',');
 
             if (int.Parse(retValues[0]) < int.Parse(endValues[0]))
             {
@@ -101,12 +101,13 @@ namespace SQFinalProject.TripPlanning
             }
             else East = false;
             
-            while (curCity != endValues[6]) // Stop when current city is the destination's next
+            while (curCity != endValues[6] && East ||
+                   curCity != endValues[7] && !East) // Stop when current city is the destination's next
             {
                 newName = retValues[1];
-                newNext = retValues[6];
                 if (East)
                 {
+                    newNext = retValues[6];
                     if (!int.TryParse(retValues[2], out newDistance))
                     {
                         Logger.Log("Error: Could not parse db return retValue[2] into int newDistance");
@@ -120,6 +121,7 @@ namespace SQFinalProject.TripPlanning
                 }
                 else
                 {
+                    newNext = retValues[7];
                     if (!int.TryParse(retValues[3], out newDistance))
                     {
                         Logger.Log("Error: Could not parse db return retValue[3] into int newDistance");
@@ -136,7 +138,7 @@ namespace SQFinalProject.TripPlanning
                 curCity = newNext;
 
                 conditions["destCity"] = curCity;
-                retValues = Controller.GetCityFromDB(conditions);
+                retValues = Controller.GetCityFromDB(conditions).First().Split(',');
             }
 
             CalculateTotalKM();
