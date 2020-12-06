@@ -189,16 +189,47 @@ namespace SQFinalProject.UI {
             {
                 CarrierSelLBL.Visibility = Visibility.Visible;
                 CarrierSelector.Visibility = Visibility.Visible;
+                CarrierDetails.Visibility = Visibility.Visible;
             }
             else 
             {
                 CarrierSelLBL.Visibility = Visibility.Collapsed;
                 CarrierSelector.Visibility = Visibility.Collapsed;
+                CarrierDetails.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
+        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e ) 
+        {    
+            e.Handled = true;
+            CarrierDetails.ItemsSource = null;
+            currCarrier = new ObservableCollection<Carrier>();
 
+            if ( OrderList.SelectedIndex != -1 )
+            {
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
+
+                List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
+
+                currCarrier.Add( new Carrier (currStrCarrier) );
+                //orderSelected = true;
+
+                /*List <Carrier> carriersLst = Controller.SetupCarriers();
+                List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+
+                foreach ( string s in availCarriers ) {
+                    CarrierSelector.Items.Add (s);
+                }//*/
+            }
+            else
+            {
+                //orderSelected = false;
+            }
+
+            CarrierDetails.ItemsSource = currCarrier;
+
+            ShowOrderControls (orderSelected);
         }
     }
 }
