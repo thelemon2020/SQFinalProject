@@ -250,7 +250,7 @@ namespace SQFinalProject.UI {
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append("TMS Internal Report:\n\n");
-                sb.AppendFormat("Period: {0} - {1}, ", split[2], split[3]);;
+                sb.AppendFormat("Period: {0} - {1}, ", split[2], split[3]);
                 sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
 
                 TwoWeekReportBlock.Text += sb.ToString();
@@ -259,7 +259,36 @@ namespace SQFinalProject.UI {
 
         private void GetAtReports_Click(object sender, RoutedEventArgs e)
         {
+            e.Handled = true;
+            AllTimeReportBlock.Text = string.Empty;
 
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            fields.Add("*");
+            conditions.Add("type", "All-Time");
+            Controller.TMS.MakeSelectCommand(fields, "report", conditions, null);
+
+            sqlReturn = Controller.TMS.ExecuteCommand();
+
+            if (sqlReturn == null || sqlReturn.Count == 0)
+            {
+                AllTimeReportBlock.Text = "No Reports to Display.\n";
+                return;
+            }
+
+            foreach (string s in sqlReturn)
+            {
+                string[] split = s.Split(',');
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("TMS Internal Report:\n\n");
+                sb.AppendFormat("Period: {0}, ", split[1]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+
+                AllTimeReportBlock.Text += sb.ToString();
+            }
         }
     }
 }
