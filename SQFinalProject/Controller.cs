@@ -189,6 +189,25 @@ namespace SQFinalProject
             return sqlReturn;
         }
 
+
+        /// \brief A method to grab all contracts currently in the TMS database
+        /// \details <b>Details</b>
+        /// A method that returns all entries in the tms marketplace as a List of strings
+        /// \param - N/A
+        /// \returns - sqlreturn - <b>List<string, string></b> - a list of results from the database query
+        /// 
+        /// \see SelectContract(Dictionary<string, string> conditions)
+        public static List<string> GetAllContractsFromTMS()
+        {
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            string table = "Contract";
+            TMS.MakeSelectCommand(fields, table, null, null);
+            List<string> sqlReturn = new List<string>();
+            sqlReturn = TMS.ExecuteCommand();
+            return sqlReturn;
+        }
+
         /// \brief A method to grab a city from the TMS database
         /// \details <b>Details</b>
         /// A method that returns a city from the routes table, specified by the conditions parameter
@@ -514,6 +533,7 @@ namespace SQFinalProject
             return sb.ToString();
         }
 
+        // Returns the highest TripID value in the TMS DB
         public static int GetLastTripID()
         {
             int retval = 0;
@@ -527,12 +547,51 @@ namespace SQFinalProject
             return retval;
         }
 
+        // Returns the FTL rate of a carrier if 0 or LTL rate if 1 
+        public static double GetRate(int carrierID, int qty)
+        {
+            double rate = 0;
+
+            List<string> fields = new List<string>();
+            if (qty == 0 || qty == 26) fields.Add("FTLRate");
+            else fields.Add("LTLRate");
+            string table = "carrier";
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("carrierid", carrierID.ToString());
+            TMS.MakeSelectCommand(fields, table, conditions, null);
+            List<string> response = new List<string>();
+            response = TMS.ExecuteCommand();
+            rate = double.Parse(response.First());
+
+            return rate;
+        }
+
+        // Saves the truck to `trip` and each tripline to `tripline` in TMS
         public static void SaveTripToDB(TripPlanning.Truck truck)
         {
-            List<string> fields = new List<string>();
-            
-            fields.Add(truck.TripID.ToString());
-            //fields.Add(morethings);
+            List<string> values = new List<string>();
+            int tmpFlag = 0;
+            if (truck.IsComplete) tmpFlag = 1;
+            values.Add(truck.TripID.ToString());
+            values.Add(truck.CarrierID.ToString());
+            values.Add(truck.BillTotal.ToString());
+            values.Add(tmpFlag.ToString());
+            TMS.MakeInsertCommand("Trip", values);
+            TMS.ExecuteCommand();
+            foreach (TripPlanning.TripLine line in truck.Contracts)
+            {
+                values.Clear();
+                values.Add(line.ContractID.ToString());
+                values.Add(line.TripID.ToString());
+                values.Add(line.Quantity.ToString());
+                values.Add(line.DaysWorked.ToString());
+                values.Add(line.Distance.ToString());
+                if (line.IsDelivered) tmpFlag = 1;
+                else tmpFlag = 0;
+                values.Add(tmpFlag.ToString());
+                TMS.MakeInsertCommand("tripline", values);
+                TMS.ExecuteCommand();
+            }
         }
     }
 }

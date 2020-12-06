@@ -63,6 +63,7 @@ namespace SQFinalProject.TripPlanning
             Origin = contract.Origin;
             Destination = contract.Destination;
             VanType = contract.VanType;
+            TotalQuantity = contract.Quantity;
             Rate = 0.0;
             HoursWorked = 0.0;
             HoursDriven = 0.0;
@@ -87,7 +88,7 @@ namespace SQFinalProject.TripPlanning
         {
             bool success = false;
 
-            if (contract.Quantity + TotalQuantity <= kMaxPallets)
+            if (contract.Quantity + TotalQuantity <= kMaxPallets && TotalQuantity != 0)
             {
                 Contracts.Add(contract);
                 if (!ThisRoute.AddCity(contract.Destination))    // False if route was modified
@@ -111,14 +112,16 @@ namespace SQFinalProject.TripPlanning
         public void SimulateDay()
         {
 
+
             HoursWorked = 0.0;
             HoursDriven = 0.0;
 
             if (ThisRoute.Cities[0].Name == Origin)
-            {   // Load contracts if the truck is still in the origin city
+            {   // Load contracts and determine charges if the truck is still in the origin city
+                TotalCost();
                 LoadContracts();
             }
-            while(kMaxTotalHours >= HoursWorked + ThisRoute.Cities[0].Time && kMaxDrivingHours < HoursDriven + ThisRoute.Cities[0].Time)
+            while(kMaxTotalHours >= HoursWorked + ThisRoute.Cities[0].Time && kMaxDrivingHours > HoursDriven + ThisRoute.Cities[0].Time && !IsComplete)
             {
                 for (int i = 0; i < Contracts.Count(); i++)
                 {
@@ -127,17 +130,11 @@ namespace SQFinalProject.TripPlanning
                         Unload(i);
                     }
                 }
-                ContinueRoute();
+                if (!IsComplete) ContinueRoute();
             }
-
+            // Increment additiontal days worked counter and add associated surcharge
             DaysWorked++;
-            if (Contracts[0].IsDelivered == true)
-            {
-                if (Contracts.Count() > 1 && Contracts[1].IsDelivered == true)
-                {
-                    IsComplete = true;
-                }
-            }
+            BillTotal += 150;
         }
         /// \brief A method to simulate the truck continuing to the next city
         /// \details <b>Details</b>
@@ -184,6 +181,7 @@ namespace SQFinalProject.TripPlanning
         {
             bool allDelivered = true;
             HoursWorked += 2;
+            Contracts[index].DaysWorked = DaysWorked;
             Contracts[index].IsDelivered = true;
 
             foreach (TripLine c in Contracts) if (c.IsDelivered == false) allDelivered = false;
@@ -196,12 +194,15 @@ namespace SQFinalProject.TripPlanning
         
         public void TotalCost()
         {
-            
+            Rate = Controller.GetRate(CarrierID, TotalQuantity);
+            if (Rate > 1) BillTotal = (ThisRoute.TotalDistance * Rate) * ((ReeferRate * VanType) + 1);
+            else BillTotal = (ThisRoute.TotalDistance * Rate * TotalQuantity) * ((ReeferRate * VanType) + 1);
+            //Round to 2 decimal places
+            BillTotal = Math.Round(BillTotal, 2);
         }
 
         public void SaveToDB()
         {
-            foreach (TripLine c in Contracts) c.SaveToDB();
             Controller.SaveTripToDB(this);
         }
     }

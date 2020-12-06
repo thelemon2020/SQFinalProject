@@ -67,11 +67,5 @@ namespace SQFinalProject.TripPlanning
             Distance = int.Parse(splitDetails[4]);
             IsDelivered = bool.Parse(splitDetails[5]);
         }
-
-        public void SaveToDB()
-        {
-            //Update contract with distance
-            //Modify tripline
-        }
     }
 }

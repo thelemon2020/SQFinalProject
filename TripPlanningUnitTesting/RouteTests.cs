@@ -29,17 +29,47 @@ namespace SQFinalProject.Tests
             List<Carrier> carriers = Controller.SetupCarriers();
             Dictionary<string, string> cnd = new Dictionary<string, string>();
             cnd.Add("status", "IN-PROGRESS");
-            List <Contract> contracts = new List<Contract>();
+            List<Contract> contracts = new List<Contract>();
             List<string> details = Controller.GetAllContractsFromDB();
             foreach (string c in details)
             {
                 contracts.Add(new Contract(c));
             }
-            List<string> s = Controller.FindCarriersForContract(contracts[1], carriers);
-            Truck theTruck = new Truck(contracts[1], carriers[1], contracts[1].Quantity - 2);
-            theTruck.AddContract(new TripLine(contracts[2], theTruck.TripID, 2));
+            List<string> s = Controller.FindCarriersForContract(contracts[2], carriers);
+            Truck theTruck = new Truck(contracts[2], carriers[2], contracts[2].Quantity - 2);
+            //theTruck.AddContract(new TripLine(contracts[2], theTruck.TripID, 2));
+            theTruck.SimulateDay();
 
+            Assert.AreEqual("London", theTruck.ThisRoute.Cities.First().Name);
         }
+
+        [TestMethod()]
+        public void TruckAddContractTest()
+        {
+            Controller.LoadConfig();
+            List<Carrier> carriers = Controller.SetupCarriers();
+            Dictionary<string, string> cnd = new Dictionary<string, string>();
+            cnd.Add("status", "IN-PROGRESS");
+            List<Contract> contracts = new List<Contract>();
+            List<string> details = Controller.GetAllContractsFromTMS();
+            foreach (string c in details)
+            {
+                contracts.Add(new Contract(c));
+            }
+
+            string fakeString = "8,Ace McVey,1,5,Windsor,Ottawa,0,IN-PROGRESS";
+            Contract fakeContract = new Contract(fakeString);
+            List<string> s = Controller.FindCarriersForContract(contracts[4], carriers);
+            Truck theTruck = new Truck(contracts[4], carriers[2], contracts[4].Quantity);
+            theTruck.AddContract(new TripLine(fakeContract, theTruck.TripID, fakeContract.Quantity));
+            theTruck.SimulateDay();
+            theTruck.SimulateDay();
+
+            theTruck.SaveToDB();
+
+            Assert.AreEqual("Toronto", theTruck.ThisRoute.Cities[0].Name);
+        }
+
         /// \brief Test method to test that the GetCities Method can get a city from the tms database
         /// \details <b>Details</b>
         /// Creates a test route and tries to get the route for London to Toronto from the tms database,

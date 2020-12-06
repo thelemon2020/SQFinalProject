@@ -138,7 +138,7 @@ namespace SQFinalProject.TripPlanning
                 curCity = newNext;
 
                 conditions["destCity"] = curCity;
-                retValues = Controller.GetCityFromDB(conditions).First().Split(',');
+                if (curCity != "END") retValues = Controller.GetCityFromDB(conditions).First().Split(',');
             }
 
             CalculateTotalKM();
