@@ -37,6 +37,9 @@ namespace SQFinalProject.ContactMgmtBilling
             FTLRate = double.Parse(details[2]);
             LTLRate = double.Parse(details[3]);
             ReefCharge = double.Parse(details[4]);
+            DepotCities = new List<string>();
+            FTLA = new List<int>();
+            LTLA = new List<int>();
         }
 
         public double CalculateCost(Contract contract)

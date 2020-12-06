@@ -50,6 +50,7 @@ namespace SQFinalProject
                     foreach (string dbDetails in splitByDB)//iterate through string
                     {
                         string[] details = dbDetails.Split(' '); //split string into individual fields
+                        details[1] = details[1].TrimEnd('\r');
                         if (details[0] == "TMS") //If the info is for the TMS database
                         {
                             List<string> TMS_Database = new List<string>();
@@ -57,6 +58,7 @@ namespace SQFinalProject
                             {
                                 TMS_Database.Add(details[i]);
                             }
+                            TMS_Database[4] = TMS_Database[4].TrimEnd('\r');
                             TMS = new Database(TMS_Database[0], TMS_Database[1], TMS_Database[2], TMS_Database[3], TMS_Database[4]);
 
                             success = true;
@@ -68,6 +70,7 @@ namespace SQFinalProject
                             {
                                 MarketPlace_Database.Add(details[i]);
                             }
+                            MarketPlace_Database[4] = MarketPlace_Database[4].TrimEnd('\r');
                             MarketPlace = new Database(MarketPlace_Database[0], MarketPlace_Database[1], MarketPlace_Database[2], MarketPlace_Database[3], MarketPlace_Database[4]);
 
                             success = true;
@@ -378,8 +381,8 @@ namespace SQFinalProject
                     if(tmpSplit[0] == c.CarrierName)
                     {
                         c.DepotCities.Add(tmpSplit[1]);
-                        c.FTLA[i] = int.Parse(tmpSplit[2]); // adding the availability could likely use some work. this should ideally be
-                        c.LTLA[i] = int.Parse(tmpSplit[3]); // added for every depot city rather than just to the carrier as a whole.
+                        c.FTLA.Add(int.Parse(tmpSplit[2])); // adding the availability could likely use some work. this should ideally be
+                        c.LTLA.Add(int.Parse(tmpSplit[3])); // added for every depot city rather than just to the carrier as a whole.
                     }
                     i++;
                 }
@@ -403,6 +406,7 @@ namespace SQFinalProject
 
             foreach(Carrier carrier in carriers) //iterate through all carriers, they should already be setup
             {
+                i = 0;
                 foreach(string city in carrier.DepotCities) // for one carrier, check through all their depot cities to see if one matches
                 {                                           // the contract origin city
                     if(contract.Origin == city) // if the contract origin city matches one of the depot cities of a carrier we check next
@@ -512,13 +516,15 @@ namespace SQFinalProject
 
         public static int GetLastTripID()
         {
+            int retval = 0;
             List<string> fields = new List<string>();
             fields.Add("MAX(TripID)");
             string table = "Trip";
             TMS.MakeSelectCommand(fields, table, null, null);
             List<string> LastTripID = TMS.ExecuteCommand();
+            if (LastTripID != null) retval = int.Parse(LastTripID.First());
 
-            return int.Parse(LastTripID.First());
+            return retval;
         }
 
         public static void SaveTripToDB(TripPlanning.Truck truck)

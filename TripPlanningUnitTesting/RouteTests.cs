@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQFinalProject;
 using SQFinalProject.TripPlanning;
+using SQFinalProject.ContactMgmtBilling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,24 @@ namespace SQFinalProject.Tests
     [TestClass()]
     public class RouteTests
     {
+        [TestMethod()]
+        public void TestTruckContructor()
+        {
+            Controller.LoadConfig();
+            List<Carrier> carriers = Controller.SetupCarriers();
+            Dictionary<string, string> cnd = new Dictionary<string, string>();
+            cnd.Add("status", "IN-PROGRESS");
+            List <Contract> contracts = new List<Contract>();
+            List<string> details = Controller.GetAllContractsFromDB();
+            foreach (string c in details)
+            {
+                contracts.Add(new Contract(c));
+            }
+            List<string> s = Controller.FindCarriersForContract(contracts[1], carriers);
+            Truck theTruck = new Truck(contracts[1], carriers[1], contracts[1].Quantity - 2);
+            theTruck.AddContract(new TripLine(contracts[2], theTruck.TripID, 2));
+
+        }
         /// \brief Test method to test that the GetCities Method can get a city from the tms database
         /// \details <b>Details</b>
         /// Creates a test route and tries to get the route for London to Toronto from the tms database,
@@ -37,7 +56,7 @@ namespace SQFinalProject.Tests
 
             test.GetCities("London", "Toronto");
             
-            Assert.AreEqual(test.cities.First().name, "London");
+            Assert.AreEqual(test.Cities.First().Name, "London");
             
         }
 
@@ -57,7 +76,7 @@ namespace SQFinalProject.Tests
 
             test.GetCities("London", "Toronto");
 
-            Assert.IsNotNull(test.east);
+            Assert.IsNotNull(test.East);
 
         }
 
@@ -77,7 +96,7 @@ namespace SQFinalProject.Tests
 
             test.GetCities("Windsor", "Ottawa");
 
-            Assert.AreEqual("Ottawa", test.cities.Last().name);
+            Assert.AreEqual("Ottawa", test.Cities.Last().Name);
 
         }
 
@@ -98,7 +117,7 @@ namespace SQFinalProject.Tests
             test.GetCities("London", "Toronto");
             test.CalculateTotalTime();
 
-            Assert.AreEqual(3, test.totalTime);
+            Assert.AreEqual(3, test.TotalTime);
 
         }
 
@@ -119,7 +138,7 @@ namespace SQFinalProject.Tests
             test.GetCities("Windsor", "Ottawa");
             test.CalculateTotalTime();
 
-            Assert.AreEqual(12.15, test.totalTime);
+            Assert.AreEqual(12.15, test.TotalTime);
 
         }
 
@@ -140,7 +159,7 @@ namespace SQFinalProject.Tests
             test.GetCities("London", "Toronto");
             test.CalculateTotalKM();
 
-            Assert.AreEqual(196, test.totalDistance);
+            Assert.AreEqual(196, test.TotalDistance);
 
         }
 
@@ -161,7 +180,7 @@ namespace SQFinalProject.Tests
             test.GetCities("London", "Toronto");
             test.ArriveAtStop();
 
-            Assert.AreEqual("Hamilton", test.cities[0].name);
+            Assert.AreEqual("Hamilton", test.Cities[0].Name);
 
         }
     }
