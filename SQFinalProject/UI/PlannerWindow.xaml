@@ -73,7 +73,8 @@
                     <Grid Grid.Column="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="2*" />
                             <RowDefinition Height="2*" />
                             <RowDefinition Height="*" />
@@ -135,6 +136,20 @@
                                 </ListBox>
                             </Border>
                         </Border>
+
+                        <Grid Grid.Row="1">
+                            <!-- Sets up the column definitions for the user name row -->
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Sets up the user name prompt and text box -->
+                            <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" Visibility="Collapsed"/>
+                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Visibility="Collapsed" SelectionChanged="CarrierSelector_SelectionChanged"/>
+
+
+                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>

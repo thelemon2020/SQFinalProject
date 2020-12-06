@@ -31,15 +31,17 @@ namespace SQFinalProject.UI {
     public partial class PlannerWindow : Window
     {
         //! Properties
-
-        public string userName;                                         //<Stores the user name of the current user
+        private bool orderSelected { get; set; }
+        private string userName { get; set; }                                         //<Stores the user name of the current user
         ObservableCollection<Contract> ordersCollection { get; set; }
-        ObservableCollection<Contract> orderDetails { get; set; }
+        ObservableCollection<Contract> currOrder { get; set; }
+        ObservableCollection<Carrier>  currCarrier { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
 
             userName = name;
+            orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
         }
 
@@ -155,14 +157,48 @@ namespace SQFinalProject.UI {
             e.Handled = true;
 
             OrderDetails.ItemsSource = null;
+            CarrierSelector.Items.Clear() ;
 
-            orderDetails = new ObservableCollection<Contract>();
+            currOrder = new ObservableCollection<Contract>();
 
-            if ( OrderList.SelectedIndex != -1 ) {
-                orderDetails.Add( (Contract) OrderList.SelectedItem );
+            if ( OrderList.SelectedIndex != -1 )
+            {
+                currOrder.Add( (Contract) OrderList.SelectedItem );
+                orderSelected = true;
+
+                List <Carrier> carriersLst = Controller.SetupCarriers();
+                List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+
+                foreach ( string s in availCarriers ) {
+                    CarrierSelector.Items.Add (s);
+                }
+            }
+            else
+            {
+                orderSelected = false;
             }
 
-            OrderDetails.ItemsSource = orderDetails;
+            OrderDetails.ItemsSource = currOrder;
+
+            ShowOrderControls (orderSelected);
+        }
+
+        private void ShowOrderControls ( bool doShow ) {
+
+            if ( doShow ) 
+            {
+                CarrierSelLBL.Visibility = Visibility.Visible;
+                CarrierSelector.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                CarrierSelLBL.Visibility = Visibility.Collapsed;
+                CarrierSelector.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
+
         }
     }
 }
