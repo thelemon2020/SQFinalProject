@@ -36,10 +36,11 @@ namespace SQFinalProject.UI {
         ObservableCollection<Contract> ordersCollection { get; set; }
         ObservableCollection<Contract> currOrder { get; set; }
         ObservableCollection<Carrier>  currCarrier { get; set; }
+        ObservableCollection<string> Reports { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
-
+            Reports = new ObservableCollection<string>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -198,6 +199,66 @@ namespace SQFinalProject.UI {
         }
 
         private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
+
+        }
+
+        private void GenRep_Click(object sender, RoutedEventArgs e)
+        {
+            int weeks = SummaryTimeFrame.SelectedIndex;
+            string report = "";
+            switch(weeks)
+            {
+                case 1:
+                    weeks = 2;
+                    report = Controller.GenerateReport(weeks);
+                    break;
+
+                case 2:
+                    report = Controller.GenerateReport();
+                    break;
+
+                default:
+                    break;
+            }
+            Reports.Add(report);
+        }
+
+        private void Get2wReports_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            TwoWeekReportBlock.Text = string.Empty;
+
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            fields.Add("*");
+            conditions.Add("type", "2-week");
+            Controller.TMS.MakeSelectCommand(fields, "report", conditions, null);
+
+            sqlReturn = Controller.TMS.ExecuteCommand();
+
+            if(sqlReturn == null || sqlReturn.Count == 0)
+            {
+                TwoWeekReportBlock.Text = "No Reports to Display.\n";
+                return;
+            }
+
+            foreach(string s in sqlReturn)
+            {
+                string[] split = s.Split(',');
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("TMS Internal Report:\n\n");
+                sb.AppendFormat("Period: {0} - {1}, ", split[2], split[3]);;
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+
+                TwoWeekReportBlock.Text += sb.ToString();
+            }
+        }
+
+        private void GetAtReports_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

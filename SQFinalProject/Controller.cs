@@ -490,6 +490,7 @@ namespace SQFinalProject
         {
             string start = "";
             string end = "";
+            string type = "";
             if(weeks == 0) // this will be an "all-time" reports
             {
                 start = DateTime.MinValue.ToString();
@@ -523,14 +524,32 @@ namespace SQFinalProject
             if (weeks == 0)
             {
                 sb.Append("Period: All-Time, ");
+                type = "All-Time";
             }
             else
             {
                 sb.AppendFormat("Period: {0} - {1}, ", start, end);
+                type = "2-Week";
             }
             sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}", invoiceCount, totalCost);
+            string report = sb.ToString();
 
-            return sb.ToString();
+            fields.Clear();
+            fields.Add("*");
+            TMS.MakeSelectCommand(fields, "report", null, null);
+            int reportCount = TMS.ExecuteCommand().Count + 1;
+
+            fields.Clear();
+            fields.Add(reportCount.ToString());
+            fields.Add(type);
+            fields.Add(start);
+            fields.Add(end);
+            fields.Add(invoiceCount.ToString());
+            fields.Add(totalCost.ToString());
+
+            TMS.MakeInsertCommand("report", fields);
+            
+            return report;
         }
 
         // Returns the highest TripID value in the TMS DB

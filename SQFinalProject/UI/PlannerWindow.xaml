@@ -242,12 +242,56 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="NumDays" Width="150"></TextBox>
                         <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="05" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="AdvTimeBtn" Width="130" Content="Advance Time"/>
 
-                        <Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="GenReportBtn" Width="130" Content="Generate Report"/>
+                        <Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="GenReportBtn" Width="130" Content="Generate Report" Click="GenRep_Click"/>
 
                         <Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ReloadBtn" Width="130" Content="Reload From Database"/>
                     </Grid>
                 </Grid>
 
+            </TabItem>
+            <TabItem Header="Reports">
+                <Border BorderBrush="Black" BorderThickness="2" CornerRadius="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">TMS 2 Week Reports</Label>
+                        <Label FontSize="20" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">TMS All-Time Reports</Label>
+                        <Border Grid.Row="1"  BorderBrush="Black" BorderThickness="2">
+                            <TextBlock x:Name="TwoWeekReportBlock" FontSize="12">
+                                <TextBlock.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="10 0 0 0"></Setter>
+                                    </Style>
+                                </TextBlock.Resources>
+                            </TextBlock>
+                        </Border>
+
+                        <Border BorderBrush="Black" BorderThickness="2" Grid.Row="1" Grid.Column="1">
+                            <TextBlock x:Name="AllTimeReportBlock" FontSize="12">
+                                <TextBlock.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="10 0 0 0"></Setter>
+                                    </Style>
+                                </TextBlock.Resources>
+                            </TextBlock>
+                        </Border>
+
+                        <Button Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="center" 
+                                Height="30" Width="125"
+                                Content="Get 2 Week Reports" Click="Get2wReports_Click"></Button>
+
+                        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Height="30" Width="125"
+                                Content="Get All-Time Reports" Click="GetAtReports_Click" ></Button>
+                    </Grid>
+                </Border>
             </TabItem>
             <TabItem Header="Testing">
                 <TextBox x:Name="txtMain"
