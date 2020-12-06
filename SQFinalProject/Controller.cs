@@ -244,6 +244,37 @@ namespace SQFinalProject
         }
 
 
+        public static void AddContractToTMS(Contract contract)
+        {
+            // get the count of contracts in the db for the new contract id
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            TMS.MakeSelectCommand(fields, "contract", null, null);
+            int count = 0;
+            try
+            {
+                count = TMS.ExecuteCommand().Count;
+            }
+            catch(Exception e)
+            {
+                count = 0;
+            }
+
+            // get the values from the contract to be added to the database table
+            string[] tmpDeets = contract.ToString().Split(',');
+            List<string> values = new List<string>();
+
+            // add the values into the list to be inserted to the db
+            values.Add(count.ToString());
+            foreach(string s in tmpDeets)
+            {
+                values.Add(s);
+            }
+            TMS.MakeInsertCommand("contract", values);
+            TMS.ExecuteCommand();
+        }
+
+
         /// \brief A method that is used to add an account to the tms database
         /// \details <b>Details</b>
         /// A method which takes a single account, breaks down its values into string, and adds them into a list to be
