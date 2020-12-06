@@ -50,6 +50,7 @@ namespace SQFinalProject.ContactMgmtBilling
         {
             Contracts = new Dictionary<int, Contract>();
             UncalculatedContracts = new Dictionary<int, Contract>();
+            Invoices = new List<string>();
             Balance = 0.00;
         }
 
@@ -69,6 +70,7 @@ namespace SQFinalProject.ContactMgmtBilling
             AccountName = contract.ClientName;
             Contracts = new Dictionary<int, Contract>();
             UncalculatedContracts = new Dictionary<int, Contract>();
+            Invoices = new List<string>();
             AddNewContract(contract.ID, contract);
         }
 
@@ -88,6 +90,7 @@ namespace SQFinalProject.ContactMgmtBilling
             AccountName = contracts[0].ClientName;
             Contracts = new Dictionary<int, Contract>();
             UncalculatedContracts = new Dictionary<int, Contract>();
+            Invoices = new List<string>();
             foreach (Contract contract in contracts)
             {
                 AddNewContract(contract.ID, contract);

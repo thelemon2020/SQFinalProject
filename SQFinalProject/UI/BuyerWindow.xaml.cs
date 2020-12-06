@@ -189,11 +189,13 @@ namespace SQFinalProject.UI {
         {
             bool isIn = false;
             List<string> fields = new List<string>();
-            fields.Add("*");
+            fields.Add("accountid");
+            fields.Add("clientName");
             Dictionary<string, string> conditions = new Dictionary<string, string>();
             conditions.Add("clientname", name);
             Controller.TMS.MakeSelectCommand(fields, "account", conditions, null);
-            if (Controller.TMS.ExecuteCommand().Count > 0)
+            List<string> sqlReturn = Controller.GetAccountsFromTMS(fields, conditions);
+            if (sqlReturn != null)
             {
                 isIn = true;
             }
@@ -320,6 +322,45 @@ namespace SQFinalProject.UI {
             toSend.Status = "CLOSED";
             OrderList.ItemsSource = null;
             OrderList.ItemsSource = ordersCollection;
+
+            toSend.Cost = 2000.67;
+            toSend.TripComplete = true;
+
+            // Get account from database
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            fields.Add("accountid");
+            fields.Add("clientName");
+
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("clientName", toSend.ClientName);
+
+            Controller.TMS.MakeSelectCommand(fields, "account", conditions, null);
+            sqlReturn = Controller.TMS.ExecuteCommand();
+            string[] tmpArray = sqlReturn[0].Split(',');
+
+            // Create an account class using the toSend contract
+            Account tmpAcc = new Account(toSend);
+            tmpAcc.AccountID = int.Parse(tmpArray[0]);
+
+            // Use the account and the contract to generate an invoice containing the all necessary IDs and details to identify it
+            string invoice = Controller.GenerateInvoice(tmpAcc, toSend);
+
+            if(invoice != null)
+            {
+                tmpArray = invoice.Split(',');
+                List<string> values = tmpArray.ToList();
+
+                // set up an insert for the invoice
+                Controller.TMS.MakeInsertCommand("invoice", values);
+
+                // Insert the invoice into the correct table
+                Controller.TMS.ExecuteCommand();
+            }
+            else
+            {
+                toSend.Status = "COMPLETED";
+            }
         }
 
         //  METHOD:		OrderList_SelectionChanged
