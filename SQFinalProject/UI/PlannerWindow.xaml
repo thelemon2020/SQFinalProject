@@ -244,8 +244,15 @@
                             </Border>
                         </Border>
 
-                        <Button  x:Name="btnFinalize" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Content="Finalize Shipping" Click="btnFinalize_Click" IsEnabled="False"/>
-                        <Button  x:Name="btnCompleteContract" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" Content="Complete Contract" Click="btnCompleteContract_Click" IsEnabled="False"/>
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button    x:Name="btnFinalize" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Finalize Shipping" Click="btnFinalize_Click" IsEnabled="False"/>
+                            <Button  x:Name="btnCompleteContract" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Complete Contract" Click="btnCompleteContract_Click" IsEnabled="False"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>

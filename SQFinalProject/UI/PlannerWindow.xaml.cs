@@ -205,7 +205,6 @@ namespace SQFinalProject.UI {
                         TruckSelector.Items.Add(truck.TripID);
                     }
 
-                    currPrice = 0;
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
                     QntRem.Text = currQntRem.ToString();
@@ -216,6 +215,12 @@ namespace SQFinalProject.UI {
 
                     currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
                     OrderTrips.ItemsSource = currOrderTrips;
+                } else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) {
+                    OrderState = 2;
+
+                    if ( IsContractComplete() ){
+                        btnCompleteContract.IsEnabled = true;
+                    }
                 }
             }
             else
@@ -232,15 +237,18 @@ namespace SQFinalProject.UI {
 
             if ( doShow == 1 )
             {
+                CarrierSelector.IsEnabled = true;
                 btnCompleteContract.IsEnabled = false;
             }
             else if ( doShow == 2 )
             {
+                CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
             }
             else
             {
+                CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
 
@@ -284,7 +292,6 @@ namespace SQFinalProject.UI {
 
             if ( currOrder[0].JobType == 0 ) {
 
-                currPrice += currCarrier[0].FTLRate;
                 btnAddTruck.IsEnabled = false;
 
             } else {
@@ -297,7 +304,6 @@ namespace SQFinalProject.UI {
                     btnFinalize.IsEnabled = true;
                 } else {
                     truckLoad = 26;
-                    currPrice += currCarrier[0].FTLRate;
                     currQntRem -= 26;
                 }
 
@@ -353,6 +359,28 @@ namespace SQFinalProject.UI {
             GetOrders();
 
             btnCompleteContract.IsEnabled = false;
+        }
+
+        private bool IsContractComplete()
+        {
+            bool isComplete = false;
+
+            List<string> fields = new List<string>();
+            fields.Add("isDelivered");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeSelectCommand(fields, "tripline", conditions, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            if ( results != null && results.Count > 0) {
+                isComplete = true;
+
+                foreach (string result in results)
+                {
+                    isComplete = isComplete && (result == "1");
+                }
+            }
+
+            return isComplete;
         }
 
 

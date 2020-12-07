@@ -19,11 +19,11 @@ namespace SQFinalProject.TripPlanning
     ///
     public class TripLine
     {
-        private const double workDay = 12.0; //!< A constant value of a full workday
-        private const int FTLMaxLoad = 0; //!< A constant value of max load of an FTL truck
-        private const int LTLMaxLoad = 26; //!< Max pallet count for an LTL truck
-        private const int DryVan = 0; //!< The int representation of a dry van
-        private const int ReefVan = 1;//!< The int representation of a reefer van
+        private const double workDay = 12.0;    //!< A constant value of a full workday
+        private const int FTLMaxLoad = 0;       //!< A constant value of max load of an FTL truck
+        private const int LTLMaxLoad = 26;      //!< Max pallet count for an LTL truck
+        private const int DryVan = 0;           //!< The int representation of a dry van
+        private const int ReefVan = 1;          //!< The int representation of a reefer van
         public int ContractID { get; set; }     //!< the contract associated with the trip line
         public int TripID { get; set; }         //!<the truck associated with the trip line
         public int Quantity { get; set; }       //!< quantity of order
@@ -31,6 +31,7 @@ namespace SQFinalProject.TripPlanning
         public int DaysWorked { get; set; }     //!< days(past the first) taken to complete
         public int Distance { get; set; }       //!< distance to complete
         public bool IsDelivered { get; set; }   //!< Flag to mark the payload delivered
+        public float TotalTime { get; set; }   //!< Total time it took to deliver the contract
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
@@ -51,6 +52,7 @@ namespace SQFinalProject.TripPlanning
             DaysWorked = 0;
             Distance = 0;
             IsDelivered = false;
+            TotalTime = 0;
         }
 
         /// \brief Constructor for the TripLine class
@@ -71,6 +73,7 @@ namespace SQFinalProject.TripPlanning
             DaysWorked = int.Parse(splitDetails[3]);
             Distance = int.Parse(splitDetails[4]);
             IsDelivered = bool.Parse(splitDetails[5]);
+            TotalTime = float.Parse(splitDetails[6]); 
         }
 
         public void SaveToDB()

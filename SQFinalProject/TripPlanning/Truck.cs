@@ -39,6 +39,7 @@ namespace SQFinalProject.TripPlanning
         public double ReeferRate { get; set; }          //<The reefer rate of the carrier if the truck is a reefer truck
         public double BillTotal { get; set; }           //<The total price charged by the carrier for the trip
         public bool IsComplete { get; set; }            //<Flag to set trip to complete
+        public float TotalTime { get; set; }              //<Total time it takes to deliver the truck
         public List<TripLine> Contracts { get; set; }   //<A list of contracts that the Truck will have to deliver
         public Route ThisRoute { get; set; }            //<A route object modelling the route to be taken by the truck
 
@@ -63,7 +64,7 @@ namespace SQFinalProject.TripPlanning
             Origin = contract.Origin;
             Destination = contract.Destination;
             VanType = contract.VanType;
-            TotalQuantity = contract.Quantity;
+            TotalQuantity = qty;
             Rate = 0.0;
             HoursWorked = 0.0;
             HoursDriven = 0.0;
@@ -71,6 +72,7 @@ namespace SQFinalProject.TripPlanning
             ReeferRate = carrier.ReefCharge;
             BillTotal = 0.0;
             IsComplete = false;
+            TotalTime = 0;
             Contracts = new List<TripLine> { new TripLine(contract, TripID, qty) };
             ThisRoute = new Route();
             ThisRoute.GetCities(Origin, Destination);
@@ -129,8 +131,14 @@ namespace SQFinalProject.TripPlanning
                     }
                 }
                 if (!IsComplete) ContinueRoute();
+                else break;
             }
             // Increment additiontal days worked counter and add associated surcharge
+            foreach (TripLine c in Contracts)
+            {
+                if (!c.IsDelivered) c.TotalTime += (float)HoursWorked;
+            }
+            TotalTime += (float)HoursWorked;
             DaysWorked++;
             BillTotal += 150;
         }
@@ -180,6 +188,7 @@ namespace SQFinalProject.TripPlanning
             bool allDelivered = true;
             HoursWorked += 2;
             Contracts[index].DaysWorked = DaysWorked;
+            Contracts[index].TotalTime += (float)HoursWorked;
             Contracts[index].IsDelivered = true;
 
             foreach (TripLine c in Contracts) if (c.IsDelivered == false) allDelivered = false;

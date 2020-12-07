@@ -167,7 +167,7 @@ namespace SQFinalProject.TripPlanning
                 }
             }
             // Add to the list and recalculate totals if it's not already there
-            if (!exists)
+            if (!exists && newDest != "END")
             {
                 GetCities(Cities.Last().Next, newDest);
             }
