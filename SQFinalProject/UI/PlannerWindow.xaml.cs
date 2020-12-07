@@ -219,28 +219,19 @@ namespace SQFinalProject.UI {
 
             if ( doShow == 1 )
             {
-                CarrierSelLBL.Visibility = Visibility.Visible;
-                CarrierSelector.Visibility = Visibility.Visible;
-                CarrierDetails.Visibility = Visibility.Visible;
-                btnAddTruck.Visibility = Visibility.Visible;
-                lblQuantity.Visibility = Visibility.Visible;
-                QntRem.Visibility = Visibility.Visible;
-                TripsBorder.Visibility = Visibility.Visible;
-                btnFinalize.Visibility = Visibility.Visible;
+                btnCompleteContract.IsEnabled = false;
+            }
+            else if ( doShow == 2 )
+            {
+                btnAddTruck.IsEnabled = false;
+                btnFinalize.IsEnabled = false;
             }
             else
             {
-                CarrierSelLBL.Visibility = Visibility.Collapsed;
-                CarrierSelector.Visibility = Visibility.Collapsed;
-                CarrierDetails.Visibility = Visibility.Collapsed;
-                btnAddTruck.Visibility = Visibility.Collapsed;
-                lblQuantity.Visibility = Visibility.Collapsed;
-                QntRem.Visibility = Visibility.Collapsed;
-                TripsBorder.Visibility = Visibility.Collapsed;
-                btnFinalize.Visibility = Visibility.Collapsed;
-
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
+
+                btnCompleteContract.IsEnabled = false;
             }
         }
 
@@ -305,8 +296,8 @@ namespace SQFinalProject.UI {
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
-            newTruck.Contracts.Last().SaveToDB ();
-            newTruck.SaveToDB ();
+            Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
+            Controller.SaveTripToDB ( newTruck );
             currOrder[0].Quantity = currQntRem;
 
             currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
@@ -314,7 +305,7 @@ namespace SQFinalProject.UI {
         }
 
         private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
-            
+
 
             currOrder[0].Status = "IN-PROGRESS";
             Dictionary<string, string> values = new Dictionary<string, string>();
@@ -333,6 +324,22 @@ namespace SQFinalProject.UI {
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+        private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
+
+
+            currOrder[0].Status = "COMPLETE";
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("status", currOrder[0].Status);
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
+            Controller.TMS.ExecuteCommand();
+
+            GetOrders();
+
+            btnCompleteContract.IsEnabled = false;
+        }
 
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -431,7 +438,8 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+
+
         }
     }
 }
