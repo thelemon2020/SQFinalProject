@@ -46,6 +46,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public int VanType { get; set; } //!< The van type, 0 or 1 -> Dry van or Reefer van 
         public bool TripComplete { get; set; } //!< A boolean which represents if the trip has been completed or not
         public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
+        public string Direction { get; set; }
         public Carrier Carrier { get; set; } //!<The name of the carrier delivering the contract
         public List<TripLine> Trips { get; set; } //!< A list of the trips required to deliver the full order
         public string Status { get; set; }
@@ -70,6 +71,7 @@ namespace SQFinalProject.ContactMgmtBilling
             Destination = splitDetails[4];
             VanType = int.Parse(splitDetails[5]);
             Status = "NEW";
+            GetEastOrWest();
         }
 
         public Contract(string details, int flag)
@@ -85,10 +87,40 @@ namespace SQFinalProject.ContactMgmtBilling
             VanType = int.Parse(splitDetails[6]);
             Status = splitDetails[7];
             AccountID = int.Parse(splitDetails[8]);
+            GetEastOrWest();
         }
 
         public Contract()
         {
+        }
+
+        private void GetEastOrWest()
+        {
+            List<string> field = new List<string>();
+            field.Add("routeID");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("destCity", Origin);
+            Controller.TMS.MakeSelectCommand(field,"route",conditions, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            int originID;
+            int.TryParse(results[0], out originID);
+            field = new List<string>();
+            field.Add("routeID");
+            conditions = new Dictionary<string, string>();
+            conditions.Add("destCity", Destination);
+            Controller.TMS.MakeSelectCommand(field, "route", conditions, null);
+            results = Controller.TMS.ExecuteCommand();
+            int destID;
+            int.TryParse(results[0], out destID);
+            int isEast = (originID - destID);
+            if (isEast < 0)
+            {
+                Direction = "East";
+            }
+            else
+            {
+                Direction = "West";
+            }
         }
 
         /// \brief A method to reset the ID count of active contracts

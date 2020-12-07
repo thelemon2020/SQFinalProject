@@ -355,7 +355,7 @@ namespace SQFinalProject.UI {
                 TruckSelector.Items.Add("New Truck");
                 foreach (Truck truck in Trucks)
                 {
-                    if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0) && (truck.CarrierID.ToString() == currStrCarrier[0]))
+                    if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0) && (truck.CarrierID.ToString() == currStrCarrier[0]) && (truck.Direction == currOrder[0].Direction))
                     {
                         truckCollection.Add(truck);
                         TruckSelector.Items.Add(truck.TripID);

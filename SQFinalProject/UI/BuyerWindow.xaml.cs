@@ -255,6 +255,15 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		GetCustomers
+        /// \brief Gets all the customers in the customer database
+        /// \details <b>Details</b>
+        ///    Queries the account table for all client names 
+        /// 
+        /// \param - <b>None</b>
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void GetCustomers()
         {
             CustomerCombo.Items.Clear();
@@ -333,9 +342,6 @@ namespace SQFinalProject.UI {
             OrderList.ItemsSource = null;
             OrderList.ItemsSource = ordersCollection;
 
-            toSend.Cost = 2000.67;
-            toSend.TripComplete = true;
-
             // Get account from database
             List<string> sqlReturn = new List<string>();
             List<string> fields = new List<string>();
@@ -412,6 +418,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		CustomerCombo_SelectionChanged
+        /// \brief Updates the customer collection depending on selection
+        /// \details <b>Details</b>
+        ///     Sets the CustomerList itemssource to null, gets a new list of customers and resets the itemssource to the collection
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void CustomerCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -420,6 +436,14 @@ namespace SQFinalProject.UI {
             CustomerList.ItemsSource = customerPageCollection;
         }
 
+        //  METHOD:		getCustomerContracts
+        /// \brief Gets all the contracts associated with that client
+        /// \details <b>Details</b>
+        ///     Queries the contract table to get all contracts associated with that client
+        /// 
+        /// \param - <b>None</b>
+        /// \return - <b>Nothing</b>
+        ///
         private void getCustomerContracts()
         {
             double totalCost = 0;
@@ -464,6 +488,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		CustomerList_SelectionChanged
+        /// \brief Prevents a page refresh
+        /// \details <b>Details</b>
+        ///     Sets Handled to true to prevent a page refresh
+        /// 
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void CustomerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
