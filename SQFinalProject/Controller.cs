@@ -258,6 +258,7 @@ namespace SQFinalProject
             }
             catch(Exception e)
             {
+                Logger.Log("Server Error - " + e.Message);
                 count = 0;
             }
 

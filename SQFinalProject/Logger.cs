@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SQFinalProject
 {
@@ -41,6 +42,7 @@ namespace SQFinalProject
                 }
                 catch (IOException e)
                 {
+                    MessageBox.Show(e.Message, "Logger Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return 1;
                 }
             }
@@ -59,8 +61,9 @@ namespace SQFinalProject
                         logFile = sr.ReadToEnd();
                     }
                 }
-                catch
+                catch (IOException e)
                 {
+                    MessageBox.Show(e.Message, "Logger Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     logFile = null;
                 }
             }
