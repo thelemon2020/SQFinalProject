@@ -111,8 +111,6 @@ namespace SQFinalProject.TripPlanning
         //
         public void SimulateDay()
         {
-
-
             HoursWorked = 0.0;
             HoursDriven = 0.0;
 

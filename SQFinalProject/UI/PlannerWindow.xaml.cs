@@ -424,5 +424,16 @@ namespace SQFinalProject.UI {
                 AllTimeReportBlock.Text += sb.ToString();
             }
         }
+
+        private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int days = int.Parse(NumDays.Text);
+
+        }
+
+        private void NumDays_TxtChng(object sender, TextChangedEventArgs e)
+        {
+            AdvTimeBtn.IsEnabled = true;
+        }
     }
 }
