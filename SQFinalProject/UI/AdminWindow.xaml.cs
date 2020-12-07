@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -32,15 +33,32 @@ namespace SQFinalProject.UI {
     /// 
     public partial class AdminWindow : Window {
         //! Properties
+        public static ObservableCollection<string> combo = new ObservableCollection<string>() { "a", "b", "p" };
+        public static ObservableCollection<string> Combo
+        {
+            get { return combo; }
+        }
         public string DBBackUp { get; set; }
         private ObservableCollection<Carrier> carrierCollection { get;set;}
         private ObservableCollection<RouteCity> cityCollection { get; set; }
+        private ObservableCollection<User> userCollection { get; set; }
+
+        public ObservableCollection<Depot> depotCollection { get; set; }
+        private static ObservableCollection<string> depotCityCollection { get; set; }
+        public static ObservableCollection<string> depotCarrierCollection { get; set; }
         public string userName;                                         //<Stores the user name of the current user
 
+
+
+        public AdminWindow()
+        {
+
+        }
         public AdminWindow(string name)
         {
             InitializeComponent();                                              // Load databases from config file
             userName = name;
+            DBBackUp = Controller.DBBackUpPath;
             lblUsrInfo.Content = "User Name:  " + userName;
         }
 
@@ -215,6 +233,86 @@ namespace SQFinalProject.UI {
             else if (BackUpTab.IsSelected)
             {
                 BackUpPath.Text = DBBackUp;
+            }
+            else if (UserTab.IsSelected)
+            {
+                userCollection = new ObservableCollection<User>();
+                LoadUsers();
+                UserData.DataContext = userCollection;
+                UpdateUserCombo();
+            }
+            else if (DepotTab.IsSelected)
+            {
+                GenerateCarriers();
+                GenerateCities();
+                LoadDepots();
+                UpdateDepotCombo();
+                DepotData.DataContext = depotCollection;
+            }
+        }
+
+        private void GenerateCities()
+        {
+            depotCityCollection = new ObservableCollection<string>();
+            List<string> fields = new List<string>();
+            fields.Add("destCity");
+            Controller.TMS.MakeSelectCommand(fields, "route", null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                depotCityCollection.Add(result);
+            }
+        }
+        private void GenerateCarriers()
+        {
+            depotCarrierCollection = new ObservableCollection<string>();
+            List<string> fields = new List<string>();
+            fields.Add("carriername");
+            Controller.TMS.MakeSelectCommand(fields, "carrier", null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                depotCarrierCollection.Add(result);
+            }
+        }
+
+        private void LoadDepots()
+        {
+            depotCollection = new ObservableCollection<Depot>();
+            List<string> fields = new List<string>();
+            fields.Add("carrier.carriername");
+            fields.Add("depot.depotCity");
+            fields.Add("depot.FTLA");
+            fields.Add("depot.LTLA");
+            List<string> tables = new List<string>();
+            tables.Add("carrier");
+            tables.Add("depot");
+            List<string> IDs = new List<string>();
+            IDs.Add("carrierid");
+            IDs.Add("carrierid");
+            Controller.TMS.MakeInnerJoinSelect(fields, tables, IDs, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                string[] splitResult = result.Split(',');
+                Depot d = new Depot(splitResult[0],splitResult[1],splitResult[2], splitResult[3]);
+                d.depotCityCollection = depotCityCollection;
+                d.depotCarrierCollection = depotCarrierCollection;
+                depotCollection.Add(d);
+            }
+        }
+
+        private void LoadUsers()
+        {
+            List<string> field = new List<string>();
+            field.Add("*");
+            Controller.TMS.MakeSelectCommand(field, "login", null, null);
+            List<string> returns = Controller.TMS.ExecuteCommand();
+            foreach (string result in returns)
+            {
+                string[] splitResult = result.Split(',');
+                SQFinalProject.User u = new SQFinalProject.User(splitResult[0], splitResult[1], splitResult[2], splitResult[3]);
+                userCollection.Add(u);
             }
         }
 
@@ -417,6 +515,7 @@ namespace SQFinalProject.UI {
         {
             Carrier c = new Carrier();
             c.newlyCreated = true;
+            c.CarrierID = carrierCollection.Last().CarrierID + 1;
             carrierCollection.Add(c);
             UpdateCarrierComboBox();
         }
@@ -637,7 +736,10 @@ namespace SQFinalProject.UI {
         {
             RouteCity c = new RouteCity();
             c.newlyCreated = true;
+            c.routeID = cityCollection.Count + 1;
             cityCollection.Add(c);
+            RouteData.DataContext = null;
+            RouteData.DataContext = cityCollection;
             UpdateRouteComboBox();
         }
 
@@ -814,6 +916,153 @@ namespace SQFinalProject.UI {
             if (Controller.TMS.Restore(DBBackUp) == 1)
             {
                 System.Windows.Forms.MessageBox.Show("Restore Failed", "Error", (MessageBoxButtons)MessageBoxButton.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CreateUser_Click(object sender, RoutedEventArgs e)
+        {
+            User u = new User();
+            int temp;
+            if (userCollection.Count == 0)
+            {
+                temp = 0;
+            }
+            else
+            {
+                int.TryParse(userCollection.Last().userID, out temp);
+            }        
+            u.userID = (temp + 1).ToString();
+            userCollection.Add(u);
+            UpdateUserCombo();
+        }
+
+        private void UpdateUserCombo()
+        {
+            UserList.Items.Clear();
+            foreach (User u in userCollection)
+            {
+                UserList.Items.Add(u.userID);
+            }
+        }
+
+        private void UserDelete_Click(object sender, RoutedEventArgs e)
+        {
+            string u = (string)UserList.SelectedItem;
+            int temp;
+            int.TryParse(u, out temp);
+            userCollection.RemoveAt(temp - 1);
+            UpdateUserCombo();
+        }
+
+        private void UserUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Controller.TMS.MakeDeleteCommand("login",null);
+            Controller.TMS.ExecuteCommand();
+            foreach (User u in userCollection)
+            {
+                List<string> values = new List<string>();
+                values.Add(u.userID);
+                values.Add(u.userName);
+                values.Add(u.password);
+                values.Add(u.role);
+                Controller.TMS.MakeInsertCommand("login", values);
+                Controller.TMS.ExecuteCommand();
+            }
+        }
+
+        private void UserData_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            UpdateUserCombo();
+        }
+
+        private void DeleteUserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            string u = (string)UserList.SelectedItem;
+            if (u != null)
+            {
+                UserDelete.IsEnabled = true;
+            }
+            else
+            {
+                UserDelete.IsEnabled = false;
+            }
+        }
+
+        private void UserData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void DepotData_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            UpdateDepotCombo();
+        }
+
+        private void UpdateDepotCombo()
+        {
+            DepotList.Items.Clear();
+            int i = 1;
+            foreach (Depot d in depotCollection)
+            {
+                DepotList.Items.Add(i);
+                i++;
+            }
+        }
+
+        private void CreateDepot_Click(object sender, RoutedEventArgs e)
+        {
+            Depot d = new Depot();
+            d.depotCarrierCollection = depotCarrierCollection;
+            d.depotCityCollection = depotCityCollection;
+            depotCollection.Add(d);
+        }
+
+        private void DepotDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int i = DepotList.SelectedIndex;
+            depotCollection.RemoveAt(i);
+            UpdateDepotCombo();
+        }
+
+        private void DepotUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Controller.TMS.MakeDeleteCommand("depot", null);
+            Controller.TMS.ExecuteCommand();
+            foreach (Depot d in depotCollection)
+            {
+                List<string> fields = new List<string>();
+                fields.Add("carrierid");
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add("carriername", d.carrierName);
+                Controller.TMS.MakeSelectCommand(fields,"carrier",conditions,null);
+                List<string> results = Controller.TMS.ExecuteCommand();
+                List<string> values = new List<string>();
+                values.Add(results[0]);
+                values.Add(d.cityName);
+                values.Add(d.FTLA);
+                values.Add(d.LTLA);
+                Controller.TMS.MakeInsertCommand("depot", values);
+                Controller.TMS.ExecuteCommand();
+            }
+        }
+
+        private void DepotData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void DeleteDepotList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            if (DepotList.SelectedValue == null)
+            {
+                DepotDelete.IsEnabled = false;
+            }
+            else
+            {
+                DepotDelete.IsEnabled = true;
             }
         }
     }

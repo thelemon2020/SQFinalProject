@@ -114,7 +114,9 @@
     <Compile Include="Controller.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DatabaseInteraction.cs" />
+    <Compile Include="Database\User.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="TripPlanning\Depot.cs" />
     <Compile Include="TripPlanning\Route.cs" />
     <Compile Include="TripPlanning\RouteCity.cs" />
     <Compile Include="TripPlanning\Truck.cs" />

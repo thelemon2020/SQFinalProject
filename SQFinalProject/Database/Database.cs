@@ -98,13 +98,22 @@ namespace SQFinalProject
             int countLoops = values.Count() - 1;
             foreach (string value in values) //iterate through each string in the list to format the insert query string
             {
-                if (i==countLoops)
+                string value1;
+                if (value.Contains("'"))
                 {
-                    InsertCommand.AppendFormat("'{0}'", value);
+                    value1 = value.Replace("'","''");
                 }
                 else
                 {
-                    InsertCommand.AppendFormat("'{0}', ", value);
+                    value1 = value;
+                }
+                if (i==countLoops)
+                {
+                    InsertCommand.AppendFormat("'{0}'", value1);
+                }
+                else
+                {
+                    InsertCommand.AppendFormat("'{0}', ", value1);
                 }
                 i++;
             }
@@ -131,13 +140,22 @@ namespace SQFinalProject
             int countLoops = fields.Count() - 1;
             foreach(string field in fields)//iterate through each string in the list to format which columns to insert the data into
             {
-                if (i==countLoops)
+                string field1;
+                if (field.Contains("'"))
                 {
-                    InsertCommand.AppendFormat("{0})", field);
+                    field1 = field.Replace("'", "''");
                 }
                 else
                 {
-                    InsertCommand.AppendFormat("{0}, ", field);
+                    field1 = field;
+                }
+                if (i==countLoops)
+                {
+                    InsertCommand.AppendFormat("{0})", field1);
+                }
+                else
+                {
+                    InsertCommand.AppendFormat("{0}, ", field1);
                 }
                 i++;
             }
@@ -146,13 +164,22 @@ namespace SQFinalProject
             countLoops = values.Count() - 1;
             foreach (string value in values) //iterate through values to format the order of the data being inserted
             {
-                if (i == countLoops)
+                string value1;
+                if (value.Contains("'"))
                 {
-                    InsertCommand.AppendFormat("'{0}'", value);
+                    value1 = value.Replace("'", "''");
                 }
                 else
                 {
-                    InsertCommand.AppendFormat("'{0}', ", value);
+                    value1 = value;
+                }
+                if (i == countLoops)
+                {
+                    InsertCommand.AppendFormat("'{0}'", value1);
+                }
+                else
+                {
+                    InsertCommand.AppendFormat("'{0}', ", value1);
                 }
                 i++;
             }
@@ -179,13 +206,22 @@ namespace SQFinalProject
             int countLoops = fields.Count() - 1;
             foreach (string entry in fields) // iterate through the fields that are to be selected and append them to string
             {
-                if (i == countLoops)
+                string entry1;
+                if (entry.Contains("'"))
                 {
-                    selectCommand.AppendFormat(" {0}", entry);
+                    entry1 = entry.Replace("'", "''");
                 }
                 else
                 {
-                    selectCommand.AppendFormat(" {0},", entry);
+                    entry1 = entry;
+                }
+                if (i == countLoops)
+                {
+                    selectCommand.AppendFormat(" {0}", entry1);
+                }
+                else
+                {
+                    selectCommand.AppendFormat(" {0},", entry1);
                 }
                 i++;
             }
@@ -197,13 +233,22 @@ namespace SQFinalProject
                 countLoops = conditions.Count() - 1;
                 foreach (KeyValuePair<string, string> entry in conditions)  // iterate through conditions and append them to string
                 {
-                    if (i == countLoops)
+                    string value1;
+                    if (entry.Value.Contains("'"))
                     {
-                        selectCommand.AppendFormat(" {0} = '{1}'", entry.Key, entry.Value);
+                        value1 = entry.Value.Replace("'", "''");
                     }
                     else
                     {
-                        selectCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, entry.Value);
+                        value1 = entry.Value;
+                    }
+                    if (i == countLoops)
+                    {
+                        selectCommand.AppendFormat(" {0} = '{1}'", entry.Key, value1);
+                    }
+                    else
+                    {
+                        selectCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, value1);
                     }
                     i++;
                 }
@@ -228,13 +273,22 @@ namespace SQFinalProject
                 int countLoops = conditions.Count() - 1;
                 foreach (KeyValuePair<string, string> entry in conditions)  // iterate through conditions and append them to string
                 {
-                    if (i == countLoops)
+                    string value1;
+                    if (entry.Value.Contains("'"))
                     {
-                        selectCommand.AppendFormat(" {0} = '{1}'", entry.Key, entry.Value);
+                        value1 = entry.Value.Replace("'", "''");
                     }
                     else
                     {
-                        selectCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, entry.Value);
+                        value1 = entry.Value;
+                    }
+                    if (i == countLoops)
+                    {
+                        selectCommand.AppendFormat(" {0} = '{1}'", entry.Key, value1);
+                    }
+                    else
+                    {
+                        selectCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, value1);
                     }
                     i++;
                 }
@@ -263,13 +317,22 @@ namespace SQFinalProject
             int countLoops = updateValues.Count() - 1;
             foreach (KeyValuePair<string, string> entry in updateValues)
             {
-                if (i == countLoops)
+                string value1;
+                if (entry.Value.Contains("'"))
                 {
-                    updateCommand.AppendFormat(" {0} = '{1}'", entry.Key, entry.Value);
+                    value1 = entry.Value.Replace("'", "''");
                 }
                 else
                 {
-                    updateCommand.AppendFormat(" {0} = '{1}',", entry.Key, entry.Value);
+                    value1 = entry.Value;
+                }
+                if (i == countLoops)
+                {
+                    updateCommand.AppendFormat(" {0} = '{1}'", entry.Key, value1);
+                }
+                else
+                {
+                    updateCommand.AppendFormat(" {0} = '{1}',", entry.Key, value1);
                 }
                 i++;
             }
@@ -278,13 +341,22 @@ namespace SQFinalProject
             countLoops = conditions.Count() - 1;
             foreach (KeyValuePair<string, string> entry in conditions)// iterate through conditions and append them to string
             {
-                if (i == countLoops)
+                string value1;
+                if (entry.Value.Contains("'"))
                 {
-                    updateCommand.AppendFormat(" {0} = '{1}'", entry.Key, entry.Value);
+                    value1 = entry.Value.Replace("'", "''");
                 }
                 else
                 {
-                    updateCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, entry.Value);
+                    value1 = entry.Value;
+                }
+                if (i == countLoops)
+                {
+                    updateCommand.AppendFormat(" {0} = '{1}'", entry.Key, value1);
+                }
+                else
+                {
+                    updateCommand.AppendFormat(" {0} = '{1}' AND", entry.Key, value1);
                 }
                 i++;
             }

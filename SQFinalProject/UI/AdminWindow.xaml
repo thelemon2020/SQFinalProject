@@ -45,36 +45,34 @@
         <TabControl DockPanel.Dock="Top" SelectionChanged="TabsCtrl_SelectionChanged" x:Name="TabsCtrl">
             <TabItem x:Name="Config" Header="Config" >
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="47*"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2" Margin="0,0,0,0.286"></Border>
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" Grid.RowSpan="2" Margin="0,0,0,0.286"></Border>
                     <TextBlock Grid.Row="0" Text="TMS Database" FontSize="30" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"></TextBlock>
-                    <TextBox Name="TMS_IP" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,106,0,105.286" Width="175" Height="35" Grid.ColumnSpan="2"></TextBox>
-                    <TextBox Name="TMS_Port" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,106,0,105.286" Width="175" Height="35" Grid.Column="1"></TextBox>
-                    <TextBox Name="TMS_User" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,106,0,105.286" Width="175" Height="35" Grid.Column="1"></TextBox>
-                    <PasswordBox Name="TMS_Password" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,106,0,105.286" Width="175" Height="35" Grid.Column="1"></PasswordBox>
-                    <TextBlock Text="IP Address" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,68,0,143.286" Width="175" Height="35" Grid.ColumnSpan="2"></TextBlock>
-                    <TextBlock Text="Port" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,68,0,143.286" Width="175" Height="35" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="Username" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,68,0,143.286" Width="175" Height="35" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="Password" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,68,0,143.286" Width="175" Height="35" Grid.Column="1"></TextBlock>
-                    <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2" Margin="0,246,0,-0.429" Grid.RowSpan="2"/>
-                    <TextBlock Text="Marketplace Database" FontSize="30" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,246,0,0" Grid.RowSpan="2"/>
-                    <TextBox Grid.Row="1" Name="MP_IP" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,105.714,0,105.571" Width="175" Height="35" Grid.ColumnSpan="2"></TextBox>
-                    <TextBox Grid.Row="1" Name="MP_Port" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,105.714,0,105.571" Width="175" Height="35" Grid.Column="1"></TextBox>
-                    <TextBox Grid.Row="1" Name="MP_User" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,105.714,0,105.571" Width="175" Height="35" Grid.Column="1"></TextBox>
-                    <PasswordBox Grid.Row="1" Name="MP_Password" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,105.714,0,105.571" Width="175" Height="35" Grid.Column="1"></PasswordBox>
-                    <TextBlock Grid.Row="1" Text="IP Address" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,67.714,0,143.571" Width="175" Height="35" Grid.ColumnSpan="2"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="Port" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="184.877,67.714,0,143.571" Width="175" Height="35" Grid.Column="1"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="Username" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="434.877,67.714,0,143.571" Width="175" Height="35" Grid.Column="1"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="Password" TextAlignment="Center" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="684.877,67.714,0,143.571" Width="175" Height="35" Grid.Column="1"></TextBlock>
-                    <Button Grid.Row="0" Click="TMSChange_Click" Content="Apply" Margin="323.877,0,419,10.286" FontSize="20" Name="TMSChange" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="150" Grid.Column="1" ></Button>
-                    <Button Grid.Row="1" Click="MPChange_Click" Content="Apply" Margin="323.877,0,419,9.571" FontSize="20" Name="MPChange" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="150" Grid.Column="1" ></Button>
+                    <TextBox Name="TMS_IP" Grid.Row="1" Margin="50,0,0,0" Background="LightGray" VerticalAlignment="Top" HorizontalAlignment="Left" Width="175" Height="35" Grid.ColumnSpan="2"></TextBox>
+                    <TextBox Name="TMS_Port" Grid.Row="1"  Background="LightGray" VerticalAlignment="Top" Margin="0,0,250,0" HorizontalAlignment="Center" Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <TextBox Name="TMS_User" Grid.Row="1" Background="LightGray"  VerticalAlignment="Top" Margin="250,0,0,0" HorizontalAlignment="Center"  Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <PasswordBox Background="LightGray" Grid.Row="1" Name="TMS_Password" VerticalAlignment="Top" Margin="0,0,50,0" HorizontalAlignment="Right"  Width="175" Height="35" Grid.Column="1"></PasswordBox>
+                    <TextBlock Text="IP Address" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50,0,0,0"  Width="175" Height="35" Grid.ColumnSpan="2"></TextBlock>
+                    <TextBlock Text="Port" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,250,0" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Text="Username" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="250,0,0,0" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Text="Password" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,0" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <Border BorderBrush="Black" Grid.Row="2" BorderThickness="2" Grid.RowSpan="2"/>
+                    <TextBlock Text="Marketplace Database" FontSize="30" Grid.Row="2" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox Background="LightGray" Name="MP_IP" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,0,0,0"  Width="175" Height="35" ></TextBox>
+                    <TextBox Grid.Row="3" Background="LightGray" Name="MP_Port" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,250,0" Width="175" Height="35" Grid.Column="1"></TextBox>
+                    <TextBox Grid.Row="3" Background="LightGray" Name="MP_User" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="250,0,0,0" Width="175" Height="35"></TextBox>
+                    <PasswordBox Grid.Row="3" Background="LightGray" Name="MP_Password" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,50,0" Width="175" Height="35" Grid.Column="1"></PasswordBox>
+                    <TextBlock Grid.Row="2" Text="IP Address" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50,0,0,0" Width="175" Height="35"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="Port" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,250,0" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="Username" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="250,0,0,0" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="Password" TextAlignment="Center" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,0" Width="175" Height="35" Grid.Column="1"></TextBlock>
+                    <Button Grid.Row="1" Click="TMSChange_Click" Content="Apply"  FontSize="20" Name="TMSChange" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,10" Height="50" Width="150" Grid.Column="1" ></Button>
+                    <Button Grid.Row="3" Click="MPChange_Click" Content="Apply"  FontSize="20" Name="MPChange" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,10" Height="50" Width="150" Grid.Column="1" ></Button>
                 </Grid>
             </TabItem>
             <TabItem Name="Log" Header="Log File">
@@ -93,7 +91,6 @@
                     </Border>
                     <Button Grid.Row="1" Name="ChangePath" Click="ChangePath_Click" VerticalAlignment="Center" Width="150" Height="40" Content="Change..."></Button>
                     <TextBox Focusable="False" x:Name="FilePath" VerticalAlignment="Center" Grid.Row="1" BorderBrush="Black"  Background="LightGray" HorizontalAlignment="Left" Margin="30,0,0,0" Width="300" Height="37" ></TextBox>
-
                 </Grid>
             </TabItem>
             <TabItem Name="CarrierTab" Header="Carriers">
@@ -141,6 +138,48 @@
                     <ComboBox Name="RouteCityList" SelectionChanged="DeleteCityList_SelectionChanged" VerticalAlignment="Center" Grid.Column="1" Margin="0,75,0,0" Width="125"></ComboBox>
                 </Grid>
             </TabItem>
+            <TabItem Name="DepotTab" Header="Depots">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width=".2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Name="DepotData" AddingNewItem="DepotData_AddingNewItem" CanUserAddRows="False" ItemsSource="{Binding}" SelectionMode="Single" SelectionUnit="Cell" SelectionChanged="DepotData_SelectionChanged" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="Carrier Name" Width="*" SelectedValueBinding="{Binding carrierName}">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding  depotCarrierCollection}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding  depotCarrierCollection}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridComboBoxColumn Header="City Name" Width="*" SelectedValueBinding="{Binding cityName}">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding  depotCityCollection}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding  depotCityCollection}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridTextColumn Header="FTL Avail" Width="*" Binding="{Binding FTLA}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="LTL Avail" Width="*" Binding="{Binding LTLA}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Create New Depot" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Margin="0,75,0,0" Width="125" Click="CreateDepot_Click"></Button>
+                    <Button Content="Delete Depot" IsEnabled="False" Name="DepotDelete" Grid.Column="1" VerticalAlignment="Center" Height="40" Width="125" Click="DepotDelete_Click"></Button>
+                    <Button Content="Update Database" Name="DepotUpdate" Grid.Column="1" VerticalAlignment="Bottom" Margin="0,0,0,75" Height="40" Width="125" Click="DepotUpdate_Click"></Button>
+                    <ComboBox Name="DepotList" SelectionChanged="DeleteDepotList_SelectionChanged" VerticalAlignment="Center" Grid.Column="1" Margin="0,75,0,0" Width="125"></ComboBox>
+                </Grid>
+            </TabItem>
             <TabItem Name="RateTab" Header="Rates">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -152,6 +191,26 @@
                     <TextBlock Grid.Column="0" Text="FLT Rate(%)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,75"></TextBlock>
                     <TextBlock Grid.Column="1" Text="LLT Rate(%)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,75"></TextBlock>
                     <Button Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="125" Content="Apply" Click="RateAppy_Click"></Button>
+                </Grid>
+            </TabItem>
+            <TabItem Name="UserTab" Header="Users">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width=".2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Name="UserData" SelectionChanged="UserData_SelectionChanged" AddingNewItem="UserData_AddingNewItem" CanUserAddRows="False" ItemsSource="{Binding}" SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="User ID" Binding="{Binding userID}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Username" Binding="{Binding userName}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Password" Binding="{Binding password}"></DataGridTextColumn>
+                            <DataGridComboBoxColumn Width="75" Header="Role" SelectedValueBinding="{Binding role}" ItemsSource="{Binding Source={x:Static Member=local:AdminWindow.Combo}}" ></DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Create New User" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Margin="0,75,0,0" Width="125" Click="CreateUser_Click"></Button>
+                    <Button Content="Delete Delete" IsEnabled="False" Name="UserDelete" Grid.Column="1" VerticalAlignment="Center" Height="40" Width="125" Click="UserDelete_Click"></Button>
+                    <Button Content="Update Database" Name="UserUpdate" Grid.Column="1" VerticalAlignment="Bottom" Margin="0,0,0,75" Height="40" Width="125" Click="UserUpdate_Click"></Button>
+                    <ComboBox Name="UserList" SelectionChanged="DeleteUserList_SelectionChanged" VerticalAlignment="Center" Grid.Column="1" Margin="0,75,0,0" Width="125"></ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Name="BackUpTab" Header="Database Backup">
