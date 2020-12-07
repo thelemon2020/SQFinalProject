@@ -660,7 +660,7 @@ namespace SQFinalProject.UI {
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
             // Advance each truck by one day
-            foreach(Truck t in truckCollection)
+            foreach(Truck t in Trucks)
             {
                 if(!t.IsComplete) // only advance time on trucks that are not yet complete
                 {
