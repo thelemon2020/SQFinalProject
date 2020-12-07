@@ -57,6 +57,7 @@ namespace SQFinalProject.TripPlanning
             Distance = 0;
             IsDelivered = false;
             TotalTime = 0;
+            HoursPerDay = new double[3];
         }
 
         /// \brief Constructor for the TripLine class
@@ -92,7 +93,7 @@ namespace SQFinalProject.TripPlanning
             {
                 TotalTime = float.Parse(splitDetails[6]);
             }
-            
+            HoursPerDay = new double[3];   
         }
 
         public void SaveToDB()
@@ -107,6 +108,12 @@ namespace SQFinalProject.TripPlanning
             truck.ThisRoute.GetCities(truck.Origin, Destination);
             TotalTime += truck.ThisRoute.TotalTime;
             Distance = truck.ThisRoute.TotalDistance;
+
+            // fill the array with all 0s
+            for(int i = 0; i < HoursPerDay.Length; i++)
+            {
+                HoursPerDay[i] = 0.00;
+            }
 
             // Now check if the trip will take multiple days without loading and unloading considered
             if (TotalTime <= workDay)

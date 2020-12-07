@@ -134,11 +134,16 @@ namespace SQFinalProject.TripPlanning
 
                     for(int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
                     {
+                        if(Contracts[0].Destination == ThisRoute.Cities[i].Name) // if we're at the destination then break the loop
+                        {
+                            break;
+                        }
+
                         if(Contracts[0].HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
                         {                                     // Then add 2 hours stop time to the first day.
                             Contracts[0].HoursPerDay[0] += 2;
                         }
-                        else // The total time for the day is already greater than 10 hours
+                        else // The tot time for the day is already greater than 10 hours
                         {
                             Contracts[0].HoursPerDay[1] += 2; // add the extra two hours to the follow up day
 
@@ -163,6 +168,11 @@ namespace SQFinalProject.TripPlanning
 
                         for (int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
                         {
+                            if(tl.Destination == ThisRoute.Cities[i].Name) // if the trip line is at the current city then break;
+                            {
+                                break;
+                            }
+
                             if(ThisRoute.Cities[i].Name != tl.Destination) // if we're not at the trip lines destination add 2 hours stop time
                             {                                              // Do this because we already added 2 hours unload time
                                                                            // and we don't want the shorter ltl trip to add 2 hours stop time
