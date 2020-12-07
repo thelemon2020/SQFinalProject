@@ -61,8 +61,8 @@
                                                 <ColumnDefinition Width="75"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
 
-                                            <ListBoxItem Grid.Column="0" Content="{Binding ID}" />
-                                            <ListBoxItem Grid.Column="1" Content="{Binding ClientName}" />
+                                            <TextBlock Grid.Column="0" Text="{Binding ID}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding ClientName}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -75,8 +75,8 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="2*" />
-                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="3*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" x:Name="DetailsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0">
@@ -141,15 +141,107 @@
                             <!-- Sets up the column definitions for the user name row -->
                             <Grid.ColumnDefinitions >
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Sets up the user name prompt and text box -->
+                            <!-- Sets up the Selection prompt, combo box, & details section -->
                             <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" Visibility="Collapsed"/>
                             <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Visibility="Collapsed" SelectionChanged="CarrierSelector_SelectionChanged"/>
-
-
                         </Grid>
+
+                        <ListBox  x:Name="CarrierDetails" Visibility="Collapsed" Grid.Row="2">
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <DockPanel LastChildFill="True">
+                                        <Grid DockPanel.Dock="Top" Height="30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" HorizontalAlignment="Center">ID</Label>
+                                            <Label Grid.Column="1" HorizontalAlignment="Center">Name</Label>
+                                            <Label Grid.Column="2" HorizontalAlignment="Center">FTL rate</Label>
+                                            <Label Grid.Column="3" HorizontalAlignment="Center">LTL rate</Label>
+                                            <Label Grid.Column="4" HorizontalAlignment="Center">Reefer Charge</Label>
+                                        </Grid>
+                                        <ItemsPresenter></ItemsPresenter>
+                                    </DockPanel>
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="75" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="75" />
+                                            <ColumnDefinition Width="75" />
+                                            <ColumnDefinition Width="100" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding CarrierID}" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding CarrierName}"  HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding FTLRate}"  HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding LTLRate}"  HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding ReefCharge}"  HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Grid Grid.Row="3" >
+                            <!-- Sets up the column definitions for the user name row -->
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Sets up the Selection prompt, combo box, & details section -->
+
+                            <Button    x:Name="btnAddTruck" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Add Truck to Contract" Click="AddTruck_Click" Visibility="Collapsed" IsEnabled="False"/>
+                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Quantity Remaining:" FontWeight="Bold" Visibility="Collapsed"/>
+                            <TextBlock x:Name="QntRem" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Visibility="Collapsed"/>
+                        </Grid>
+
+                        <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0" Visibility="Collapsed">
+                            <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
+                                <ListBox x:Name="OrderTrips" Height="{Binding Path=ActualHeight, ElementName=HeightLimiter}">
+                                    <ListBox.Template>
+                                        <ControlTemplate>
+                                            <DockPanel LastChildFill="True">
+                                                <Grid DockPanel.Dock="Top" Height="30">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="75"></ColumnDefinition>
+                                                        <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Grid.Column="0">Trip ID</Label>
+                                                    <Label Grid.Column="1">Qnt</Label>
+                                                </Grid>
+                                                <ItemsPresenter></ItemsPresenter>
+                                            </DockPanel>
+                                        </ControlTemplate>
+                                    </ListBox.Template>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="75" />
+                                                    <ColumnDefinition Width="75" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding TripID}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Quantity}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </Border>
+
+                        <Button    x:Name="btnFinalize" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Finalize Shipping" Click="btnFinalize_Click" Visibility="Collapsed" IsEnabled="False"/>
                     </Grid>
                 </Grid>
             </TabItem>
