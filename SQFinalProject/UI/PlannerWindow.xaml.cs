@@ -481,15 +481,15 @@ namespace SQFinalProject.UI {
                     currQntRem -= t.RemainingQuantity();
                 }
 
-                t.TotalQuantity += truckLoad;
-
-                QntRem.Text = currQntRem.ToString();
-                TruckRem.Text = t.RemainingQuantity().ToString();
+                //t.TotalQuantity += truckLoad;
 
                 t.AddContract( new TripLine (currOrder[0], t.TripID, truckLoad) );
                 currOrder[0].Trips.Add ( t.Contracts.Last() );
                 Controller.SaveTripLineToDB ( t.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
+
+                QntRem.Text = currQntRem.ToString();
+                TruckRem.Text = t.RemainingQuantity().ToString();
             }
             
             
