@@ -77,6 +77,7 @@ namespace SQFinalProject.TripPlanning
             ThisRoute = new Route();
             ThisRoute.GetCities(Origin, Destination);
             Contracts[0].Distance = ThisRoute.TotalDistance;
+            Contracts[0].CalculateTripTime(this);
         }
 
         /// \brief Method to add cargo from a contract to the trip
@@ -97,12 +98,14 @@ namespace SQFinalProject.TripPlanning
                 {
                     Destination = contract.Destination;
                     contract.Distance = ThisRoute.TotalDistance;
+                    contract.CalculateTripTime(this);
                 }
                 else
                 {
                     Route tmpRt = new Route();
                     tmpRt.GetCities(Origin, contract.Destination);
                     contract.Distance = tmpRt.TotalDistance;
+                    contract.CalculateTripTime(this);
                 }
                 TotalQuantity += contract.Quantity;
             }
@@ -111,7 +114,81 @@ namespace SQFinalProject.TripPlanning
         }
 
 
+        public void CorrectContractTime()
+        {
+            if(Contracts.Count == 1 && TotalQuantity == 0) // This is an FTL Trip, so we don't need to do anything.
+            {
+                return;
+            }
+            else // This is an LTL trip with potentially multiple contracts
+            {
+                if(Contracts.Count == 1 && TotalQuantity <= kMaxPallets) // LTL but only one contract, Add 2 hours for each city we got through
+                {
+                    for(int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
+                    {
+                        if(Contracts[0].HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
+                        {                                     // Then add 2 hours stop time to the first day.
+                            Contracts[0].HoursPerDay[0] += 2;
+                        }
+                        else // The total time for the day is already greater than 10 hours
+                        {
+                            Contracts[0].HoursPerDay[1] += 2; // add the extra two hours to the follow up day
 
+                            if(Contracts[0].HoursPerDay[1] > kMaxTotalHours) // if adding the extra 2 hours stop time pushed the second day over
+                            {                                                // over the limit we start adding time to a third day.
+                                Contracts[0].HoursPerDay[1] -= 2; // make it so that the second day is not over the limit anymore
+                                Contracts[0].HoursPerDay[2] += 2; // add the two hours to the third day.
+                            }
+                        }
+                    }
+                    
+                }
+                else // There are two or more trips
+                {
+                    // Find the one day and multi day trips
+                    TripLine[] oneDayTrips = new TripLine[10];
+                    TripLine[] multiDayTrips = new TripLine[10];
+                    int index = 0;
+                    int index2 = 0;
+                    foreach(TripLine tl in Contracts)
+                    {
+                        if(tl.HoursPerDay.Length == 1)
+                        {
+                            oneDayTrips[index] = tl;
+                            index++;
+                        }
+                        else
+                        {
+                            multiDayTrips[index] = tl;
+                            index2++;
+                        }
+                    }
+
+                    // Now find the shortest of the one day trips
+                    double shortestTime = oneDayTrips[0].HoursPerDay[0];
+                    foreach (TripLine tl in oneDayTrips)
+                    {
+                        if(tl.HoursPerDay[0] < shortestTime)
+                        {
+                            shortestTime = tl.HoursPerDay[0];
+                        }
+                    }
+
+                    // Add 2 hours of unload time to all one day trips for the shortest one
+                    foreach(TripLine tl in oneDayTrips)
+                    {
+                        if(tl.HoursPerDay[0] != shortestTime)
+                        {
+                            tl.HoursPerDay[0] += 2;
+                            if(tl.HoursPerDay[0] > kMaxTotalHours) // if adding 2 hours unload time for 
+                            {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
         //
