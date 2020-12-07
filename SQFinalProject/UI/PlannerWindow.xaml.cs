@@ -21,7 +21,7 @@ namespace SQFinalProject.UI {
     ///
     /// \class PlannerWindow
     ///
-    /// \brief This class holds all the event handlers for for the Planner WPF window.  It has data members for the TMS database & the Marketplace database.
+    /// \brief This class holds all the event handlers for for the Planner WPF window.  It is split into Orders, Summary, and Reports tabs.
     /// The error handling in this class will be handled in the form of message boxes describing the errors that happen for majour errors, and error text indicating
     /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they
     /// will be used in the final program.
@@ -31,22 +31,22 @@ namespace SQFinalProject.UI {
     public partial class PlannerWindow : Window
     {
         //! Properties
-        //private bool orderSelected { get; set; }
-        private int OrderState { get; set; }
-        private string userName { get; set; }                                         //<Stores the user name of the current user
-        ObservableCollection<Contract> ordersCollection { get; set; }
-        ObservableCollection<Contract> currOrder { get; set; }
-        ObservableCollection<Carrier> currCarrier { get; set; }
-        ObservableCollection<TripLine> currOrderTrips { get; set; }
-        ObservableCollection<Truck> truckCollection {get;set;}
+        private int OrderState { get; set; }                                        //<Stores the state that an order is in, for enabling or disabling controls
+        private string userName { get; set; }                                       //<Stores the user name of the current user
+        ObservableCollection<Contract> ordersCollection { get; set; }               //<Collection of contracts for databinding to the order summary list
+        ObservableCollection<Contract> currOrder { get; set; }                      //<Collection of contracts for databinding to the order details table
+        ObservableCollection<Carrier> currCarrier { get; set; }                     //<Collection of carriers for databinding to the carrier selection dropdown list
+        ObservableCollection<List<string>> currOrderTripDet { get; set; }            //<Collection of tripLines for databinding to the order trips list
+        ObservableCollection<Truck> truckCollection {get;set;}                      //<Collection of trucks for databinding to the truck selection dropdown list
 
-        ObservableCollection<Contract> planningCollection { get; set; }
+        ObservableCollection<Contract> planningCollection { get; set; }             //<Collection of contracts for databinding to the order selection list
         List<Truck> Trucks { get; set; }
         List<Contract> Contracts { get; set; }
         List<Carrier> Carriers { get; set; }
 
         private int currQntRem { get; set; }
-        //private double currPrice  { get; set; }
+
+
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
@@ -60,6 +60,7 @@ namespace SQFinalProject.UI {
             OrderState = 0;
             lblUsrInfo.Content = "User Name:  " + userName;
         }
+
 
         //  METHOD:		LoadRates
         /// \brief Gets Rates Information from DB
@@ -285,8 +286,8 @@ namespace SQFinalProject.UI {
                         btnFinalize.IsEnabled = true;
                     }
 
-                    currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
-                    OrderTrips.ItemsSource = currOrderTrips;
+                    currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
+                    OrderTrips.ItemsSource = currOrderTripDet;
                 }
             }
 
@@ -376,7 +377,7 @@ namespace SQFinalProject.UI {
             if ( TruckSelector.SelectedIndex != -1 && TruckSelector.SelectedItem != null )
             {
   
-                if ( currOrder[0].JobType == 0 && currOrder[0].Trips.Count > 0  ) {
+                if ( currOrder[0].JobType == 0 && currOrder[0].Trips.Count == 0  ) {
                     btnAddTruck.IsEnabled = true;
                 } else if ( currQntRem != 0 ) {
                     btnAddTruck.IsEnabled = true;
@@ -441,11 +442,9 @@ namespace SQFinalProject.UI {
                 
                 Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
                 TruckRem.Text = newTruck.RemainingQuantity().ToString();
-                //Controller.SaveTripToDB ( newTruck );
                 Trucks.Add(newTruck);
 
                 currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
-                //Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
 
             } else {
@@ -467,19 +466,14 @@ namespace SQFinalProject.UI {
 
                 t.AddContract( new TripLine (currOrder[0], t.TripID, truckLoad) );
                 currOrder[0].Trips.Add ( t.Contracts.Last() );
-                //Controller.SaveTripLineToDB ( t.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
 
                 QntRem.Text = currQntRem.ToString();
                 TruckRem.Text = t.RemainingQuantity().ToString();
             }
-            
-            
-            //Carriers.Add(currCarrier[0]);
-            //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
-            currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
-            OrderTrips.ItemsSource = currOrderTrips;
+            currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
+            OrderTrips.ItemsSource = currOrderTripDet;
         }
 
 
@@ -517,6 +511,59 @@ namespace SQFinalProject.UI {
             GetContracts();
 
             btnFinalize.IsEnabled = false;
+        }
+
+
+        private List<List<string>> getTripDetails ( List <TripLine> trips ) {
+            List<List<string>> details = new List<List<string>>();
+            List<string> item;
+            
+            List<string> QueryLst = new List<string> ();   // Set up the database query and check if the user name exists in the database
+            QueryLst.Add ("carrierID");
+            Dictionary<string, string> tempDict;
+            List<string> retList;
+
+            foreach ( TripLine t in trips ) {
+                item = new List<string>();
+                string carrierName = " Truck not found ";
+                string carrierID = "";
+                
+                bool found = false;
+
+                tempDict = new Dictionary<string, string>();
+                tempDict.Add ("tripID", t.TripID.ToString());
+
+                Controller.TMS.MakeSelectCommand ( QueryLst, "truck", tempDict,null);
+
+                retList = Controller.TMS.ExecuteCommand();
+
+                if ( retList.Count() != 0 ) {
+                    carrierID = retList.ElementAt(0);
+                } else {
+                    for ( int i = 0; i < Trucks.Count && !found; i++ ) {
+                        if ( Trucks[i].TripID == t.TripID ) {
+                            carrierID = Trucks[i].CarrierID.ToString();
+                            found = true;
+                        }
+                    }
+                }
+                
+                found = false;
+                for ( int i = 0; i < Carriers.Count && !found; i++ ) {
+                    if ( Carriers[i].CarrierID.ToString().Equals ( carrierID ) ) {
+                        carrierName = Carriers[i].CarrierName;
+                        found = true;
+                    }
+                }
+
+                item.Add(t.TripID.ToString());
+                item.Add(carrierName);
+                item.Add(t.Quantity.ToString());
+
+                details.Add ( item );
+            }
+
+            return details;
         }
 
         private void Nullify_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {

@@ -224,10 +224,12 @@
                                                 <Grid DockPanel.Dock="Top" Height="30">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
                                                     <Label Grid.Column="0">Truck ID</Label>
-                                                    <Label Grid.Column="1">Qnt</Label>
+                                                    <Label Grid.Column="1">Carrier Name</Label>
+                                                    <Label Grid.Column="2">Qnt</Label>
                                                 </Grid>
                                                 <ItemsPresenter></ItemsPresenter>
                                             </DockPanel>
@@ -238,10 +240,12 @@
                                             <Grid Margin="0,2">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="75" />
+                                                    <ColumnDefinition Width="100"/>
                                                     <ColumnDefinition Width="75" />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding TripID}" />
-                                                <TextBlock Grid.Column="1" Text="{Binding Quantity}" />
+                                                <TextBlock Grid.Column="0" Text="{Binding [0]}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding [1]}" />
+                                                <TextBlock Grid.Column="2" Text="{Binding [2]}" />
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
