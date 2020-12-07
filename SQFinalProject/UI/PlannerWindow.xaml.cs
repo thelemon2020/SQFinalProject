@@ -285,10 +285,10 @@ namespace SQFinalProject.UI {
                     } else {
                         btnFinalize.IsEnabled = true;
                     }
-
-                    currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
-                    OrderTrips.ItemsSource = currOrderTripDet;
                 }
+
+                currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
+                OrderTrips.ItemsSource = currOrderTripDet;
             }
 
             OrderDetails.ItemsSource = currOrder;
