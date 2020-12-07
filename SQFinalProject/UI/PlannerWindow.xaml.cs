@@ -438,8 +438,7 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-
-
+            
         }
     }
 }
