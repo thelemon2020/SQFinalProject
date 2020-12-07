@@ -1,4 +1,4 @@
 TMS 108.168.17.4 3306 tmsadmin 12345 tms
 MP 159.89.117.198 3306 DevOSHT Snodgr4ss! cmp
-LOGGER C:\Users\Chris\source\repos\SQ\SQFinalProject\bin\Debug\log.txt
-BACKUP C:\Users\Chris\source\repos\SQ\SQFinalProject\config\backup.sql
+LOGGER .\log\
+BACKUP .\backup\
