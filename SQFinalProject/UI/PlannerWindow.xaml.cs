@@ -40,14 +40,18 @@ namespace SQFinalProject.UI {
         ObservableCollection<TripLine> currOrderTrips { get; set;}
         ObservableCollection<string> Reports { get; set; }
         List<Truck> Trucks { get; set; }
+        List<Contract> Contracts { get; set; }
+        List<Carrier> Carriers { get; set; }
 
         private int currQntRem { get; set; }
-        //private double currPrice  { get; set; }
+        private double currPrice  { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
             Reports = new ObservableCollection<string>();
             Trucks = new List<Truck>();
+            Contracts = new List<Contract>();
+            Carriers = new List<Carrier>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -188,6 +192,7 @@ namespace SQFinalProject.UI {
                         CarrierSelector.Items.Add (s);
                     }
 
+                    currPrice = 0;
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
                     QntRem.Text = currQntRem.ToString();
@@ -198,15 +203,6 @@ namespace SQFinalProject.UI {
 
                     currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
                     OrderTrips.ItemsSource = currOrderTrips;
-
-                } else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) {
-                    OrderState = 2;
-
-                    if ( IsContractComplete() ) {
-                        btnCompleteContract.IsEnabled = true;
-                    }
-                } else {
-                    OrderState = 0;
                 }
             }
             else
@@ -274,6 +270,7 @@ namespace SQFinalProject.UI {
 
             if ( currOrder[0].JobType == 0 ) {
 
+                currPrice += currCarrier[0].FTLRate;
                 btnAddTruck.IsEnabled = false;
 
             } else {
@@ -286,6 +283,7 @@ namespace SQFinalProject.UI {
                     btnFinalize.IsEnabled = true;
                 } else {
                     truckLoad = 26;
+                    currPrice += currCarrier[0].FTLRate;
                     currQntRem -= 26;
                 }
 
@@ -294,6 +292,7 @@ namespace SQFinalProject.UI {
 
             Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
             Trucks.Add(newTruck);
+            Carriers.Add(currCarrier[0]);
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
@@ -306,6 +305,7 @@ namespace SQFinalProject.UI {
         }
 
         private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
+
 
             currOrder[0].Status = "IN-PROGRESS";
             Dictionary<string, string> values = new Dictionary<string, string>();
@@ -324,42 +324,6 @@ namespace SQFinalProject.UI {
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-        private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
-            currOrder[0].Status = "COMPLETE";
-            Dictionary<string, string> values = new Dictionary<string, string>();
-            values.Add("status", currOrder[0].Status);
-            Dictionary<string, string> conditions = new Dictionary<string, string>();
-            conditions.Add("contractID", currOrder[0].ID.ToString());
-            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
-            Controller.TMS.ExecuteCommand();
-
-            GetOrders();
-
-            btnCompleteContract.IsEnabled = false;
-        }
-
-        private bool IsContractComplete()
-        {
-            bool isComplete = false;
-
-            List<string> fields = new List<string>();
-            fields.Add("isDelivered");
-            Dictionary<string,string> conditions = new Dictionary<string, string>();
-            conditions.Add ( "contractID", currOrder[0].ID.ToString() );
-            Controller.TMS.MakeSelectCommand(fields, "tripline", conditions, null);
-            List<string> results = Controller.TMS.ExecuteCommand();
-
-            if ( results != null && results.Count > 0 ) {
-                isComplete = true;
-
-                foreach (string result in results)
-                {
-                    isComplete = isComplete && ( result == "1" );
-                }
-            }
-
-            return isComplete;
-        }
 
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -458,30 +422,8 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            List<Contract> contracts = new List<Contract>();
-            List<string> fields = new List<string>();
-            fields.Add("*");
 
-            Dictionary<string, string> cond = new Dictionary<string, string>();
-            cond.Add("status", "IN-PROGRESS");
 
-            Controller.TMS.MakeSelectCommand(fields, "contract", cond, null);
-            List<string> sqlReturn = Controller.TMS.ExecuteCommand();
-
-            foreach(string s in sqlReturn)
-            {
-                Contract c = new Contract(s, 1);
-                contracts.Add(c);
-            }
-
-            fields.Clear();
-            cond.Clear();
-
-            foreach(Contract c in contracts)
-            {
-                fields.Add("*");
-                //cond.Add("")
-            }
         }
     }
 }
