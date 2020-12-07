@@ -47,6 +47,7 @@ namespace SQFinalProject.UI {
         public PlannerWindow ( string name ) {
             InitializeComponent();
             Reports = new ObservableCollection<string>();
+            Trucks = new List<Truck>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -425,9 +426,29 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            foreach(Truck t in Trucks)
+            List<Contract> contracts = new List<Contract>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+
+            Dictionary<string, string> cond = new Dictionary<string, string>();
+            cond.Add("status", "IN-PROGRESS");
+
+            Controller.TMS.MakeSelectCommand(fields, "contract", cond, null);
+            List<string> sqlReturn = Controller.TMS.ExecuteCommand();
+
+            foreach(string s in sqlReturn)
             {
-                
+                Contract c = new Contract(s, 1);
+                contracts.Add(c);
+            }
+
+            fields.Clear();
+            cond.Clear();
+            
+            foreach(Contract c in contracts)
+            {
+                fields.Add("*");
+                //cond.Add("")
             }
         }
     }
