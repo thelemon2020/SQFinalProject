@@ -799,6 +799,10 @@ namespace SQFinalProject.UI {
         private bool IsContractComplete(Contract contract)
         {
             bool complete = contract.IsContractComplete();
+            if(complete)
+            {
+                contract.TripComplete = true;
+            }
             return complete;
         }
 
@@ -807,6 +811,19 @@ namespace SQFinalProject.UI {
         {
             e.Handled = true;
             Contract c = (Contract)SummaryList.SelectedItem;
+            bool complete = false;
+            foreach(Contract contract in Contracts)
+            {
+                if(contract.ID == c.ID)
+                {
+                    complete = IsContractComplete(contract);
+                    if(complete)
+                    {
+                        c.TripComplete = true;
+                    }
+                }
+            }
+
             if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
             {
                 CompleteContract.IsEnabled = true;
