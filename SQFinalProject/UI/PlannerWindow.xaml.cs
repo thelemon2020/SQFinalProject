@@ -753,6 +753,7 @@ namespace SQFinalProject.UI {
                             }
                         }
                     }
+                   
                 }
                 //Check through all the triplines again to see if they're all delivered
                 bool truckIsComplete = true;
@@ -769,20 +770,30 @@ namespace SQFinalProject.UI {
                     t.IsComplete = true;
                 }
             }
+            foreach (Contract c in ordersCollection)
+            {
+                c.TripComplete = c.IsContractComplete();
+            }
+            SummaryList.ItemsSource = null;
+            SummaryList.ItemsSource = ordersCollection;
         }
 
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
             Contract c = (Contract)SummaryList.SelectedItem;
-            if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
+            if (c!=null)
             {
-                CompleteContract.IsEnabled = true;
+                if ((c.Status == "IN") && (c.TripComplete == true))
+                {
+                    CompleteContract.IsEnabled = true;
+                }
+                else
+                {
+                    CompleteContract.IsEnabled = false;
+                }
             }
-            else
-            {
-                CompleteContract.IsEnabled = false;
-            }
+           
         }
     }
 }

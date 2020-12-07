@@ -205,7 +205,7 @@ namespace SQFinalProject.UI {
             conditions.Add("clientname", name);
             Controller.TMS.MakeSelectCommand(fields, "account", conditions, null);
             List<string> sqlReturn = Controller.GetAccountsFromTMS(fields, conditions);
-            if (sqlReturn != null)
+            if ((sqlReturn != null) && (sqlReturn.Count != 0))
             {
                 isIn = true;
             }
