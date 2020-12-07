@@ -38,7 +38,6 @@ namespace SQFinalProject.UI {
         ObservableCollection<Contract> currOrder { get; set; }
         ObservableCollection<Carrier> currCarrier { get; set; }
         ObservableCollection<TripLine> currOrderTrips { get; set; }
-        ObservableCollection<string> Reports { get; set; }
         ObservableCollection<Truck> truckCollection {get;set;}
 
         ObservableCollection<Contract> planningCollection { get; set; }
@@ -51,7 +50,6 @@ namespace SQFinalProject.UI {
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
-            Reports = new ObservableCollection<string>();
             Trucks = new List<Truck>();
             Carriers = new List<Carrier>();
 
@@ -623,7 +621,6 @@ namespace SQFinalProject.UI {
                 default:
                     break;
             }
-            Reports.Add(report);
         }
 
         private void Get2wReports_Click(object sender, RoutedEventArgs e)
