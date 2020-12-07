@@ -508,7 +508,10 @@ namespace SQFinalProject
                 sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", invoiceID, contract.ID, account.AccountID, date, contract.Cost, contract.JobType, contract.Quantity, contract.VanType);
 
                 account.Invoices.Add(sb.ToString());
-                using (StreamWriter sw = new StreamWriter(invoiceFilePath + contract.ClientName + "-"+ contract.ID))
+                using (StreamWriter sw = new StreamWriter(invoiceFilePath + contract.ClientName + "- "+ contract.ID + ".txt"))
+                {
+                    sw.Write(sb.ToString());
+                }
                 return sb.ToString();
 
             }
