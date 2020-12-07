@@ -118,8 +118,9 @@ namespace SQFinalProject.UI {
         }
 
 
-        /////////////////////////////////////////////////////////////////
-
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        /* ~~~~~ Methods for contracts in Planning stage ~~~~~ */
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
         private void TabsCtrl_Planner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -293,11 +294,11 @@ namespace SQFinalProject.UI {
             }
 
             Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
-            TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
+            //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
-            currOrder[0].Trips.Add ( newTrip );
-            Controller.SaveTripLineToDB ( newTrip );
-            Controller.SaveTripToDB ( newTruck );
+            currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
+            newTruck.Contracts.Last().SaveToDB ();
+            newTruck.SaveToDB ();
             currOrder[0].Quantity = currQntRem;
 
             currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
@@ -324,6 +325,16 @@ namespace SQFinalProject.UI {
             //OrderDetails.ItemsSource = currOrder;
             btnFinalize.IsEnabled = false;
         }
+
+
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        /* ~~~~~ Methods for Advancing Time ~~~~~ */
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
         private void GenRep_Click(object sender, RoutedEventArgs e)
         {
