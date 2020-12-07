@@ -40,6 +40,8 @@ namespace SQFinalProject.UI {
         ObservableCollection<TripLine> currOrderTrips { get; set;}
         ObservableCollection<string> Reports { get; set; }
         List<Truck> Trucks { get; set; }
+        List<Contract> Contracts { get; set; }
+        List<Carrier> Carriers { get; set; }
 
         private int currQntRem { get; set; }
         private double currPrice  { get; set; }
@@ -48,6 +50,8 @@ namespace SQFinalProject.UI {
             InitializeComponent();
             Reports = new ObservableCollection<string>();
             Trucks = new List<Truck>();
+            Contracts = new List<Contract>();
+            Carriers = new List<Carrier>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -297,6 +301,7 @@ namespace SQFinalProject.UI {
 
             Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
             Trucks.Add(newTruck);
+            Carriers.Add(currCarrier[0]);
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
@@ -426,30 +431,8 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            List<Contract> contracts = new List<Contract>();
-            List<string> fields = new List<string>();
-            fields.Add("*");
-
-            Dictionary<string, string> cond = new Dictionary<string, string>();
-            cond.Add("status", "IN-PROGRESS");
-
-            Controller.TMS.MakeSelectCommand(fields, "contract", cond, null);
-            List<string> sqlReturn = Controller.TMS.ExecuteCommand();
-
-            foreach(string s in sqlReturn)
-            {
-                Contract c = new Contract(s, 1);
-                contracts.Add(c);
-            }
-
-            fields.Clear();
-            cond.Clear();
             
-            foreach(Contract c in contracts)
-            {
-                fields.Add("*");
-                //cond.Add("")
-            }
+            
         }
     }
 }
