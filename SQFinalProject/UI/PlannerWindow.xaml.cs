@@ -36,7 +36,7 @@ namespace SQFinalProject.UI {
         ObservableCollection<Contract> ordersCollection { get; set; }               //<Collection of contracts for databinding to the order summary list
         ObservableCollection<Contract> currOrder { get; set; }                      //<Collection of contracts for databinding to the order details table
         ObservableCollection<Carrier> currCarrier { get; set; }                     //<Collection of carriers for databinding to the carrier selection dropdown list
-        ObservableCollection<List<string>> currOrderTripDet { get; set; }            //<Collection of tripLines for databinding to the order trips list
+        ObservableCollection<List<string>> currOrderTripDet { get; set; }            //<Collection of strings containing trip details for databinding to the order trips list
         ObservableCollection<Truck> truckCollection {get;set;}                      //<Collection of trucks for databinding to the truck selection dropdown list
 
         ObservableCollection<Contract> planningCollection { get; set; }             //<Collection of contracts for databinding to the order selection list
@@ -554,23 +554,13 @@ namespace SQFinalProject.UI {
                 
                 bool found = false;
 
-                tempDict = new Dictionary<string, string>();
-                tempDict.Add ("tripID", t.TripID.ToString());
-
-                Controller.TMS.MakeSelectCommand ( QueryLst, "truck", tempDict,null);
-
-                retList = Controller.TMS.ExecuteCommand();
-
-                if ( retList.Count() != 0 ) {
-                    carrierID = retList.ElementAt(0);
-                } else {
+                
                     for ( int i = 0; i < Trucks.Count && !found; i++ ) {
                         if ( Trucks[i].TripID == t.TripID ) {
                             carrierID = Trucks[i].CarrierID.ToString();
                             found = true;
                         }
                     }
-                }
                 
                 found = false;
                 for ( int i = 0; i < Carriers.Count && !found; i++ ) {
