@@ -102,8 +102,8 @@
                                 </ListBox>
                             </Border>
                         </Border>
-                        <Button Grid.Column="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="48.6,100,49,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
-                        <Button Grid.Column="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="48.6,200,49,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
+                        <Button Grid.Column="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
+                        <Button Grid.Column="2" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
                     </Grid>
                 </Grid>
             </TabItem>
