@@ -512,6 +512,10 @@ namespace SQFinalProject.UI {
             btnFinalize.IsEnabled = false;
         }
 
+        private void Nullify_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
+            e.Handled = true;
+        }
+
 
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

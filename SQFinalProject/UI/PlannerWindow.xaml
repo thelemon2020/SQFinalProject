@@ -81,7 +81,7 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" x:Name="DetailsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0">
                             <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
-                                <ListBox x:Name="OrderDetails">
+                                <ListBox x:Name="OrderDetails" SelectionChanged="Nullify_SelectionChanged">
                                     <ListBox.Template>
                                         <ControlTemplate>
                                             <DockPanel LastChildFill="True">
@@ -143,17 +143,18 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
                             <!-- Sets up the Selection prompt, combo box, & details section -->
                             <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" />
                             <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" SelectionChanged="CarrierSelector_SelectionChanged" IsEnabled="False"/>
-                            <Label    Grid.Column="2" Height="25" Margin="0,0,150,0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Truck:" FontWeight="Bold" />
-                            <ComboBox x:Name="TruckSelector" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding TripID}" SelectionChanged="TruckSelector_SelectionChanged" IsEnabled="False"/>
+                            <Label    Grid.Column="2" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Truck:" FontWeight="Bold" />
+                            <ComboBox x:Name="TruckSelector" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" ItemsSource="{Binding TripID}" SelectionChanged="TruckSelector_SelectionChanged" IsEnabled="False"/>
                         </Grid>
-                        
 
-                        <ListBox x:Name="CarrierDetails" Grid.Row="2">
+
+                        <ListBox x:Name="CarrierDetails" Grid.Row="2" SelectionChanged="Nullify_SelectionChanged">
                             <ListBox.Template>
                                 <ControlTemplate>
                                     <DockPanel LastChildFill="True">
@@ -176,7 +177,7 @@
                                 </ControlTemplate>
                             </ListBox.Template>
                             <ListBox.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate >
                                     <Grid Margin="0,2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="75" />
@@ -198,23 +199,25 @@
                         <Grid Grid.Row="3" >
                             <!-- Sets up the column definitions for the user name row -->
                             <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
                             <!-- Sets up the Selection prompt, combo box, & details section -->
 
                             <Button    x:Name="btnAddTruck" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Add Truck to Contract" Click="AddTruck_Click" IsEnabled="False"/>
-                            <Label     x:Name="lblQuantity" Grid.Column="0" Height="25" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Quantity Remaining:" FontWeight="Bold" />
-                            <TextBlock x:Name="QntRem" Grid.Column="1" Margin="75,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="75"/>
-                            <Label Grid.Column="1" HorizontalAlignment="Right" Content="Space On Truck:" VerticalAlignment="Center" FontWeight="Bold"></Label>
-                            <TextBlock x:Name="TruckRem" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="75"/>
+                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Quantity Remaining:" FontWeight="Bold" />
+                            <TextBlock x:Name="QntRem" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Grid.Column="3" HorizontalAlignment="Right" Content="Space On Truck:" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                            <TextBlock x:Name="TruckRem" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </Grid>
 
-                        <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0" >
+                        <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2"  Focusable="False">
                             <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
-                                <ListBox x:Name="OrderTrips" Height="{Binding Path=ActualHeight, ElementName=HeightLimiter}">
+                                <ListBox x:Name="OrderTrips" Height="{Binding Path=ActualHeight, ElementName=HeightLimiter}"  SelectionChanged="Nullify_SelectionChanged">
                                     <ListBox.Template>
                                         <ControlTemplate>
                                             <DockPanel LastChildFill="True">
