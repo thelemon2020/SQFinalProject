@@ -40,6 +40,8 @@ namespace SQFinalProject.UI {
         ObservableCollection<TripLine> currOrderTrips { get; set; }
         ObservableCollection<string> Reports { get; set; }
         ObservableCollection<Truck> truckCollection {get;set;}
+
+        ObservableCollection<Contract> planningCollection { get; set; }
         List<Truck> Trucks { get; set; }
         List<Contract> Contracts { get; set; }
         List<Carrier> Carriers { get; set; }
@@ -90,6 +92,14 @@ namespace SQFinalProject.UI {
                 Contracts.Add(c);
             }
             ordersCollection = new ObservableCollection<Contract> ( Contracts );
+            planningCollection = new ObservableCollection<Contract>();
+            foreach (Contract c in ordersCollection)
+            {
+                if (c.Status == "PLANNING")
+                {
+                    planningCollection.Add(c);
+                }
+            }
         }
 
         //  METHOD:	CloseCB_CanExecute
@@ -185,7 +195,7 @@ namespace SQFinalProject.UI {
 
             if (Orders.IsSelected)
             {
-                OrderList.ItemsSource = ordersCollection;
+                OrderList.ItemsSource = planningCollection;
             }
             else if (Summary.IsSelected)
             {
@@ -239,18 +249,6 @@ namespace SQFinalProject.UI {
                     {
                         TruckSelector.IsEnabled = false;
                     } 
-                    else
-                    {
-                        TruckSelector.IsEnabled = true;
-                        foreach (Truck truck in Trucks) /* !!Need to populate trucks first, but need to add qnt to db for trucks first ... !! */
-                        {
-                            if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0))
-                            {
-                                truckCollection.Add(truck);
-                                TruckSelector.Items.Add(truck.TripID);
-                            }
-                        }
-                    }
 
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
@@ -332,24 +330,29 @@ namespace SQFinalProject.UI {
             e.Handled = true;
             CarrierDetails.ItemsSource = null;
             currCarrier = new ObservableCollection<Carrier>();
-
+            TruckSelector.Items.Clear();
             if ( CarrierSelector.SelectedIndex != -1 && CarrierSelector.SelectedItem != null )
             {
                 TruckSelector.SelectedIndex = -1;
                 TruckRem.Text = "";
 
-                if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
-                    btnAddTruck.IsEnabled = true;
-                } else if ( currQntRem == 0 ) {
-                    btnFinalize.IsEnabled = true;
-                }
-
+                TruckSelector.IsEnabled = true;
+               
                 Dictionary<string, string> conditions = new Dictionary<string, string>();
                 conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
 
                 List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
 
                 currCarrier.Add( new Carrier (currStrCarrier) );
+                TruckSelector.Items.Add("New Truck");
+                foreach (Truck truck in Trucks) /* !!Need to populate trucks first, but need to add qnt to db for trucks first ... !! */
+                {
+                    if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0) && (truck.CarrierID.ToString() == currStrCarrier[0]))
+                    {
+                        truckCollection.Add(truck);
+                        TruckSelector.Items.Add(truck.TripID);
+                    }
+                }
             }
             else
             {
@@ -362,37 +365,30 @@ namespace SQFinalProject.UI {
         private void TruckSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
-            CarrierDetails.ItemsSource = null;
-            currCarrier = new ObservableCollection<Carrier>();
-
             if ( TruckSelector.SelectedIndex != -1 && TruckSelector.SelectedItem != null )
             {
-                CarrierSelector.SelectedIndex = -1;
-
+  
                 if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
                     btnAddTruck.IsEnabled = true;
                 } else if ( currQntRem == 0 ) {
                     btnFinalize.IsEnabled = true;
                 }
-                
-                int i = TruckSelector.SelectedIndex;
-                Truck t = truckCollection[i];
+                if (TruckSelector.SelectedIndex == 0)
+                {
+                    TruckRem.Text = "26";
+                }
+                else
+                {
+                    int i = TruckSelector.SelectedIndex;
+                    Truck t = truckCollection[i-1];
 
-                TruckRem.Text = t.RemainingQuantity().ToString();
-
-                Dictionary<string, string> conditions = new Dictionary<string, string>();
-                conditions.Add( "carrierid", t.CarrierID.ToString() );
-
-                List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
-
-                currCarrier.Add( new Carrier (currStrCarrier) );
+                    TruckRem.Text = t.RemainingQuantity().ToString();
+                }               
             }
             else
             {
                 btnAddTruck.IsEnabled = false;
             }
-
-            CarrierDetails.ItemsSource = currCarrier;
         }
 
 
@@ -417,7 +413,7 @@ namespace SQFinalProject.UI {
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = true;
 
-            } else if ( TruckSelector.SelectedIndex == -1 ) {
+            } else if ( TruckSelector.SelectedIndex == 0 ) {
 
                 if ( currQntRem <= 26 ) {
                     truckLoad += currQntRem;
@@ -443,7 +439,7 @@ namespace SQFinalProject.UI {
 
             } else {
                 int i = TruckSelector.SelectedIndex;
-                Truck t = truckCollection[i];
+                Truck t = truckCollection[i-1];
 
                 if ( currQntRem <= t.RemainingQuantity() ) {
                     
