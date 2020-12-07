@@ -62,7 +62,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public Contract(string details)
         {
             string[] splitDetails = details.Split(',');
-
+            Trips = new List<TripLine>();
             ClientName = splitDetails[0];
             JobType = int.Parse(splitDetails[1]);
             Quantity = int.Parse(splitDetails[2]);
@@ -75,7 +75,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public Contract(string details, int flag)
         {
             string[] splitDetails = details.Split(',');
-
+            Trips = new List<TripLine>();
             ID = int.Parse(splitDetails[0]);
             ClientName = splitDetails[1];
             JobType = int.Parse(splitDetails[2]);
@@ -89,7 +89,6 @@ namespace SQFinalProject.ContactMgmtBilling
 
         public Contract()
         {
-
         }
 
         /// \brief A method to reset the ID count of active contracts

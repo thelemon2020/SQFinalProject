@@ -270,16 +270,17 @@
                     
                     <Border x:Name="border1" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0">
                         <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
-                            <ListBox Name="SummaryList">
+                            <ListBox Name="SummaryList" SelectionChanged="SummaryList_SelectionChanged">
                                 <ListBox.Template>
                                     <ControlTemplate>
                                         <DockPanel LastChildFill="True">
                                             <Grid DockPanel.Dock="Top" Height="30">
                                                 <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"></ColumnDefinition>
                                                     <ColumnDefinition Width="75"></ColumnDefinition>
-                                                    <ColumnDefinition Width="75"></ColumnDefinition>
-                                                    <ColumnDefinition Width="75"></ColumnDefinition>
-                                                    <ColumnDefinition Width="75"></ColumnDefinition>
+                                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                                    <ColumnDefinition Width="60"></ColumnDefinition>
                                                     <ColumnDefinition Width="75"></ColumnDefinition>
                                                     <ColumnDefinition Width="75"></ColumnDefinition>
                                                     <ColumnDefinition Width="75"></ColumnDefinition>
@@ -292,7 +293,8 @@
                                                 <Label Grid.Column="4">Van Type</Label>
                                                 <Label Grid.Column="5">Starting City</Label>
                                                 <Label Grid.Column="6">Ending City</Label>
-                                                <Label Grid.Column="7">Status</Label>
+                                                <Label Grid.Column="7">IsDelivered?</Label>
+                                                <Label Grid.Column="8">Status</Label>
                                             </Grid>
                                             <ItemsPresenter></ItemsPresenter>
                                         </DockPanel>
@@ -302,10 +304,11 @@
                                     <DataTemplate>
                                         <Grid Margin="0,2">
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="60" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="75" />
@@ -318,7 +321,8 @@
                                             <TextBlock Grid.Column="4" Text="{Binding VanType}" />
                                             <TextBlock Grid.Column="5" Text="{Binding Origin}" />
                                             <TextBlock Grid.Column="6" Text="{Binding Destination}" />
-                                            <TextBlock Grid.Column="7" Text="{Binding Status}"/>
+                                            <TextBlock Grid.Column="7" Text="{Binding TripComplete}" />
+                                            <TextBlock Grid.Column="8" Text="{Binding Status}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -346,8 +350,9 @@
                             <ComboBoxItem Content="All Time"/>
                         </ComboBox>
 
-                        <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="05" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="AdvTimeBtn" Width="130" Content="Advance Time" Click="AdvTimeBtn_Click"/>
+                        <Button Grid.Row="1" Grid.ColumnSpan="2" Margin="05" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="AdvTimeBtn" Width="130" Content="Advance Time" Click="AdvTimeBtn_Click"/>
 
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="05" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="CompleteContract" Width="130" Content="Complete Contract" Click="btnCompleteContract_Click"/>
                         <Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="GenReportBtn" Width="130" Content="Generate Report" Click="GenRep_Click"/>
 
                         <Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ReloadBtn" Width="130" Content="Reload From Database"/>

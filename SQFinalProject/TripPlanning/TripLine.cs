@@ -65,15 +65,30 @@ namespace SQFinalProject.TripPlanning
         /// 
         public TripLine(string details, string destination)
         {
-            string[] splitDetails = details.Split();
+            string[] splitDetails = details.Split(',');
             ContractID = int.Parse(splitDetails[0]);
             TripID = int.Parse(splitDetails[1]);
             Quantity = int.Parse(splitDetails[2]);
             Destination = destination;
             DaysWorked = int.Parse(splitDetails[3]);
             Distance = int.Parse(splitDetails[4]);
-            IsDelivered = bool.Parse(splitDetails[5]);
-            TotalTime = float.Parse(splitDetails[6]); 
+            if (splitDetails[5] == "0")
+            {
+                IsDelivered = false;
+            }
+            else
+            {
+                IsDelivered = true;
+            }
+            if (splitDetails[6] == "")
+            {
+                TotalTime = 0;
+            }
+            else
+            {
+                TotalTime = float.Parse(splitDetails[6]);
+            }
+            
         }
 
         public void SaveToDB()
