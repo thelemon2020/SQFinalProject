@@ -94,6 +94,22 @@ namespace SQFinalProject.ContactMgmtBilling
         {
         }
 
+
+        public bool IsContractComplete()
+        {
+            bool complete = true;
+            
+            foreach(TripLine tl in Trips)
+            {
+                if(!tl.IsDelivered)
+                {
+                    complete = false;
+                }
+            }
+
+            return complete;
+        }
+
         /// \brief Determines if a contract is eastbound or westbound
         /// \details <b>Details</b>
         /// Gets the route IDs for the origin and destination city and subtracts one from the other.  If it's negative 
