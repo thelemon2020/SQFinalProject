@@ -72,6 +72,21 @@ namespace SQFinalProject.ContactMgmtBilling
             Status = "NEW";
         }
 
+        public Contract(string details, int flag)
+        {
+            string[] splitDetails = details.Split(',');
+
+            ID = int.Parse(splitDetails[0]);
+            ClientName = splitDetails[1];
+            JobType = int.Parse(splitDetails[2]);
+            Quantity = int.Parse(splitDetails[3]);
+            Origin = splitDetails[4];
+            Destination = splitDetails[5];
+            VanType = int.Parse(splitDetails[6]);
+            Status = splitDetails[7];
+            AccountID = int.Parse(splitDetails[8]);
+        }
+
         public Contract()
         {
 

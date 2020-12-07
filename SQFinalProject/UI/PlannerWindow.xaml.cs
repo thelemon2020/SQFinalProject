@@ -39,6 +39,7 @@ namespace SQFinalProject.UI {
         ObservableCollection<Carrier>  currCarrier { get; set; }
         ObservableCollection<TripLine> currOrderTrips { get; set;}
         ObservableCollection<string> Reports { get; set; }
+        List<Truck> Trucks { get; set; }
 
         private int currQntRem { get; set; }
         //private double currPrice  { get; set; }
@@ -46,6 +47,7 @@ namespace SQFinalProject.UI {
         public PlannerWindow ( string name ) {
             InitializeComponent();
             Reports = new ObservableCollection<string>();
+            Trucks = new List<Truck>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -202,7 +204,7 @@ namespace SQFinalProject.UI {
 
                     if ( IsContractComplete() ) {
                         btnCompleteContract.IsEnabled = true;
-                    } 
+                    }
                 } else {
                     OrderState = 0;
                 }
@@ -252,7 +254,7 @@ namespace SQFinalProject.UI {
                 lblDelivered.Visibility = Visibility.Visible;
                 btnCompleteContract.Visibility = Visibility.Visible;
             }
-            else 
+            else
             {
                 CarrierSelLBL.Visibility = Visibility.Collapsed;
                 CarrierSelector.Visibility = Visibility.Collapsed;
@@ -327,6 +329,8 @@ namespace SQFinalProject.UI {
             }
 
             Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+            Trucks.Add(newTruck);
+            //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
             newTruck.Contracts.Last().SaveToDB ();
@@ -337,7 +341,7 @@ namespace SQFinalProject.UI {
             OrderTrips.ItemsSource = currOrderTrips;
         }
 
-        private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {            
+        private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
 
             currOrder[0].Status = "IN-PROGRESS";
             Dictionary<string, string> values = new Dictionary<string, string>();
@@ -487,16 +491,33 @@ namespace SQFinalProject.UI {
             }
         }
 
+
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            string order = SummaryList.SelectedItem.ToString();
+            List<Contract> contracts = new List<Contract>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
 
+            Dictionary<string, string> cond = new Dictionary<string, string>();
+            cond.Add("status", "IN-PROGRESS");
 
-        }
+            Controller.TMS.MakeSelectCommand(fields, "contract", cond, null);
+            List<string> sqlReturn = Controller.TMS.ExecuteCommand();
 
-        private void NumDays_TxtChng(object sender, TextChangedEventArgs e)
-        {
-            //AdvTimeBtn.IsEnabled = true;
+            foreach(string s in sqlReturn)
+            {
+                Contract c = new Contract(s, 1);
+                contracts.Add(c);
+            }
+
+            fields.Clear();
+            cond.Clear();
+
+            foreach(Contract c in contracts)
+            {
+                fields.Add("*");
+                //cond.Add("")
+            }
         }
     }
 }
