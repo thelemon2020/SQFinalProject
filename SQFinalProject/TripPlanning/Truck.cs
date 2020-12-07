@@ -39,7 +39,7 @@ namespace SQFinalProject.TripPlanning
         public double ReeferRate { get; set; }          //<The reefer rate of the carrier if the truck is a reefer truck
         public double BillTotal { get; set; }           //<The total price charged by the carrier for the trip
         public bool IsComplete { get; set; }            //<Flag to set trip to complete
-        public float TotalTime { get; set; }              //<Total time it takes to deliver the truck
+        public double TotalTime { get; set; }              //<Total time it takes to deliver the truck
         public List<TripLine> Contracts { get; set; }   //<A list of contracts that the Truck will have to deliver
         public Route ThisRoute { get; set; }            //<A route object modelling the route to be taken by the truck
 
@@ -110,6 +110,10 @@ namespace SQFinalProject.TripPlanning
             return success;
         }
 
+
+
+
+
         //
         public void SimulateDay()
         {
@@ -136,9 +140,9 @@ namespace SQFinalProject.TripPlanning
             // Increment additiontal days worked counter and add associated surcharge
             foreach (TripLine c in Contracts)
             {
-                if (!c.IsDelivered) c.TotalTime += (float)HoursWorked;
+                if (!c.IsDelivered) c.TotalTime += HoursWorked;
             }
-            TotalTime += (float)HoursWorked;
+            TotalTime += HoursWorked;
             DaysWorked++;
             BillTotal += 150;
         }

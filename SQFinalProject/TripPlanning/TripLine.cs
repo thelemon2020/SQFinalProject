@@ -20,6 +20,9 @@ namespace SQFinalProject.TripPlanning
     public class TripLine
     {
         private const double workDay = 12.0;    //!< A constant value of a full workday
+        private const double MaxDriveTime = 8.0;//!< A constant value of the maximum time a driver is allowed to drive
+        private const double load = 2.0;
+        private const double unload = 2.0;
         private const int FTLMaxLoad = 0;       //!< A constant value of max load of an FTL truck
         private const int LTLMaxLoad = 26;      //!< Max pallet count for an LTL truck
         private const int DryVan = 0;           //!< The int representation of a dry van
@@ -31,7 +34,8 @@ namespace SQFinalProject.TripPlanning
         public int DaysWorked { get; set; }     //!< days(past the first) taken to complete
         public int Distance { get; set; }       //!< distance to complete
         public bool IsDelivered { get; set; }   //!< Flag to mark the payload delivered
-        public float TotalTime { get; set; }   //!< Total time it took to deliver the contract
+        public double TotalTime { get; set; }   //!< Total time it took to deliver the contract
+        public double[] HoursPerDay { get; set; } //!< An array that holds how many hours the trip will take broken into days
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
@@ -95,6 +99,48 @@ namespace SQFinalProject.TripPlanning
         {
             Controller.SaveTripLineToDB(this);
         }
+        
+
+        public void CalculateTripTime(Truck truck)
+        {
+            // Get the cities that the trip line will be on, and thus the total km and time of the trip excluding load and unload time
+            truck.ThisRoute.GetCities(truck.Origin, Destination);
+            TotalTime += truck.ThisRoute.TotalTime;
+            Distance = truck.ThisRoute.TotalDistance;
+
+            if(truck.TotalQuantity == 0) // This is for an FTL Truck
+            {
+                // Now check if the trip will take multiple days without loading and unloading considered
+                if (TotalTime <= workDay)
+                {
+                    // The trip is less than 12 hours, but since loading and unloading has not been taken into account, we have to check
+                    // Whether the driver is driving for 8 hours max a day.
+                    DaysWorked = 1;
+
+                    if (TotalTime <= MaxDriveTime) // the trip time without loading and unloading is less than or equal the max driving time
+                    {
+                        // This means we can add the load and unload time and be sure the trip will only take one day
+                        HoursPerDay[0] = TotalTime + load + unload;
+                    }
+                    else // The trip will have to be broken up into multiple days because the drive time is greater than 8 hours
+                    {
+                        // Break up the operating time each day by using a modulo operation to see how much driving time is remaining
+                        HoursPerDay[0] = TotalTime - (TotalTime % MaxDriveTime) + load; // add load time to the first day's driving time
+                        HoursPerDay[1] = (TotalTime % MaxDriveTime) + unload; // Add unload time to the remainder of the driving time
+
+                        DaysWorked++;
+                    }
+                }
+                else
+                {
+                    HoursPerDay[0] = TotalTime - (TotalTime % MaxDriveTime) + load;
+                    HoursPerDay[1] = (TotalTime % MaxDriveTime) + unload;
+
+                    DaysWorked = 2;
+                }
+            }
+        }
+
 
         /// \brief A method that calculates the total cost of a contract
         /// \details <b>Details</b>
