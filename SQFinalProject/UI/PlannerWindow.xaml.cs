@@ -205,24 +205,9 @@ namespace SQFinalProject.UI {
                 } else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) {
                     OrderState = 2;
 
-                    List <Carrier> carriersLst = Controller.SetupCarriers();
-                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
-
-                    foreach ( string s in availCarriers ) {
-                        CarrierSelector.Items.Add (s);
+                    if ( IsContractComplete() ){
+                        btnCompleteContract.IsEnabled = true;
                     }
-
-                    currPrice = 0;
-                    currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
-
-                    QntRem.Text = currQntRem.ToString();
-
-                    if ( currOrder[0].Trips == null ) {
-                        currOrder[0].Trips = new List<TripLine>();
-                    }
-
-                    currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
-                    OrderTrips.ItemsSource = currOrderTrips;
                 }
             }
             else
@@ -360,6 +345,28 @@ namespace SQFinalProject.UI {
             GetOrders();
 
             btnCompleteContract.IsEnabled = false;
+        }
+
+        private bool IsContractComplete()
+        {
+            bool isComplete = false;
+
+            List<string> fields = new List<string>();
+            fields.Add("isDelivered");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeSelectCommand(fields, "tripline", conditions, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            if ( results != null && results.Count > 0) {
+                isComplete = true;
+
+                foreach (string result in results)
+                {
+                    isComplete = isComplete && (result == "1");
+                }
+            }
+
+            return isComplete;
         }
 
 
