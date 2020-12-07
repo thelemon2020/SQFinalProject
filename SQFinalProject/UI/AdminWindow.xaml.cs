@@ -570,14 +570,14 @@ namespace SQFinalProject.UI {
             of.FilterIndex = 2;
             if (of.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string temp = Logger.path;   
+                string temp = System.IO.Path.GetDirectoryName(Logger.path);   
                 Logger.path = of.FileName;
                 string configContents;
                 using (StreamReader sr = new StreamReader(Controller.ConfigPath))
                 {
                     configContents = sr.ReadToEnd();
-                }
-                string toWrite = configContents.Replace(temp, Logger.path);
+                }                
+                string toWrite = configContents.Replace(temp, System.IO.Path.GetDirectoryName(Logger.path));
                 using (StreamWriter sw = new StreamWriter(Controller.ConfigPath, false))
                 {
                     sw.Write(toWrite);
@@ -945,21 +945,20 @@ namespace SQFinalProject.UI {
         ///
         private void ChangeUpdatePath_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog of = new OpenFileDialog();
-            of.InitialDirectory = DBBackUp;
-            of.Filter = "sql files (*.sql)|*.sql|All files (*.*)|*.*";
-            of.FilterIndex = 2;
+            FolderBrowserDialog of = new FolderBrowserDialog();
+            of.ShowNewFolderButton = true;
+            of.SelectedPath = DBBackUp;
             if (of.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string temp = DBBackUp;
-                DBBackUp = of.FileName; 
+                string temp = System.IO.Path.GetDirectoryName(DBBackUp);
+                DBBackUp = of.SelectedPath + "backup.sql"; 
                 BackUpPath.Text = DBBackUp;
                 string configContents;
                 using (StreamReader sr = new StreamReader(Controller.ConfigPath))
                 {
                     configContents = sr.ReadToEnd();
                 }
-                string toWrite = configContents.Replace(temp, DBBackUp);
+                string toWrite = configContents.Replace(temp, System.IO.Path.GetDirectoryName(DBBackUp));
                 using (StreamWriter sw = new StreamWriter(Controller.ConfigPath, false))
                 {
                     sw.Write(toWrite);

@@ -19,7 +19,7 @@ namespace SQFinalProject
     public static class Controller
     {
         public const string invoiceFilePath = @".\invoices\";
-        public const string ConfigPath = @"..\..\config\TMS.txt";   //<The path to the config file
+        public const string ConfigPath = @".\TMS.txt";   //<The path to the config file
         static public Database TMS { get; set; }                    //<The database object for the TMS database
         static public Database MarketPlace { get; set; }            //<The database object for the Marketplace database
         static public List<string> TMS_Database { get; set; }                  //<The the string list to store TMS DB connection info
@@ -79,10 +79,29 @@ namespace SQFinalProject
                         else if (details[0] == "BACKUP")
                         {
                             DBBackUpPath = details[1];
+                            if (!Directory.Exists(DBBackUpPath))
+                            {
+                                Directory.CreateDirectory(DBBackUpPath);
+                            }
+                            if (!File.Exists(DBBackUpPath + "backup.sql"))
+                            {
+                                File.Create(DBBackUpPath + "backup.sql");
+                            }
+                            DBBackUpPath = DBBackUpPath + "backup.sql";
                         }
                         else if (details[0] == "LOGGER")
                         {
                             Logger.path = details[1];
+                            if (!Directory.Exists(Logger.path))
+                            {
+                                Directory.CreateDirectory(Logger.path);
+                            }
+                            if (!File.Exists(Logger.path + "log.txt"))
+                            {
+                                File.Create(Logger.path + "log.txt");
+                               
+                            }
+                            Logger.path = Logger.path + "log.txt";
                         }
                     }
                 }
