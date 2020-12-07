@@ -206,8 +206,10 @@
                             <!-- Sets up the Selection prompt, combo box, & details section -->
 
                             <Button    x:Name="btnAddTruck" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Add Truck to Contract" Click="AddTruck_Click" IsEnabled="False"/>
-                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Quantity Remaining:" FontWeight="Bold" />
-                            <TextBlock x:Name="QntRem" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="75"/>
+                            <Label     x:Name="lblQuantity" Grid.Column="0" Height="25" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Quantity Remaining:" FontWeight="Bold" />
+                            <TextBlock x:Name="QntRem" Grid.Column="1" Margin="75,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="75"/>
+                            <Label Grid.Column="1" HorizontalAlignment="Right" Content="Space On Truck:" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                            <TextBlock x:Name="TruckRem" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="75"/>
                         </Grid>
 
                         <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0" >
