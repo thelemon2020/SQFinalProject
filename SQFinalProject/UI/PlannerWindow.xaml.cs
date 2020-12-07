@@ -39,6 +39,7 @@ namespace SQFinalProject.UI {
         ObservableCollection<Carrier>  currCarrier { get; set; }
         ObservableCollection<TripLine> currOrderTrips { get; set;}
         ObservableCollection<string> Reports { get; set; }
+        List<Truck> Trucks { get; set; }
 
         private int currQntRem { get; set; }
         private double currPrice  { get; set; }
@@ -294,6 +295,7 @@ namespace SQFinalProject.UI {
             }
 
             Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+            Trucks.Add(newTruck);
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
@@ -420,16 +422,13 @@ namespace SQFinalProject.UI {
             }
         }
 
+
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            string order = SummaryList.SelectedItem.ToString();
-
-
-        }
-
-        private void NumDays_TxtChng(object sender, TextChangedEventArgs e)
-        {
-            //AdvTimeBtn.IsEnabled = true;
+            foreach(Truck t in Trucks)
+            {
+                
+            }
         }
     }
 }

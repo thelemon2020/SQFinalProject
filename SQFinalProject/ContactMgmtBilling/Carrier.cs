@@ -68,49 +68,5 @@ namespace SQFinalProject.ContactMgmtBilling
             FTLA = new List<int>();
             LTLA = new List<int>();
         }
-
-
-        /// \brief A method that calculates the total cost of a contract
-        /// \details <b>Details</b>
-        /// A method that adds up all costs of triplines associated with a contract and returns that cost to be added to an account.
-        /// \param - contract - <b>Contract</b> - The contract being evaluated
-        /// \returns - cost - <b>double</b> - The calculated cost of the contract
-        /// 
-        public double CalculateCost(Contract contract)
-        {
-            double cost = 0.00;
-
-            foreach (TripLine trip in contract.Trips)
-            {
-                if (contract.VanType == DryVan) // dry van
-                {
-                    if (trip.Quantity == FTLMaxLoad) // FTL
-                    {
-                        cost += FTLRate * trip.Distance;
-                    }
-                    else // LTL 
-                    {
-                        cost += trip.Quantity * LTLRate * trip.Distance;
-                    }
-                }
-                else if (contract.VanType == ReefVan) // Reefer Van
-                {
-                    if (trip.Quantity == 0) // FTL
-                    {
-                        cost += FTLRate * trip.Distance * ReefCharge;
-                    }
-                    else // LTL
-                    {
-                        cost += trip.Quantity * LTLRate * ReefCharge * trip.Distance;
-                    }
-                }
-
-                if (trip.DaysWorked > 0)
-                {
-                    cost += 150.00 * trip.DaysWorked; // add 150.00 for each extra day
-                }
-            }
-            return cost;
-        }
     }
 }
