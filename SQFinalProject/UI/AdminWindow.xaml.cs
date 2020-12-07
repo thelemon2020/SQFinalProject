@@ -202,7 +202,8 @@ namespace SQFinalProject.UI {
         /// \details <b>Details</b>
         ///     Checks which tab is selected and loads the required data to fill out that t
         /// 
-        /// \param - <b>None</b>
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
         /// 
         /// \return - <b>Nothing</b>
         ///
@@ -251,6 +252,16 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		GenerateCities
+        /// \brief Creates a collection of cities from the databse
+        /// \details <b>Details</b>
+        ///     Queries the route table for all the cities that TMS uses on it's transportation corridor and adds them into a collection
+        /// 
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+
         private void GenerateCities()
         {
             depotCityCollection = new ObservableCollection<string>();
@@ -258,11 +269,29 @@ namespace SQFinalProject.UI {
             fields.Add("destCity");
             Controller.TMS.MakeSelectCommand(fields, "route", null, null);
             List<string> results = Controller.TMS.ExecuteCommand();
-            foreach (string result in results)
+            if (results == null)
             {
-                depotCityCollection.Add(result);
+                System.Windows.Forms.MessageBox.Show("Query Failed", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                foreach (string result in results)
+                {
+                    depotCityCollection.Add(result);
+                }
+            }
+           
         }
+
+        //  METHOD:		GenerateCarriers
+        /// \brief Creates a collection of carriers from the databse
+        /// \details <b>Details</b>
+        ///     Queries the carrier table for all the carriers that TMS uses on it's transportation corridor and adds them into a collection
+        /// 
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void GenerateCarriers()
         {
             depotCarrierCollection = new ObservableCollection<string>();
@@ -270,12 +299,29 @@ namespace SQFinalProject.UI {
             fields.Add("carriername");
             Controller.TMS.MakeSelectCommand(fields, "carrier", null, null);
             List<string> results = Controller.TMS.ExecuteCommand();
-            foreach (string result in results)
+            if (results == null)
             {
-                depotCarrierCollection.Add(result);
+                System.Windows.Forms.MessageBox.Show("Query Failed", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                foreach (string result in results)
+                {
+                    depotCarrierCollection.Add(result);
+                }
+            }
+            
         }
 
+        //  METHOD:		LoadDepots
+        /// \brief Creates a collection of depots from the databse
+        /// \details <b>Details</b>
+        ///     Queries the depot table for all the carrier depots that TMS uses on it's transportation corridor and adds them into a collection
+        /// 
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void LoadDepots()
         {
             depotCollection = new ObservableCollection<Depot>();
@@ -292,28 +338,53 @@ namespace SQFinalProject.UI {
             IDs.Add("carrierid");
             Controller.TMS.MakeInnerJoinSelect(fields, tables, IDs, null);
             List<string> results = Controller.TMS.ExecuteCommand();
-            foreach (string result in results)
+            if (results == null)
             {
-                string[] splitResult = result.Split(',');
-                Depot d = new Depot(splitResult[0],splitResult[1],splitResult[2], splitResult[3]);
-                d.depotCityCollection = depotCityCollection;
-                d.depotCarrierCollection = depotCarrierCollection;
-                depotCollection.Add(d);
+                System.Windows.Forms.MessageBox.Show("Query Failed", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                foreach (string result in results)
+                {
+                    string[] splitResult = result.Split(',');
+                    Depot d = new Depot(splitResult[0], splitResult[1], splitResult[2], splitResult[3]);
+                    d.depotCityCollection = depotCityCollection;
+                    d.depotCarrierCollection = depotCarrierCollection;
+                    depotCollection.Add(d);
+                }
+            }
+           
         }
 
+        //  METHOD:		LoadUsers
+        /// \brief Creates a collection of users from the databse
+        /// \details <b>Details</b>
+        ///     Queries the login table for all the users that have access to the TMS system
+        /// 
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void LoadUsers()
         {
             List<string> field = new List<string>();
             field.Add("*");
             Controller.TMS.MakeSelectCommand(field, "login", null, null);
             List<string> returns = Controller.TMS.ExecuteCommand();
-            foreach (string result in returns)
+            if (returns == null)
             {
-                string[] splitResult = result.Split(',');
-                SQFinalProject.User u = new SQFinalProject.User(splitResult[0], splitResult[1], splitResult[2], splitResult[3]);
-                userCollection.Add(u);
+                System.Windows.Forms.MessageBox.Show("Query Failed", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                foreach (string result in returns)
+                {
+                    string[] splitResult = result.Split(',');
+                    SQFinalProject.User u = new SQFinalProject.User(splitResult[0], splitResult[1], splitResult[2], splitResult[3]);
+                    userCollection.Add(u);
+                }
+            }
+           
         }
 
         //  METHOD:		LoadRates
@@ -331,9 +402,16 @@ namespace SQFinalProject.UI {
             field.Add("*");
             Controller.TMS.MakeSelectCommand(field, "rates", null, null);
             List<string> returns = Controller.TMS.ExecuteCommand();
-            string[] rates = returns[0].Split(',');
-            FTLRate.Text = rates[0].ToString();
-            LTLRate.Text = rates[1].ToString();
+            if (returns == null)
+            {
+                System.Windows.Forms.MessageBox.Show("Query Failed", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                string[] rates = returns[0].Split(',');
+                FTLRate.Text = rates[0].ToString();
+                LTLRate.Text = rates[1].ToString();
+            }           
         }
 
         //  METHOD:		LoadCities
@@ -369,23 +447,30 @@ namespace SQFinalProject.UI {
             order.Add("routeID", "ASC");
             Controller.TMS.MakeSelectCommand(fields, "route", null, order);
             fields = Controller.TMS.ExecuteCommand();
-            foreach (string field in fields)
+            if (fields == null)
             {
-                string[] columns = field.Split(',');
-                int cityID;
-                int.TryParse(columns[0], out cityID);
-                int kmToEast;
-                int kmToWest;
-                double hToEast;
-                double hToWest;
-                int.TryParse(columns[2], out kmToEast);
-                int.TryParse(columns[3], out kmToWest);
-                double.TryParse(columns[4], out hToEast);
-                double.TryParse(columns[5], out hToWest);
-                RouteCity c = new RouteCity(cityID, columns[1], kmToEast, kmToWest, hToEast, hToWest,columns[6], columns[7]);
-                c.newlyCreated = false;
-                cityCollection.Add(c);
+                System.Windows.Forms.MessageBox.Show("Query Failed", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                foreach (string field in fields)
+                {
+                    string[] columns = field.Split(',');
+                    int cityID;
+                    int.TryParse(columns[0], out cityID);
+                    int kmToEast;
+                    int kmToWest;
+                    double hToEast;
+                    double hToWest;
+                    int.TryParse(columns[2], out kmToEast);
+                    int.TryParse(columns[3], out kmToWest);
+                    double.TryParse(columns[4], out hToEast);
+                    double.TryParse(columns[5], out hToWest);
+                    RouteCity c = new RouteCity(cityID, columns[1], kmToEast, kmToWest, hToEast, hToWest, columns[6], columns[7]);
+                    c.newlyCreated = false;
+                    cityCollection.Add(c);
+                }
+            }            
             return cityCollection;
         }
 
@@ -897,7 +982,6 @@ namespace SQFinalProject.UI {
             if (Controller.TMS.BackItUp(DBBackUp) == 1)
             {
                 System.Windows.Forms.MessageBox.Show("Backup Failed", "Error", (MessageBoxButtons)MessageBoxButton.OK, MessageBoxIcon.Error);
-
             }
         }
 
@@ -919,6 +1003,18 @@ namespace SQFinalProject.UI {
             }
         }
 
+
+
+        //  METHOD:		CreateUser_Click
+        /// \brief Creates an empty user to be edited and added to the databse
+        /// \details <b>Details</b>
+        ///    Creates an instance of User and adds it to the collection that populates the datagrid
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void CreateUser_Click(object sender, RoutedEventArgs e)
         {
             User u = new User();
@@ -936,6 +1032,16 @@ namespace SQFinalProject.UI {
             UpdateUserCombo();
         }
 
+
+        //  METHOD:		UpdateUserCombo
+        /// \brief Updates the combobox that holds the users 
+        /// \details <b>Details</b>
+        ///     Loops through the collection of the users and adds them to the combo box
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UpdateUserCombo()
         {
             UserList.Items.Clear();
@@ -944,6 +1050,18 @@ namespace SQFinalProject.UI {
                 UserList.Items.Add(u.userID);
             }
         }
+
+
+        //  METHOD:		UserDelete_Click
+        /// \brief Deletes user from datagrid
+        /// \details <b>Details</b>
+        ///     Checks which user is being selected and removes it from the collection of users
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
 
         private void UserDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -954,6 +1072,17 @@ namespace SQFinalProject.UI {
             UpdateUserCombo();
         }
 
+
+        //  METHOD:		UserUpdate_Click
+        /// \brief Updates the database with all the new users
+        /// \details <b>Details</b>
+        ///     Generates update queries to update the login table
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UserUpdate_Click(object sender, RoutedEventArgs e)
         {
             
@@ -971,11 +1100,33 @@ namespace SQFinalProject.UI {
             }
         }
 
+
+        //  METHOD:		UserData_AddingNewItem
+        /// \brief Called whenever a new item is added to the datagrid
+        /// \details <b>Details</b>
+        ///     Calls method to refresh combobox
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UserData_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             UpdateUserCombo();
         }
 
+
+        //  METHOD:		DeleteUserList_SelectionChanged
+        /// \brief Enables and disables buttons based on what is selected
+        /// \details <b>Details</b>
+        ///     Enables and disables the Delete button based on if a valid user is selected or not
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DeleteUserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -990,16 +1141,48 @@ namespace SQFinalProject.UI {
             }
         }
 
+
+        //  METHOD:		UserData_SelectionChanged
+        /// \brief Stops page refresh
+        /// \details <b>Details</b>
+        ///     sets Handled to true to avoid a page refresh
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UserData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
         }
 
+
+        //  METHOD:		DepotData_AddingNewItem
+        /// \brief Called whenever Depot is added to datagrid
+        /// \details <b>Details</b>
+        ///     Calls a method to update the Depot Combobox
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DepotData_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             UpdateDepotCombo();
         }
 
+
+        //  METHOD:		Restore_Click
+        /// \brief Makes sure the combobox is up to date
+        /// \details <b>Details</b>
+        ///     Clears the combobox and then loops through the collection and adds everything in it
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void UpdateDepotCombo()
         {
             DepotList.Items.Clear();
@@ -1011,6 +1194,18 @@ namespace SQFinalProject.UI {
             }
         }
 
+
+
+        //  METHOD:		CreateDepot_Click
+        /// \brief Creates a new Depot object
+        /// \details <b>Details</b>
+        ///     Creates a new empty depot object and adds it to the collection
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void CreateDepot_Click(object sender, RoutedEventArgs e)
         {
             Depot d = new Depot();
@@ -1019,6 +1214,16 @@ namespace SQFinalProject.UI {
             depotCollection.Add(d);
         }
 
+        //  METHOD:		DeleteDepot_Click
+        /// \brief Deletes a new Depot object
+        /// \details <b>Details</b>
+        ///    Gets the selected depot item and deletes it
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DepotDelete_Click(object sender, RoutedEventArgs e)
         {
             int i = DepotList.SelectedIndex;
@@ -1026,6 +1231,16 @@ namespace SQFinalProject.UI {
             UpdateDepotCombo();
         }
 
+        //  METHOD:		DepotUpdate_Click
+        /// \brief Updates the depot database
+        /// \details <b>Details</b>
+        ///     Creates query strings to update and insert new data
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DepotUpdate_Click(object sender, RoutedEventArgs e)
         {
             Controller.TMS.MakeDeleteCommand("depot", null);
@@ -1048,11 +1263,32 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		DepotData_SelectionChanged
+        /// \brief Stops a page refresh
+        /// \details <b>Details</b>
+        ///     Sets Handled to true to prevent a page refresh
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DepotData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
         }
 
+
+        //  METHOD:		DeleteDepotList_SelectionChanged
+        /// \brief Enables and disables buttons based on selection
+        /// \details <b>Details</b>
+        ///     Gets the seleted item from the depotlist and enables the delete button if it's a valid item
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void DeleteDepotList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;

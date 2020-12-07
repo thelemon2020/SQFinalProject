@@ -18,6 +18,7 @@ namespace SQFinalProject
     /// \author <i>Nick Byam</i>
     public static class Controller
     {
+        public const string invoiceFilePath = @".\invoices\";
         public const string ConfigPath = @"..\..\config\TMS.txt";   //<The path to the config file
         static public Database TMS { get; set; }                    //<The database object for the TMS database
         static public Database MarketPlace { get; set; }            //<The database object for the Marketplace database
@@ -507,7 +508,9 @@ namespace SQFinalProject
                 sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", invoiceID, contract.ID, account.AccountID, date, contract.Cost, contract.JobType, contract.Quantity, contract.VanType);
 
                 account.Invoices.Add(sb.ToString());
+                using (StreamWriter sw = new StreamWriter(invoiceFilePath + contract.ClientName + "-"+ contract.ID))
                 return sb.ToString();
+
             }
         }
 
