@@ -41,7 +41,7 @@ namespace SQFinalProject.UI {
         ObservableCollection<string> Reports { get; set; }
 
         private int currQntRem { get; set; }
-        private double currPrice  { get; set; }
+        //private double currPrice  { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
@@ -186,7 +186,6 @@ namespace SQFinalProject.UI {
                         CarrierSelector.Items.Add (s);
                     }
 
-                    currPrice = 0;
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
                     QntRem.Text = currQntRem.ToString();
@@ -197,6 +196,15 @@ namespace SQFinalProject.UI {
 
                     currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
                     OrderTrips.ItemsSource = currOrderTrips;
+
+                } else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) {
+                    OrderState = 2;
+
+                    if ( IsContractComplete() ) {
+                        btnCompleteContract.IsEnabled = true;
+                    } 
+                } else {
+                    OrderState = 0;
                 }
             }
             else
@@ -221,8 +229,13 @@ namespace SQFinalProject.UI {
                 QntRem.Visibility = Visibility.Visible;
                 TripsBorder.Visibility = Visibility.Visible;
                 btnFinalize.Visibility = Visibility.Visible;
+
+                lblDelivered.Visibility = Visibility.Collapsed;
+                btnCompleteContract.Visibility = Visibility.Collapsed;
+
+                btnCompleteContract.IsEnabled = false;
             }
-            else
+            else if ( doShow == 2 )
             {
                 CarrierSelLBL.Visibility = Visibility.Collapsed;
                 CarrierSelector.Visibility = Visibility.Collapsed;
@@ -235,6 +248,28 @@ namespace SQFinalProject.UI {
 
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
+
+                lblDelivered.Visibility = Visibility.Visible;
+                btnCompleteContract.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                CarrierSelLBL.Visibility = Visibility.Collapsed;
+                CarrierSelector.Visibility = Visibility.Collapsed;
+                CarrierDetails.Visibility = Visibility.Collapsed;
+                btnAddTruck.Visibility = Visibility.Collapsed;
+                lblQuantity.Visibility = Visibility.Collapsed;
+                QntRem.Visibility = Visibility.Collapsed;
+                TripsBorder.Visibility = Visibility.Collapsed;
+                btnFinalize.Visibility = Visibility.Collapsed;
+
+                btnAddTruck.IsEnabled = false;
+                btnFinalize.IsEnabled = false;
+
+                lblDelivered.Visibility = Visibility.Collapsed;
+                btnCompleteContract.Visibility = Visibility.Collapsed;
+
+                btnCompleteContract.IsEnabled = false;
             }
         }
 
@@ -273,7 +308,6 @@ namespace SQFinalProject.UI {
 
             if ( currOrder[0].JobType == 0 ) {
 
-                currPrice += currCarrier[0].FTLRate;
                 btnAddTruck.IsEnabled = false;
 
             } else {
@@ -286,7 +320,6 @@ namespace SQFinalProject.UI {
                     btnFinalize.IsEnabled = true;
                 } else {
                     truckLoad = 26;
-                    currPrice += currCarrier[0].FTLRate;
                     currQntRem -= 26;
                 }
 
@@ -294,7 +327,6 @@ namespace SQFinalProject.UI {
             }
 
             Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
-            //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
             newTruck.Contracts.Last().SaveToDB ();
@@ -305,8 +337,7 @@ namespace SQFinalProject.UI {
             OrderTrips.ItemsSource = currOrderTrips;
         }
 
-        private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
-            
+        private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {            
 
             currOrder[0].Status = "IN-PROGRESS";
             Dictionary<string, string> values = new Dictionary<string, string>();
@@ -325,6 +356,42 @@ namespace SQFinalProject.UI {
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
+            currOrder[0].Status = "COMPLETE";
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("status", currOrder[0].Status);
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
+            Controller.TMS.ExecuteCommand();
+
+            GetOrders();
+
+            btnCompleteContract.IsEnabled = false;
+        }
+
+        private bool IsContractComplete()
+        {
+            bool isComplete = false;
+
+            List<string> fields = new List<string>();
+            fields.Add("isDelivered");
+            Dictionary<string,string> conditions = new Dictionary<string, string>();
+            conditions.Add ( "contractID", currOrder[0].ID.ToString() );
+            Controller.TMS.MakeSelectCommand(fields, "tripline", conditions, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+
+            if ( results != null && results.Count > 0 ) {
+                isComplete = true;
+
+                foreach (string result in results)
+                {
+                    isComplete = isComplete && ( result == "1" );
+                }
+            }
+
+            return isComplete;
+        }
 
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
