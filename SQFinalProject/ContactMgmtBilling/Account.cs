@@ -50,6 +50,7 @@ namespace SQFinalProject.ContactMgmtBilling
         {
             Contracts = new Dictionary<int, Contract>();
             UncalculatedContracts = new Dictionary<int, Contract>();
+            Invoices = new List<string>();
             Balance = 0.00;
         }
 
@@ -69,6 +70,7 @@ namespace SQFinalProject.ContactMgmtBilling
             AccountName = contract.ClientName;
             Contracts = new Dictionary<int, Contract>();
             UncalculatedContracts = new Dictionary<int, Contract>();
+            Invoices = new List<string>();
             AddNewContract(contract.ID, contract);
         }
 
@@ -88,6 +90,7 @@ namespace SQFinalProject.ContactMgmtBilling
             AccountName = contracts[0].ClientName;
             Contracts = new Dictionary<int, Contract>();
             UncalculatedContracts = new Dictionary<int, Contract>();
+            Invoices = new List<string>();
             foreach (Contract contract in contracts)
             {
                 AddNewContract(contract.ID, contract);
@@ -190,6 +193,12 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
+        /// \brief Returns a string representation of the Account class
+        /// \details <b>Details</b>
+        /// A method that returns a string representing the account class and its pertinent properties
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>string</b> - a string of the account's properties
+        /// 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

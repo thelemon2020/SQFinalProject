@@ -67,5 +67,10 @@ namespace SQFinalProject.TripPlanning
             Distance = int.Parse(splitDetails[4]);
             IsDelivered = bool.Parse(splitDetails[5]);
         }
+
+        public void SaveToDB()
+        {
+            Controller.SaveTripLineToDB(this);
+        }
     }
 }

@@ -32,14 +32,20 @@ namespace SQFinalProject.UI {
     {
         //! Properties
         private bool orderSelected { get; set; }
+        private int OrderState { get; set; }
         private string userName { get; set; }                                         //<Stores the user name of the current user
         ObservableCollection<Contract> ordersCollection { get; set; }
         ObservableCollection<Contract> currOrder { get; set; }
         ObservableCollection<Carrier>  currCarrier { get; set; }
+        ObservableCollection<TripLine> currOrderTrips { get; set;}
+        ObservableCollection<string> Reports { get; set; }
+
+        private int currQntRem { get; set; }
+        private double currPrice  { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
-
+            Reports = new ObservableCollection<string>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -112,12 +118,16 @@ namespace SQFinalProject.UI {
         }
 
 
-        /////////////////////////////////////////////////////////////////
-        
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        /* ~~~~~ Methods for contracts in Planning stage ~~~~~ */
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
         private void TabsCtrl_Planner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
+
+            OrderList.ItemsSource = null;
+            SummaryList.ItemsSource = null;
 
             GetOrders();
 
@@ -149,14 +159,15 @@ namespace SQFinalProject.UI {
                 c.ID = temp;
                 c.Status = splitResult[7];
                 ordersCollection.Add(c);
-            }            
+            }
         }
 
-        private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e ) 
+        private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
 
             OrderDetails.ItemsSource = null;
+            OrderTrips.ItemsSource = null;
             CarrierSelector.Items.Clear() ;
 
             currOrder = new ObservableCollection<Contract>();
@@ -164,41 +175,261 @@ namespace SQFinalProject.UI {
             if ( OrderList.SelectedIndex != -1 )
             {
                 currOrder.Add( (Contract) OrderList.SelectedItem );
-                orderSelected = true;
 
-                List <Carrier> carriersLst = Controller.SetupCarriers();
-                List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+                if ( currOrder[0].Status.ToUpper().Equals ("PLANNING") ) {
+                    OrderState = 1;
 
-                foreach ( string s in availCarriers ) {
-                    CarrierSelector.Items.Add (s);
+                    List <Carrier> carriersLst = Controller.SetupCarriers();
+                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+
+                    foreach ( string s in availCarriers ) {
+                        CarrierSelector.Items.Add (s);
+                    }
+
+                    currPrice = 0;
+                    currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
+
+                    QntRem.Text = currQntRem.ToString();
+
+                    if ( currOrder[0].Trips == null ) {
+                        currOrder[0].Trips = new List<TripLine>();
+                    }
+
+                    currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
+                    OrderTrips.ItemsSource = currOrderTrips;
                 }
             }
             else
             {
-                orderSelected = false;
+                OrderState = 0;
             }
 
             OrderDetails.ItemsSource = currOrder;
 
-            ShowOrderControls (orderSelected);
+            ShowOrderControls (OrderState);
         }
 
-        private void ShowOrderControls ( bool doShow ) {
+        private void ShowOrderControls ( int doShow ) {
 
-            if ( doShow ) 
+            if ( doShow == 1 )
             {
                 CarrierSelLBL.Visibility = Visibility.Visible;
                 CarrierSelector.Visibility = Visibility.Visible;
+                CarrierDetails.Visibility = Visibility.Visible;
+                btnAddTruck.Visibility = Visibility.Visible;
+                lblQuantity.Visibility = Visibility.Visible;
+                QntRem.Visibility = Visibility.Visible;
+                TripsBorder.Visibility = Visibility.Visible;
+                btnFinalize.Visibility = Visibility.Visible;
             }
-            else 
+            else
             {
                 CarrierSelLBL.Visibility = Visibility.Collapsed;
                 CarrierSelector.Visibility = Visibility.Collapsed;
+                CarrierDetails.Visibility = Visibility.Collapsed;
+                btnAddTruck.Visibility = Visibility.Collapsed;
+                lblQuantity.Visibility = Visibility.Collapsed;
+                QntRem.Visibility = Visibility.Collapsed;
+                TripsBorder.Visibility = Visibility.Collapsed;
+                btnFinalize.Visibility = Visibility.Collapsed;
+
+                btnAddTruck.IsEnabled = false;
+                btnFinalize.IsEnabled = false;
             }
         }
 
-        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
+        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e )
+        {
+            e.Handled = true;
+            CarrierDetails.ItemsSource = null;
+            currCarrier = new ObservableCollection<Carrier>();
 
+            if ( OrderList.SelectedIndex != -1 && CarrierSelector.SelectedItem != null)
+            {
+                if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
+                    btnAddTruck.IsEnabled = true;
+                } else if ( currQntRem == 0 ) {
+                    btnFinalize.IsEnabled = true;
+                }
+
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
+
+                List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
+
+                currCarrier.Add( new Carrier (currStrCarrier) );
+            }
+            else
+            {
+                btnAddTruck.IsEnabled = false;
+            }
+
+            CarrierDetails.ItemsSource = currCarrier;
+        }
+
+        private void AddTruck_Click ( object sender, RoutedEventArgs e ) {
+            int truckLoad = 0;
+            OrderTrips.ItemsSource = null;
+
+            if ( currOrder[0].JobType == 0 ) {
+
+                currPrice += currCarrier[0].FTLRate;
+                btnAddTruck.IsEnabled = false;
+
+            } else {
+                if ( currQntRem <= 26 ) {
+                    truckLoad = currQntRem;
+                    btnAddTruck.IsEnabled = false;
+
+                    currQntRem = 0;
+
+                    btnFinalize.IsEnabled = true;
+                } else {
+                    truckLoad = 26;
+                    currPrice += currCarrier[0].FTLRate;
+                    currQntRem -= 26;
+                }
+
+                QntRem.Text = currQntRem.ToString();
+            }
+
+            Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+            //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
+
+            currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
+            newTruck.Contracts.Last().SaveToDB ();
+            newTruck.SaveToDB ();
+            currOrder[0].Quantity = currQntRem;
+
+            currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
+            OrderTrips.ItemsSource = currOrderTrips;
+        }
+
+        private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
+            
+
+            currOrder[0].Status = "IN-PROGRESS";
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("status", currOrder[0].Status);
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
+            Controller.TMS.ExecuteCommand();
+
+            GetOrders();
+
+            btnFinalize.IsEnabled = false;
+        }
+
+
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+        /* ~~~~~ Methods for Advancing Time ~~~~~ */
+        /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+        private void GenRep_Click(object sender, RoutedEventArgs e)
+        {
+            int weeks = SummaryTimeFrame.SelectedIndex;
+            string report = "";
+            switch(weeks)
+            {
+                case 1:
+                    weeks = 2;
+                    report = Controller.GenerateReport(weeks);
+                    break;
+
+                case 2:
+                    report = Controller.GenerateReport();
+                    break;
+
+                default:
+                    break;
+            }
+            Reports.Add(report);
+        }
+
+        private void Get2wReports_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            TwoWeekReportBlock.Text = string.Empty;
+
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            fields.Add("*");
+            conditions.Add("type", "2-week");
+            Controller.TMS.MakeSelectCommand(fields, "report", conditions, null);
+
+            sqlReturn = Controller.TMS.ExecuteCommand();
+
+            if(sqlReturn == null || sqlReturn.Count == 0)
+            {
+                TwoWeekReportBlock.Text = "No Reports to Display.\n";
+                return;
+            }
+
+            foreach(string s in sqlReturn)
+            {
+                string[] split = s.Split(',');
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("TMS Internal Report:\n\n");
+                sb.AppendFormat("Period: {0} - {1}\n", split[2], split[3]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+
+                TwoWeekReportBlock.Text += sb.ToString();
+            }
+        }
+
+        private void GetAtReports_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            AllTimeReportBlock.Text = string.Empty;
+
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            fields.Add("*");
+            conditions.Add("type", "All-Time");
+            Controller.TMS.MakeSelectCommand(fields, "report", conditions, null);
+
+            sqlReturn = Controller.TMS.ExecuteCommand();
+
+            if (sqlReturn == null || sqlReturn.Count == 0)
+            {
+                AllTimeReportBlock.Text = "No Reports to Display.\n";
+                return;
+            }
+
+            foreach (string s in sqlReturn)
+            {
+                string[] split = s.Split(',');
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("TMS Internal Report:\n\n");
+                sb.AppendFormat("Period: {0}\n", split[1]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+
+                AllTimeReportBlock.Text += sb.ToString();
+            }
+        }
+
+        private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string order = SummaryList.SelectedItem.ToString();
+
+
+        }
+
+        private void NumDays_TxtChng(object sender, TextChangedEventArgs e)
+        {
+            //AdvTimeBtn.IsEnabled = true;
         }
     }
 }

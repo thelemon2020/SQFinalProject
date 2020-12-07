@@ -97,6 +97,17 @@ namespace SQFinalProject
                                 row.AppendFormat("{0}", reader.GetDouble(i).ToString()); // add to list of strings
                             }                           
                         }
+                        else if(type.Contains("date"))
+                        {
+                            if(reader.GetValue(i) == null)
+                            {
+                                row.Append("");
+                            }
+                            else
+                            {
+                                row.AppendFormat("{0}", reader.GetDateTime(i).ToString());
+                            }
+                        }
                         if (i !=reader.FieldCount - 1)
                         {
                             row.AppendFormat(",");

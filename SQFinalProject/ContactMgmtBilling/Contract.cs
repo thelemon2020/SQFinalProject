@@ -69,6 +69,7 @@ namespace SQFinalProject.ContactMgmtBilling
             Origin = splitDetails[3];
             Destination = splitDetails[4];
             VanType = int.Parse(splitDetails[5]);
+            Status = "NEW";
         }
 
         public Contract()
@@ -126,7 +127,7 @@ namespace SQFinalProject.ContactMgmtBilling
             {
                 tmpVanType = "REF";
             }
-            contract.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}",ID, ClientName, tmpJobType, Quantity, Origin, Destination, tmpVanType, TripComplete.ToString());
+            contract.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}",ID, ClientName, tmpJobType, Quantity, Origin, Destination, tmpVanType, Status);
             return contract.ToString();
         }
     }
