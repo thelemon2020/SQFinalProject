@@ -223,53 +223,17 @@ namespace SQFinalProject.UI {
 
             if ( doShow == 1 )
             {
-                CarrierSelLBL.Visibility = Visibility.Visible;
-                CarrierSelector.Visibility = Visibility.Visible;
-                CarrierDetails.Visibility = Visibility.Visible;
-                btnAddTruck.Visibility = Visibility.Visible;
-                lblQuantity.Visibility = Visibility.Visible;
-                QntRem.Visibility = Visibility.Visible;
-                TripsBorder.Visibility = Visibility.Visible;
-                btnFinalize.Visibility = Visibility.Visible;
-
-                lblDelivered.Visibility = Visibility.Collapsed;
-                btnCompleteContract.Visibility = Visibility.Collapsed;
-
                 btnCompleteContract.IsEnabled = false;
             }
             else if ( doShow == 2 )
             {
-                CarrierSelLBL.Visibility = Visibility.Collapsed;
-                CarrierSelector.Visibility = Visibility.Collapsed;
-                CarrierDetails.Visibility = Visibility.Collapsed;
-                btnAddTruck.Visibility = Visibility.Collapsed;
-                lblQuantity.Visibility = Visibility.Collapsed;
-                QntRem.Visibility = Visibility.Collapsed;
-                TripsBorder.Visibility = Visibility.Collapsed;
-                btnFinalize.Visibility = Visibility.Collapsed;
-
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
-
-                lblDelivered.Visibility = Visibility.Visible;
-                btnCompleteContract.Visibility = Visibility.Visible;
             }
             else
             {
-                CarrierSelLBL.Visibility = Visibility.Collapsed;
-                CarrierSelector.Visibility = Visibility.Collapsed;
-                CarrierDetails.Visibility = Visibility.Collapsed;
-                btnAddTruck.Visibility = Visibility.Collapsed;
-                lblQuantity.Visibility = Visibility.Collapsed;
-                QntRem.Visibility = Visibility.Collapsed;
-                TripsBorder.Visibility = Visibility.Collapsed;
-                btnFinalize.Visibility = Visibility.Collapsed;
-
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
-
-                lblDelivered.Visibility = Visibility.Collapsed;
-                btnCompleteContract.Visibility = Visibility.Collapsed;
 
                 btnCompleteContract.IsEnabled = false;
             }
@@ -333,8 +297,8 @@ namespace SQFinalProject.UI {
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
 
             currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
-            newTruck.Contracts.Last().SaveToDB ();
-            newTruck.SaveToDB ();
+            Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
+            Controller.SaveTripToDB ( newTruck );
             currOrder[0].Quantity = currQntRem;
 
             currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );

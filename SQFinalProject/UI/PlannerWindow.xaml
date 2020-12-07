@@ -146,14 +146,12 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Sets up the Selection prompt, combo box, & details section -->
-                            <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" Visibility="Collapsed"/>
-                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Visibility="Collapsed" SelectionChanged="CarrierSelector_SelectionChanged"/>
+                            <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" />
+                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" SelectionChanged="CarrierSelector_SelectionChanged"/>
                         </Grid>
-                        <Label x:Name="lblDelivered" Grid.Row="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Visibility="Collapsed"
-                               Content="Ensure the Contract has been delivered before setting it to complete" />
                         
 
-                        <ListBox x:Name="CarrierDetails" Visibility="Collapsed" Grid.Row="2">
+                        <ListBox x:Name="CarrierDetails" Grid.Row="2">
                             <ListBox.Template>
                                 <ControlTemplate>
                                     <DockPanel LastChildFill="True">
@@ -194,7 +192,6 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <Button  x:Name="btnCompleteContract" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Complete Contract" Click="btnCompleteContract_Click" Visibility="Collapsed" IsEnabled="False"/>
 
                         <Grid Grid.Row="3" >
                             <!-- Sets up the column definitions for the user name row -->
@@ -206,12 +203,12 @@
 
                             <!-- Sets up the Selection prompt, combo box, & details section -->
 
-                            <Button    x:Name="btnAddTruck" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Add Truck to Contract" Click="AddTruck_Click" Visibility="Collapsed" IsEnabled="False"/>
-                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Quantity Remaining:" FontWeight="Bold" Visibility="Collapsed"/>
-                            <TextBlock x:Name="QntRem" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Visibility="Collapsed"/>
+                            <Button    x:Name="btnAddTruck" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Add Truck to Contract" Click="AddTruck_Click" IsEnabled="False"/>
+                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Quantity Remaining:" FontWeight="Bold" />
+                            <TextBlock x:Name="QntRem" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
                         </Grid>
 
-                        <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0" Visibility="Collapsed">
+                        <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0" >
                             <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
                                 <ListBox x:Name="OrderTrips" Height="{Binding Path=ActualHeight, ElementName=HeightLimiter}">
                                     <ListBox.Template>
@@ -245,7 +242,8 @@
                             </Border>
                         </Border>
 
-                        <Button    x:Name="btnFinalize" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Finalize Shipping" Click="btnFinalize_Click" Visibility="Collapsed" IsEnabled="False"/>
+                        <Button    x:Name="btnFinalize" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Left" Width="130" Content="Finalize Shipping" Click="btnFinalize_Click" IsEnabled="False"/>
+                        <Button  x:Name="btnCompleteContract" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Right" Width="130" Content="Complete Contract" Click="btnCompleteContract_Click" IsEnabled="False"/>
                     </Grid>
                 </Grid>
             </TabItem>
