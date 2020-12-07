@@ -594,7 +594,7 @@ namespace SQFinalProject
             int retval = 0;
             List<string> fields = new List<string>();
             fields.Add("MAX(TripID)");
-            string table = "Trip";
+            string table = "truck";
             TMS.MakeSelectCommand(fields, table, null, null);
             List<string> LastTripID = TMS.ExecuteCommand();
             if (LastTripID != null) retval = int.Parse(LastTripID.First());
