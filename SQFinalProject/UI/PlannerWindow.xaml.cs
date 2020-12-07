@@ -325,6 +325,22 @@ namespace SQFinalProject.UI {
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+        private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
+
+
+            currOrder[0].Status = "COMPLETE";
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("status", currOrder[0].Status);
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
+            Controller.TMS.ExecuteCommand();
+
+            GetOrders();
+
+            btnCompleteContract.IsEnabled = false;
+        }
+
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for Advancing Time ~~~~~ */
