@@ -312,14 +312,6 @@ namespace SQFinalProject.UI {
             if ( doShow == 1 )
             {
                 CarrierSelector.IsEnabled = true;
-                btnCompleteContract.IsEnabled = false;
-                TruckRem.Text = "";
-            }
-            else if ( doShow == 2 )
-            {
-                TruckSelector.IsEnabled = false;
-                CarrierSelector.IsEnabled = false;
-                btnAddTruck.IsEnabled = false;
                 TruckRem.Text = "";
             }
             else
@@ -328,8 +320,6 @@ namespace SQFinalProject.UI {
                 CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 TruckRem.Text = "";
-
-                btnCompleteContract.IsEnabled = false;
             }
         }
 
@@ -568,39 +558,6 @@ namespace SQFinalProject.UI {
             Controller.TMS.ExecuteCommand();
 
             GetContracts();
-
-            btnCompleteContract.IsEnabled = false;
-        }
-
-        //  METHOD:		LoadRates
-        /// \brief Gets Rates Information from DB
-        /// \details <b>Details</b>
-        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
-        ///
-        /// \param - <b>None</b>
-        /// 
-        /// \return - <b>Nothing</b>
-        ///
-        private bool IsContractComplete()
-        {
-            bool isComplete = false;
-
-            List<string> fields = new List<string>();
-            fields.Add("isDelivered");
-            Dictionary<string, string> conditions = new Dictionary<string, string>();
-            conditions.Add("contractID", currOrder[0].ID.ToString());
-            Controller.TMS.MakeSelectCommand(fields, "tripline", conditions, null);
-            List<string> results = Controller.TMS.ExecuteCommand();
-            if ( results != null && results.Count > 0) {
-                isComplete = true;
-
-                foreach (string result in results)
-                {
-                    isComplete = isComplete && (result == "1");
-                }
-            }
-
-            return isComplete;
         }
 
 
@@ -610,29 +567,35 @@ namespace SQFinalProject.UI {
 
         private void GenRep_Click(object sender, RoutedEventArgs e)
         {
+            e.Handled = true;
             int weeks = SummaryTimeFrame.SelectedIndex;
             string report = "";
+
             switch(weeks)
             {
-                case 1:
+                case 0:
                     weeks = 2;
+                    ReportsTtl.Content = "TMS Reports - Past 2 Weeks";
                     report = Controller.GenerateReport(weeks);
+                    Get2wReports();
                     break;
 
-                case 2:
+                case 1:
+                    ReportsTtl.Content = "TMS Reports - All Time";
                     report = Controller.GenerateReport();
+                    GetAtReports();
                     break;
 
                 default:
+                    ReportsTtl.Content = "TMS Reports";
                     break;
             }
             Reports.Add(report);
         }
 
-        private void Get2wReports_Click(object sender, RoutedEventArgs e)
+        private void Get2wReports()
         {
-            e.Handled = true;
-            TwoWeekReportBlock.Text = string.Empty;
+            ReportBlock.Text = string.Empty;
 
             List<string> sqlReturn = new List<string>();
             List<string> fields = new List<string>();
@@ -646,7 +609,7 @@ namespace SQFinalProject.UI {
 
             if(sqlReturn == null || sqlReturn.Count == 0)
             {
-                TwoWeekReportBlock.Text = "No Reports to Display.\n";
+                ReportBlock.Text = "No Reports to Display.\n";
                 return;
             }
 
@@ -659,14 +622,13 @@ namespace SQFinalProject.UI {
                 sb.AppendFormat("Period: {0} - {1}\n", split[2], split[3]);
                 sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
 
-                TwoWeekReportBlock.Text += sb.ToString();
+                ReportBlock.Text += sb.ToString();
             }
         }
 
-        private void GetAtReports_Click(object sender, RoutedEventArgs e)
+        private void GetAtReports()
         {
-            e.Handled = true;
-            AllTimeReportBlock.Text = string.Empty;
+            ReportBlock.Text = string.Empty;
 
             List<string> sqlReturn = new List<string>();
             List<string> fields = new List<string>();
@@ -680,7 +642,7 @@ namespace SQFinalProject.UI {
 
             if (sqlReturn == null || sqlReturn.Count == 0)
             {
-                AllTimeReportBlock.Text = "No Reports to Display.\n";
+                ReportBlock.Text = "No Reports to Display.\n";
                 return;
             }
 
@@ -693,7 +655,7 @@ namespace SQFinalProject.UI {
                 sb.AppendFormat("Period: {0}\n", split[1]);
                 sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
 
-                AllTimeReportBlock.Text += sb.ToString();
+                ReportBlock.Text += sb.ToString();
             }
         }
 
