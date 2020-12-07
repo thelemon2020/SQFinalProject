@@ -428,6 +428,14 @@ namespace SQFinalProject.UI {
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = true;
 
+                truckLoad = 26;
+
+                Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+                TruckRem.Text = "";
+                Trucks.Add(newTruck);
+
+                currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
+
             } else if ( TruckSelector.SelectedIndex == 0 ) {
 
                 if ( currQntRem <= 26 ) {
