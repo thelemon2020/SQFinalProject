@@ -192,6 +192,26 @@ namespace SQFinalProject.UI {
                         CarrierSelector.Items.Add (s);
                     }
 
+                    currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
+
+                    QntRem.Text = currQntRem.ToString();
+
+                    if ( currOrder[0].Trips == null ) {
+                        currOrder[0].Trips = new List<TripLine>();
+                    }
+
+                    currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
+                    OrderTrips.ItemsSource = currOrderTrips;
+                } else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) {
+                    OrderState = 2;
+
+                    List <Carrier> carriersLst = Controller.SetupCarriers();
+                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+
+                    foreach ( string s in availCarriers ) {
+                        CarrierSelector.Items.Add (s);
+                    }
+
                     currPrice = 0;
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
@@ -219,15 +239,18 @@ namespace SQFinalProject.UI {
 
             if ( doShow == 1 )
             {
+                CarrierSelector.IsEnabled = true;
                 btnCompleteContract.IsEnabled = false;
             }
             else if ( doShow == 2 )
             {
+                CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
             }
             else
             {
+                CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
 
@@ -270,7 +293,6 @@ namespace SQFinalProject.UI {
 
             if ( currOrder[0].JobType == 0 ) {
 
-                currPrice += currCarrier[0].FTLRate;
                 btnAddTruck.IsEnabled = false;
 
             } else {
@@ -283,7 +305,6 @@ namespace SQFinalProject.UI {
                     btnFinalize.IsEnabled = true;
                 } else {
                     truckLoad = 26;
-                    currPrice += currCarrier[0].FTLRate;
                     currQntRem -= 26;
                 }
 
