@@ -36,9 +36,10 @@ namespace SQFinalProject.UI {
         private string userName { get; set; }                                         //<Stores the user name of the current user
         ObservableCollection<Contract> ordersCollection { get; set; }
         ObservableCollection<Contract> currOrder { get; set; }
-        ObservableCollection<Carrier>  currCarrier { get; set; }
-        ObservableCollection<TripLine> currOrderTrips { get; set;}
+        ObservableCollection<Carrier> currCarrier { get; set; }
+        ObservableCollection<TripLine> currOrderTrips { get; set; }
         ObservableCollection<string> Reports { get; set; }
+        ObservableCollection<Truck> truckCollection {get;set;}
         List<Truck> Trucks { get; set; }
         List<Contract> Contracts { get; set; }
         List<Carrier> Carriers { get; set; }
@@ -207,9 +208,10 @@ namespace SQFinalProject.UI {
             OrderDetails.ItemsSource = null;
             OrderTrips.ItemsSource = null;
             CarrierSelector.Items.Clear() ;
-
+            TruckSelector.Items.Clear();
+            TruckSelector.ItemsSource = null;
             currOrder = new ObservableCollection<Contract>();
-
+            truckCollection = new ObservableCollection<Truck>();
             if ( OrderList.SelectedIndex != -1 )
             {
                 currOrder.Add( (Contract) OrderList.SelectedItem );
@@ -222,6 +224,17 @@ namespace SQFinalProject.UI {
 
                     foreach ( string s in availCarriers ) {
                         CarrierSelector.Items.Add (s);
+                    }
+                    foreach (Truck truck in Trucks)
+                    {
+                        if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.TotalQuantity <= 28))
+                        {
+                            truckCollection.Add(truck);
+                        }
+                    }
+                    foreach (Truck truck in truckCollection)
+                    {
+                        TruckSelector.Items.Add(truck.TripID);
                     }
 
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
@@ -299,6 +312,7 @@ namespace SQFinalProject.UI {
         private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
+            TruckSelector.SelectedIndex = -1;
             CarrierDetails.ItemsSource = null;
             currCarrier = new ObservableCollection<Carrier>();
 
@@ -565,6 +579,14 @@ namespace SQFinalProject.UI {
         {
 
 
+        }
+
+        private void TruckSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            CarrierSelector.SelectedIndex = -1;
+            int i = TruckSelector.SelectedIndex;
+            Truck t = truckCollection[i];
         }
     }
 }

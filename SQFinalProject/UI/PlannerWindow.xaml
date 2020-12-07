@@ -147,7 +147,9 @@
 
                             <!-- Sets up the Selection prompt, combo box, & details section -->
                             <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" />
-                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" SelectionChanged="CarrierSelector_SelectionChanged" IsEnabled="False"/>
+                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" SelectionChanged="CarrierSelector_SelectionChanged"/>
+                            <Label    Grid.Column="2" Height="25" Margin="0,0,150,0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Truck:" FontWeight="Bold" />
+                            <ComboBox x:Name="TruckSelector" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding TripID}" SelectionChanged="TruckSelector_SelectionChanged"/>
                         </Grid>
                         
 
@@ -204,8 +206,8 @@
                             <!-- Sets up the Selection prompt, combo box, & details section -->
 
                             <Button    x:Name="btnAddTruck" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Content="Add Truck to Contract" Click="AddTruck_Click" IsEnabled="False"/>
-                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Quantity Remaining:" FontWeight="Bold" />
-                            <TextBlock x:Name="QntRem" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                            <Label     x:Name="lblQuantity" Grid.Column="1" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Quantity Remaining:" FontWeight="Bold" />
+                            <TextBlock x:Name="QntRem" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="75"/>
                         </Grid>
 
                         <Border Grid.Row="4" x:Name="TripsBorder" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.Column="0" >
