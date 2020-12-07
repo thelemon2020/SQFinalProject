@@ -57,6 +57,7 @@ namespace SQFinalProject.TripPlanning
             Distance = 0;
             IsDelivered = false;
             TotalTime = 0;
+            HoursPerDay = new double[3];
         }
 
         /// \brief Constructor for the TripLine class
@@ -92,7 +93,7 @@ namespace SQFinalProject.TripPlanning
             {
                 TotalTime = float.Parse(splitDetails[6]);
             }
-            
+            HoursPerDay = new double[3];   
         }
 
         public void SaveToDB()
@@ -108,36 +109,39 @@ namespace SQFinalProject.TripPlanning
             TotalTime += truck.ThisRoute.TotalTime;
             Distance = truck.ThisRoute.TotalDistance;
 
-            if(truck.TotalQuantity == 0) // This is for an FTL Truck
+            // fill the array with all 0s
+            for(int i = 0; i < HoursPerDay.Length; i++)
             {
-                // Now check if the trip will take multiple days without loading and unloading considered
-                if (TotalTime <= workDay)
+                HoursPerDay[i] = 0.00;
+            }
+
+            // Now check if the trip will take multiple days without loading and unloading considered
+            if (TotalTime <= workDay)
+            {
+                // The trip is less than 12 hours, but since loading and unloading has not been taken into account, we have to check
+                // Whether the driver is driving for 8 hours max a day.
+                DaysWorked = 1;
+
+                if (TotalTime <= MaxDriveTime) // the trip time without loading and unloading is less than or equal the max driving time
                 {
-                    // The trip is less than 12 hours, but since loading and unloading has not been taken into account, we have to check
-                    // Whether the driver is driving for 8 hours max a day.
-                    DaysWorked = 1;
-
-                    if (TotalTime <= MaxDriveTime) // the trip time without loading and unloading is less than or equal the max driving time
-                    {
-                        // This means we can add the load and unload time and be sure the trip will only take one day
-                        HoursPerDay[0] = TotalTime + load + unload;
-                    }
-                    else // The trip will have to be broken up into multiple days because the drive time is greater than 8 hours
-                    {
-                        // Break up the operating time each day by using a modulo operation to see how much driving time is remaining
-                        HoursPerDay[0] = TotalTime - (TotalTime % MaxDriveTime) + load; // add load time to the first day's driving time
-                        HoursPerDay[1] = (TotalTime % MaxDriveTime) + unload; // Add unload time to the remainder of the driving time
-
-                        DaysWorked++;
-                    }
+                    // This means we can add the load and unload time and be sure the trip will only take one day
+                    HoursPerDay[0] = TotalTime + load + unload;
                 }
-                else
+                else // The trip will have to be broken up into multiple days because the drive time is greater than 8 hours
                 {
-                    HoursPerDay[0] = TotalTime - (TotalTime % MaxDriveTime) + load;
-                    HoursPerDay[1] = (TotalTime % MaxDriveTime) + unload;
+                    // Break up the operating time each day by using a modulo operation to see how much driving time is remaining
+                    HoursPerDay[0] = TotalTime - (TotalTime % MaxDriveTime) + load; // add load time to the first day's driving time
+                    HoursPerDay[1] = (TotalTime % MaxDriveTime) + unload; // Add unload time to the remainder of the driving time
 
-                    DaysWorked = 2;
+                    DaysWorked++;
                 }
+            }
+            else
+            {
+                HoursPerDay[0] = TotalTime - (TotalTime % MaxDriveTime) + load;
+                HoursPerDay[1] = (TotalTime % MaxDriveTime) + unload;
+
+                DaysWorked = 2;
             }
         }
 

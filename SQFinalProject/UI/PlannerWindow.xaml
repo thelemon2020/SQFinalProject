@@ -94,6 +94,7 @@
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
+                                                        <ColumnDefinition Width="75"></ColumnDefinition>
                                                         <ColumnDefinition Width="125"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
                                                     <Label Grid.Column="0">Order #</Label>
@@ -103,7 +104,8 @@
                                                     <Label Grid.Column="4">Van Type</Label>
                                                     <Label Grid.Column="5">Starting City</Label>
                                                     <Label Grid.Column="6">Ending City</Label>
-                                                    <Label Grid.Column="7">Status</Label>
+                                                    <Label Grid.Column="7">Direction</Label>
+                                                    <Label Grid.Column="8">Status</Label>
                                                 </Grid>
                                                 <ItemsPresenter></ItemsPresenter>
                                             </DockPanel>
@@ -120,6 +122,7 @@
                                                     <ColumnDefinition Width="75" />
                                                     <ColumnDefinition Width="75" />
                                                     <ColumnDefinition Width="75" />
+                                                    <ColumnDefinition Width="75" />
                                                     <ColumnDefinition Width="125" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Text="{Binding ID}" />
@@ -129,7 +132,8 @@
                                                 <TextBlock Grid.Column="4" Text="{Binding VanType}" />
                                                 <TextBlock Grid.Column="5" Text="{Binding Origin}" />
                                                 <TextBlock Grid.Column="6" Text="{Binding Destination}" />
-                                                <TextBlock Grid.Column="7" Text="{Binding Status}"/>
+                                                <TextBlock Grid.Column="7" Text="{Binding Direction}" />
+                                                <TextBlock Grid.Column="8" Text="{Binding Status}"/>
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>

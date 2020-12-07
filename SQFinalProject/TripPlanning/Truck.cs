@@ -42,6 +42,7 @@ namespace SQFinalProject.TripPlanning
         public double TotalTime { get; set; }              //<Total time it takes to deliver the truck
         public List<TripLine> Contracts { get; set; }   //<A list of contracts that the Truck will have to deliver
         public Route ThisRoute { get; set; }            //<A route object modelling the route to be taken by the truck
+        public string Direction { get; set; }
 
 
         /// \brief Constructor for the truck class
@@ -77,6 +78,9 @@ namespace SQFinalProject.TripPlanning
             ThisRoute = new Route();
             ThisRoute.GetCities(Origin, Destination);
             Contracts[0].Distance = ThisRoute.TotalDistance;
+            Direction = contract.Direction;
+
+            Contracts[0].CalculateTripTime(this);
         }
 
         /// \brief Method to add cargo from a contract to the trip
@@ -97,12 +101,14 @@ namespace SQFinalProject.TripPlanning
                 {
                     Destination = contract.Destination;
                     contract.Distance = ThisRoute.TotalDistance;
+                    contract.CalculateTripTime(this);
                 }
                 else
                 {
                     Route tmpRt = new Route();
                     tmpRt.GetCities(Origin, contract.Destination);
                     contract.Distance = tmpRt.TotalDistance;
+                    contract.CalculateTripTime(this);
                 }
                 TotalQuantity += contract.Quantity;
             }
@@ -111,7 +117,87 @@ namespace SQFinalProject.TripPlanning
         }
 
 
+        public void CorrectContractTime()
+        {
+            if(Contracts.Count == 1 && TotalQuantity == 0) // This is an FTL Trip, so we don't need to do anything.
+            {
+                return;
+            }
+            else // This is an LTL trip with potentially multiple contracts
+            {
+                if(Contracts.Count == 1 && TotalQuantity <= kMaxPallets) // LTL but only one contract, Add 2 hours for each city we got through
+                {
+                    if(ThisRoute.Cities.Count == 2) // the trip is only going one town over, don't add any extra time
+                    {
+                        return;
+                    }
 
+                    for(int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
+                    {
+                        if(Contracts[0].Destination == ThisRoute.Cities[i].Name) // if we're at the destination then break the loop
+                        {
+                            break;
+                        }
+
+                        if(Contracts[0].HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
+                        {                                     // Then add 2 hours stop time to the first day.
+                            Contracts[0].HoursPerDay[0] += 2;
+                        }
+                        else // The tot time for the day is already greater than 10 hours
+                        {
+                            Contracts[0].HoursPerDay[1] += 2; // add the extra two hours to the follow up day
+
+                            if(Contracts[0].HoursPerDay[1] > kMaxTotalHours) // if adding the extra 2 hours stop time pushed the second day over
+                            {                                                // over the limit we start adding time to a third day.
+                                Contracts[0].HoursPerDay[1] -= 2; // make it so that the second day is not over the limit anymore
+                                Contracts[0].HoursPerDay[2] += 2; // add the two hours to the third day.
+                            }
+                        }
+                    }
+                    
+                }
+                else // There are two or more trips
+                {
+                    // iterate through each trip adding 2 hours for each city stopped in
+                    foreach(TripLine tl in Contracts)
+                    {
+                        if (tl.Destination == ThisRoute.Cities[1].Name) // the trip is only going to the next city, don't add any extra
+                        {                                               // time for it.
+                            continue;
+                        }
+
+                        for (int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
+                        {
+                            if(tl.Destination == ThisRoute.Cities[i].Name) // if the trip line is at the current city then break;
+                            {
+                                break;
+                            }
+
+                            if(ThisRoute.Cities[i].Name != tl.Destination) // if we're not at the trip lines destination add 2 hours stop time
+                            {                                              // Do this because we already added 2 hours unload time
+                                                                           // and we don't want the shorter ltl trip to add 2 hours stop time
+                                                                           // at its destination.
+
+                                if (tl.HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
+                                {                                     // Then add 2 hours stop time to the first day.
+                                    tl.HoursPerDay[0] += 2;
+                                }
+                                else // The total time for the day is already greater than 10 hours
+                                {
+                                    tl.HoursPerDay[1] += 2; // add the extra two hours to the follow up day
+
+                                    if (tl.HoursPerDay[1] > kMaxTotalHours) // if adding the extra 2 hours stop time pushed the second
+                                    {                                                // day over the limit we start adding time to a third day.
+                                        tl.HoursPerDay[1] -= 2; // make it so that the second day is not over the limit anymore
+                                        tl.HoursPerDay[2] += 2; // add the two hours to the third day.
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
         //
