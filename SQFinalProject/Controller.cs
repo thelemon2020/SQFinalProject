@@ -244,6 +244,37 @@ namespace SQFinalProject
         }
 
 
+        public static void AddContractToTMS(Contract contract)
+        {
+            // get the count of contracts in the db for the new contract id
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            TMS.MakeSelectCommand(fields, "contract", null, null);
+            int count = 0;
+            try
+            {
+                count = TMS.ExecuteCommand().Count;
+            }
+            catch(Exception e)
+            {
+                count = 0;
+            }
+
+            // get the values from the contract to be added to the database table
+            string[] tmpDeets = contract.ToString().Split(',');
+            List<string> values = new List<string>();
+
+            // add the values into the list to be inserted to the db
+            values.Add(count.ToString());
+            foreach(string s in tmpDeets)
+            {
+                values.Add(s);
+            }
+            TMS.MakeInsertCommand("contract", values);
+            TMS.ExecuteCommand();
+        }
+
+
         /// \brief A method that is used to add an account to the tms database
         /// \details <b>Details</b>
         /// A method which takes a single account, breaks down its values into string, and adds them into a list to be
@@ -490,6 +521,7 @@ namespace SQFinalProject
         {
             string start = "";
             string end = "";
+            string type = "";
             if(weeks == 0) // this will be an "all-time" reports
             {
                 start = DateTime.MinValue.ToString();
@@ -504,12 +536,17 @@ namespace SQFinalProject
             fields.Add("cost");
             Dictionary<string, string> searchPoints = new Dictionary<string, string>();
             searchPoints.Add("invoiceDate", start);
-            searchPoints.Add("invoiceDate", end);
+            searchPoints.Add("invoice", end);
             string table = "invoice";
 
             TMS.MakeBetweenSelect(fields, table, searchPoints);
 
             List<string> sqlReturn = TMS.ExecuteCommand();
+
+            if(sqlReturn == null || sqlReturn.Count == 0)
+            {
+                return null;
+            }
 
             double totalCost = 0.00;
             int invoiceCount = sqlReturn.Count;
@@ -523,14 +560,32 @@ namespace SQFinalProject
             if (weeks == 0)
             {
                 sb.Append("Period: All-Time, ");
+                type = "All-Time";
             }
             else
             {
                 sb.AppendFormat("Period: {0} - {1}, ", start, end);
+                type = "2-Week";
             }
             sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}", invoiceCount, totalCost);
+            string report = sb.ToString();
 
-            return sb.ToString();
+            fields.Clear();
+            fields.Add("*");
+            TMS.MakeSelectCommand(fields, "report", null, null);
+            int reportCount = TMS.ExecuteCommand().Count + 1;
+
+            fields.Clear();
+            fields.Add(reportCount.ToString());
+            fields.Add(type);
+            fields.Add(start);
+            fields.Add(end);
+            fields.Add(invoiceCount.ToString());
+            fields.Add(totalCost.ToString());
+
+            TMS.MakeInsertCommand("report", fields);
+            
+            return report;
         }
 
         // Returns the highest TripID value in the TMS DB

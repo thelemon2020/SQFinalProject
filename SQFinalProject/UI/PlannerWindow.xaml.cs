@@ -38,13 +38,14 @@ namespace SQFinalProject.UI {
         ObservableCollection<Contract> currOrder { get; set; }
         ObservableCollection<Carrier>  currCarrier { get; set; }
         ObservableCollection<TripLine> currOrderTrips { get; set;}
+        ObservableCollection<string> Reports { get; set; }
 
         private int currQntRem { get; set; }
         private double currPrice  { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
-
+            Reports = new ObservableCollection<string>();
             userName = name;
             orderSelected = false;
             lblUsrInfo.Content = "User Name:  " + userName;
@@ -118,7 +119,7 @@ namespace SQFinalProject.UI {
 
 
         /////////////////////////////////////////////////////////////////
-        
+
 
         private void TabsCtrl_Planner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -157,10 +158,10 @@ namespace SQFinalProject.UI {
                 c.ID = temp;
                 c.Status = splitResult[7];
                 ordersCollection.Add(c);
-            }            
+            }
         }
 
-        private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e ) 
+        private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
 
@@ -189,7 +190,7 @@ namespace SQFinalProject.UI {
 
                     QntRem.Text = currQntRem.ToString();
 
-                    if ( currOrder[0].Trips == null ) { 
+                    if ( currOrder[0].Trips == null ) {
                         currOrder[0].Trips = new List<TripLine>();
                     }
 
@@ -209,7 +210,7 @@ namespace SQFinalProject.UI {
 
         private void ShowOrderControls ( int doShow ) {
 
-            if ( doShow == 1 ) 
+            if ( doShow == 1 )
             {
                 CarrierSelLBL.Visibility = Visibility.Visible;
                 CarrierSelector.Visibility = Visibility.Visible;
@@ -220,7 +221,7 @@ namespace SQFinalProject.UI {
                 TripsBorder.Visibility = Visibility.Visible;
                 btnFinalize.Visibility = Visibility.Visible;
             }
-            else 
+            else
             {
                 CarrierSelLBL.Visibility = Visibility.Collapsed;
                 CarrierSelector.Visibility = Visibility.Collapsed;
@@ -236,8 +237,8 @@ namespace SQFinalProject.UI {
             }
         }
 
-        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e ) 
-        {    
+        private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e )
+        {
             e.Handled = true;
             CarrierDetails.ItemsSource = null;
             currCarrier = new ObservableCollection<Carrier>();
@@ -270,7 +271,7 @@ namespace SQFinalProject.UI {
             OrderTrips.ItemsSource = null;
 
             if ( currOrder[0].JobType == 0 ) {
-                
+
                 currPrice += currCarrier[0].FTLRate;
                 btnAddTruck.IsEnabled = false;
 
@@ -322,6 +323,95 @@ namespace SQFinalProject.UI {
             //OrderList.ItemsSource = ordersCollection;
             //OrderDetails.ItemsSource = currOrder;
             btnFinalize.IsEnabled = false;
+        }
+
+        private void GenRep_Click(object sender, RoutedEventArgs e)
+        {
+            int weeks = SummaryTimeFrame.SelectedIndex;
+            string report = "";
+            switch(weeks)
+            {
+                case 1:
+                    weeks = 2;
+                    report = Controller.GenerateReport(weeks);
+                    break;
+
+                case 2:
+                    report = Controller.GenerateReport();
+                    break;
+
+                default:
+                    break;
+            }
+            Reports.Add(report);
+        }
+
+        private void Get2wReports_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            TwoWeekReportBlock.Text = string.Empty;
+
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            fields.Add("*");
+            conditions.Add("type", "2-week");
+            Controller.TMS.MakeSelectCommand(fields, "report", conditions, null);
+
+            sqlReturn = Controller.TMS.ExecuteCommand();
+
+            if(sqlReturn == null || sqlReturn.Count == 0)
+            {
+                TwoWeekReportBlock.Text = "No Reports to Display.\n";
+                return;
+            }
+
+            foreach(string s in sqlReturn)
+            {
+                string[] split = s.Split(',');
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("TMS Internal Report:\n\n");
+                sb.AppendFormat("Period: {0} - {1}\n", split[2], split[3]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+
+                TwoWeekReportBlock.Text += sb.ToString();
+            }
+        }
+
+        private void GetAtReports_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            AllTimeReportBlock.Text = string.Empty;
+
+            List<string> sqlReturn = new List<string>();
+            List<string> fields = new List<string>();
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+
+            fields.Add("*");
+            conditions.Add("type", "All-Time");
+            Controller.TMS.MakeSelectCommand(fields, "report", conditions, null);
+
+            sqlReturn = Controller.TMS.ExecuteCommand();
+
+            if (sqlReturn == null || sqlReturn.Count == 0)
+            {
+                AllTimeReportBlock.Text = "No Reports to Display.\n";
+                return;
+            }
+
+            foreach (string s in sqlReturn)
+            {
+                string[] split = s.Split(',');
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("TMS Internal Report:\n\n");
+                sb.AppendFormat("Period: {0}\n", split[1]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+
+                AllTimeReportBlock.Text += sb.ToString();
+            }
         }
     }
 }
