@@ -147,9 +147,9 @@
 
                             <!-- Sets up the Selection prompt, combo box, & details section -->
                             <Label    x:Name="CarrierSelLBL" Grid.Column="0" Height="25" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Carrier:" FontWeight="Bold" />
-                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" SelectionChanged="CarrierSelector_SelectionChanged"/>
+                            <ComboBox x:Name="CarrierSelector" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" SelectionChanged="CarrierSelector_SelectionChanged" IsEnabled="False"/>
                             <Label    Grid.Column="2" Height="25" Margin="0,0,150,0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Select a Truck:" FontWeight="Bold" />
-                            <ComboBox x:Name="TruckSelector" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding TripID}" SelectionChanged="TruckSelector_SelectionChanged"/>
+                            <ComboBox x:Name="TruckSelector" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding TripID}" SelectionChanged="TruckSelector_SelectionChanged" IsEnabled="False"/>
                         </Grid>
                         
 

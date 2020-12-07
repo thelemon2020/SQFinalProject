@@ -212,5 +212,9 @@ namespace SQFinalProject.TripPlanning
         {
             Controller.SaveTripToDB(this);
         }
+
+        public int RemainingQuantity () {
+            return kMaxPallets - TotalQuantity;
+        }
     }
 }

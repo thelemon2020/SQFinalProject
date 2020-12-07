@@ -31,7 +31,7 @@ namespace SQFinalProject.UI {
     public partial class PlannerWindow : Window
     {
         //! Properties
-        private bool orderSelected { get; set; }
+        //private bool orderSelected { get; set; }
         private int OrderState { get; set; }
         private string userName { get; set; }                                         //<Stores the user name of the current user
         ObservableCollection<Contract> ordersCollection { get; set; }
@@ -45,17 +45,51 @@ namespace SQFinalProject.UI {
         List<Carrier> Carriers { get; set; }
 
         private int currQntRem { get; set; }
-        private double currPrice  { get; set; }
+        //private double currPrice  { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
             Reports = new ObservableCollection<string>();
             Trucks = new List<Truck>();
-            Contracts = new List<Contract>();
             Carriers = new List<Carrier>();
+
+            GetContracts();
+            Carriers = Controller.SetupCarriers();
+
             userName = name;
-            orderSelected = false;
+            OrderState = 0;
             lblUsrInfo.Content = "User Name:  " + userName;
+        }
+
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        private void GetContracts()
+        {
+            Contracts = new List<Contract>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                string[] splitResult = result.Split(',');
+                StringBuilder recombine = new StringBuilder();
+                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
+                Contract c = new Contract(recombine.ToString());
+                int temp;
+                int.TryParse(splitResult[0], out temp);
+                c.ID = temp;
+                c.Status = splitResult[7];
+                Contracts.Add(c);
+            }
+            ordersCollection = new ObservableCollection<Contract> ( Contracts );
         }
 
         //  METHOD:	CloseCB_CanExecute
@@ -147,7 +181,7 @@ namespace SQFinalProject.UI {
             OrderList.ItemsSource = null;
             SummaryList.ItemsSource = null;
 
-            GetOrders();
+            GetContracts();
 
             if (Orders.IsSelected)
             {
@@ -156,36 +190,6 @@ namespace SQFinalProject.UI {
             else if (Summary.IsSelected)
             {
                 SummaryList.ItemsSource = ordersCollection;
-            }
-        }
-
-        //  METHOD:		LoadRates
-        /// \brief Gets Rates Information from DB
-        /// \details <b>Details</b>
-        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
-        ///
-        /// \param - <b>None</b>
-        /// 
-        /// \return - <b>Nothing</b>
-        ///
-        private void GetOrders()
-        {
-            ordersCollection = new ObservableCollection<Contract>();
-            List<string> fields = new List<string>();
-            fields.Add("*");
-            Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
-            List<string> results = Controller.TMS.ExecuteCommand();
-            foreach (string result in results)
-            {
-                string[] splitResult = result.Split(',');
-                StringBuilder recombine = new StringBuilder();
-                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
-                Contract c = new Contract(recombine.ToString());
-                int temp;
-                int.TryParse(splitResult[0], out temp);
-                c.ID = temp;
-                c.Status = splitResult[7];
-                ordersCollection.Add(c);
             }
         }
 
@@ -204,14 +208,18 @@ namespace SQFinalProject.UI {
         private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
+            OrderState = 0;
 
             OrderDetails.ItemsSource = null;
             OrderTrips.ItemsSource = null;
-            CarrierSelector.Items.Clear() ;
+            CarrierSelector.Items.Clear();
+
             TruckSelector.Items.Clear();
             TruckSelector.ItemsSource = null;
+
             currOrder = new ObservableCollection<Contract>();
             truckCollection = new ObservableCollection<Truck>();
+
             if ( OrderList.SelectedIndex != -1 )
             {
                 currOrder.Add( (Contract) OrderList.SelectedItem );
@@ -219,22 +227,29 @@ namespace SQFinalProject.UI {
                 if ( currOrder[0].Status.ToUpper().Equals ("PLANNING") ) {
                     OrderState = 1;
 
-                    List <Carrier> carriersLst = Controller.SetupCarriers();
-                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+                    Carriers = Controller.SetupCarriers();
+                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), Carriers );
 
-                    foreach ( string s in availCarriers ) {
+                    foreach ( string s in availCarriers ) 
+                    {
                         CarrierSelector.Items.Add (s);
-                    }
-                    foreach (Truck truck in Trucks)
+                    }                    
+
+                    if ( currOrder[0].JobType == 0 ) 
                     {
-                        if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.TotalQuantity <= 28))
+                        TruckSelector.IsEnabled = false;
+                    } 
+                    else
+                    {
+                        TruckSelector.IsEnabled = true;
+                        foreach (Truck truck in Trucks) /* !!Need to populate trucks first, but need to add qnt to db for trucks first ... !! */
                         {
-                            truckCollection.Add(truck);
+                            if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0))
+                            {
+                                truckCollection.Add(truck);
+                                TruckSelector.Items.Add(truck.TripID);
+                            }
                         }
-                    }
-                    foreach (Truck truck in truckCollection)
-                    {
-                        TruckSelector.Items.Add(truck.TripID);
                     }
 
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
@@ -247,7 +262,9 @@ namespace SQFinalProject.UI {
 
                     currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
                     OrderTrips.ItemsSource = currOrderTrips;
-                } else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) {
+                } 
+                else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) 
+                {
                     OrderState = 2;
 
                     if ( IsContractComplete() ){
@@ -255,14 +272,10 @@ namespace SQFinalProject.UI {
                     }
                 }
             }
-            else
-            {
-                OrderState = 0;
-            }
 
             OrderDetails.ItemsSource = currOrder;
 
-            ShowOrderControls (OrderState);
+            EnableOrderControls (OrderState);
         }
 
         //  METHOD:		LoadRates
@@ -274,24 +287,29 @@ namespace SQFinalProject.UI {
         /// 
         /// \return - <b>Nothing</b>
         ///
-        private void ShowOrderControls ( int doShow ) {
+        private void EnableOrderControls ( int doShow ) {
 
             if ( doShow == 1 )
             {
                 CarrierSelector.IsEnabled = true;
                 btnCompleteContract.IsEnabled = false;
+                TruckRem.Text = "";
             }
             else if ( doShow == 2 )
             {
+                TruckSelector.IsEnabled = false;
                 CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
+                TruckRem.Text = "";
             }
             else
             {
+                TruckSelector.IsEnabled = false;
                 CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
+                TruckRem.Text = "";
 
                 btnCompleteContract.IsEnabled = false;
             }
@@ -312,12 +330,14 @@ namespace SQFinalProject.UI {
         private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
-            TruckSelector.SelectedIndex = -1;
             CarrierDetails.ItemsSource = null;
             currCarrier = new ObservableCollection<Carrier>();
 
-            if ( OrderList.SelectedIndex != -1 && CarrierSelector.SelectedItem != null)
+            if ( CarrierSelector.SelectedIndex != -1 && CarrierSelector.SelectedItem != null )
             {
+                TruckSelector.SelectedIndex = -1;
+                TruckRem.Text = "";
+
                 if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
                     btnAddTruck.IsEnabled = true;
                 } else if ( currQntRem == 0 ) {
@@ -326,6 +346,42 @@ namespace SQFinalProject.UI {
 
                 Dictionary<string, string> conditions = new Dictionary<string, string>();
                 conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
+
+                List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
+
+                currCarrier.Add( new Carrier (currStrCarrier) );
+            }
+            else
+            {
+                btnAddTruck.IsEnabled = false;
+            }
+
+            CarrierDetails.ItemsSource = currCarrier;
+        }
+
+        private void TruckSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            CarrierDetails.ItemsSource = null;
+            currCarrier = new ObservableCollection<Carrier>();
+
+            if ( TruckSelector.SelectedIndex != -1 && TruckSelector.SelectedItem != null )
+            {
+                CarrierSelector.SelectedIndex = -1;
+
+                if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
+                    btnAddTruck.IsEnabled = true;
+                } else if ( currQntRem == 0 ) {
+                    btnFinalize.IsEnabled = true;
+                }
+                
+                int i = TruckSelector.SelectedIndex;
+                Truck t = truckCollection[i];
+
+                TruckRem.Text = t.RemainingQuantity().ToString();
+
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add( "carrierid", t.CarrierID.ToString() );
 
                 List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
 
@@ -351,17 +407,20 @@ namespace SQFinalProject.UI {
         ///
         /// \return - <b>Nothing</b>
         ///
-        private void AddTruck_Click ( object sender, RoutedEventArgs e ) {
+        private void AddTruck_Click ( object sender, RoutedEventArgs e ) 
+        {
             int truckLoad = 0;
             OrderTrips.ItemsSource = null;
 
             if ( currOrder[0].JobType == 0 ) {
 
                 btnAddTruck.IsEnabled = false;
+                btnFinalize.IsEnabled = true;
 
-            } else {
+            } else if ( TruckSelector.SelectedIndex == -1 ) {
+
                 if ( currQntRem <= 26 ) {
-                    truckLoad = currQntRem;
+                    truckLoad += currQntRem;
                     btnAddTruck.IsEnabled = false;
 
                     currQntRem = 0;
@@ -369,21 +428,50 @@ namespace SQFinalProject.UI {
                     btnFinalize.IsEnabled = true;
                 } else {
                     truckLoad = 26;
-                    currQntRem -= 26;
+                    currQntRem -= truckLoad;
                 }
 
                 QntRem.Text = currQntRem.ToString();
+                
+                Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+                Controller.SaveTripToDB ( newTruck );
+                Trucks.Add(newTruck);
+
+                currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
+                Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
+                currOrder[0].Quantity = currQntRem;
+
+            } else {
+                int i = TruckSelector.SelectedIndex;
+                Truck t = truckCollection[i];
+
+                if ( currQntRem <= t.RemainingQuantity() ) {
+                    
+                    truckLoad += currQntRem;
+                    btnAddTruck.IsEnabled = false;
+
+                    currQntRem = 0;
+
+                    btnFinalize.IsEnabled = true;
+                } else {
+                    truckLoad += t.RemainingQuantity();
+                    currQntRem -= t.RemainingQuantity();
+                }
+
+                t.TotalQuantity += truckLoad;
+
+                QntRem.Text = currQntRem.ToString();
+                TruckRem.Text = t.RemainingQuantity().ToString();
+
+                t.AddContract( new TripLine (currOrder[0], t.TripID, truckLoad) );
+                currOrder[0].Trips.Add ( t.Contracts.Last() );
+                Controller.SaveTripLineToDB ( t.Contracts.Last() );
+                currOrder[0].Quantity = currQntRem;
             }
-
-            Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
-            Trucks.Add(newTruck);
-            Carriers.Add(currCarrier[0]);
+            
+            
+            //Carriers.Add(currCarrier[0]);
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
-
-            currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
-            Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
-            Controller.SaveTripToDB ( newTruck );
-            currOrder[0].Quantity = currQntRem;
 
             currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
             OrderTrips.ItemsSource = currOrderTrips;
@@ -412,7 +500,7 @@ namespace SQFinalProject.UI {
             Controller.TMS.MakeUpdateCommand("contract",values,conditions);
             Controller.TMS.ExecuteCommand();
 
-            GetOrders();
+            GetContracts();
 
             btnFinalize.IsEnabled = false;
         }
@@ -444,7 +532,7 @@ namespace SQFinalProject.UI {
             Controller.TMS.MakeUpdateCommand("contract",values,conditions);
             Controller.TMS.ExecuteCommand();
 
-            GetOrders();
+            GetContracts();
 
             btnCompleteContract.IsEnabled = false;
         }
@@ -579,14 +667,6 @@ namespace SQFinalProject.UI {
         {
 
 
-        }
-
-        private void TruckSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            e.Handled = true;
-            CarrierSelector.SelectedIndex = -1;
-            int i = TruckSelector.SelectedIndex;
-            Truck t = truckCollection[i];
         }
     }
 }
