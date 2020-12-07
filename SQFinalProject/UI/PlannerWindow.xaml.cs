@@ -26,7 +26,7 @@ namespace SQFinalProject.UI {
     /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they
     /// will be used in the final program.
     ///
-    /// \author <i>Deric Kruse</i>
+    /// \author <i>Nick Byam, Deric Kruse, & Chris Lemon</i>
     ///
     public partial class PlannerWindow : Window
     {
@@ -124,10 +124,21 @@ namespace SQFinalProject.UI {
         }
 
 
+
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in Planning stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void TabsCtrl_Planner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -147,6 +158,15 @@ namespace SQFinalProject.UI {
             }
         }
 
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void GetOrders()
         {
             ordersCollection = new ObservableCollection<Contract>();
@@ -168,6 +188,18 @@ namespace SQFinalProject.UI {
             }
         }
 
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
@@ -220,6 +252,15 @@ namespace SQFinalProject.UI {
             ShowOrderControls (OrderState);
         }
 
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private void ShowOrderControls ( int doShow ) {
 
             if ( doShow == 1 )
@@ -243,6 +284,18 @@ namespace SQFinalProject.UI {
             }
         }
 
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
@@ -272,6 +325,18 @@ namespace SQFinalProject.UI {
             CarrierDetails.ItemsSource = currCarrier;
         }
 
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void AddTruck_Click ( object sender, RoutedEventArgs e ) {
             int truckLoad = 0;
             OrderTrips.ItemsSource = null;
@@ -310,6 +375,18 @@ namespace SQFinalProject.UI {
             OrderTrips.ItemsSource = currOrderTrips;
         }
 
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
 
 
@@ -327,10 +404,21 @@ namespace SQFinalProject.UI {
         }
 
 
+
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
 
 
@@ -347,6 +435,15 @@ namespace SQFinalProject.UI {
             btnCompleteContract.IsEnabled = false;
         }
 
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
         private bool IsContractComplete()
         {
             bool isComplete = false;
