@@ -89,7 +89,6 @@ namespace SQFinalProject.ContactMgmtBilling
 
         public Contract()
         {
-
         }
 
         /// \brief A method to reset the ID count of active contracts

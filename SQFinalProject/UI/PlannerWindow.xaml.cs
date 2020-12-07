@@ -100,6 +100,21 @@ namespace SQFinalProject.UI {
                     TripLine t = new TripLine(resulting, c.Destination);
                     c.Trips.Add(t);
                 }
+                if (c.Trips.Count == 0)
+                {
+                    c.TripComplete = false;
+                }
+                else
+                {
+                    c.TripComplete = true;
+                    foreach (TripLine trip in c.Trips)
+                    {
+                        if (trip.IsDelivered == false)
+                        {
+                            c.TripComplete = false;
+                        }
+                    }
+                }
                 Contracts.Add(c);
             }
             ordersCollection = new ObservableCollection<Contract> ( Contracts );
@@ -534,7 +549,12 @@ namespace SQFinalProject.UI {
         ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
 
+            if (SummaryList.SelectedIndex > -1)
+            {
+                int i = SummaryList.SelectedIndex;
 
+
+            }
             currOrder[0].Status = "COMPLETE";
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", currOrder[0].Status);
@@ -678,6 +698,20 @@ namespace SQFinalProject.UI {
         {
 
 
+        }
+
+        private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            Contract c = (Contract)SummaryList.SelectedItem;
+            if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
+            {
+                CompleteContract.IsEnabled = true;
+            }
+            else
+            {
+                CompleteContract.IsEnabled = false;
+            }
         }
     }
 }
