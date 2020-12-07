@@ -269,12 +269,7 @@ namespace SQFinalProject.UI {
                     foreach ( string s in availCarriers ) 
                     {
                         CarrierSelector.Items.Add (s);
-                    }                    
-
-                    if ( currOrder[0].JobType == 0 ) 
-                    {
-                        TruckSelector.IsEnabled = false;
-                    } 
+                    }
 
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
@@ -284,16 +279,16 @@ namespace SQFinalProject.UI {
                         currOrder[0].Trips = new List<TripLine>();
                     }
 
+                    if ( currOrder[0].JobType == 0 && currOrder[0].Trips.Count == 0  ) {
+                        btnFinalize.IsEnabled = false;
+                    } else if ( currQntRem != 0 ) {
+                        btnFinalize.IsEnabled = false;
+                    } else {
+                        btnFinalize.IsEnabled = true;
+                    }
+
                     currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
                     OrderTrips.ItemsSource = currOrderTrips;
-                } 
-                else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) 
-                {
-                    OrderState = 2;
-
-                    if ( IsContractComplete() ){
-                        btnCompleteContract.IsEnabled = true;
-                    }
                 }
             }
 
@@ -312,6 +307,7 @@ namespace SQFinalProject.UI {
         /// \return - <b>Nothing</b>
         ///
         private void EnableOrderControls ( int doShow ) {
+            btnAddTruck.IsEnabled = false;
 
             if ( doShow == 1 )
             {
@@ -324,7 +320,6 @@ namespace SQFinalProject.UI {
                 TruckSelector.IsEnabled = false;
                 CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
-                btnFinalize.IsEnabled = false;
                 TruckRem.Text = "";
             }
             else
@@ -332,7 +327,6 @@ namespace SQFinalProject.UI {
                 TruckSelector.IsEnabled = false;
                 CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
-                btnFinalize.IsEnabled = false;
                 TruckRem.Text = "";
 
                 btnCompleteContract.IsEnabled = false;
@@ -394,7 +388,9 @@ namespace SQFinalProject.UI {
             if ( TruckSelector.SelectedIndex != -1 && TruckSelector.SelectedItem != null )
             {
   
-                if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
+                if ( currOrder[0].JobType == 0 && currOrder[0].Trips.Count > 0  ) {
+                    btnAddTruck.IsEnabled = true;
+                } else if ( currQntRem != 0 ) {
                     btnAddTruck.IsEnabled = true;
                 } else if ( currQntRem == 0 ) {
                     btnFinalize.IsEnabled = true;
@@ -457,11 +453,11 @@ namespace SQFinalProject.UI {
                 
                 Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
                 TruckRem.Text = newTruck.RemainingQuantity().ToString();
-                Controller.SaveTripToDB ( newTruck );
+                //Controller.SaveTripToDB ( newTruck );
                 Trucks.Add(newTruck);
 
                 currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
-                Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
+                //Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
 
             } else {
@@ -481,11 +477,9 @@ namespace SQFinalProject.UI {
                     currQntRem -= t.RemainingQuantity();
                 }
 
-                //t.TotalQuantity += truckLoad;
-
                 t.AddContract( new TripLine (currOrder[0], t.TripID, truckLoad) );
                 currOrder[0].Trips.Add ( t.Contracts.Last() );
-                Controller.SaveTripLineToDB ( t.Contracts.Last() );
+                //Controller.SaveTripLineToDB ( t.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
 
                 QntRem.Text = currQntRem.ToString();
@@ -514,6 +508,15 @@ namespace SQFinalProject.UI {
         ///
         private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
 
+            foreach ( TripLine t in currOrder[0].Trips ) {
+                Controller.SaveTripLineToDB ( t );
+            }
+
+            foreach ( Truck t in Trucks) {
+                if ( t.Contracts.First().ContractID == currOrder[0].ID ) {
+                    Controller.SaveTripToDB ( t );
+                }
+            }
 
             currOrder[0].Status = "IN-PROGRESS";
             Dictionary<string, string> values = new Dictionary<string, string>();
