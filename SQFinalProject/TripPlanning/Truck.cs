@@ -124,6 +124,11 @@ namespace SQFinalProject.TripPlanning
             {
                 if(Contracts.Count == 1 && TotalQuantity <= kMaxPallets) // LTL but only one contract, Add 2 hours for each city we got through
                 {
+                    if(ThisRoute.Cities.Count == 2) // the trip is only going one town over, don't add any extra time
+                    {
+                        return;
+                    }
+
                     for(int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
                     {
                         if(Contracts[0].HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
@@ -148,6 +153,11 @@ namespace SQFinalProject.TripPlanning
                     // iterate through each trip adding 2 hours for each city stopped in
                     foreach(TripLine tl in Contracts)
                     {
+                        if (tl.Destination == ThisRoute.Cities[1].Name) // the trip is only going to the next city, don't add any extra
+                        {                                               // time for it.
+                            continue;
+                        }
+
                         for (int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
                         {
                             if(ThisRoute.Cities[i].Name != tl.Destination) // if we're not at the trip lines destination add 2 hours stop time
