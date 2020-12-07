@@ -89,6 +89,17 @@ namespace SQFinalProject.UI {
                 int.TryParse(splitResult[0], out temp);
                 c.ID = temp;
                 c.Status = splitResult[7];
+                List<string> field = new List<string>();
+                field.Add("*");
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add("contractid", c.ID.ToString());
+                Controller.TMS.MakeSelectCommand(field, "tripline", conditions,null);
+                results = Controller.TMS.ExecuteCommand();
+                foreach (string resulting in results)
+                {
+                    TripLine t = new TripLine(resulting, c.Destination);
+                    c.Trips.Add(t);
+                }
                 Contracts.Add(c);
             }
             ordersCollection = new ObservableCollection<Contract> ( Contracts );
