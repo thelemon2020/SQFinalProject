@@ -541,11 +541,6 @@ namespace SQFinalProject.UI {
         private List<List<string>> getTripDetails ( List <TripLine> trips ) {
             List<List<string>> details = new List<List<string>>();
             List<string> item;
-            
-            List<string> QueryLst = new List<string> ();   // Set up the database query and check if the user name exists in the database
-            QueryLst.Add ("carrierID");
-            Dictionary<string, string> tempDict;
-            List<string> retList;
 
             foreach ( TripLine t in trips ) {
                 item = new List<string>();
@@ -555,12 +550,12 @@ namespace SQFinalProject.UI {
                 bool found = false;
 
                 
-                    for ( int i = 0; i < Trucks.Count && !found; i++ ) {
-                        if ( Trucks[i].TripID == t.TripID ) {
-                            carrierID = Trucks[i].CarrierID.ToString();
-                            found = true;
-                        }
+                for ( int i = 0; i < Trucks.Count && !found; i++ ) {
+                    if ( Trucks[i].TripID == t.TripID ) {
+                        carrierID = Trucks[i].CarrierID.ToString();
+                        found = true;
                     }
+                }
                 
                 found = false;
                 for ( int i = 0; i < Carriers.Count && !found; i++ ) {
