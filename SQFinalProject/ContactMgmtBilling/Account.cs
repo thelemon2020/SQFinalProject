@@ -193,6 +193,12 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
+        /// \brief Returns a string representation of the Account class
+        /// \details <b>Details</b>
+        /// A method that returns a string representing the account class and its pertinent properties
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>string</b> - a string of the account's properties
+        /// 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
