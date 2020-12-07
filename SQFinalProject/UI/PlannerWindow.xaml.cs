@@ -672,45 +672,37 @@ namespace SQFinalProject.UI {
                     {
                         if(!tl.IsDelivered) // only advance time for undelivered contracts
                         {
-                            if (tl.HoursPerDay.Length == 1) // if the tripline is still only a single day, set it to be completed
+                            if (tl.HoursPerDay[0] == 0.00) // day one was already advanced
+                            {
+                                if (tl.HoursPerDay[1] == 0.00) // day two was already advanced
+                                {
+                                    tl.HoursPerDay[2] = 0.00; // set the third to 0.
+                                }
+                                else // set the second day to 0
+                                {
+                                    tl.HoursPerDay[1] = 0.00;
+                                }
+                            }
+                            else // take away the first day
                             {
                                 tl.HoursPerDay[0] = 0.00;
-                                tl.IsDelivered = true;
                             }
-                            else // it's a multi day tripline, they can only ever be 3 days long at max
+
+                            // Check through all days in the hours per day and make sure they're all 0 for the tripline to be 
+                            // considered done
+                            int daysDone = 0;
+                            for (int i = 0; i < tl.HoursPerDay.Length; i++)
                             {
-                                if (tl.HoursPerDay[0] == 0.00) // day one was already advanced
+                                if (tl.HoursPerDay[i] == 0.00)
                                 {
-                                    if (tl.HoursPerDay[1] == 0.00) // day two was already advanced
-                                    {
-                                        tl.HoursPerDay[2] = 0.00; // set the third to 0.
-                                    }
-                                    else // set the second day to 0
-                                    {
-                                        tl.HoursPerDay[1] = 0.00;
-                                    }
+                                    daysDone++;
                                 }
-                                else // take away the first day
-                                {
-                                    tl.HoursPerDay[0] = 0.00;
-                                }
+                            }
 
-                                // Check through all days in the hours per day and make sure they're all 0 for the tripline to be 
-                                // considered done
-                                int daysDone = 0;
-                                for (int i = 0; i < tl.HoursPerDay.Length; i++)
-                                {
-                                    if (tl.HoursPerDay[i] == 0.00)
-                                    {
-                                        daysDone++;
-                                    }
-                                }
-
-                                // if all the elements in the array are 0.00 the tripline is complete
-                                if (daysDone == tl.HoursPerDay.Length)
-                                {
-                                    tl.IsDelivered = true;
-                                }
+                            // if all the elements in the array are 0.00 the tripline is complete
+                            if (daysDone == tl.HoursPerDay.Length)
+                            {
+                                tl.IsDelivered = true;
                             }
                         }
                     }
