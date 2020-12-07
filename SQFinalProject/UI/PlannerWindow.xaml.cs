@@ -88,12 +88,16 @@ namespace SQFinalProject.UI {
                 int.TryParse(splitResult[0], out temp);
                 c.ID = temp;
                 c.Status = splitResult[7];
+
                 List<string> field = new List<string>();
                 field.Add("*");
+
                 Dictionary<string, string> conditions = new Dictionary<string, string>();
                 conditions.Add("contractid", c.ID.ToString());
+
                 Controller.TMS.MakeSelectCommand(field, "tripline", conditions,null);
                 results = Controller.TMS.ExecuteCommand();
+
                 foreach (string resulting in results)
                 {
                     TripLine t = new TripLine(resulting, c.Destination);
@@ -464,12 +468,24 @@ namespace SQFinalProject.UI {
                     currQntRem -= t.RemainingQuantity();
                 }
 
-                t.AddContract( new TripLine (currOrder[0], t.TripID, truckLoad) );
+                TripLine tmpTL = new TripLine(currOrder[0], t.TripID, truckLoad);
+
+                t.AddContract( tmpTL );
                 currOrder[0].Trips.Add ( t.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
 
                 QntRem.Text = currQntRem.ToString();
                 TruckRem.Text = t.RemainingQuantity().ToString();
+
+                // Add the triplines into the Right contract in the Contract list
+                foreach(Contract c in Contracts)
+                {
+                    if(c.ID == currOrder[0].ID) // Select the contract with the same ID as the currOrder add the trip line to it
+                    {                           // and update the remaining quantity on the contract.
+                        c.Trips.Add(tmpTL);
+                        c.RemainingQuantity = currQntRem;
+                    }
+                }
             }
 
             currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
@@ -770,6 +786,14 @@ namespace SQFinalProject.UI {
                 }
             }
         }
+
+
+        private bool IsContractComplete(Contract contract)
+        {
+            bool complete = contract.IsContractComplete();
+            return complete;
+        }
+
 
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

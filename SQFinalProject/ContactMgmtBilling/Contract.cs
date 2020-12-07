@@ -46,6 +46,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public int VanType { get; set; } //!< The van type, 0 or 1 -> Dry van or Reefer van 
         public bool TripComplete { get; set; } //!< A boolean which represents if the trip has been completed or not
         public double Cost { get; set; } //!<The flat cost of the trip before rates are applied
+        public int RemainingQuantity { get; set; } //!< The remaining quantity of pallets for an LTL contract if the total quantity is > 26
         public string Direction { get; set; }
         public Carrier Carrier { get; set; } //!<The name of the carrier delivering the contract
         public List<TripLine> Trips { get; set; } //!< A list of the trips required to deliver the full order
@@ -99,12 +100,17 @@ namespace SQFinalProject.ContactMgmtBilling
         {
             bool complete = true;
             
-            foreach(TripLine tl in Trips)
+            foreach(TripLine tl in Trips) // all the trip lines on a contract mustbe completed
             {
                 if(!tl.IsDelivered)
                 {
                     complete = false;
                 }
+            }
+
+            if(RemainingQuantity != 0) // and all skids of an order must be put into to trip lines and delivered
+            {
+                complete = false;
             }
 
             return complete;
