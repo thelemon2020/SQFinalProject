@@ -306,12 +306,9 @@ namespace SQFinalProject.UI {
         }
 
         private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
-            //OrderDetails.ItemsSource = null;
+            
 
-            //currOrder = new ObservableCollection<Contract>();
-            //currOrder.Add( (Contract) OrderList.SelectedItem );
-
-            currOrder[0].Status = "IN_PROGRESS";
+            currOrder[0].Status = "IN-PROGRESS";
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", currOrder[0].Status);
             Dictionary<string, string> conditions = new Dictionary<string, string>();
@@ -321,8 +318,6 @@ namespace SQFinalProject.UI {
 
             GetOrders();
 
-            //OrderList.ItemsSource = ordersCollection;
-            //OrderDetails.ItemsSource = currOrder;
             btnFinalize.IsEnabled = false;
         }
 
