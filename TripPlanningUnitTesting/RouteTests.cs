@@ -51,20 +51,34 @@ namespace SQFinalProject.Tests
             Dictionary<string, string> cnd = new Dictionary<string, string>();
             cnd.Add("status", "IN-PROGRESS");
             List<Contract> contracts = new List<Contract>();
+
             List<string> details = Controller.GetAllContractsFromTMS();
-            foreach (string c in details)
+
+            foreach (string result in details)
             {
-                contracts.Add(new Contract(c));
+                string[] splitResult = result.Split(',');
+                StringBuilder recombine = new StringBuilder();
+                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}", splitResult[1], splitResult[2], splitResult[3], splitResult[4], splitResult[5], splitResult[6]);
+                Contract c = new Contract(recombine.ToString());
+                int temp;
+                int.TryParse(splitResult[0], out temp);
+                c.ID = temp;
+                c.Status = splitResult[7];
+                contracts.Add(c);
             }
 
-            string fakeString = "8,Ace McVey,1,5,Windsor,Ottawa,0,IN-PROGRESS";
+            string fakeString = "Ace McVey,1,5,Windsor,Ottawa,0";
             Contract fakeContract = new Contract(fakeString);
+            fakeContract.ID = 12;
+
+
             List<string> s = Controller.FindCarriersForContract(contracts[4], carriers);
-            Truck theTruck = new Truck(contracts[4], carriers[2], contracts[4].Quantity);
-            theTruck.AddContract(new TripLine(fakeContract, theTruck.TripID, fakeContract.Quantity));
+            Truck theTruck = new Truck(contracts[2], carriers[2], 3);
+            theTruck.AddContract(new TripLine(contracts[5], theTruck.TripID, 3));
             theTruck.SimulateDay();
             theTruck.SimulateDay();
 
+            theTruck.SaveToDB();
             theTruck.SaveToDB();
 
             Assert.AreEqual("Toronto", theTruck.ThisRoute.Cities[0].Name);

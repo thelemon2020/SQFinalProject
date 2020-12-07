@@ -631,6 +631,7 @@ namespace SQFinalProject
             values.Add(truck.CarrierID.ToString());
             values.Add(truck.BillTotal.ToString());
             values.Add(tmpFlag.ToString());
+            values.Add(truck.TotalTime.ToString());
             TMS.MakeInsertCommand("Trip", values);
             TMS.ExecuteCommand();
         }
@@ -651,6 +652,7 @@ namespace SQFinalProject
             if (line.IsDelivered) tmpFlag = 1;
             else tmpFlag = 0;
             values.Add(tmpFlag.ToString());
+            values.Add(line.TotalTime.ToString());
             TMS.MakeInsertCommand("tripline", values);
             TMS.ExecuteCommand();
         }
