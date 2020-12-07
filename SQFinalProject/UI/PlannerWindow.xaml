@@ -226,7 +226,7 @@
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
                                                         <ColumnDefinition Width="75"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Grid.Column="0">Trip ID</Label>
+                                                    <Label Grid.Column="0">Truck ID</Label>
                                                     <Label Grid.Column="1">Qnt</Label>
                                                 </Grid>
                                                 <ItemsPresenter></ItemsPresenter>

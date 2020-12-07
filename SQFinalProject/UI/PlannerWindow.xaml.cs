@@ -345,7 +345,7 @@ namespace SQFinalProject.UI {
 
                 currCarrier.Add( new Carrier (currStrCarrier) );
                 TruckSelector.Items.Add("New Truck");
-                foreach (Truck truck in Trucks) /* !!Need to populate trucks first, but need to add qnt to db for trucks first ... !! */
+                foreach (Truck truck in Trucks)
                 {
                     if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0) && (truck.CarrierID.ToString() == currStrCarrier[0]))
                     {
@@ -430,6 +430,7 @@ namespace SQFinalProject.UI {
                 QntRem.Text = currQntRem.ToString();
                 
                 Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+                TruckRem.Text = newTruck.RemainingQuantity().ToString();
                 Controller.SaveTripToDB ( newTruck );
                 Trucks.Add(newTruck);
 
