@@ -422,13 +422,14 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-            int days = int.Parse(NumDays.Text);
+            string order = SummaryList.SelectedItem.ToString();
+
 
         }
 
         private void NumDays_TxtChng(object sender, TextChangedEventArgs e)
         {
-            AdvTimeBtn.IsEnabled = true;
+            //AdvTimeBtn.IsEnabled = true;
         }
     }
 }
