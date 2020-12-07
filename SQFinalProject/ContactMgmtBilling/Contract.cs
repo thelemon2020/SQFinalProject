@@ -94,6 +94,13 @@ namespace SQFinalProject.ContactMgmtBilling
         {
         }
 
+        /// \brief Determines if a contract is eastbound or westbound
+        /// \details <b>Details</b>
+        /// Gets the route IDs for the origin and destination city and subtracts one from the other.  If it's negative 
+        /// the route is east bound, it's positive, west bound
+        /// 
+        /// \param - details - <b>List<string></b> - A list of contract details retrieved from the contract marketplace database
+        /// \returns - <b>Nothing</b>
         private void GetEastOrWest()
         {
             List<string> field = new List<string>();
