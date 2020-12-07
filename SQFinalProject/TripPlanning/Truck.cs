@@ -39,7 +39,7 @@ namespace SQFinalProject.TripPlanning
         public double ReeferRate { get; set; }          //<The reefer rate of the carrier if the truck is a reefer truck
         public double BillTotal { get; set; }           //<The total price charged by the carrier for the trip
         public bool IsComplete { get; set; }            //<Flag to set trip to complete
-        public float TotalTime { get; set; }              //<Total time it takes to deliver the truck
+        public double TotalTime { get; set; }              //<Total time it takes to deliver the truck
         public List<TripLine> Contracts { get; set; }   //<A list of contracts that the Truck will have to deliver
         public Route ThisRoute { get; set; }            //<A route object modelling the route to be taken by the truck
         public string Direction { get; set; }
@@ -80,6 +80,7 @@ namespace SQFinalProject.TripPlanning
             Contracts[0].Distance = ThisRoute.TotalDistance;
             Direction = contract.Direction;
 
+            Contracts[0].CalculateTripTime(this);
         }
 
         /// \brief Method to add cargo from a contract to the trip
@@ -100,18 +101,84 @@ namespace SQFinalProject.TripPlanning
                 {
                     Destination = contract.Destination;
                     contract.Distance = ThisRoute.TotalDistance;
+                    contract.CalculateTripTime(this);
                 }
                 else
                 {
                     Route tmpRt = new Route();
                     tmpRt.GetCities(Origin, contract.Destination);
                     contract.Distance = tmpRt.TotalDistance;
+                    contract.CalculateTripTime(this);
                 }
                 TotalQuantity += contract.Quantity;
             }
 
             return success;
         }
+
+
+        public void CorrectContractTime()
+        {
+            if(Contracts.Count == 1 && TotalQuantity == 0) // This is an FTL Trip, so we don't need to do anything.
+            {
+                return;
+            }
+            else // This is an LTL trip with potentially multiple contracts
+            {
+                if(Contracts.Count == 1 && TotalQuantity <= kMaxPallets) // LTL but only one contract, Add 2 hours for each city we got through
+                {
+                    for(int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
+                    {
+                        if(Contracts[0].HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
+                        {                                     // Then add 2 hours stop time to the first day.
+                            Contracts[0].HoursPerDay[0] += 2;
+                        }
+                        else // The total time for the day is already greater than 10 hours
+                        {
+                            Contracts[0].HoursPerDay[1] += 2; // add the extra two hours to the follow up day
+
+                            if(Contracts[0].HoursPerDay[1] > kMaxTotalHours) // if adding the extra 2 hours stop time pushed the second day over
+                            {                                                // over the limit we start adding time to a third day.
+                                Contracts[0].HoursPerDay[1] -= 2; // make it so that the second day is not over the limit anymore
+                                Contracts[0].HoursPerDay[2] += 2; // add the two hours to the third day.
+                            }
+                        }
+                    }
+                    
+                }
+                else // There are two or more trips
+                {
+                    // iterate through each trip adding 2 hours for each city stopped in
+                    foreach(TripLine tl in Contracts)
+                    {
+                        for (int i = 1; i < ThisRoute.Cities.Count - 1; i++) // we don't want to include the origin city or the destination
+                        {
+                            if(ThisRoute.Cities[i].Name != tl.Destination) // if we're not at the trip lines destination add 2 hours stop time
+                            {                                              // Do this because we already added 2 hours unload time
+                                                                           // and we don't want the shorter ltl trip to add 2 hours stop time
+                                                                           // at its destination.
+
+                                if (tl.HoursPerDay[0] <= 10) // if the first day is less than 10 hours of time with load and driving
+                                {                                     // Then add 2 hours stop time to the first day.
+                                    tl.HoursPerDay[0] += 2;
+                                }
+                                else // The total time for the day is already greater than 10 hours
+                                {
+                                    tl.HoursPerDay[1] += 2; // add the extra two hours to the follow up day
+
+                                    if (tl.HoursPerDay[1] > kMaxTotalHours) // if adding the extra 2 hours stop time pushed the second
+                                    {                                                // day over the limit we start adding time to a third day.
+                                        tl.HoursPerDay[1] -= 2; // make it so that the second day is not over the limit anymore
+                                        tl.HoursPerDay[2] += 2; // add the two hours to the third day.
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         //
         public void SimulateDay()
@@ -139,9 +206,9 @@ namespace SQFinalProject.TripPlanning
             // Increment additiontal days worked counter and add associated surcharge
             foreach (TripLine c in Contracts)
             {
-                if (!c.IsDelivered) c.TotalTime += (float)HoursWorked;
+                if (!c.IsDelivered) c.TotalTime += HoursWorked;
             }
-            TotalTime += (float)HoursWorked;
+            TotalTime += HoursWorked;
             DaysWorked++;
             BillTotal += 150;
         }
