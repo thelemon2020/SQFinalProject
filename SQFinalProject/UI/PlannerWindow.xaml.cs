@@ -26,35 +26,106 @@ namespace SQFinalProject.UI {
     /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they
     /// will be used in the final program.
     ///
-    /// \author <i>Deric Kruse</i>
+    /// \author <i>Nick Byam, Deric Kruse, & Chris Lemon</i>
     ///
     public partial class PlannerWindow : Window
     {
         //! Properties
-        private bool orderSelected { get; set; }
+        //private bool orderSelected { get; set; }
         private int OrderState { get; set; }
         private string userName { get; set; }                                         //<Stores the user name of the current user
         ObservableCollection<Contract> ordersCollection { get; set; }
         ObservableCollection<Contract> currOrder { get; set; }
-        ObservableCollection<Carrier>  currCarrier { get; set; }
-        ObservableCollection<TripLine> currOrderTrips { get; set;}
+        ObservableCollection<Carrier> currCarrier { get; set; }
+        ObservableCollection<TripLine> currOrderTrips { get; set; }
         ObservableCollection<string> Reports { get; set; }
+        ObservableCollection<Truck> truckCollection {get;set;}
+
+        ObservableCollection<Contract> planningCollection { get; set; }
         List<Truck> Trucks { get; set; }
         List<Contract> Contracts { get; set; }
         List<Carrier> Carriers { get; set; }
 
         private int currQntRem { get; set; }
-        private double currPrice  { get; set; }
+        //private double currPrice  { get; set; }
 
         public PlannerWindow ( string name ) {
             InitializeComponent();
             Reports = new ObservableCollection<string>();
             Trucks = new List<Truck>();
-            Contracts = new List<Contract>();
             Carriers = new List<Carrier>();
+
+            GetContracts();
+            Carriers = Controller.SetupCarriers();
+
             userName = name;
-            orderSelected = false;
+            OrderState = 0;
             lblUsrInfo.Content = "User Name:  " + userName;
+        }
+
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        private void GetContracts()
+        {
+            Contracts = new List<Contract>();
+            List<string> fields = new List<string>();
+            fields.Add("*");
+            Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            foreach (string result in results)
+            {
+                string[] splitResult = result.Split(',');
+                StringBuilder recombine = new StringBuilder();
+                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
+                Contract c = new Contract(recombine.ToString());
+                int temp;
+                int.TryParse(splitResult[0], out temp);
+                c.ID = temp;
+                c.Status = splitResult[7];
+                List<string> field = new List<string>();
+                field.Add("*");
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add("contractid", c.ID.ToString());
+                Controller.TMS.MakeSelectCommand(field, "tripline", conditions,null);
+                results = Controller.TMS.ExecuteCommand();
+                foreach (string resulting in results)
+                {
+                    TripLine t = new TripLine(resulting, c.Destination);
+                    c.Trips.Add(t);
+                }
+                if (c.Trips.Count == 0)
+                {
+                    c.TripComplete = false;
+                }
+                else
+                {
+                    c.TripComplete = true;
+                    foreach (TripLine trip in c.Trips)
+                    {
+                        if (trip.IsDelivered == false)
+                        {
+                            c.TripComplete = false;
+                        }
+                    }
+                }
+                Contracts.Add(c);
+            }
+            ordersCollection = new ObservableCollection<Contract> ( Contracts );
+            planningCollection = new ObservableCollection<Contract>();
+            foreach (Contract c in ordersCollection)
+            {
+                if (c.Status == "PLANNING")
+                {
+                    planningCollection.Add(c);
+                }
+            }
         }
 
         //  METHOD:	CloseCB_CanExecute
@@ -124,10 +195,21 @@ namespace SQFinalProject.UI {
         }
 
 
+
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in Planning stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void TabsCtrl_Planner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
@@ -135,11 +217,11 @@ namespace SQFinalProject.UI {
             OrderList.ItemsSource = null;
             SummaryList.ItemsSource = null;
 
-            GetOrders();
+            GetContracts();
 
             if (Orders.IsSelected)
             {
-                OrderList.ItemsSource = ordersCollection;
+                OrderList.ItemsSource = planningCollection;
             }
             else if (Summary.IsSelected)
             {
@@ -147,36 +229,32 @@ namespace SQFinalProject.UI {
             }
         }
 
-        private void GetOrders()
-        {
-            ordersCollection = new ObservableCollection<Contract>();
-            List<string> fields = new List<string>();
-            fields.Add("*");
-            Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
-            List<string> results = Controller.TMS.ExecuteCommand();
-            foreach (string result in results)
-            {
-                string[] splitResult = result.Split(',');
-                StringBuilder recombine = new StringBuilder();
-                recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
-                Contract c = new Contract(recombine.ToString());
-                int temp;
-                int.TryParse(splitResult[0], out temp);
-                c.ID = temp;
-                c.Status = splitResult[7];
-                ordersCollection.Add(c);
-            }
-        }
 
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void OrderList_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
+            OrderState = 0;
 
             OrderDetails.ItemsSource = null;
             OrderTrips.ItemsSource = null;
-            CarrierSelector.Items.Clear() ;
+            CarrierSelector.Items.Clear();
+
+            TruckSelector.Items.Clear();
+            TruckSelector.ItemsSource = null;
 
             currOrder = new ObservableCollection<Contract>();
+            truckCollection = new ObservableCollection<Truck>();
 
             if ( OrderList.SelectedIndex != -1 )
             {
@@ -185,14 +263,19 @@ namespace SQFinalProject.UI {
                 if ( currOrder[0].Status.ToUpper().Equals ("PLANNING") ) {
                     OrderState = 1;
 
-                    List <Carrier> carriersLst = Controller.SetupCarriers();
-                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), carriersLst );
+                    Carriers = Controller.SetupCarriers();
+                    List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), Carriers );
 
-                    foreach ( string s in availCarriers ) {
+                    foreach ( string s in availCarriers ) 
+                    {
                         CarrierSelector.Items.Add (s);
-                    }
+                    }                    
 
-                    currPrice = 0;
+                    if ( currOrder[0].JobType == 0 ) 
+                    {
+                        TruckSelector.IsEnabled = false;
+                    } 
+
                     currQntRem = ((Contract) OrderList.SelectedItem).Quantity;
 
                     QntRem.Text = currQntRem.ToString();
@@ -203,58 +286,99 @@ namespace SQFinalProject.UI {
 
                     currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
                     OrderTrips.ItemsSource = currOrderTrips;
+                } 
+                else if ( currOrder[0].Status.ToUpper().Equals ("IN-PROGRESS") ) 
+                {
+                    OrderState = 2;
+
+                    if ( IsContractComplete() ){
+                        btnCompleteContract.IsEnabled = true;
+                    }
                 }
-            }
-            else
-            {
-                OrderState = 0;
             }
 
             OrderDetails.ItemsSource = currOrder;
 
-            ShowOrderControls (OrderState);
+            EnableOrderControls (OrderState);
         }
 
-        private void ShowOrderControls ( int doShow ) {
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        private void EnableOrderControls ( int doShow ) {
 
             if ( doShow == 1 )
             {
+                CarrierSelector.IsEnabled = true;
                 btnCompleteContract.IsEnabled = false;
+                TruckRem.Text = "";
             }
             else if ( doShow == 2 )
             {
+                TruckSelector.IsEnabled = false;
+                CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
+                TruckRem.Text = "";
             }
             else
             {
+                TruckSelector.IsEnabled = false;
+                CarrierSelector.IsEnabled = false;
                 btnAddTruck.IsEnabled = false;
                 btnFinalize.IsEnabled = false;
+                TruckRem.Text = "";
 
                 btnCompleteContract.IsEnabled = false;
             }
         }
 
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void CarrierSelector_SelectionChanged ( object sender,SelectionChangedEventArgs e )
         {
             e.Handled = true;
             CarrierDetails.ItemsSource = null;
             currCarrier = new ObservableCollection<Carrier>();
-
-            if ( OrderList.SelectedIndex != -1 && CarrierSelector.SelectedItem != null)
+            TruckSelector.Items.Clear();
+            if ( CarrierSelector.SelectedIndex != -1 && CarrierSelector.SelectedItem != null )
             {
-                if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
-                    btnAddTruck.IsEnabled = true;
-                } else if ( currQntRem == 0 ) {
-                    btnFinalize.IsEnabled = true;
-                }
+                TruckSelector.SelectedIndex = -1;
+                TruckRem.Text = "";
 
+                TruckSelector.IsEnabled = true;
+               
                 Dictionary<string, string> conditions = new Dictionary<string, string>();
                 conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
 
                 List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
 
                 currCarrier.Add( new Carrier (currStrCarrier) );
+                TruckSelector.Items.Add("New Truck");
+                foreach (Truck truck in Trucks) /* !!Need to populate trucks first, but need to add qnt to db for trucks first ... !! */
+                {
+                    if ((truck.Origin == currOrder[0].Origin) && (truck.Origin == truck.ThisRoute.Cities[0].Name) && (truck.RemainingQuantity() > 0) && (truck.CarrierID.ToString() == currStrCarrier[0]))
+                    {
+                        truckCollection.Add(truck);
+                        TruckSelector.Items.Add(truck.TripID);
+                    }
+                }
             }
             else
             {
@@ -264,18 +388,61 @@ namespace SQFinalProject.UI {
             CarrierDetails.ItemsSource = currCarrier;
         }
 
-        private void AddTruck_Click ( object sender, RoutedEventArgs e ) {
+        private void TruckSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            if ( TruckSelector.SelectedIndex != -1 && TruckSelector.SelectedItem != null )
+            {
+  
+                if ( currOrder[0].JobType == 0 || currQntRem != 0 ) {
+                    btnAddTruck.IsEnabled = true;
+                } else if ( currQntRem == 0 ) {
+                    btnFinalize.IsEnabled = true;
+                }
+                if (TruckSelector.SelectedIndex == 0)
+                {
+                    TruckRem.Text = "26";
+                }
+                else
+                {
+                    int i = TruckSelector.SelectedIndex;
+                    Truck t = truckCollection[i-1];
+
+                    TruckRem.Text = t.RemainingQuantity().ToString();
+                }               
+            }
+            else
+            {
+                btnAddTruck.IsEnabled = false;
+            }
+        }
+
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
+        private void AddTruck_Click ( object sender, RoutedEventArgs e ) 
+        {
             int truckLoad = 0;
             OrderTrips.ItemsSource = null;
 
             if ( currOrder[0].JobType == 0 ) {
 
-                currPrice += currCarrier[0].FTLRate;
                 btnAddTruck.IsEnabled = false;
+                btnFinalize.IsEnabled = true;
 
-            } else {
+            } else if ( TruckSelector.SelectedIndex == 0 ) {
+
                 if ( currQntRem <= 26 ) {
-                    truckLoad = currQntRem;
+                    truckLoad += currQntRem;
                     btnAddTruck.IsEnabled = false;
 
                     currQntRem = 0;
@@ -283,27 +450,67 @@ namespace SQFinalProject.UI {
                     btnFinalize.IsEnabled = true;
                 } else {
                     truckLoad = 26;
-                    currPrice += currCarrier[0].FTLRate;
-                    currQntRem -= 26;
+                    currQntRem -= truckLoad;
                 }
 
                 QntRem.Text = currQntRem.ToString();
+                
+                Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
+                Controller.SaveTripToDB ( newTruck );
+                Trucks.Add(newTruck);
+
+                currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
+                Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
+                currOrder[0].Quantity = currQntRem;
+
+            } else {
+                int i = TruckSelector.SelectedIndex;
+                Truck t = truckCollection[i-1];
+
+                if ( currQntRem <= t.RemainingQuantity() ) {
+                    
+                    truckLoad += currQntRem;
+                    btnAddTruck.IsEnabled = false;
+
+                    currQntRem = 0;
+
+                    btnFinalize.IsEnabled = true;
+                } else {
+                    truckLoad += t.RemainingQuantity();
+                    currQntRem -= t.RemainingQuantity();
+                }
+
+                t.TotalQuantity += truckLoad;
+
+                QntRem.Text = currQntRem.ToString();
+                TruckRem.Text = t.RemainingQuantity().ToString();
+
+                t.AddContract( new TripLine (currOrder[0], t.TripID, truckLoad) );
+                currOrder[0].Trips.Add ( t.Contracts.Last() );
+                Controller.SaveTripLineToDB ( t.Contracts.Last() );
+                currOrder[0].Quantity = currQntRem;
             }
-
-            Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
-            Trucks.Add(newTruck);
-            Carriers.Add(currCarrier[0]);
+            
+            
+            //Carriers.Add(currCarrier[0]);
             //TripLine newTrip = new TripLine( currOrder[0], newTruck.TripID, truckLoad);
-
-            currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
-            Controller.SaveTripLineToDB ( newTruck.Contracts.Last() );
-            Controller.SaveTripToDB ( newTruck );
-            currOrder[0].Quantity = currQntRem;
 
             currOrderTrips = new ObservableCollection<TripLine> ( currOrder[0].Trips );
             OrderTrips.ItemsSource = currOrderTrips;
         }
 
+
+
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void btnFinalize_Click ( object sender,RoutedEventArgs e ) {
 
 
@@ -315,19 +522,39 @@ namespace SQFinalProject.UI {
             Controller.TMS.MakeUpdateCommand("contract",values,conditions);
             Controller.TMS.ExecuteCommand();
 
-            GetOrders();
+            GetContracts();
 
             btnFinalize.IsEnabled = false;
         }
+
+        private void Nullify_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
+            e.Handled = true;
+        }
+
 
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+        //  METHOD:		About_Click
+        /// \brief Method that is called when the About item on the menu is clicked
+        /// \details <b>Details</b>
+        ///     Opens up the about window when the option is clicked on the menu.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
 
+            if (SummaryList.SelectedIndex > -1)
+            {
+                int i = SummaryList.SelectedIndex;
 
+
+            }
             currOrder[0].Status = "COMPLETE";
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", currOrder[0].Status);
@@ -336,9 +563,40 @@ namespace SQFinalProject.UI {
             Controller.TMS.MakeUpdateCommand("contract",values,conditions);
             Controller.TMS.ExecuteCommand();
 
-            GetOrders();
+            GetContracts();
 
             btnCompleteContract.IsEnabled = false;
+        }
+
+        //  METHOD:		LoadRates
+        /// \brief Gets Rates Information from DB
+        /// \details <b>Details</b>
+        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///
+        /// \param - <b>None</b>
+        /// 
+        /// \return - <b>Nothing</b>
+        ///
+        private bool IsContractComplete()
+        {
+            bool isComplete = false;
+
+            List<string> fields = new List<string>();
+            fields.Add("isDelivered");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", currOrder[0].ID.ToString());
+            Controller.TMS.MakeSelectCommand(fields, "tripline", conditions, null);
+            List<string> results = Controller.TMS.ExecuteCommand();
+            if ( results != null && results.Count > 0) {
+                isComplete = true;
+
+                foreach (string result in results)
+                {
+                    isComplete = isComplete && (result == "1");
+                }
+            }
+
+            return isComplete;
         }
 
 
@@ -439,6 +697,20 @@ namespace SQFinalProject.UI {
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+            Contract c = (Contract)SummaryList.SelectedItem;
+            if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
+            {
+                CompleteContract.IsEnabled = true;
+            }
+            else
+            {
+                CompleteContract.IsEnabled = false;
+            }
         }
     }
 }

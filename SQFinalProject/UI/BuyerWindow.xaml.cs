@@ -25,7 +25,7 @@ namespace SQFinalProject.UI {
     /// simpler errors. The testing for this class will be mainly done manually as this is the most efficient way to access the event handlers in the way that they 
     /// will be used in the final program.
     ///
-    /// \author <i>Deric Kruse</i>
+    /// \author <i>Chris Lemon</i>
     ///
     public partial class BuyerWindow : Window
     {
