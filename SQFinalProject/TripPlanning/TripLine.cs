@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SQFinalProject.TripPlanning
 {
-    /// 
+    ///
     /// \class TripLine
     ///
     /// \brief This class joins together a <b>Truck</b> with a <b>Contract</b>.  No real error handling is needed as a <b>Truck</b> and a <b>Contract</b> must exist
@@ -15,7 +15,7 @@ namespace SQFinalProject.TripPlanning
     ///
     /// \see Truck
     /// \see Contract
-    /// \author <i>Chris Lemon</i>
+    /// \author <i>Chris Lemon, Nick Byam</i>
     ///
     public class TripLine
     {
@@ -39,14 +39,14 @@ namespace SQFinalProject.TripPlanning
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
-        /// Sets some general properties based on arguments passed in from another method 
-        /// 
+        /// Sets some general properties based on arguments passed in from another method
+        ///
         /// \param - contract - <b>Contract</b> - the contract to be loaded onto a <b>Truck</b>
         /// \param - truck - <b>Truck</b> - the <b>Truck</b> to load the contract on to
         /// \param - qty -<b>int</b> - number of pallets to be fulfilled on this trip
-        /// 
+        ///
         /// \return N/A
-        /// 
+        ///
         public TripLine(Contract contract, int tripID, int qty)
         {
             ContractID = contract.ID;
@@ -63,11 +63,11 @@ namespace SQFinalProject.TripPlanning
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
         /// Creates a tripline method from TMS database for the contract class to process after completion
-        /// 
+        ///
         /// \param - details - <b>List<string></b> - the query return of a tripline from the tms db
-        /// 
+        ///
         /// \return N/A
-        /// 
+        ///
         public TripLine(string details, string destination)
         {
             string[] splitDetails = details.Split(',');
@@ -93,30 +93,30 @@ namespace SQFinalProject.TripPlanning
             {
                 TotalTime = float.Parse(splitDetails[6]);
             }
-            HoursPerDay = new double[3];   
+            HoursPerDay = new double[3];
         }
 
-        /// \brief Method to save the Trip line to the database
+
+        /// \brief A method for saving triplines to the TMS DB
         /// \details <b>Details</b>
-        /// Calls the controller method that saves the tripline to the database.
-        /// 
-        /// \param - none
-        /// 
-        /// \return N/A
-        /// 
+        /// This method simply calls a controller method which performs the logic of saving tripline data to the db
+        /// \param - <b>nothing</b>
+        /// \returns - <b>Nothing</b>
+        ///
+        /// \see TripLine
         public void SaveToDB()
         {
             Controller.SaveTripLineToDB(this);
         }
 
-        /// \brief Method to calculate the time a trip takes
+        /// \brief A method that calculates the total time to get from origin to destination
         /// \details <b>Details</b>
-        /// This method calculates the time that a specific trip takes given a truck that it is on.
-        /// 
-        /// \param - truck - <b>Truck</b> - the truck that the trip line is on
-        /// 
-        /// \return N/A
-        /// 
+        /// This method takes a truck as a parameter and calculates the amount of time it takes for the truck to reach
+        /// this tripline(contract)'s destination
+        /// \param - <b>truck</b> - The truck the tripline is being carried on
+        /// \returns - <b>Nothing</b>
+        ///
+        /// \see Truck
         public void CalculateTripTime(Truck truck)
         {
             // Get the cities that the trip line will be on, and thus the total km and time of the trip excluding load and unload time
@@ -166,7 +166,7 @@ namespace SQFinalProject.TripPlanning
         /// A method that adds up all costs of triplines associated with a contract and returns that cost to be added to an account.
         /// \param - contract - <b>Contract</b> - The contract being evaluated
         /// \returns - cost - <b>double</b> - The calculated cost of the contract
-        /// 
+        ///
         public double CalculateCost(Contract contract, Truck truck)
         {
             double cost = 0.00;
@@ -179,7 +179,7 @@ namespace SQFinalProject.TripPlanning
                     {
                         cost += truck.Rate * trip.Distance;
                     }
-                    else // LTL 
+                    else // LTL
                     {
                         cost += trip.Quantity * truck.Rate * trip.Distance;
                     }
