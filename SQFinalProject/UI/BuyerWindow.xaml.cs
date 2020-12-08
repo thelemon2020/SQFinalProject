@@ -149,40 +149,44 @@ namespace SQFinalProject.UI {
         private void TakeContracts(object sender, RoutedEventArgs e)
         {
             Contract selectedContract = (Contract)MarketList.SelectedItem;
-            contractCollection.Remove(selectedContract);
-            selectedContract.Status = "NEW";
-            if (!CheckAccount(selectedContract.ClientName))
+            if (selectedContract != null)
             {
-                AddAccount(selectedContract.ClientName);
-            }
-            List<string> fields = new List<string>();
-            fields.Add("accountid");
-            Dictionary<string, string> cond = new Dictionary<string, string>();
-            cond.Add("clientname", selectedContract.ClientName);
-            Controller.TMS.MakeSelectCommand(fields, "account", cond, null);
-            List<string> sqlreturn = Controller.TMS.ExecuteCommand();
-            selectedContract.AccountID = int.Parse(sqlreturn[0]);
-            fields.Clear();
+                contractCollection.Remove(selectedContract);
+                selectedContract.Status = "NEW";
+                if (!CheckAccount(selectedContract.ClientName))
+                {
+                    AddAccount(selectedContract.ClientName);
+                }
+                List<string> fields = new List<string>();
+                fields.Add("accountid");
+                Dictionary<string, string> cond = new Dictionary<string, string>();
+                cond.Add("clientname", selectedContract.ClientName);
+                Controller.TMS.MakeSelectCommand(fields, "account", cond, null);
+                List<string> sqlreturn = Controller.TMS.ExecuteCommand();
+                selectedContract.AccountID = int.Parse(sqlreturn[0]);
+                fields.Clear();
 
-            fields.Add("clientname");
-            fields.Add("jobtype");
-            fields.Add("skidQuant");
-            fields.Add("depotCity");
-            fields.Add("destCity");
-            fields.Add("vantype");
-            fields.Add("status");
-            fields.Add("accountid");
-            List<string> values = new List<string>();
-            values.Add(selectedContract.ClientName);
-            values.Add(selectedContract.JobType.ToString());
-            values.Add(selectedContract.Quantity.ToString());
-            values.Add(selectedContract.Origin);
-            values.Add(selectedContract.Destination);
-            values.Add(selectedContract.VanType.ToString());
-            values.Add(selectedContract.Status);
-            values.Add(selectedContract.AccountID.ToString());
-            Controller.TMS.MakeInsertCommand("contract", fields, values);
-            Controller.TMS.ExecuteCommand();
+                fields.Add("clientname");
+                fields.Add("jobtype");
+                fields.Add("skidQuant");
+                fields.Add("depotCity");
+                fields.Add("destCity");
+                fields.Add("vantype");
+                fields.Add("status");
+                fields.Add("accountid");
+                List<string> values = new List<string>();
+                values.Add(selectedContract.ClientName);
+                values.Add(selectedContract.JobType.ToString());
+                values.Add(selectedContract.Quantity.ToString());
+                values.Add(selectedContract.Origin);
+                values.Add(selectedContract.Destination);
+                values.Add(selectedContract.VanType.ToString());
+                values.Add(selectedContract.Status);
+                values.Add(selectedContract.AccountID.ToString());
+                Controller.TMS.MakeInsertCommand("contract", fields, values);
+                Controller.TMS.ExecuteCommand();
+            }
+            
         }
 
         //  METHOD:		CheckAccount
