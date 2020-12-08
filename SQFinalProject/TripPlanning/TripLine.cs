@@ -21,8 +21,8 @@ namespace SQFinalProject.TripPlanning
     {
         private const double workDay = 12.0;    //!< A constant value of a full workday
         private const double MaxDriveTime = 8.0;//!< A constant value of the maximum time a driver is allowed to drive
-        private const double load = 2.0;
-        private const double unload = 2.0;
+        private const double load = 2.0;        //!< A constant for how long it takes to load a trip onto a trick
+        private const double unload = 2.0;      //!< A constant for how long it takes to unload a trip from a trick
         private const int FTLMaxLoad = 0;       //!< A constant value of max load of an FTL truck
         private const int LTLMaxLoad = 26;      //!< Max pallet count for an LTL truck
         private const int DryVan = 0;           //!< The int representation of a dry van
@@ -96,12 +96,27 @@ namespace SQFinalProject.TripPlanning
             HoursPerDay = new double[3];   
         }
 
+        /// \brief Method to save the Trip line to the database
+        /// \details <b>Details</b>
+        /// Calls the controller method that saves the tripline to the database.
+        /// 
+        /// \param - none
+        /// 
+        /// \return N/A
+        /// 
         public void SaveToDB()
         {
             Controller.SaveTripLineToDB(this);
         }
-        
 
+        /// \brief Method to calculate the time a trip takes
+        /// \details <b>Details</b>
+        /// This method calculates the time that a specific trip takes given a truck that it is on.
+        /// 
+        /// \param - truck - <b>Truck</b> - the truck that the trip line is on
+        /// 
+        /// \return N/A
+        /// 
         public void CalculateTripTime(Truck truck)
         {
             // Get the cities that the trip line will be on, and thus the total km and time of the trip excluding load and unload time
