@@ -516,7 +516,7 @@ namespace SQFinalProject
         /// 
         public static string GenerateInvoice(Account account, Contract contract)
         {
-            if (!contract.TripComplete)
+            if (contract.Status != "COMPLETE")
             {
                 return null;
             }

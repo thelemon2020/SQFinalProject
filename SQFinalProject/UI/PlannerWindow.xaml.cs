@@ -599,6 +599,14 @@ namespace SQFinalProject.UI {
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
             
             currOrder[0].Status = "COMPLETE";
+            foreach(Contract c in Contracts)
+            {
+                if(currOrder[0].ID == c.ID)
+                {
+                    currOrder[0].Cost = c.Cost;
+                }
+            }
+
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", currOrder[0].Status);
             Dictionary<string, string> conditions = new Dictionary<string, string>();
@@ -815,6 +823,18 @@ namespace SQFinalProject.UI {
             SummaryList.ItemsSource = null;
             SummaryList.ItemsSource = ordersCollection;
         }
+
+
+        private bool IsContractComplete(Contract contract)
+        {
+            bool complete = contract.IsContractComplete();
+            if (complete)
+            {
+                contract.TripComplete = true;
+            }
+            return complete;
+        }
+
 
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
