@@ -327,7 +327,7 @@ namespace SQFinalProject.TripPlanning
 
         /// \brief A method for saving trucks to the TMS DB
         /// \details <b>Details</b>
-        /// This method simple calls a controller method which performs the logic of saving truck data to the db
+        /// This method simply calls a controller method which performs the logic of saving truck data to the db
         /// \param - <b>nothing</b>
         /// \returns - <b>Nothing</b>
         /// 
