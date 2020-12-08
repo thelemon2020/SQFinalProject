@@ -1,4 +1,10 @@
-﻿using System;
+﻿//*********************************************
+// File			 : Route.cs
+// Project		 : PROG2020 - Term Project
+// Programmer	 : Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser
+// Last Change   : 2020-12-06
+//*********************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +29,7 @@ namespace SQFinalProject.TripPlanning
             public string Next { get; set; }    //!< the next city
             public int Distance { get; set; }   //!<distance to next city
             public double Time { get; set; }    //!<time to next city
-            
+
             /// \brief City
             /// \details <b>Details</b>
             /// Constructor for the City struct. Assigns given values to their appropriate property

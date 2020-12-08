@@ -1,4 +1,10 @@
-﻿using SQFinalProject.ContactMgmtBilling;
+﻿//*********************************************
+// File			 : Truck.cs
+// Project		 : PROG2020 - Term Project
+// Programmer	 : Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser
+// Last Change   : 2020-12-06
+//*********************************************
+using SQFinalProject.ContactMgmtBilling;
 using SQFinalProject.UI;
 using System;
 using System.Collections.Generic;
