@@ -73,7 +73,7 @@ namespace SQFinalProject.UI {
                 Dictionary<string, string> tempDict = new Dictionary<string, string>();
                 tempDict.Add ("username", usrName);
 
-                Controller.TMS.MakeSelectCommand ( QueryLst, "login", tempDict,null);
+                Controller.TMS.MakeSelectCommand ( QueryLst, "login", tempDict, null);
 
                 List<string> UsrReturn = Controller.TMS.ExecuteCommand();
 

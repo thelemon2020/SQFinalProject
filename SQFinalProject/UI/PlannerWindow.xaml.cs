@@ -793,11 +793,30 @@ namespace SQFinalProject.UI {
                 {
                     t.IsComplete = true;
                 }
+
+                foreach (Contract c in Contracts)
+                {
+                    IsContractComplete(c);
+
+                    foreach(TripLine tl in c.Trips)
+                    {
+                        if (t.TripID == tl.TripID && c.TripComplete == true)
+                        {
+                            c.CalculateCost(t);
+                        }
+                    }
+                }
             }
-            foreach (Contract c in ordersCollection)
+            if(ordersCollection.Count != 0)
             {
-                c.TripComplete = c.IsContractComplete();
+                ordersCollection.Clear();
             }
+            
+            foreach(Contract c in Contracts)
+            {
+                ordersCollection.Add(c);
+            }
+
             SummaryList.ItemsSource = null;
             SummaryList.ItemsSource = ordersCollection;
         }
