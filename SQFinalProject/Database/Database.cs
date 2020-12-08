@@ -261,6 +261,14 @@ namespace SQFinalProject
             userCommand = selectCommand.ToString(); // set userCommand to the newly created query string
         }
 
+
+        /// \brief 
+        /// \details <b>Details</b>
+        /// 
+        /// \param - 
+        /// \returns - 
+        /// 
+        /// \see
         public void MakeDeleteCommand(string table, Dictionary<string, string> conditions)
         {
             StringBuilder selectCommand = new StringBuilder(); //instantiate string builder for use in building a query string
