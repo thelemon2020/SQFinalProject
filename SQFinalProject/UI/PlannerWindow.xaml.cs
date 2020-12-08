@@ -45,7 +45,7 @@ namespace SQFinalProject.UI {
         List<Carrier> Carriers { get; set; }                                        //<Stores the list of carriers from the DB
 
         private int currQntRem { get; set; }                                       //<Stores the remaining quantity of the current contract
-        public DateTime time { get; set; }                                         
+        public DateTime time { get; set; }
 
 
 
@@ -70,7 +70,7 @@ namespace SQFinalProject.UI {
         /// adds them to the list of trip lines in each contract.
         ///
         /// \param - <b>None</b>
-        /// 
+        ///
         /// \return - <b>Nothing</b>
         ///
         private void GetContracts()
@@ -246,8 +246,8 @@ namespace SQFinalProject.UI {
         //  METHOD:		OrderList_SelectionChanged
         /// \brief Method that is called when an order is selected from the order list.
         /// \details <b>Details</b>
-        ///     This method sets up what happens when the an item from the order list is selected. First the collections 
-        /// that need to be reset for the user interface to be updaded are reset.  If the selected item is in the planning 
+        ///     This method sets up what happens when the an item from the order list is selected. First the collections
+        /// that need to be reset for the user interface to be updaded are reset.  If the selected item is in the planning
         /// stage, the method sets up the tab so they can plan the shiping details of the contract.
         ///
         /// \param - <b>sender:</b>  the object that called the method
@@ -281,7 +281,7 @@ namespace SQFinalProject.UI {
                     Carriers = Controller.SetupCarriers();
                     List <string> availCarriers = Controller.FindCarriersForContract( (Contract)currOrder.ElementAt(0), Carriers );
 
-                    foreach ( string s in availCarriers ) 
+                    foreach ( string s in availCarriers )
                     {
                         CarrierSelector.Items.Add (s);
                     }
@@ -322,7 +322,7 @@ namespace SQFinalProject.UI {
         ///     Either enables or disables controls to set up the orders tab for the current contract.
         ///
         /// \param - <b>doShow</b>  integer to store the state that the currently selected contract is in
-        /// 
+        ///
         /// \return - <b>Nothing</b>
         ///
         private void EnableOrderControls ( int doShow ) {
@@ -347,7 +347,7 @@ namespace SQFinalProject.UI {
         //  METHOD:		CarrierSelector_SelectionChanged
         /// \brief Method that is called when a carrier is selected from the carrier selection combo box
         /// \details <b>Details</b>
-        ///     If a carrier is selected, the method gets the current carrier stats from the database and adds the partially filled 
+        ///     If a carrier is selected, the method gets the current carrier stats from the database and adds the partially filled
         /// trucks from the truck list to the truck selection combo box.
         ///
         /// \param - <b>sender:</b>  the object that called the method
@@ -367,7 +367,7 @@ namespace SQFinalProject.UI {
                 TruckRem.Text = "";
 
                 TruckSelector.IsEnabled = true;
-               
+
                 // Gets the carrier details from the database and puts them in the carrier details box
                 Dictionary<string, string> conditions = new Dictionary<string, string>();
                 conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
@@ -401,7 +401,7 @@ namespace SQFinalProject.UI {
         /// \brief Method that is called when a truck is selected from the truck selection combo box
         /// \details <b>Details</b>
         ///     If a truck is selected, the method enables either the add truck button or the finalize button depending on
-        /// whether the current contract has had all its pallets added to trucks.  
+        /// whether the current contract has had all its pallets added to trucks.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -431,7 +431,7 @@ namespace SQFinalProject.UI {
                     Truck t = truckCollection[i-1];
 
                     TruckRem.Text = t.RemainingQuantity().ToString();
-                }               
+                }
             }
             else
             {
@@ -454,7 +454,7 @@ namespace SQFinalProject.UI {
         ///
         /// \return - <b>Nothing</b>
         ///
-        private void AddTruck_Click ( object sender, RoutedEventArgs e ) 
+        private void AddTruck_Click ( object sender, RoutedEventArgs e )
         {
             int truckLoad = 0;
             OrderTrips.ItemsSource = null;
@@ -473,7 +473,7 @@ namespace SQFinalProject.UI {
 
                 currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
 
-            // If a new truck was selected, create a new truck containing the tripline and add as much of the contract as possible 
+            // If a new truck was selected, create a new truck containing the tripline and add as much of the contract as possible
             } else if ( TruckSelector.SelectedIndex == 0 ) {
 
                 if ( currQntRem <= 26 ) {
@@ -489,7 +489,7 @@ namespace SQFinalProject.UI {
                 }
 
                 QntRem.Text = currQntRem.ToString();
-                
+
                 Truck newTruck = new Truck ( currOrder[0], currCarrier[0], truckLoad );
                 TruckRem.Text = newTruck.RemainingQuantity().ToString();
                 Trucks.Add(newTruck);
@@ -503,7 +503,7 @@ namespace SQFinalProject.UI {
                 Truck t = truckCollection[i-1];
 
                 if ( currQntRem <= t.RemainingQuantity() ) {
-                    
+
                     truckLoad += currQntRem;
                     btnAddTruck.IsEnabled = false;
 
@@ -545,7 +545,7 @@ namespace SQFinalProject.UI {
         //  METHOD:		btnFinalize_Click
         /// \brief Method that is called when the finalize button is clicked
         /// \details <b>Details</b>
-        ///     Saves all the trip lines in the current contract to the database.  Also search the truck list for any trucks 
+        ///     Saves all the trip lines in the current contract to the database.  Also search the truck list for any trucks
         /// that need to be added to the database and adds them.  Then changes the state of the current contract to in progress
         /// sending it to the next tab.
         ///
@@ -601,7 +601,7 @@ namespace SQFinalProject.UI {
                 item = new List<string>();
                 string carrierName = " Truck not found ";
                 string carrierID = "";
-                
+
                 bool found = false;
 
                 // Get the carrier id from the truck that the tripline is on
@@ -611,7 +611,7 @@ namespace SQFinalProject.UI {
                         found = true;
                     }
                 }
-                
+
                 found = false;
                 // Get the carrier name from the carrier matching the carrier id of the truck
                 for ( int i = 0; i < Carriers.Count && !found; i++ ) {
@@ -667,24 +667,22 @@ namespace SQFinalProject.UI {
         /// \return - <b>Nothing</b>
         ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
-            
-            currOrder[0].Status = "COMPLETE";
-            foreach(Contract c in Contracts)
+            if (SummaryList.SelectedIndex > -1)
             {
-                if(currOrder[0].ID == c.ID)
-                {
-                    currOrder[0].Cost = c.Cost;
-                }
+                Contract c = (Contract)SummaryList.SelectedItem;
+                c.Status = "COMPLETE";
+                Dictionary<string, string> values = new Dictionary<string, string>();
+                values.Add("status", c.Status);
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add("contractID", c.ID.ToString());
+                Controller.TMS.MakeUpdateCommand("contract", values, conditions);
+                Controller.TMS.ExecuteCommand();
+                SummaryList.ItemsSource = null;
+                SummaryList.ItemsSource = ordersCollection;
+                GetContracts();
+
             }
 
-            Dictionary<string, string> values = new Dictionary<string, string>();
-            values.Add("status", currOrder[0].Status);
-            Dictionary<string, string> conditions = new Dictionary<string, string>();
-            conditions.Add("contractID", currOrder[0].ID.ToString());
-            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
-            Controller.TMS.ExecuteCommand();
-
-            GetContracts();
         }
 
 
@@ -697,7 +695,7 @@ namespace SQFinalProject.UI {
         /// \brief Method that is called when the Generate Report button is clicked
         /// \details <b>Details</b>
         ///     This method sets up the title of the reports tab depending on the type of report being generated
-        /// and then generates a report for the specified time.  Then calls a helper method which puts the report 
+        /// and then generates a report for the specified time.  Then calls a helper method which puts the report
         /// file onto the page.
         ///
         /// \param - <b>sender:</b>  the object that called the method
@@ -731,13 +729,13 @@ namespace SQFinalProject.UI {
                     break;
             }
         }
-        
+
 
 
         //  METHOD:		Get2wReports
         /// \brief This method gets a 2 week report from the database and displays it to the screen
         /// \details <b>Details</b>
-        ///     This method first receives 2 week reports from the database then parses them and reorders them 
+        ///     This method first receives 2 week reports from the database then parses them and reorders them
         /// for display in the output box.
         ///
         /// \param - <b>None</b>
@@ -778,13 +776,13 @@ namespace SQFinalProject.UI {
                 ReportBlock.Text += sb.ToString();
             }
         }
-        
+
 
 
         //  METHOD:		GetAtReports
         /// \brief This method gets all time reports from the database and displays them to the screen
         /// \details <b>Details</b>
-        ///     This method first receives reports of the everything that the program has done in its lifetime from the database 
+        ///     This method first receives reports of the everything that the program has done in its lifetime from the database
         /// then parses them and reorders them for display in the output box.
         ///
         /// \param - <b>None</b>
@@ -794,7 +792,7 @@ namespace SQFinalProject.UI {
         private void GetAtReports()
         {
             ReportBlock.Text = string.Empty;
-            
+
             // Gets the reports from the database
             List<string> sqlReturn = new List<string>();
             List<string> fields = new List<string>();
@@ -811,7 +809,7 @@ namespace SQFinalProject.UI {
                 ReportBlock.Text = "No Reports to Display.\n";
                 return;
             }
-            
+
             // Parses and displays the reports if any were found
             foreach (string s in sqlReturn)
             {
@@ -847,12 +845,12 @@ namespace SQFinalProject.UI {
             {
                 if(!t.IsComplete) // only advance time on trucks that are not yet complete
                 {
-                    // first correct the time of all triplines on a truck 
+                    // first correct the time of all triplines on a truck
                     if(t.Corrected == false)
                     {
                         t.CorrectContractTime();
                         t.Corrected = true;
-                    }  
+                    }
 
                     // Now go through each tripline and take away the first array element of the hours per day array
                     foreach (TripLine tl in t.Contracts)
@@ -875,7 +873,7 @@ namespace SQFinalProject.UI {
                                 tl.HoursPerDay[0] = 0.00;
                             }
 
-                            // Check through all days in the hours per day and make sure they're all 0 for the tripline to be 
+                            // Check through all days in the hours per day and make sure they're all 0 for the tripline to be
                             // considered done
                             int daysDone = 0;
                             for (int i = 0; i < tl.HoursPerDay.Length; i++)
@@ -906,7 +904,7 @@ namespace SQFinalProject.UI {
                             }
                         }
                     }
-                   
+
                 }
                 //Check through all the triplines again to see if they're all delivered
                 bool truckIsComplete = true;
@@ -937,7 +935,7 @@ namespace SQFinalProject.UI {
                 }
             }
             ordersCollection.Clear();
-            
+
             foreach(Contract c in Contracts)
             {
                 ordersCollection.Add(c);
@@ -996,7 +994,7 @@ namespace SQFinalProject.UI {
                     CompleteContract.IsEnabled = false;
                 }
             }
-           
+
         }
     }
 }
