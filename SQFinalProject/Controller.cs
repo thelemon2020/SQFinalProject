@@ -590,27 +590,40 @@ namespace SQFinalProject
                 ltlRate[i] = temp;
                 double.TryParse(moreResult[3], out temp);
                 reefRate[i] = temp;
+                List<string> getall = new List<string>();
+                getall.Add("*");
+                TMS.MakeSelectCommand(getall, "rates", null, null);
+                List<string> rates = TMS.ExecuteCommand();
+                string[] splitRates = rates[0].Split(',');
+                double ourFLT = 0;
+                double.TryParse(splitRates[0], out ourFLT);
+                ourFLT = ourFLT / 100;
+                double ourLTL = 0;
+                double.TryParse(splitRates[1], out ourLTL);
+                ourLTL = ourLTL / 100;
                 if (contract.JobType == 0)
                 {
-                    kmRate[i] = (value.Value[2] * 26 * ftlRate[i]);                   
+                    kmRate[i] = (value.Value[2] * 26 * (ftlRate[i] * ourFLT));                   
                 }
                 else
                 {
-                    kmRate[i] = (value.Value[0] * value.Value[2] * ltlRate[i]);
+                    kmRate[i] = (value.Value[0] * value.Value[2] * (ltlRate[i] * ourLTL));
                 }
                 if (contract.VanType == 1)
                 {
                     kmRate[i] = kmRate[i] * reefRate[i];
                 }
+                kmRate[i] = Math.Round(kmRate[i], 2);
                 dayRate[i] = (value.Value[1] - 1) * 150 ;
                 kmRate[i] = Math.Round(kmRate[i], 2);
                 if (contract.JobType == 0)
                 {
-                    invoice.AppendFormat("KM Rate {0}KM @ ${1} * {2}----------{3}\n", value.Value[2], ftlRate[i], value.Value[0], kmRate[i]);
+                    invoice.AppendFormat("KM Rate {0}KM @ (${1}*{2}) * 26----------{4}\n", value.Value[2], ftlRate[i], ourFLT, value.Value[0], kmRate[i]);
+                   
                 }
                 else
                 {
-                    invoice.AppendFormat("KM Rate {0}KM @ ${1} * {2}----------{3}\n", value.Value[2], ltlRate[i], value.Value[0], kmRate[i]) ;
+                    invoice.AppendFormat("KM Rate {0}KM @ (${1}*{2}) * {3}----------{4}\n", value.Value[2], ltlRate[i], ourLTL,value.Value[0], kmRate[i]) ;
                 }
                 invoice.AppendFormat("Day Rate {0} Day(s) @ $150----------------{1}\n", value.Value[1] - 1, dayRate[i]);
                 i++;
@@ -657,13 +670,13 @@ namespace SQFinalProject
             string type = "";
             if(weeks == 0) // this will be an "all-time" reports
             {
-                start = DateTime.MinValue.ToString();
-                end = DateTime.MaxValue.ToString();
+                start = DateTime.MinValue.ToString("yyyy-MM-dd");
+                end = DateTime.MaxValue.ToString("yyyy-MM-dd");
             }
             else
             {
-                end = DateTime.Now.AddDays(1.0).ToString();
-                start = DateTime.Now.Subtract(TimeSpan.FromDays(14)).ToString();
+                end = DateTime.Now.ToString("yyyy-MM-dd");
+                start = DateTime.Now.Subtract(TimeSpan.FromDays(14)).ToString("yyyy-MM-dd");
             }
             List<string> fields = new List<string>();
             fields.Add("cost");
@@ -717,7 +730,8 @@ namespace SQFinalProject
             fields.Add(totalCost.ToString());
 
             TMS.MakeInsertCommand("report", fields);
-            
+            TMS.ExecuteCommand();
+
             return report;
         }
 

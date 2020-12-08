@@ -51,11 +51,10 @@
 
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="151*" />
-                            <ColumnDefinition Width="639*"/>
-                            <ColumnDefinition Width="198*" />
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="border" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.ColumnSpan="2" Margin="0,0,0.4,-0.2">
+                        <Border x:Name="border" CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.ColumnSpan="1" Margin="0,0,0.714,-0.429">
                             <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
                                 <ListBox Grid.Column="0" Name="MarketList">
                                     <ListBox.Template>
@@ -104,8 +103,8 @@
                                 </ListBox>
                             </Border>
                         </Border>
-                        <Button Grid.Column="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
-                        <Button Grid.Column="2" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
+                        <Button Grid.Column="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="100" Content="Get Contracts" Click="GetContracts" x:Name="btnContracts"/>
+                        <Button Grid.Column="3" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="100" Content="Take Contract" Click="TakeContracts" x:Name="btnTake"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -186,10 +185,10 @@
                         <RowDefinition Height="*"  />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions >
-                        <ColumnDefinition Width="4*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Border CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2">
+                    <Border CornerRadius="3" BorderBrush="White" BorderThickness="2,2,2,2" Grid.ColumnSpan="1" Margin="0,0,0.286,-0.429">
                         <Border Background="Transparent" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="2">
                             <ListBox Name="CustomerList" SelectionChanged="CustomerList_SelectionChanged">
                                 <ListBox.Template>
@@ -230,11 +229,11 @@
                             </ListBox>
                         </Border>
                     </Border>
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,50" Text="Customer:"></TextBlock>
-                    <ComboBox Name="CustomerCombo" Grid.Column="1" VerticalAlignment="Center" Width="100" SelectionChanged="CustomerCombo_SelectionChanged"></ComboBox>
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,65,0" Text="Amount Owing: "></TextBlock>
-                    <TextBlock Grid.Column="1" Name="AmountOwing" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,100,0,0"></TextBlock>
-                    <TextBlock Name="LastPaid" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,200,100,0" Text="Last Paid:"></TextBlock>
+                    <TextBlock Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,50" Text="Customer:"></TextBlock>
+                    <ComboBox Name="CustomerCombo" Grid.Column="6" VerticalAlignment="Center" Width="100" SelectionChanged="CustomerCombo_SelectionChanged" Margin="0,0,0,0"></ComboBox>
+                    <TextBlock Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,100,0" Text="Amount Owing: "></TextBlock>
+                    <TextBlock Grid.Column="6" Name="AmountOwing" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,50,0,0"></TextBlock>
+                    <TextBlock Name="LastPaid" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,150,100,0" Text="Last Paid:"></TextBlock>
                 </Grid>
             </TabItem>
         </TabControl>
