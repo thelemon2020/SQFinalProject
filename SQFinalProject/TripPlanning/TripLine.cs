@@ -96,12 +96,27 @@ namespace SQFinalProject.TripPlanning
             HoursPerDay = new double[3];   
         }
 
+
+        /// \brief A method for saving triplines to the TMS DB
+        /// \details <b>Details</b>
+        /// This method simply calls a controller method which performs the logic of saving tripline data to the db
+        /// \param - <b>nothing</b>
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see TripLine
         public void SaveToDB()
         {
             Controller.SaveTripLineToDB(this);
         }
-        
 
+        /// \brief A method that calculates the total time to get from origin to destination
+        /// \details <b>Details</b>
+        /// This method takes a truck as a parameter and calculates the amount of time it takes for the truck to reach
+        /// this tripline(contract)'s destination
+        /// \param - <b>truck</b> - The truck the tripline is being carried on
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see Truck
         public void CalculateTripTime(Truck truck)
         {
             // Get the cities that the trip line will be on, and thus the total km and time of the trip excluding load and unload time
