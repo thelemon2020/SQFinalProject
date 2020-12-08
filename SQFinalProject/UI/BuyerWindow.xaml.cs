@@ -452,6 +452,7 @@ namespace SQFinalProject.UI {
             double totalCost = 0;
             customerPageCollection = new ObservableCollection<Contract>();
             string cbi = (string)CustomerCombo.SelectedItem;
+            if (cbi == null) return;
             List<string> fields = new List<string>();
             fields.Add("contractID");
             fields.Add("status");
