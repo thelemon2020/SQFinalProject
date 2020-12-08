@@ -75,27 +75,26 @@ namespace SQFinalProject.ContactMgmtBilling
             GetEastOrWest();
         }
 
-        public Contract(string details, int flag)
-        {
-            string[] splitDetails = details.Split(',');
-            Trips = new List<TripLine>();
-            ID = int.Parse(splitDetails[0]);
-            ClientName = splitDetails[1];
-            JobType = int.Parse(splitDetails[2]);
-            Quantity = int.Parse(splitDetails[3]);
-            Origin = splitDetails[4];
-            Destination = splitDetails[5];
-            VanType = int.Parse(splitDetails[6]);
-            Status = splitDetails[7];
-            AccountID = int.Parse(splitDetails[8]);
-            GetEastOrWest();
-        }
 
+        /// \brief A constructor for the Contract class
+        /// \details <b>Details</b>
+        /// A basic constructor for the Contract class
+        /// \param - <b>Nothing</b> 
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see Contract(string details)
         public Contract()
         {
         }
 
 
+        /// \brief A method that checks to see if a contract has been fulfilled
+        /// \details <b>Details</b>
+        /// A method that checks all the trip lines associated with a single contract to see if they've all been delivered.
+        /// It also relies on the contract having been fully divided into triplines.
+        /// \param - <b>Nothing</b>
+        /// \returns - complete - <b>bool</b> - Whether or not the contract was fulfilled
+        /// 
         public bool IsContractComplete()
         {
             bool complete = true;
@@ -117,6 +116,12 @@ namespace SQFinalProject.ContactMgmtBilling
         }
 
 
+        /// \brief A method that calculates the total cost on a contract
+        /// \details <b>Details</b>
+        /// A method that adds up all the triplines on the contract to get the total cost of the contract
+        /// \param - truck - <b>Truck</b> - The truck the triplines were delivered on, this is used for the rates of the carrier who owns the truck
+        /// \returns - <b>Nothing</b>
+        /// 
         public void CalculateCost(Truck truck)
         {
             double totalCost = 0.0;

@@ -261,6 +261,14 @@ namespace SQFinalProject
             userCommand = selectCommand.ToString(); // set userCommand to the newly created query string
         }
 
+
+        /// \brief A meth that creates a delete my sql command
+        /// \details <b>Details</b>
+        /// A method that builds a delete command based on conditions and a table provided by the user
+        /// \param - table - <b>string</b> - the table to delete something from
+        /// \param - conditions - <b>Dictionary<string, string></b> - the dictionary of key value pairs that will be used as sql conditionss
+        /// \returns - <b>nothing</b>
+        /// 
         public void MakeDeleteCommand(string table, Dictionary<string, string> conditions)
         {
             StringBuilder selectCommand = new StringBuilder(); //instantiate string builder for use in building a query string
@@ -433,7 +441,7 @@ namespace SQFinalProject
             int countLoops = fields.Count() - 1;
             int i = 0;
 
-            foreach(string field in fields)
+            foreach(string field in fields) // add the fields to search for
             {
                 if(i == countLoops)
                 {
@@ -447,7 +455,7 @@ namespace SQFinalProject
             }
             selectCmd.AppendFormat("FROM {0} ", tables[0]);
 
-            for(int j = 0; j < tables.Count; j++) // this is the area that requires a little work.
+            for(int j = 0; j < tables.Count; j++) // build the inner join section so that the query can relate table data
             {
                 if(j > 0)
                 {
@@ -501,7 +509,7 @@ namespace SQFinalProject
             int countLoops = fields.Count() - 1;
             int i = 0;
 
-            foreach (string field in fields)
+            foreach (string field in fields) // Build the fields to search for.
             {
                 if (i == countLoops)
                 {
@@ -516,7 +524,7 @@ namespace SQFinalProject
             selectCmd.AppendFormat("FROM {0} WHERE ", table);
 
             i = 0;
-            foreach(KeyValuePair<string, string> entry in searchPoints)
+            foreach(KeyValuePair<string, string> entry in searchPoints) // add the conditions to search between.
             {
                 if(i%2 == 0)
                 {
