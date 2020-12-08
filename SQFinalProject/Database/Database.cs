@@ -528,11 +528,11 @@ namespace SQFinalProject
             {
                 if(i%2 == 0)
                 {
-                    selectCmd.AppendFormat("{0} BETWEEN {1} AND ", entry.Key, entry.Value);
+                    selectCmd.AppendFormat("{0} BETWEEN '{1}' AND ", entry.Key, entry.Value);
                 }
                 else
                 {
-                    selectCmd.AppendFormat("{0}", entry.Value);
+                    selectCmd.AppendFormat("'{0}'", entry.Value);
                     if(i != searchPoints.Count - 1)
                     {
                         selectCmd.Append(", ");
