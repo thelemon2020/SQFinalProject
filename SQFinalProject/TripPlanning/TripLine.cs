@@ -15,7 +15,7 @@ namespace SQFinalProject.TripPlanning
     ///
     /// \see Truck
     /// \see Contract
-    /// \author <i>Chris Lemon</i>
+    /// \author <i>Chris Lemon, Nick Byam</i>
     ///
     public class TripLine
     {
