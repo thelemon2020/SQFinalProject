@@ -40,12 +40,12 @@ namespace SQFinalProject.UI {
         ObservableCollection<Truck> truckCollection {get;set;}                      //<Collection of trucks for databinding to the truck selection dropdown list
 
         ObservableCollection<Contract> planningCollection { get; set; }             //<Collection of contracts for databinding to the order selection list
-        List<Truck> Trucks { get; set; }
-        List<Contract> Contracts { get; set; }
-        List<Carrier> Carriers { get; set; }
+        List<Truck> Trucks { get; set; }                                            //<Stores the trucks added this session
+        List<Contract> Contracts { get; set; }                                      //<Stores the list of contracts from the DB
+        List<Carrier> Carriers { get; set; }                                        //<Stores the list of carriers from the DB
 
-        private int currQntRem { get; set; }
-        public DateTime time { get; set; }
+        private int currQntRem { get; set; }                                       //<Stores the remaining quantity of the current contract
+        public DateTime time { get; set; }                                         
 
 
 
@@ -63,10 +63,11 @@ namespace SQFinalProject.UI {
         }
 
 
-        //  METHOD:		LoadRates
-        /// \brief Gets Rates Information from DB
+        //  METHOD:		GetContracts
+        /// \brief Gets contracts from the database and creates a local list of them
         /// \details <b>Details</b>
-        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///     Sets up a select command and gets the contracts from the database.  It also gets all of the trip lines associated with those contracts
+        /// adds them to the list of trip lines in each contract.
         ///
         /// \param - <b>None</b>
         /// 
@@ -74,13 +75,16 @@ namespace SQFinalProject.UI {
         ///
         private void GetContracts()
         {
+            // Sets up the select command and gets the results from the database
             Contracts = new List<Contract>();
             List<string> fields = new List<string>();
             fields.Add("*");
             Controller.TMS.MakeSelectCommand(fields, "contract", null, null);
             List<string> results = Controller.TMS.ExecuteCommand();
+
             foreach (string result in results)
             {
+                // For each result, process the string into a form that can be put into the contract constructor and  create a new contract
                 string[] splitResult = result.Split(',');
                 StringBuilder recombine = new StringBuilder();
                 recombine.AppendFormat("{0},{1},{2},{3},{4},{5}",splitResult[1],splitResult[2],splitResult[3],splitResult[4],splitResult[5],splitResult[6]);
@@ -90,6 +94,7 @@ namespace SQFinalProject.UI {
                 c.ID = temp;
                 c.Status = splitResult[7];
 
+                // Set up the database query for the trip lines that are part of a contract and get them
                 List<string> field = new List<string>();
                 field.Add("*");
 
@@ -99,6 +104,7 @@ namespace SQFinalProject.UI {
                 Controller.TMS.MakeSelectCommand(field, "tripline", conditions,null);
                 results = Controller.TMS.ExecuteCommand();
 
+                // Add each tripline that the database returns to its contract
                 foreach (string resulting in results)
                 {
                     TripLine t = new TripLine(resulting, c.Destination);
@@ -121,6 +127,8 @@ namespace SQFinalProject.UI {
                 }
                 Contracts.Add(c);
             }
+
+            // Set up the observable collections so the user interface can be updated
             ordersCollection = new ObservableCollection<Contract> ( Contracts );
             planningCollection = new ObservableCollection<Contract>();
             foreach (Contract c in ordersCollection)
@@ -204,10 +212,10 @@ namespace SQFinalProject.UI {
         /* ~~~~~ Methods for contracts in Planning stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-        //  METHOD:		About_Click
-        /// \brief Method that is called when the About item on the menu is clicked
+        //  METHOD:		TabsCtrl_Planner_SelectionChanged
+        /// \brief Method that is called when tabs are changed in the planner window.
         /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.
+        ///     Sets up the required observable collections for each tab.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -235,10 +243,12 @@ namespace SQFinalProject.UI {
 
 
 
-        //  METHOD:		About_Click
-        /// \brief Method that is called when the About item on the menu is clicked
+        //  METHOD:		OrderList_SelectionChanged
+        /// \brief Method that is called when an order is selected from the order list.
         /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.
+        ///     This method sets up what happens when the an item from the order list is selected. First the collections 
+        /// that need to be reset for the user interface to be updaded are reset.  If the selected item is in the planning 
+        /// stage, the method sets up the tab so they can plan the shiping details of the contract.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -264,6 +274,7 @@ namespace SQFinalProject.UI {
             {
                 currOrder.Add( (Contract) OrderList.SelectedItem );
 
+                // If the selected contract is in the planning stage,  set up the carriers combo box so they can start planning
                 if ( currOrder[0].Status.ToUpper().Equals ("PLANNING") ) {
                     OrderState = 1;
 
@@ -279,10 +290,12 @@ namespace SQFinalProject.UI {
 
                     QntRem.Text = currQntRem.ToString();
 
+                    // If the current contract has no trips, ensure that the list has been initialized
                     if ( currOrder[0].Trips == null ) {
                         currOrder[0].Trips = new List<TripLine>();
                     }
 
+                    // Enable the Finalize button if it is valid, disable it otherwise
                     if ( currOrder[0].JobType == 0 && currOrder[0].Trips.Count == 0  ) {
                         btnFinalize.IsEnabled = false;
                     } else if ( currQntRem != 0 ) {
@@ -301,12 +314,14 @@ namespace SQFinalProject.UI {
             EnableOrderControls (OrderState);
         }
 
-        //  METHOD:		LoadRates
-        /// \brief Gets Rates Information from DB
+
+
+        //  METHOD:		EnableOrderControls
+        /// \brief Enables / disables the required controls on the orders tab
         /// \details <b>Details</b>
-        ///     Creates a SELECT query string to grab all data from the rates table and then loads them into approrpriate textbox
+        ///     Either enables or disables controls to set up the orders tab for the current contract.
         ///
-        /// \param - <b>None</b>
+        /// \param - <b>doShow</b>  integer to store the state that the currently selected contract is in
         /// 
         /// \return - <b>Nothing</b>
         ///
@@ -329,10 +344,11 @@ namespace SQFinalProject.UI {
 
 
 
-        //  METHOD:		About_Click
-        /// \brief Method that is called when the About item on the menu is clicked
+        //  METHOD:		CarrierSelector_SelectionChanged
+        /// \brief Method that is called when a carrier is selected from the carrier selection combo box
         /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.
+        ///     If a carrier is selected, the method gets the current carrier stats from the database and adds the partially filled 
+        /// trucks from the truck list to the truck selection combo box.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -352,12 +368,15 @@ namespace SQFinalProject.UI {
 
                 TruckSelector.IsEnabled = true;
                
+                // Gets the carrier details from the database and puts them in the carrier details box
                 Dictionary<string, string> conditions = new Dictionary<string, string>();
                 conditions.Add( "carrierName", ((string) CarrierSelector.SelectedItem).Split(',').ElementAt(0) );
 
                 List <string> currStrCarrier = new List<string>( Controller.GetCarriersFromTMS( null, conditions )[0].Split(',') );
 
                 currCarrier.Add( new Carrier (currStrCarrier) );
+
+                // Populates the truck selection combo box with valid partially full trucks from the local list of trucks
                 TruckSelector.Items.Add("New Truck");
                 foreach (Truck truck in Trucks)
                 {
@@ -376,12 +395,25 @@ namespace SQFinalProject.UI {
             CarrierDetails.ItemsSource = currCarrier;
         }
 
+
+
+        //  METHOD:		TruckSelector_SelectionChanged
+        /// \brief Method that is called when a truck is selected from the truck selection combo box
+        /// \details <b>Details</b>
+        ///     If a truck is selected, the method enables either the add truck button or the finalize button depending on
+        /// whether the current contract has had all its pallets added to trucks.  
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void TruckSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
             if ( TruckSelector.SelectedIndex != -1 && TruckSelector.SelectedItem != null )
             {
-  
+                //  Enables the add truck button if the contract still needs trips added to it and activates the finalize button if it doesnt
                 if ( currOrder[0].JobType == 0 && currOrder[0].Trips.Count == 0  ) {
                     btnAddTruck.IsEnabled = true;
                 } else if ( currQntRem != 0 ) {
@@ -409,10 +441,13 @@ namespace SQFinalProject.UI {
 
 
 
-        //  METHOD:		About_Click
-        /// \brief Method that is called when the About item on the menu is clicked
+        //  METHOD:		AddTruck_Click
+        /// \brief Method that is called when the add truck button is clicked
         /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.
+        ///     This method contains the logic for adding trucks / trips to the contract.  If the contract is an
+        /// FTL contract it adds a truck and enables the finalize button.  If a new truck was selected for an LTL
+        /// contract, it creates the truck and fills it up appropriately.  If a partially filled truck has been selected,
+        /// fill it up appropriately.  Finally the function sets up the trip details box.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -424,6 +459,7 @@ namespace SQFinalProject.UI {
             int truckLoad = 0;
             OrderTrips.ItemsSource = null;
 
+            // If the contract is FTL, we just create a truck and fill it as its the only thing in the load
             if ( currOrder[0].JobType == 0 ) {
 
                 btnAddTruck.IsEnabled = false;
@@ -437,6 +473,7 @@ namespace SQFinalProject.UI {
 
                 currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
 
+            // If a new truck was selected, create a new truck containing the tripline and add as much of the contract as possible 
             } else if ( TruckSelector.SelectedIndex == 0 ) {
 
                 if ( currQntRem <= 26 ) {
@@ -460,6 +497,7 @@ namespace SQFinalProject.UI {
                 currOrder[0].Trips.Add ( newTruck.Contracts.Last() );
                 currOrder[0].Quantity = currQntRem;
 
+            // If a partially filled truck was selected, put as much of the contract in it as possible and add the tripline to the truck
             } else {
                 int i = TruckSelector.SelectedIndex;
                 Truck t = truckCollection[i-1];
@@ -497,16 +535,19 @@ namespace SQFinalProject.UI {
                 }
             }
 
+            // Update the observable collections so the user interface can display the changes to the trip details
             currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
             OrderTrips.ItemsSource = currOrderTripDet;
         }
 
 
 
-        //  METHOD:		About_Click
-        /// \brief Method that is called when the About item on the menu is clicked
+        //  METHOD:		btnFinalize_Click
+        /// \brief Method that is called when the finalize button is clicked
         /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.
+        ///     Saves all the trip lines in the current contract to the database.  Also search the truck list for any trucks 
+        /// that need to be added to the database and adds them.  Then changes the state of the current contract to in progress
+        /// sending it to the next tab.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -539,18 +580,31 @@ namespace SQFinalProject.UI {
         }
 
 
+
+        //  METHOD:		getTripDetails
+        /// \brief Method that gets all the needed details for the trip detail box
+        /// \details <b>Details</b>
+        ///     Gets the name of the carrier that owns the truck that the trip line is on and adds that to a list with
+        /// the truck id and the quantity of the contract on that truck and adds this list to a list.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>List<List<string>></b> holding the details of all the trips in a contract
+        ///
         private List<List<string>> getTripDetails ( List <TripLine> trips ) {
             List<List<string>> details = new List<List<string>>();
             List<string> item;
 
             foreach ( TripLine t in trips ) {
+                // for each trip line in a list of trips get the required information
                 item = new List<string>();
                 string carrierName = " Truck not found ";
                 string carrierID = "";
                 
                 bool found = false;
 
-                
+                // Get the carrier id from the truck that the tripline is on
                 for ( int i = 0; i < Trucks.Count && !found; i++ ) {
                     if ( Trucks[i].TripID == t.TripID ) {
                         carrierID = Trucks[i].CarrierID.ToString();
@@ -559,6 +613,7 @@ namespace SQFinalProject.UI {
                 }
                 
                 found = false;
+                // Get the carrier name from the carrier matching the carrier id of the truck
                 for ( int i = 0; i < Carriers.Count && !found; i++ ) {
                     if ( Carriers[i].CarrierID.ToString().Equals ( carrierID ) ) {
                         carrierName = Carriers[i].CarrierName;
@@ -566,6 +621,7 @@ namespace SQFinalProject.UI {
                     }
                 }
 
+                // add everything to the lists and return the result
                 item.Add(t.TripID.ToString());
                 item.Add(carrierName);
                 item.Add(t.Quantity.ToString());
@@ -576,6 +632,20 @@ namespace SQFinalProject.UI {
             return details;
         }
 
+
+
+        //  METHOD:		Nullify_SelectionChanged
+        /// \brief Method that is called when a selectable item is selected that has no actions when selected
+        /// \details <b>Details</b>
+        ///     This method was created solely to stop the selection of one item from clearing the selection of other items.
+        /// If an item does not need to have actions when it is selected, like a list box containing datails, is selected, this
+        /// method stops it from clearing all other selected items.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void Nullify_SelectionChanged ( object sender,SelectionChangedEventArgs e ) {
             e.Handled = true;
         }
@@ -586,10 +656,10 @@ namespace SQFinalProject.UI {
         /* ~~~~~ Methods for contracts in In-Progress stage ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-        //  METHOD:		About_Click
-        /// \brief Method that is called when the About item on the menu is clicked
-        /// \details <b>Details</b>
-        ///     Opens up the about window when the option is clicked on the menu.
+        //  METHOD:		btnCompleteContract_Click
+        /// \brief Method that is called when the complete contract button is clicked
+        ///     Sets the status of the currently selected order to complete if all of its trip lines have
+        /// been delivered.  This allows the buyer to finish of the contract.
         ///
         /// \param - <b>sender:</b>  the object that called the method
         /// \param - <b>e:</b>       the arguments that are passed when this method is called
@@ -618,10 +688,23 @@ namespace SQFinalProject.UI {
         }
 
 
+
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
         /* ~~~~~ Methods for Advancing Time ~~~~~ */
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+        //  METHOD:		GenRep_Click
+        /// \brief Method that is called when the Generate Report button is clicked
+        /// \details <b>Details</b>
+        ///     This method sets up the title of the reports tab depending on the type of report being generated
+        /// and then generates a report for the specified time.  Then calls a helper method which puts the report 
+        /// file onto the page.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void GenRep_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
@@ -648,11 +731,24 @@ namespace SQFinalProject.UI {
                     break;
             }
         }
+        
 
+
+        //  METHOD:		Get2wReports
+        /// \brief This method gets a 2 week report from the database and displays it to the screen
+        /// \details <b>Details</b>
+        ///     This method first receives 2 week reports from the database then parses them and reorders them 
+        /// for display in the output box.
+        ///
+        /// \param - <b>None</b>
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void Get2wReports()
         {
             ReportBlock.Text = string.Empty;
 
+            // Gets the reports from the database
             List<string> sqlReturn = new List<string>();
             List<string> fields = new List<string>();
             Dictionary<string, string> conditions = new Dictionary<string, string>();
@@ -669,6 +765,7 @@ namespace SQFinalProject.UI {
                 return;
             }
 
+            // Parses and displays the reports if any were found
             foreach(string s in sqlReturn)
             {
                 string[] split = s.Split(',');
@@ -681,11 +778,24 @@ namespace SQFinalProject.UI {
                 ReportBlock.Text += sb.ToString();
             }
         }
+        
 
+
+        //  METHOD:		GetAtReports
+        /// \brief This method gets all time reports from the database and displays them to the screen
+        /// \details <b>Details</b>
+        ///     This method first receives reports of the everything that the program has done in its lifetime from the database 
+        /// then parses them and reorders them for display in the output box.
+        ///
+        /// \param - <b>None</b>
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void GetAtReports()
         {
             ReportBlock.Text = string.Empty;
-
+            
+            // Gets the reports from the database
             List<string> sqlReturn = new List<string>();
             List<string> fields = new List<string>();
             Dictionary<string, string> conditions = new Dictionary<string, string>();
@@ -701,7 +811,8 @@ namespace SQFinalProject.UI {
                 ReportBlock.Text = "No Reports to Display.\n";
                 return;
             }
-
+            
+            // Parses and displays the reports if any were found
             foreach (string s in sqlReturn)
             {
                 string[] split = s.Split(',');
@@ -716,6 +827,18 @@ namespace SQFinalProject.UI {
         }
 
 
+
+        //  METHOD:		AdvTimeBtn_Click
+        /// \brief Method that is called when the advance time button is clicked, advancing the time by 1 day.
+        /// \details <b>Details</b>
+        ///     This method simulates the passage of time by virtually moving all currently ready trucks allong their trip,
+        /// adding time for stops at each city.  It also calculates the price of the trip as the trucks travel.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
             time.AddDays(1.0); // add a day to the global time variable
@@ -825,6 +948,17 @@ namespace SQFinalProject.UI {
         }
 
 
+
+        //  METHOD:		IsContractComplete
+        /// \brief Method that is called to check if a contract is ready to complete.
+        /// \details <b>Details</b>
+        ///     This method checks each trip attatched to the contract to see if they are all complete and if so
+        /// returns true.
+        ///
+        /// \param - <b>contract:</b>  the contract to check for completion
+        ///
+        /// \return - <b>boolean</b> saying whether the contract is complete
+        ///
         private bool IsContractComplete(Contract contract)
         {
             bool complete = contract.IsContractComplete();
@@ -836,6 +970,17 @@ namespace SQFinalProject.UI {
         }
 
 
+
+        //  METHOD:		SummaryList_SelectionChanged
+        /// \brief Method that is called when an order is selected on the summary tab.
+        /// \details <b>Details</b>
+        ///     This method thecks if the selected order is ready for completion and, if so, activates the complete button.
+        ///
+        /// \param - <b>sender:</b>  the object that called the method
+        /// \param - <b>e:</b>       the arguments that are passed when this method is called
+        ///
+        /// \return - <b>Nothing</b>
+        ///
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
