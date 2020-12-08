@@ -658,7 +658,7 @@ namespace SQFinalProject
             values.Add(truck.BillTotal.ToString());
             values.Add(tmpFlag.ToString());
             values.Add(truck.TotalTime.ToString());
-            TMS.MakeInsertCommand("Trip", values);
+            TMS.MakeInsertCommand("truck", values);
             TMS.ExecuteCommand();
         }
 

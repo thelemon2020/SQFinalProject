@@ -802,43 +802,22 @@ namespace SQFinalProject.UI {
             SummaryList.ItemsSource = ordersCollection;
         }
 
-
-        private bool IsContractComplete(Contract contract)
-        {
-            bool complete = contract.IsContractComplete();
-            if(complete)
-            {
-                contract.TripComplete = true;
-            }
-            return complete;
-        }
-
-
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
             Contract c = (Contract)SummaryList.SelectedItem;
-            bool complete = false;
-            foreach(Contract contract in Contracts)
+            if (c!= null)
             {
-                if(contract.ID == c.ID)
+                if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
                 {
-                    complete = IsContractComplete(contract);
-                    if(complete)
-                    {
-                        c.TripComplete = true;
-                    }
+                    CompleteContract.IsEnabled = true;
+                }
+                else
+                {
+                    CompleteContract.IsEnabled = false;
                 }
             }
-
-            if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
-            {
-                CompleteContract.IsEnabled = true;
-            }
-            else
-            {
-                CompleteContract.IsEnabled = false;
-            }
+           
         }
     }
 }
