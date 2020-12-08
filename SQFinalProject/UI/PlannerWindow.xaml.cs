@@ -36,7 +36,7 @@ namespace SQFinalProject.UI {
         ObservableCollection<Contract> ordersCollection { get; set; }               //<Collection of contracts for databinding to the order summary list
         ObservableCollection<Contract> currOrder { get; set; }                      //<Collection of contracts for databinding to the order details table
         ObservableCollection<Carrier> currCarrier { get; set; }                     //<Collection of carriers for databinding to the carrier selection dropdown list
-        ObservableCollection<List<string>> currOrderTripDet { get; set; }            //<Collection of tripLines for databinding to the order trips list
+        ObservableCollection<List<string>> currOrderTripDet { get; set; }            //<Collection of strings containing trip details for databinding to the order trips list
         ObservableCollection<Truck> truckCollection {get;set;}                      //<Collection of trucks for databinding to the truck selection dropdown list
 
         ObservableCollection<Contract> planningCollection { get; set; }             //<Collection of contracts for databinding to the order selection list
@@ -289,10 +289,10 @@ namespace SQFinalProject.UI {
                     } else {
                         btnFinalize.IsEnabled = true;
                     }
-
-                    currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
-                    OrderTrips.ItemsSource = currOrderTripDet;
                 }
+
+                currOrderTripDet = new ObservableCollection<List<string>> ( getTripDetails( currOrder[0].Trips) );
+                OrderTrips.ItemsSource = currOrderTripDet;
             }
 
             OrderDetails.ItemsSource = currOrder;
@@ -541,11 +541,6 @@ namespace SQFinalProject.UI {
         private List<List<string>> getTripDetails ( List <TripLine> trips ) {
             List<List<string>> details = new List<List<string>>();
             List<string> item;
-            
-            List<string> QueryLst = new List<string> ();   // Set up the database query and check if the user name exists in the database
-            QueryLst.Add ("carrierID");
-            Dictionary<string, string> tempDict;
-            List<string> retList;
 
             foreach ( TripLine t in trips ) {
                 item = new List<string>();
@@ -554,21 +549,11 @@ namespace SQFinalProject.UI {
                 
                 bool found = false;
 
-                tempDict = new Dictionary<string, string>();
-                tempDict.Add ("tripID", t.TripID.ToString());
-
-                Controller.TMS.MakeSelectCommand ( QueryLst, "truck", tempDict,null);
-
-                retList = Controller.TMS.ExecuteCommand();
-
-                if ( retList.Count() != 0 ) {
-                    carrierID = retList.ElementAt(0);
-                } else {
-                    for ( int i = 0; i < Trucks.Count && !found; i++ ) {
-                        if ( Trucks[i].TripID == t.TripID ) {
-                            carrierID = Trucks[i].CarrierID.ToString();
-                            found = true;
-                        }
+                
+                for ( int i = 0; i < Trucks.Count && !found; i++ ) {
+                    if ( Trucks[i].TripID == t.TripID ) {
+                        carrierID = Trucks[i].CarrierID.ToString();
+                        found = true;
                     }
                 }
                 
@@ -736,7 +721,11 @@ namespace SQFinalProject.UI {
                 if(!t.IsComplete) // only advance time on trucks that are not yet complete
                 {
                     // first correct the time of all triplines on a truck 
-                    t.CorrectContractTime();
+                    if(t.Corrected == false)
+                    {
+                        t.CorrectContractTime();
+                        t.Corrected = true;
+                    }  
 
                     // Now go through each tripline and take away the first array element of the hours per day array
                     foreach (TripLine tl in t.Contracts)
@@ -774,6 +763,19 @@ namespace SQFinalProject.UI {
                             if (daysDone == tl.HoursPerDay.Length)
                             {
                                 tl.IsDelivered = true;
+                                foreach(Contract c in Contracts)
+                                {
+                                    if(tl.ContractID == c.ID)
+                                    {
+                                        foreach(TripLine trip in c.Trips)
+                                        {
+                                            if(tl.TripID == trip.TripID)
+                                            {
+                                                trip.IsDelivered = true;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -793,11 +795,27 @@ namespace SQFinalProject.UI {
                 {
                     t.IsComplete = true;
                 }
+
+                foreach (Contract c in Contracts)
+                {
+                    IsContractComplete(c);
+
+                    foreach(TripLine tl in c.Trips)
+                    {
+                        if (t.TripID == tl.TripID && c.TripComplete == true)
+                        {
+                            c.CalculateCost(t);
+                        }
+                    }
+                }
             }
-            foreach (Contract c in ordersCollection)
+            ordersCollection.Clear();
+            
+            foreach(Contract c in Contracts)
             {
-                c.TripComplete = c.IsContractComplete();
+                ordersCollection.Add(c);
             }
+
             SummaryList.ItemsSource = null;
             SummaryList.ItemsSource = ordersCollection;
         }

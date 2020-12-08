@@ -43,6 +43,7 @@ namespace SQFinalProject.TripPlanning
         public List<TripLine> Contracts { get; set; }   //<A list of contracts that the Truck will have to deliver
         public Route ThisRoute { get; set; }            //<A route object modelling the route to be taken by the truck
         public string Direction { get; set; }
+        public bool Corrected { get; set; }
 
 
         /// \brief Constructor for the truck class
@@ -79,6 +80,7 @@ namespace SQFinalProject.TripPlanning
             ThisRoute.GetCities(Origin, Destination);
             Contracts[0].Distance = ThisRoute.TotalDistance;
             Direction = contract.Direction;
+            Corrected = false;
 
             Contracts[0].CalculateTripTime(this);
         }

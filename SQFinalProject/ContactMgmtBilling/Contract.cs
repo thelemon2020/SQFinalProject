@@ -116,6 +116,18 @@ namespace SQFinalProject.ContactMgmtBilling
             return complete;
         }
 
+
+        public void CalculateCost(Truck truck)
+        {
+            double totalCost = 0.0;
+            foreach(TripLine t in Trips)
+            {
+                totalCost = t.CalculateCost(this, truck);
+            }
+            Cost = totalCost;
+        }
+
+
         /// \brief Determines if a contract is eastbound or westbound
         /// \details <b>Details</b>
         /// Gets the route IDs for the origin and destination city and subtracts one from the other.  If it's negative 
