@@ -23,7 +23,7 @@ namespace SQFinalProject.TripPlanning
             public string Next { get; set; }    //!< the next city
             public int Distance { get; set; }   //!<distance to next city
             public double Time { get; set; }    //!<time to next city
-            
+
             /// \brief City
             /// \details <b>Details</b>
             /// Constructor for the City struct. Assigns given values to their appropriate property
