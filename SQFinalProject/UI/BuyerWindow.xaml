@@ -68,12 +68,14 @@
                                                         <ColumnDefinition Width="100"></ColumnDefinition>
                                                         <ColumnDefinition Width="100"></ColumnDefinition>
                                                         <ColumnDefinition Width="100"></ColumnDefinition>
+                                                        <ColumnDefinition Width="100"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
                                                     <Label Grid.Column="0">Customer Name</Label>
                                                     <Label Grid.Column="1">Job Type</Label>
                                                     <Label Grid.Column="2">Quantity</Label>
                                                     <Label Grid.Column="3">Starting City</Label>
                                                     <Label Grid.Column="4">Ending City</Label>
+                                                    <Label Grid.Column="5">Van Type</Label>
                                                 </Grid>
                                                 <ItemsPresenter></ItemsPresenter>
                                             </DockPanel>

@@ -597,24 +597,22 @@ namespace SQFinalProject.UI {
         /// \return - <b>Nothing</b>
         ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
-            
-            currOrder[0].Status = "COMPLETE";
-            foreach(Contract c in Contracts)
+            if (SummaryList.SelectedIndex > -1)
             {
-                if(currOrder[0].ID == c.ID)
-                {
-                    currOrder[0].Cost = c.Cost;
-                }
+                Contract c = (Contract)SummaryList.SelectedItem;
+                c.Status = "COMPLETE";
+                Dictionary<string, string> values = new Dictionary<string, string>();
+                values.Add("status", c.Status);
+                Dictionary<string, string> conditions = new Dictionary<string, string>();
+                conditions.Add("contractID", c.ID.ToString());
+                Controller.TMS.MakeUpdateCommand("contract", values, conditions);
+                Controller.TMS.ExecuteCommand();
+                SummaryList.ItemsSource = null;
+                SummaryList.ItemsSource = ordersCollection;
+                GetContracts();
+
             }
-
-            Dictionary<string, string> values = new Dictionary<string, string>();
-            values.Add("status", currOrder[0].Status);
-            Dictionary<string, string> conditions = new Dictionary<string, string>();
-            conditions.Add("contractID", currOrder[0].ID.ToString());
-            Controller.TMS.MakeUpdateCommand("contract",values,conditions);
-            Controller.TMS.ExecuteCommand();
-
-            GetContracts();
+           
         }
 
 
@@ -648,7 +646,15 @@ namespace SQFinalProject.UI {
                     break;
             }
         }
-
+        private bool IsContractComplete(Contract contract)
+        {
+            bool complete = contract.IsContractComplete();
+            if (complete)
+            {
+                contract.TripComplete = true;
+            }
+            return complete;
+        }
         private void Get2wReports()
         {
             ReportBlock.Text = string.Empty;
@@ -823,18 +829,6 @@ namespace SQFinalProject.UI {
             SummaryList.ItemsSource = null;
             SummaryList.ItemsSource = ordersCollection;
         }
-
-
-        private bool IsContractComplete(Contract contract)
-        {
-            bool complete = contract.IsContractComplete();
-            if (complete)
-            {
-                contract.TripComplete = true;
-            }
-            return complete;
-        }
-
 
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
