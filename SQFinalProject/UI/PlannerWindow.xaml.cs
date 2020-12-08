@@ -597,13 +597,7 @@ namespace SQFinalProject.UI {
         /// \return - <b>Nothing</b>
         ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
-
-            if (SummaryList.SelectedIndex > -1)
-            {
-                int i = SummaryList.SelectedIndex;
-
-
-            }
+            
             currOrder[0].Status = "COMPLETE";
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", currOrder[0].Status);
@@ -822,36 +816,11 @@ namespace SQFinalProject.UI {
             SummaryList.ItemsSource = ordersCollection;
         }
 
-
-        private bool IsContractComplete(Contract contract)
-        {
-            bool complete = contract.IsContractComplete();
-            if(complete)
-            {
-                contract.TripComplete = true;
-            }
-            return complete;
-        }
-
-
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
             Contract c = (Contract)SummaryList.SelectedItem;
-            //bool complete = false;
-            //foreach(Contract contract in Contracts)
-            //{
-            //    if(contract.ID == c.ID)
-            //    {
-            //        complete = IsContractComplete(contract);
-            //        if(complete)
-            //        {
-            //            c.TripComplete = true;
-            //        }
-            //    }
-            //}
-
-            if(c != null)
+            if (c!= null)
             {
                 if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
                 {
@@ -862,6 +831,7 @@ namespace SQFinalProject.UI {
                     CompleteContract.IsEnabled = false;
                 }
             }
+           
         }
     }
 }
