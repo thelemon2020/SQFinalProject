@@ -830,18 +830,6 @@ namespace SQFinalProject.UI {
             SummaryList.ItemsSource = ordersCollection;
         }
 
-
-        private bool IsContractComplete(Contract contract)
-        {
-            bool complete = contract.IsContractComplete();
-            if (complete)
-            {
-                contract.TripComplete = true;
-            }
-            return complete;
-        }
-
-
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
