@@ -721,7 +721,11 @@ namespace SQFinalProject.UI {
                 if(!t.IsComplete) // only advance time on trucks that are not yet complete
                 {
                     // first correct the time of all triplines on a truck 
-                    t.CorrectContractTime();
+                    if(t.Corrected == false)
+                    {
+                        t.CorrectContractTime();
+                        t.Corrected = true;
+                    }  
 
                     // Now go through each tripline and take away the first array element of the hours per day array
                     foreach (TripLine tl in t.Contracts)
@@ -759,6 +763,19 @@ namespace SQFinalProject.UI {
                             if (daysDone == tl.HoursPerDay.Length)
                             {
                                 tl.IsDelivered = true;
+                                foreach(Contract c in Contracts)
+                                {
+                                    if(tl.ContractID == c.ID)
+                                    {
+                                        foreach(TripLine trip in c.Trips)
+                                        {
+                                            if(tl.TripID == trip.TripID)
+                                            {
+                                                trip.IsDelivered = true;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -792,10 +809,7 @@ namespace SQFinalProject.UI {
                     }
                 }
             }
-            if(ordersCollection.Count != 0)
-            {
-                ordersCollection.Clear();
-            }
+            ordersCollection.Clear();
             
             foreach(Contract c in Contracts)
             {
@@ -822,26 +836,29 @@ namespace SQFinalProject.UI {
         {
             e.Handled = true;
             Contract c = (Contract)SummaryList.SelectedItem;
-            bool complete = false;
-            foreach(Contract contract in Contracts)
-            {
-                if(contract.ID == c.ID)
-                {
-                    complete = IsContractComplete(contract);
-                    if(complete)
-                    {
-                        c.TripComplete = true;
-                    }
-                }
-            }
+            //bool complete = false;
+            //foreach(Contract contract in Contracts)
+            //{
+            //    if(contract.ID == c.ID)
+            //    {
+            //        complete = IsContractComplete(contract);
+            //        if(complete)
+            //        {
+            //            c.TripComplete = true;
+            //        }
+            //    }
+            //}
 
-            if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
+            if(c != null)
             {
-                CompleteContract.IsEnabled = true;
-            }
-            else
-            {
-                CompleteContract.IsEnabled = false;
+                if ((c.Status == "IN-PROGRESS") && (c.TripComplete == true))
+                {
+                    CompleteContract.IsEnabled = true;
+                }
+                else
+                {
+                    CompleteContract.IsEnabled = false;
+                }
             }
         }
     }
