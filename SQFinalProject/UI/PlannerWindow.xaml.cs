@@ -45,6 +45,7 @@ namespace SQFinalProject.UI {
         List<Carrier> Carriers { get; set; }
 
         private int currQntRem { get; set; }
+        public DateTime time { get; set; }
 
 
 
@@ -723,6 +724,7 @@ namespace SQFinalProject.UI {
 
         private void AdvTimeBtn_Click(object sender, RoutedEventArgs e)
         {
+            time.AddDays(1.0); // add a day to the global time variable
             // Advance each truck by one day
             foreach(Truck t in Trucks)
             {
@@ -827,6 +829,18 @@ namespace SQFinalProject.UI {
             SummaryList.ItemsSource = null;
             SummaryList.ItemsSource = ordersCollection;
         }
+
+
+        private bool IsContractComplete(Contract contract)
+        {
+            bool complete = contract.IsContractComplete();
+            if (complete)
+            {
+                contract.TripComplete = true;
+            }
+            return complete;
+        }
+
 
         private void SummaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
