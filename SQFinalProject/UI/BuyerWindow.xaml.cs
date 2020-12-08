@@ -365,6 +365,12 @@ namespace SQFinalProject.UI {
             if(invoice != null)
             {
                 toSend.Status = "CLOSED";
+                Dictionary<string, string> values = new Dictionary<string, string>();
+                values.Add("status", toSend.Status);
+                Dictionary<string, string> extraConditions = new Dictionary<string, string>();
+                extraConditions.Add("contractID", toSend.ID.ToString());
+                Controller.TMS.MakeUpdateCommand("contract", values, extraConditions);
+                Controller.TMS.ExecuteCommand();
             }
             else
             {
@@ -466,13 +472,13 @@ namespace SQFinalProject.UI {
                     moreConditions.Add("contractID", c.ID.ToString());
                     Controller.TMS.MakeSelectCommand(newFields, "invoice", moreConditions, null);
                     List<string> moreResults = Controller.TMS.ExecuteCommand();
+                    double doubTemp = 0;
                     foreach (string moreResult in moreResults)
                     {
-                        string[] moreSplit = moreResult.Split(',');
-                        int.TryParse(moreSplit[0], out temp);
-                        c.invoiceNum = temp;
-                        int.TryParse(moreSplit[1], out temp);
-                        c.Cost = temp;
+                        string[] moreSplit = moreResult.Split(',');          
+                        c.invoiceNum = moreSplit[0];
+                        double.TryParse(moreSplit[1], out doubTemp);
+                        c.Cost = doubTemp;
                         totalCost = totalCost + c.Cost;
                     }
                 }
