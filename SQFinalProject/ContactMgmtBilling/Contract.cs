@@ -33,7 +33,7 @@ namespace SQFinalProject.ContactMgmtBilling
         public const double LTLUpCharge = 1.05; //!<Company rate for LTL delivery contracts 
         public const double FTLUpCharge = 1.08; //!< Company rate for FTL delivery contracts 
         public double ReeferUpCharge { get; set; } //!<Company rate for Reefer van contracts 
-        public int invoiceNum { get; set; }
+        public string invoiceNum { get; set; }
         public int ID { get; set; } //!< Contract ID 
         public int AccountID { get; set; } //!< The Related account ID of which the contract belongs to
         public string ClientName { get; set; } //!< The name of the client

@@ -607,7 +607,7 @@ namespace SQFinalProject
             invoice.AppendFormat("---------------------------------\n\n");
             invoice.AppendFormat("Total Cost-------------------${0}\n", totalCost);
             Directory.CreateDirectory(invoiceFilePath);
-            string date = DateTime.Now.AddDays(tripLineValues.Values.First()[1]).ToString();
+            string date = DateTime.Now.AddDays(tripLineValues.Values.First()[1]).ToString("yyyy-MM-dd");
             invoice.AppendFormat("--------Generated: {0}----------", date);
             using (StreamWriter sw = new StreamWriter(invoiceFilePath + contract.ClientName + "- "+ contract.ID + ".txt"))
             {
