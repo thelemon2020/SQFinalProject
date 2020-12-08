@@ -264,6 +264,13 @@ namespace SQFinalProject
         }
 
 
+        /// \brief A method that is used to add an contract to the tms database
+        /// \details <b>Details</b>
+        /// A method which takes a single contract, breaks down its values into string, and adds them into a list to be
+        /// added to the contract table in the TMS database.
+        /// \param - contract - <b>Contract</b> - The contract to be added to the contract table in the tms database
+        /// \returns - <b>Nothing</b>
+        /// 
         public static void AddContractToTMS(Contract contract)
         {
             // get the count of contracts in the db for the new contract id
@@ -368,6 +375,7 @@ namespace SQFinalProject
         /// A method which returns the carriers in the tms database, the fields shown can be specified by the user, and can be conditional
         /// \param - values - <b>List<string></b> - The column values the user specifically wants to see 
         /// \param - condtions - <b>Dictionary<string, string></b> - The key value pairs that define the conditions
+        /// 
         /// \returns - sqlReturn - <b>List<string></b> - A list of the results generated from the database query.
         /// 
         public static List<string> GetCarriersFromTMS(List<string> values, Dictionary<string, string> conditions)
@@ -388,13 +396,17 @@ namespace SQFinalProject
         }
 
 
-        /// \brief 
+        /// \brief A method to get the depot cities for a specific carrier from the db
         /// \details <b>Details</b>
+        ///     This method sets up the query string to get the depot cities of a specific carrier then queries the database
+        /// and returns the results.
         /// 
-        /// \param - 
-        /// \returns - 
+        /// \param - values - <b>List<string></b> - The column values the user specifically wants to see 
+        /// \param - condtions - <b>Dictionary<string, string></b> - The key value pairs that define the conditions
         /// 
-        /// \see
+        /// \returns - sqlReturn - <b>List<string></b> - A list of the results generated from the database query.
+        /// 
+        /// 
         public static List<string> GetCarrierDepotCities(List<string> values, Dictionary<string, string> conditions)
         {
             List<string> fields = new List<string>();
@@ -417,13 +429,14 @@ namespace SQFinalProject
         }
 
 
-        /// \brief 
+        /// \brief A method That returns a list of all the carriers from the database
         /// \details <b>Details</b>
+        ///     This method gets all carriers from the database, adds them to a list, and returns it to the user
         /// 
-        /// \param - 
-        /// \returns - 
+        /// \param - none
         /// 
-        /// \see
+        /// \returns - carriers - <b>List<Carrier></b> - A list of the carriers returned from the database
+        /// 
         public static List<Carrier> SetupCarriers()
         {
             List<Carrier> carriers = new List<Carrier>();
@@ -463,13 +476,15 @@ namespace SQFinalProject
         }
 
 
-        /// \brief 
+        /// \brief A method that returns a list of viable carriers for a specific contract
         /// \details <b>Details</b>
+        ///     This searches through the list of carriers for ones that can take the given contract.
         /// 
-        /// \param - 
-        /// \returns - 
+        /// \param - contract - <b>Contract</b> - The contract to get carriers for
+        /// \param - carriers - <b>List<Carrier></b> - The list of carriers to search through
         /// 
-        /// \see
+        /// \returns - possibleCarrier - <b>List<string></b> - A list of the possible carriers for the given contract.
+        /// 
         public static List<string> FindCarriersForContract(Contract contract, List<Carrier> carriers)
         {
             List<string> possibleCarrier = new List<string>();
@@ -706,6 +721,12 @@ namespace SQFinalProject
             return report;
         }
 
+        /// \brief A method to get the highest TripID value in the TMS DB
+        /// \details <b>Details</b>
+        /// A method that finds the highest trip id in the database and returns it.
+        /// \param - none
+        /// \returns - <b>int</b> the largest trip ID in the database
+        /// 
         // Returns the highest TripID value in the TMS DB
         public static int GetLastTripID()
         {
@@ -720,7 +741,14 @@ namespace SQFinalProject
             return retval;
         }
 
-        // Returns the FTL rate of a carrier if 0 or LTL rate if 1 
+        /// \brief A method that gets the FTL/LTL rate from the carrier 
+        /// \details <b>Details</b>
+        /// This method gets the FTL rate for a carrier specified by ID given a specific quantity in the truck
+        /// \param - carrierID - <b>int</b> - The ID fo the carrier to get the rate of
+        /// \param - qty - <b>int</b> -     the quantity in the truck, which decides whether FTL or LTL rates are returned
+        /// 
+        /// \returns - rate <b>int</b> the rate of the truck for FTL or LTL
+        ///
         public static double GetRate(int carrierID, int qty)
         {
             double rate = 0;
@@ -739,7 +767,12 @@ namespace SQFinalProject
             return rate;
         }
 
-        // Saves the truck to `trip` and each tripline to `tripline` in TMS
+        /// \brief A method to Save a truck to the truck table in the database
+        /// \details <b>Details</b>
+        /// This method takes a truck object, parses out its relevant datamembers and sends it to the database
+        /// \param - truck - <b>Truck</b> - The truck to add to the database
+        /// \returns - <b>Nothing</b>
+        /// 
         public static void SaveTripToDB(TripPlanning.Truck truck)
         {
             List<string> values = new List<string>();
@@ -754,8 +787,12 @@ namespace SQFinalProject
             TMS.ExecuteCommand();
         }
 
-
-        // Saves the truck to `trip` and each tripline to `tripline` in TMS
+        /// \brief A method to Save a trip line to the trip line table in the database
+        /// \details <b>Details</b>
+        /// This method takes a trip line object, parses out its relevant datamembers and sends it to the database
+        /// \param - line - <b>TripLine</b> - The trip line to add to the database
+        /// \returns - <b>Nothing</b>
+        /// 
         public static void SaveTripLineToDB(TripPlanning.TripLine line)
         {
             List<string> values = new List<string>();
