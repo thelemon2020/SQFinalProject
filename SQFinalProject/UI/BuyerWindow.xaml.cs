@@ -364,18 +364,11 @@ namespace SQFinalProject.UI {
 
             if(invoice != null)
             {
-                tmpArray = invoice.Split(',');
-                List<string> values = tmpArray.ToList();
-
-                // set up an insert for the invoice
-                Controller.TMS.MakeInsertCommand("invoice", values);
-
-                // Insert the invoice into the correct table
-                Controller.TMS.ExecuteCommand();
+                toSend.Status = "CLOSED";
             }
             else
             {
-                toSend.Status = "COMPLETED";
+                toSend.Status = "COMPLETE";
             }
         }
 
@@ -400,7 +393,7 @@ namespace SQFinalProject.UI {
                     SendPlanner.IsEnabled = true;
                     GenInvoice.IsEnabled = false;
                 }
-                else if (c.Status == "COMPLETED")
+                else if (c.Status == "COMPLETE")
                 {
                     SendPlanner.IsEnabled = false;
                     GenInvoice.IsEnabled = true;

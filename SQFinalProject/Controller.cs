@@ -516,25 +516,115 @@ namespace SQFinalProject
         /// 
         public static string GenerateInvoice(Account account, Contract contract)
         {
-            if (!contract.TripComplete)
+            List<string> fields = new List<string>();
+            fields.Add("tripid");
+            fields.Add("quantity");
+            fields.Add("daysworked");
+            fields.Add("distance");
+            Dictionary<string, string> conditions = new Dictionary<string, string>();
+            conditions.Add("contractID", contract.ID.ToString());
+            TMS.MakeSelectCommand(fields,"tripline",conditions,null);
+            List<string> results = TMS.ExecuteCommand();
+            Dictionary<string, List<int>> tripLineValues = new Dictionary<string, List<int>>();
+            foreach (string result in results)
             {
-                return null;
+                string[] splitIt = result.Split(',');
+                int quant;
+                int daywork;
+                int distance;
+                int.TryParse(splitIt[1], out quant);
+                int.TryParse(splitIt[2], out daywork);
+                int.TryParse(splitIt[3], out distance);
+                List<int> totals = new List<int>();
+                totals.Add(quant);
+                totals.Add(daywork);
+                totals.Add(distance);
+                tripLineValues.Add(splitIt[0], totals);
             }
-            else
+            double[] ltlRate = new double[results.Count];
+            double[] ftlRate = new double[results.Count];
+            double[] reefRate = new double[results.Count];
+            double[] kmRate = new double[results.Count];
+            int[] dayRate = new int[results.Count];
+            int i = 0;
+            StringBuilder invoice = new StringBuilder();
+            invoice.AppendFormat("{0}-----------------Contract #: {1}\n\n", contract.ClientName, contract.ID);
+            foreach (KeyValuePair<string, List<int>> value in tripLineValues)
             {
-                string date = DateTime.Now.ToString();
-                string invoiceID = account.AccountID.ToString() + contract.ID.ToString();
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", invoiceID, contract.ID, account.AccountID, date, contract.Cost, contract.JobType, contract.Quantity, contract.VanType);
-
-                account.Invoices.Add(sb.ToString());
-                using (StreamWriter sw = new StreamWriter(invoiceFilePath + contract.ClientName + "- "+ contract.ID + ".txt"))
+                invoice.AppendFormat("Trip {0}\n-------------------------------------\n", value.Key);
+                List<string> moreFields = new List<string>();
+                moreFields.Add("carrier.carrierName");
+                moreFields.Add("carrier.FTLRate");
+                moreFields.Add("carrier.LTLRate");
+                moreFields.Add("carrier.reefCharge");
+                List<string> tables = new List<string>();
+                tables.Add("carrier");
+                tables.Add("truck");
+                List<string> IDs = new List<string>();
+                IDs.Add("carrierID");
+                IDs.Add("carrierID");
+                Dictionary<string, string> moreConditions = new Dictionary<string, string>();
+                moreConditions.Add("truck.tripID", value.Key);
+                TMS.MakeInnerJoinSelect(moreFields,tables, IDs, moreConditions);
+                List<string> moreResults = TMS.ExecuteCommand();
+                string[] moreResult = moreResults[0].Split(',');
+                double temp;
+                double.TryParse(moreResult[1], out temp);
+                ftlRate[i] = temp;
+                double.TryParse(moreResult[2], out temp);
+                ltlRate[i] = temp;
+                double.TryParse(moreResult[3], out temp);
+                reefRate[i] = temp;
+                if (contract.JobType == 0)
                 {
-                    sw.Write(sb.ToString());
+                    kmRate[i] = (value.Value[2] * 26 * ftlRate[i]);                   
                 }
-                return sb.ToString();
-
+                else
+                {
+                    kmRate[i] = (value.Value[0] * value.Value[2] * ltlRate[i]);
+                }
+                if (contract.VanType == 1)
+                {
+                    kmRate[i] = kmRate[i] * reefRate[i];
+                }
+                dayRate[i] = (value.Value[1] - 1) * 150 ;
+                if (contract.JobType == 0)
+                {
+                    invoice.AppendFormat("KM Rate {0}KM @ ${1} * {2}----------{3}\n", value.Value[2], ftlRate[i], value.Value[0], kmRate[i]);
+                }
+                else
+                {
+                    invoice.AppendFormat("KM Rate {0}KM @ ${1} * {2}----------{3}\n", value.Value[2], ltlRate[i], value.Value[0], kmRate[i]) ;
+                }
+                invoice.AppendFormat("Day Rate {0} Day(s) @ $150----------------{1}\n", value.Value[1] - 1, dayRate[i]);
+                i++;
             }
+            double totalCost = 0;
+            for (int j = 0; j<i; j++)
+            {
+                totalCost = totalCost + (dayRate[j] + kmRate[j]);
+            }
+            invoice.AppendFormat("---------------------------------\n\n");
+            invoice.AppendFormat("Total Cost-------------------${0}\n", totalCost);
+            Directory.CreateDirectory(invoiceFilePath);
+            string date = DateTime.Now.AddDays(tripLineValues.Values.First()[1]).ToString();
+            invoice.AppendFormat("--------Generated: {0}----------", date);
+            using (StreamWriter sw = new StreamWriter(invoiceFilePath + contract.ClientName + "- "+ contract.ID + ".txt"))
+            {
+                sw.Write(invoice.ToString());
+            }
+            List<string> toInsert = new List<string>();
+            toInsert.Add(contract.AccountID.ToString() + "-" + contract.ID.ToString());
+            toInsert.Add(contract.ID.ToString());
+            toInsert.Add(contract.AccountID.ToString());
+            toInsert.Add(date);
+            toInsert.Add(totalCost.ToString());
+            toInsert.Add(contract.JobType.ToString());
+            toInsert.Add(contract.Quantity.ToString());
+            toInsert.Add(contract.VanType.ToString());
+            TMS.MakeInsertCommand("invoice", toInsert);
+            TMS.ExecuteCommand();
+            return invoice.ToString();
         }
 
         /// \brief A method to generate a report of company earnings and total contracts
