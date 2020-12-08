@@ -596,13 +596,7 @@ namespace SQFinalProject.UI {
         /// \return - <b>Nothing</b>
         ///
         private void btnCompleteContract_Click ( object sender,RoutedEventArgs e ) {
-
-            if (SummaryList.SelectedIndex > -1)
-            {
-                int i = SummaryList.SelectedIndex;
-
-
-            }
+            
             currOrder[0].Status = "COMPLETE";
             Dictionary<string, string> values = new Dictionary<string, string>();
             values.Add("status", currOrder[0].Status);
