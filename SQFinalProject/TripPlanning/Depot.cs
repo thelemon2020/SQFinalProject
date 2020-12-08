@@ -1,12 +1,4 @@
-﻿/*
-* FILE : Depot.cs
-* PROJECT : SENG2020 - ML04
-* PROGRAMMERs : Chris Lemon, Nick Byam, Deric Kruse, Mark Fraser
-* FIRST VERSION : 2020 - 11 - 15
-* REVISED ON : 2020 - 12 - 07
-* DESCRIPTION : This file defines the Depot class.  
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,33 +9,31 @@ namespace SQFinalProject.TripPlanning
 {
     /// 
     /// \class Depot
-    ///
-    /// \brief This class represents a depot at which trucks can pick up orders and depart from
-    ///
-    /// \see Trip
+    /// 
+    /// \brief A class representing a depot city
+    /// 
     /// \author <i>Chris Lemon</i>
-    ///
+
     public class Depot
     {
-        public string carrierName { get; set; }
-        public string cityName { get; set; }
-        public string FTLA { get; set; }
-        public string LTLA { get; set; }
-        public ObservableCollection<string> depotCityCollection { get; set; }
+        //! Properties
+        public string carrierName { get; set; } //!< The carrier that operates out of the depot city
+        public string cityName { get; set; } //!< the city name
+        public string FTLA { get; set; } //!< The FTL availability at the city
+        public string LTLA { get; set; } //!< The LTL availability at the city
+        public ObservableCollection<string> depotCityCollection { get; set; } //!< A collection of depot cities which the UI can see
 
-        public ObservableCollection<string> depotCarrierCollection { get; set; }
+        public ObservableCollection<string> depotCarrierCollection { get; set; } //!< A collection of carriers at the depot city
 
-        /// \brief Depot
+
+        /// \brief A constructor for the Depot class
         /// \details <b>Details</b>
-        /// Constructor for the Depot class. Assigns given values to their appropriate property
-        /// 
-        /// \param - carry -  <b>string</b> - Name for the carrier that uses this depot
-        /// \param - cityNames -  <b>string</b> - Name for the next city on the route
-        /// \param - FTL - <b>string</b> - Amount of available trucks for FTL
-        /// \param - LTL -  <b>string</b> - Amount of available trucks for LTL
-        /// 
-        /// 
-        /// \return - <b>Nothing</b>
+        /// A constructor for the depot city that instantiates the collection and sets the properties of the class
+        /// \param - carry - <b>string</b> - The name of the carrier
+        /// \param - cityNames - <b>string</b> - The name of the city
+        /// \param - FTL - <b>string</b> - The ftl availability 
+        /// \param - LTL - <b>string</b> -The ltl availability
+        /// \returns - <b>Nothing</b>
         /// 
         public Depot(string carry, string cityNames, string FTL, string LTL)
         {
@@ -55,13 +45,11 @@ namespace SQFinalProject.TripPlanning
             LTLA = LTL;
         }
 
-        /// \brief Depot
+        /// \brief A constructor for the Depot class
         /// \details <b>Details</b>
-        /// Constructor for the Depot class. For assignment later
-        /// 
-        /// \param - <b>None</b>
-        ///  
-        /// \return - <b>Nothing</b>
+        /// A basic constructor for the depot class that takes no parameters
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
         /// 
         public Depot()
         {
