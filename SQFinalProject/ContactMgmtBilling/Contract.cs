@@ -1,5 +1,5 @@
 ﻿//*********************************************
-// File			 : ContractDetails.cs
+// File			 : Contract.cs
 // Project		 : PROG2020 - Term Project
 // Programmer	 : Nick Byam, Chris Lemon, Deric Kruse, Mark Fraser
 // Last Change   : 2020-11-25
