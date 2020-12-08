@@ -768,10 +768,11 @@ namespace SQFinalProject.UI {
             {
                 string[] split = s.Split(',');
                 StringBuilder sb = new StringBuilder();
+                double tmpCost = Math.Round(double.Parse(split[5]), 2);
 
                 sb.Append("TMS Internal Report:\n\n");
                 sb.AppendFormat("Period: {0} - {1}\n", split[2], split[3]);
-                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], tmpCost.ToString()); ;
 
                 ReportBlock.Text += sb.ToString();
             }
@@ -815,10 +816,11 @@ namespace SQFinalProject.UI {
             {
                 string[] split = s.Split(',');
                 StringBuilder sb = new StringBuilder();
+                double tmpCost = Math.Round(double.Parse(split[5]), 2);
 
                 sb.Append("TMS Internal Report:\n\n");
                 sb.AppendFormat("Period: {0}\n", split[1]);
-                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], split[5]);
+                sb.AppendFormat("Total Contracts Delivered: {0}, Total Invoice Cost: {1}\n\n", split[4], tmpCost.ToString());
 
                 ReportBlock.Text += sb.ToString();
             }

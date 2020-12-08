@@ -715,7 +715,8 @@ namespace SQFinalProject
             fields.Add(totalCost.ToString());
 
             TMS.MakeInsertCommand("report", fields);
-            
+            TMS.ExecuteCommand();
+
             return report;
         }
 

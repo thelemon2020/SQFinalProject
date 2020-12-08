@@ -117,7 +117,7 @@ namespace SQFinalProject
                 }
                 i++;
             }
-            InsertCommand.AppendFormat(")");
+            InsertCommand.AppendFormat(");");
             userCommand = InsertCommand.ToString();//set user command variable to newly created query string
         }
 
