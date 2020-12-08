@@ -21,8 +21,8 @@ namespace SQFinalProject.TripPlanning
     {
         private const double workDay = 12.0;    //!< A constant value of a full workday
         private const double MaxDriveTime = 8.0;//!< A constant value of the maximum time a driver is allowed to drive
-        private const double load = 2.0;
-        private const double unload = 2.0;
+        private const double load = 2.0;        //!< A constant representing the amount og time it takes to load a contract
+        private const double unload = 2.0;      //!< A constant representing the amount og time it takes to unload a contract
         private const int FTLMaxLoad = 0;       //!< A constant value of max load of an FTL truck
         private const int LTLMaxLoad = 26;      //!< Max pallet count for an LTL truck
         private const int DryVan = 0;           //!< The int representation of a dry van
