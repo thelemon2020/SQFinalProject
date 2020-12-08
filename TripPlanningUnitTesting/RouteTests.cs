@@ -73,8 +73,8 @@ namespace SQFinalProject.Tests
 
 
             List<string> s = Controller.FindCarriersForContract(contracts[4], carriers);
-            Truck theTruck = new Truck(contracts[2], carriers[2], 3);
-            theTruck.AddContract(new TripLine(contracts[5], theTruck.TripID, 3));
+            Truck theTruck = new Truck(contracts[7], carriers[1], contracts[7].Quantity);
+            theTruck.AddContract(new TripLine(contracts[5], theTruck.TripID, 21));
             theTruck.SimulateDay();
             theTruck.SimulateDay();
 
@@ -135,12 +135,13 @@ namespace SQFinalProject.Tests
         [TestMethod()]
         public void GetCitiesTest_Boundary1()
         {
-
+            Controller.LoadConfig();
             Route test = new Route();
+            List<string> cty = new List<string>();
+            cty.Add("Windsor");
+            test.GetCities("Windsor", "Toronto");
 
-            test.GetCities("Windsor", "Ottawa");
-
-            Assert.AreEqual("Ottawa", test.Cities.Last().Name);
+            Assert.AreEqual("Toronto", test.Cities.Last().Name);
 
         }
 

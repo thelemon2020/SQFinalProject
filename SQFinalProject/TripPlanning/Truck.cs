@@ -39,7 +39,7 @@ namespace SQFinalProject.TripPlanning
         public double ReeferRate { get; set; }          //<The reefer rate of the carrier if the truck is a reefer truck
         public double BillTotal { get; set; }           //<The total price charged by the carrier for the trip
         public bool IsComplete { get; set; }            //<Flag to set trip to complete
-        public double TotalTime { get; set; }              //<Total time it takes to deliver the truck
+        public double TotalTime { get; set; }           //<Total time it takes to deliver the truck
         public List<TripLine> Contracts { get; set; }   //<A list of contracts that the Truck will have to deliver
         public Route ThisRoute { get; set; }            //<A route object modelling the route to be taken by the truck
         public string Direction { get; set; }
@@ -49,10 +49,11 @@ namespace SQFinalProject.TripPlanning
         /// \brief Constructor for the truck class
         /// \details <b>Details</b>
         /// The constructor for the Truck class 
-        /// \param - <b>contract</b> - 
+        /// \param - <b>contract</b> - Contract class containing details for the order
+        /// \param - <b>carrier</b> - Carrier class containing details for the carrier
+        /// \param - <b>qty</b> - int containing the number of pallets from the contract to be fulfilled by this truck
         /// \returns - <b>Nothing</b>
         /// 
-        /// \see 
         public Truck(Contract contract, Carrier carrier, int qty)
         {
             if (LastID == 0)
@@ -85,13 +86,13 @@ namespace SQFinalProject.TripPlanning
             Contracts[0].CalculateTripTime(this);
         }
 
+
         /// \brief Method to add cargo from a contract to the trip
         /// \details <b>Details</b>
         /// The constructor for the Truck class
-        /// \param - contract - <b>TripLine</b> - an instantiated tripline
-        /// \returns - success - <b>bool</b> - flag letting the calling method know if the contract was successfully added to the trip
+        /// \param - <b>contract</b> - an instantiated tripline to be added
+        /// \returns - <b>success</b> - flag letting the calling method know if the contract was successfully added to the trip
         /// 
-        /// \see 
         public bool AddContract(TripLine contract)
         {
             bool success = false;
@@ -119,6 +120,12 @@ namespace SQFinalProject.TripPlanning
         }
 
 
+        /// \brief Method to add cargo from a contract to the trip
+        /// \details <b>Details</b>
+        /// The constructor for the Truck class
+        /// \param - N/A
+        /// \returns - N/A
+        /// 
         public void CorrectContractTime()
         {
             if(Contracts.Count == 1 && TotalQuantity == 0) // This is an FTL Trip, so we don't need to do anything.
@@ -202,19 +209,27 @@ namespace SQFinalProject.TripPlanning
         }
 
 
-        //
+        /// \brief Method to simulate a workday for the truck
+        /// \details <b>Details</b>
+        /// The constructor for the Truck class
+        /// \param - N/A
+        /// \returns - N/A
+        /// 
         public void SimulateDay()
         {
             HoursWorked = 0.0;
             HoursDriven = 0.0;
 
             if (ThisRoute.Cities[0].Name == Origin)
-            {   // Load contracts and determine charges if the truck is still in the origin city
+            {   
+                // Load contracts and determine charges(cost to hire truck) if the truck is still in the origin city
                 TotalCost();
                 LoadContracts();
             }
+            // Keep moving as long as "work limits" for the day are not reached
             while(kMaxTotalHours >= HoursWorked + ThisRoute.Cities[0].Time && kMaxDrivingHours > HoursDriven + ThisRoute.Cities[0].Time && !IsComplete)
             {
+                // Loop through each contract too see if it should be unloaded in the current city
                 for (int i = 0; i < Contracts.Count(); i++)
                 {
                     if (Contracts[i].Destination == ThisRoute.Cities[0].Name && kMaxTotalHours > HoursWorked + 2)
@@ -234,26 +249,26 @@ namespace SQFinalProject.TripPlanning
             DaysWorked++;
             BillTotal += 150;
         }
+
         /// \brief A method to simulate the truck continuing to the next city
         /// \details <b>Details</b>
-        /// A method that will increase the work time equal to the number of hours to the next city then update the contracts delivered if any
+        /// A method that will increase the work time equal to the number of hours to the next city then update the route object to move to the next city
         /// \param - <b>Nothing</b>
         /// \returns - <b>Nothing</b>
         /// 
-        /// \see Load(TripLine contract)
-        /// \see Unload(TripLine contract)
         private void ContinueRoute()
         {
+            // Increase hours worked/driven by the time to the next city
             HoursDriven += ThisRoute.Cities[0].Time;
             HoursWorked += ThisRoute.Cities[0].Time;
-            ThisRoute.ArriveAtStop();
+            ThisRoute.ArriveAtStop(); // Removes one city from the Cities list
         }
 
 
         /// \brief A method that simulates loading product onto the truck
         /// \details <b>Details</b>
         /// A method to simulate loading the truck with product related to a contract, it adds 2 hours to the total work time for each 
-        /// contract that needs to be loaded, then updates pallet counts
+        /// contract that needs to be loaded
         /// \param - contract <b>TripLine</b> - The trip details of the contract
         /// \returns - <b>Nothing</b>
         /// 
@@ -269,8 +284,9 @@ namespace SQFinalProject.TripPlanning
 
         /// \brief A method that simulates unloading the truck
         /// \details <b>Details</b>
-        /// A method that simulates unloading an order from the truck. Adds 2 hours to the work time, removes a contract from the list,
-        /// and then updates the number of pallets in the truck
+        /// A method that simulates unloading an order from the truck. Adds 2 hours to the work time, then updates
+        /// final delivery information in the tripline and checks if all contracts are delivered in which case
+        /// the truck's IsComplete flag is set
         /// \param - index - <b>int</b> - The index of the trip line (contract) being unloaded
         /// \returns - <b>Nothing</b>
         /// 
@@ -282,15 +298,23 @@ namespace SQFinalProject.TripPlanning
             Contracts[index].DaysWorked = DaysWorked;
             Contracts[index].TotalTime += (float)HoursWorked;
             Contracts[index].IsDelivered = true;
-
+            // Check the delivery flag on each contract on the truck
             foreach (TripLine c in Contracts) if (c.IsDelivered == false) allDelivered = false;
             if (Contracts[index].Destination == Destination && allDelivered == true)
             {
                 IsComplete = true;
-                //SaveToDB()? or use button idk
             }
         }
-        
+
+
+        /// \brief A method that calculates the total cost for tms to hire the truck
+        /// \details <b>Details</b>
+        /// The rate is retrieved from the database based on how many pallets are on the truck (FTL or LTL Rate)
+        /// then the rate/reefer charge(if applicable) are applied and 
+        /// the truck's IsComplete flag is set
+        /// \param - index - <b>int</b> - The index of the trip line (contract) being unloaded
+        /// \returns - <b>Nothing</b>
+        /// 
         public void TotalCost()
         {
             Rate = Controller.GetRate(CarrierID, TotalQuantity);
@@ -300,11 +324,26 @@ namespace SQFinalProject.TripPlanning
             BillTotal = Math.Round(BillTotal, 2);
         }
 
+
+        /// \brief A method for saving trucks to the TMS DB
+        /// \details <b>Details</b>
+        /// This method simple calls a controller method which performs the logic of saving truck data to the db
+        /// \param - <b>nothing</b>
+        /// \returns - <b>Nothing</b>
+        /// 
+        /// \see Truck
         public void SaveToDB()
         {
             Controller.SaveTripToDB(this);
         }
 
+
+        /// \brief A method that returns the amount of space remaining on a truck
+        /// \details <b>Details</b>
+        /// TotalQuantity is simply subtracted from the maxumim total no. of pallets and the value is returned
+        /// \param - <b>Nothing</b>
+        /// \returns - <b>Nothing</b>
+        /// 
         public int RemainingQuantity () {
             return kMaxPallets - TotalQuantity;
         }

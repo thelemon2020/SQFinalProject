@@ -588,6 +588,7 @@ namespace SQFinalProject
                     kmRate[i] = kmRate[i] * reefRate[i];
                 }
                 dayRate[i] = (value.Value[1] - 1) * 150 ;
+                kmRate[i] = Math.Round(kmRate[i], 2);
                 if (contract.JobType == 0)
                 {
                     invoice.AppendFormat("KM Rate {0}KM @ ${1} * {2}----------{3}\n", value.Value[2], ftlRate[i], value.Value[0], kmRate[i]);
@@ -604,6 +605,7 @@ namespace SQFinalProject
             {
                 totalCost = totalCost + (dayRate[j] + kmRate[j]);
             }
+            totalCost = Math.Round(totalCost, 2);
             invoice.AppendFormat("---------------------------------\n\n");
             invoice.AppendFormat("Total Cost-------------------${0}\n", totalCost);
             Directory.CreateDirectory(invoiceFilePath);
