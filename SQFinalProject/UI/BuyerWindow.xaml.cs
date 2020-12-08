@@ -345,6 +345,14 @@ namespace SQFinalProject.UI {
             OrderList.ItemsSource = ordersCollection;
         }
 
+
+        /// \brief A method that generates a new invoice when a button is clicked
+        /// \details <b>Details</b>
+        /// Generates a new invoice when the user clicks the button to, the invoice is based on a completed contract
+        /// \param - sender - <b>object</b> - the UI element that sent the event
+        /// \param e - <b>RoutedEventArgs</b> - event arguments for a routed command that the mehtod can use
+        /// \returns - <b>Nothing</b>
+        /// 
         private void GenerateInvoice_Click(object sender, RoutedEventArgs e)
         {
             Contract toSend = (Contract)OrderList.SelectedItem;

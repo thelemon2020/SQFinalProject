@@ -55,6 +55,13 @@ namespace SQFinalProject
             return 0;
         }
 
+
+        /// \brief A method that reads from the log
+        /// \details <b>Details</b>
+        /// A method that reads from the log to display on a screen in the admin panel. Creates a message box if the path can't be found
+        /// \param - <b>Nothing</b>
+        /// \returns - logFile - <b>string</b> - A string containing the contents of the log
+        /// 
         public static string ReadLog()
         {
             string logFile;

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SQFinalProject.TripPlanning
 {
-    ///
+    /// 
     /// \class TripLine
     ///
     /// \brief This class joins together a <b>Truck</b> with a <b>Contract</b>.  No real error handling is needed as a <b>Truck</b> and a <b>Contract</b> must exist
@@ -27,8 +27,8 @@ namespace SQFinalProject.TripPlanning
     {
         private const double workDay = 12.0;    //!< A constant value of a full workday
         private const double MaxDriveTime = 8.0;//!< A constant value of the maximum time a driver is allowed to drive
-        private const double load = 2.0;        //!< A constant for how long it takes to load a trip onto a trick
-        private const double unload = 2.0;      //!< A constant for how long it takes to unload a trip from a trick
+        private const double load = 2.0;        //!< A constant representing the amount og time it takes to load a contract
+        private const double unload = 2.0;      //!< A constant representing the amount og time it takes to unload a contract
         private const int FTLMaxLoad = 0;       //!< A constant value of max load of an FTL truck
         private const int LTLMaxLoad = 26;      //!< Max pallet count for an LTL truck
         private const int DryVan = 0;           //!< The int representation of a dry van
@@ -45,14 +45,14 @@ namespace SQFinalProject.TripPlanning
 
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
-        /// Sets some general properties based on arguments passed in from another method
-        ///
+        /// Sets some general properties based on arguments passed in from another method 
+        /// 
         /// \param - contract - <b>Contract</b> - the contract to be loaded onto a <b>Truck</b>
         /// \param - truck - <b>Truck</b> - the <b>Truck</b> to load the contract on to
         /// \param - qty -<b>int</b> - number of pallets to be fulfilled on this trip
-        ///
+        /// 
         /// \return N/A
-        ///
+        /// 
         public TripLine(Contract contract, int tripID, int qty)
         {
             ContractID = contract.ID;
@@ -69,11 +69,11 @@ namespace SQFinalProject.TripPlanning
         /// \brief Constructor for the TripLine class
         /// \details <b>Details</b>
         /// Creates a tripline method from TMS database for the contract class to process after completion
-        ///
+        /// 
         /// \param - details - <b>List<string></b> - the query return of a tripline from the tms db
-        ///
+        /// 
         /// \return N/A
-        ///
+        /// 
         public TripLine(string details, string destination)
         {
             string[] splitDetails = details.Split(',');
@@ -99,7 +99,7 @@ namespace SQFinalProject.TripPlanning
             {
                 TotalTime = float.Parse(splitDetails[6]);
             }
-            HoursPerDay = new double[3];
+            HoursPerDay = new double[3];   
         }
 
 
@@ -108,7 +108,7 @@ namespace SQFinalProject.TripPlanning
         /// This method simply calls a controller method which performs the logic of saving tripline data to the db
         /// \param - <b>nothing</b>
         /// \returns - <b>Nothing</b>
-        ///
+        /// 
         /// \see TripLine
         public void SaveToDB()
         {
@@ -121,7 +121,7 @@ namespace SQFinalProject.TripPlanning
         /// this tripline(contract)'s destination
         /// \param - <b>truck</b> - The truck the tripline is being carried on
         /// \returns - <b>Nothing</b>
-        ///
+        /// 
         /// \see Truck
         public void CalculateTripTime(Truck truck)
         {
@@ -172,7 +172,7 @@ namespace SQFinalProject.TripPlanning
         /// A method that adds up all costs of triplines associated with a contract and returns that cost to be added to an account.
         /// \param - contract - <b>Contract</b> - The contract being evaluated
         /// \returns - cost - <b>double</b> - The calculated cost of the contract
-        ///
+        /// 
         public double CalculateCost(Contract contract, Truck truck)
         {
             double cost = 0.00;
@@ -185,7 +185,7 @@ namespace SQFinalProject.TripPlanning
                     {
                         cost += truck.Rate * trip.Distance;
                     }
-                    else // LTL
+                    else // LTL 
                     {
                         cost += trip.Quantity * truck.Rate * trip.Distance;
                     }
